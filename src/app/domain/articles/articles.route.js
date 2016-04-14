@@ -6,9 +6,10 @@
     .config(routerConfig)
   ;
 
-  function routerConfig($stateProvider) {
-    $stateProvider
-      .state('articles', {
+  function routerConfig(stateHelperProvider) {
+    stateHelperProvider
+      .state({
+        name: 'articles',
         url: '/articles',
         templateUrl: 'app/domain/articles/articles.html',
         controller: 'ArticlesController',

@@ -12,7 +12,9 @@
     var vm = this;
 
     Article.bindAll({},$scope,'vm.articles');
-    Article.findAll();
+    Article.findAll({
+      limit: 100
+    });
 
     var groupSize = 3;
 
@@ -30,10 +32,6 @@
     };
 
     vm.repeater = repeater;
-
-    vm.onLayout = function (event) {
-      console.log (event);
-    };
 
   }
 
