@@ -24,7 +24,14 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div ui-view></div>
+    <section layout-fill>
+
+      <md-content>
+        <acme-navbar creation-date="main.creationDate"></acme-navbar>
+        <section ui-view></section>
+      </md-content>
+
+    </div>
 
     <!-- build:js(src) scripts/vendor.js -->
     <!-- bower:js -->

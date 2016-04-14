@@ -1,0 +1,7 @@
+md-content(layout-padding)
+  h1 Articles
+
+  md-grid-list(md-row-height="3:3" md-cols-xs="1" md-cols-sm="3" md-cols-md="5" md-cols-lg="6" md-gutter="10" md-on-layout="vm.onLayout($event)")
+    md-grid-tile(ng-repeat="a in vm.articles")
+      img.thumbnail(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
+      md-grid-tile-footer {{ a.name }}

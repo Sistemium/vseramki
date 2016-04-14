@@ -8,6 +8,18 @@
   "globals": {
     "angular": true,
     "module": true,
-    "inject": true
+    "inject": true,
+    "window": true,
+    "console": true,
+    "_": true,
+    "UAParser": true,
+    "uuid": true,
+    "io": true,
+    "debug": true
+  },
+  "rules": {
+    "no-console": 0,
+    "angular/log": 0,
+    "angular/window-service": 0
   }
 }
