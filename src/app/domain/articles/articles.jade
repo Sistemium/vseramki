@@ -1,18 +1,17 @@
-md-content(layout-padding)
-
+md-content.articles(layout-padding layout="row" layout-xs="column")
   md-grid-list(
-    md-row-height-xs="530"
-    md-row-height-sm="470"
-    md-row-height-md="470"
-    md-row-height-lg="470"
-    md-cols-xs="1"
-    md-cols-sm="3"
-    md-cols-md="4"
-    md-cols-lg="5"
+    flex=""
+    md-row-height-xs="450"
+    md-row-height-sm="450"
+    md-row-height-gt-sm="430"
+    md-cols-xs="2"
+    md-cols-sm="2"
+    md-cols-md="3"
+    md-cols-lg="4"
     md-gutter="10"
   )
     md-grid-tile(ng-repeat="a in vm.articles")
-      md-card
+      md-card.height-100
         md-card-header
           md-card-header-text
             .md-title Заголовок
@@ -24,3 +23,4 @@ md-content(layout-padding)
           md-card-icon-actions
             md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину")
               i.material-icons add_shopping_cart
+  md-sidenav.md-sidenav-right(md-component-id="right-nav" md-is-locked-open="$mdMedia('min-width: 333px')")
