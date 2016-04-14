@@ -5,7 +5,6 @@
     .module('vseramki', [
       'ui.router',
       'ngMaterial',
-      'toastr',
       'sistemium'
     ]);
 
