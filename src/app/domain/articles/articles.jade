@@ -1,10 +1,10 @@
 md-content(layout-padding)
 
   md-grid-list(
-    md-row-height-xs="500"
-    md-row-height-sm="430"
-    md-row-height-md="430"
-    md-row-height-lg="420"
+    md-row-height-xs="530"
+    md-row-height-sm="470"
+    md-row-height-md="470"
+    md-row-height-lg="470"
     md-cols-xs="1"
     md-cols-sm="3"
     md-cols-md="4"
@@ -12,7 +12,7 @@ md-content(layout-padding)
     md-gutter="10"
   )
     md-grid-tile(ng-repeat="a in vm.articles")
-      md-card.height-100
+      md-card
         md-card-header
           md-card-header-text
             .md-title Заголовок
@@ -20,3 +20,7 @@ md-content(layout-padding)
         md-card-title
           md-card-title-text
             .md-subhead {{ a.name }}
+        md-card-actions(layout="row" layout-align="start center")
+          md-card-icon-actions
+            md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину")
+              i.material-icons add_shopping_cart
