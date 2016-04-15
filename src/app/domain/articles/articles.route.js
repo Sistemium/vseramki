@@ -6,6 +6,7 @@
     .config(routerConfig)
   ;
 
+  /** @ngInject */
   function routerConfig(stateHelperProvider) {
     stateHelperProvider
       .state({
