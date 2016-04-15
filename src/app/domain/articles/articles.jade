@@ -1,4 +1,4 @@
-section.busy(ng-if="!vm.articles.length" layout="row" layout-sm="column" layout-align="space-around")
+section.busy(ng-if="!vm.articles.length" layout="row" layout-align="space-around")
   md-progress-circular(md-diameter="200")
 md-content.articles(ng-if="vm.articles.length" layout="row" layout-xs="column")
   section(layout-padding flex="" resize style="height: {{ windowHeight - 64 }}px; overflow-y: scroll;")
