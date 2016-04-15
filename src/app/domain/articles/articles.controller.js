@@ -13,7 +13,7 @@
 
     Article.bindAll({},$scope,'vm.articles');
     Article.findAll({
-      limit: 100
+      limit: 50
     });
 
     var groupSize = 3;
