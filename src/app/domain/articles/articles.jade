@@ -1,26 +1,30 @@
-md-content.articles(layout-padding layout="row" layout-xs="column")
-  md-grid-list(
-    flex=""
-    md-row-height-xs="450"
-    md-row-height-sm="450"
-    md-row-height-gt-sm="430"
-    md-cols-xs="2"
-    md-cols-sm="2"
-    md-cols-md="3"
-    md-cols-lg="4"
-    md-gutter="10"
-  )
-    md-grid-tile(ng-repeat="a in vm.articles")
-      md-card.height-100
-        md-card-header
-          md-card-header-text
-            .md-title Заголовок
-        img.thumbnail-(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
-        md-card-title
-          md-card-title-text
-            .md-subhead {{ a.name }}
-        md-card-actions(layout="row" layout-align="start center")
-          md-card-icon-actions
-            md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину")
-              i.material-icons add_shopping_cart
+section.busy(ng-if="!vm.articles.length" layout="row" layout-sm="column" layout-align="space-around")
+  md-progress-circular(md-diameter="200")
+md-content.articles(ng-if="vm.articles.length" layout="row" layout-xs="column")
+  section(layout-padding flex="" resize style="height: {{ windowHeight - 64 }}px; overflow-y: scroll;")
+    md-grid-list(
+      md-row-height-xs="450"
+      md-row-height-sm="450"
+      md-row-height-gt-sm="430"
+      md-cols-xs="2"
+      md-cols-sm="2"
+      md-cols-md="3"
+      md-cols-lg="4"
+      md-gutter="10"
+    )
+      md-grid-tile(ng-repeat="a in vm.articles")
+        md-card.height-100
+          md-card-header
+            md-card-header-text
+              .md-title Заголовок
+          img.thumbnail-(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
+          md-card-title
+            md-card-title-text
+              .md-subhead {{ a.name }}
+          md-card-actions(layout="row" layout-align="start center")
+            md-card-icon-actions
+              md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину")
+                i.material-icons add_shopping_cart
   md-sidenav.md-sidenav-right(md-component-id="right-nav" md-is-locked-open="$mdMedia('min-width: 333px')")
+    md-content(layout-padding)
+      md-subnav Фильтры
