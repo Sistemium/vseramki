@@ -14,6 +14,8 @@
     Article.bindAll({},$scope,'vm.articles');
     Article.findAll({
       limit: 50
+    }).then(function(data){
+      vm.ready = true;
     });
 
     var groupSize = 3;

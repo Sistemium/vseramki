@@ -1,5 +1,6 @@
-md-toolbar.toolbar-fixed-top(layout='row', layout-align='center center' md-medium-tall)
-  md-button(ui-sref='home') vseramki.ru
-  section(flex='', layout='row', layout-align='left center')
+md-toolbar.toolbar-fixed-top
+  .md-toolbar-tools
+    md-button(ui-sref='home') vseramki.ru
     md-button.md-primary(ui-sref='home' ui-sref-active='md-raised') Главная
     md-button.md-primary(ui-sref='articles' ui-sref-active='md-raised') Каталог
+    .flex
