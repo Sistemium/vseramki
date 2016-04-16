@@ -3,12 +3,17 @@
 
   angular
     .module('vseramki')
-    .config(config);
+    .config(config)
+    .service('DEBUG',DEBUG)
+  ;
 
-  /** @ngInject */
   function config($logProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
+  }
+
+  function DEBUG (saDebug) {
+    return saDebug.log ('stm:vr');
   }
 
 })();
