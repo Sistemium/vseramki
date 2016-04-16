@@ -27,7 +27,8 @@ md-content.articles(ng-if="vm.ready" layout="row")
           md-card-header
             md-card-header-text
               .md-title Заголовок
-          img.thumbnail(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
+          .img(flex)
+            img.thumbnail(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
           md-card-title
             md-card-title-text
               .md-subhead {{ a.name }}
