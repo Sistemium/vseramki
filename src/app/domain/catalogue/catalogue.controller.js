@@ -7,57 +7,114 @@
   ;
 
   /** @ngInject */
-  function CatalogueController($scope, Article) {
+  function CatalogueController($scope, Article, DEBUG) {
 
     var vm = this;
+    var groupSize = 3;
 
-    function setPage() {
+    function setPage (direction) {
 
-      var page = vm.currentPage;
+      var page = vm.currentPage + direction;
 
       //Article.ejectAll();
 
-      Article.findAll({
+      vm.busy = true;
+
+      return Article.findAll({
           limit: vm.pageSize,
           offset: page * vm.pageSize
         }, {
           bypassCache: true
         })
         .then(function (data) {
+
           vm.articles = data;
+
+          var rows = _.chunk(data, groupSize);
+
+          if (direction>0 || !vm.rows.length) {
+            Array.prototype.push.apply (vm.rows, rows);
+          } else if (direction<0) {
+            vm.rows = Array.prototype.push.apply (rows, vm.rows);
+          } else {
+            vm.rows = rows;
+          }
+
+        })
+        .finally(function(){
+          vm.busy = false;
         });
 
     }
 
-    var groupSize = 3;
-
-    var repeater = {
-      getLength: function () {
-        console.log(vm.articles.length);
-        return Math.floor(vm.articles.length / groupSize);
-      },
-      getItemAtIndex: function (index) {
-        if (!vm.articles.length) {
-          return;
-        }
-        return vm.articles[index * groupSize];
+    function nextPage () {
+      if (vm.busy) {
+        return DEBUG ('vb.busy')
       }
-    };
+      DEBUG ('nextPage',vm.currentPage);
+      //setPage(1);
+    }
+
+    function prevPage () {
+      if (vm.busy) {
+        return DEBUG ('vb.busy')
+      }
+      DEBUG ('prevPage',vm.currentPage);
+      setPage(-1);
+    }
 
     angular.extend(vm, {
 
-      repeater: repeater,
       currentPage: 1,
       pages: 9,
-      pageSize: 25,
+      pageSize: 36,
+      rows: [],
+      rowsFlex: 33,
 
-      setPage: setPage
+      setPage: function () {
+        DEBUG('setPage', vm.currentPage);
+        setPage (0);
+      },
+      nextPage: nextPage,
+      prevPage: prevPage
+
     });
 
     Article.getCount().then(function (res) {
       vm.ready = true;
-      vm.total = Math.ceil(res / vm.pages);
+      vm.total = Math.ceil(res / vm.pageSize);
     });
+
+    $scope.$watch ('windowWidth', function (windowWidth) {
+
+      if (windowWidth > 1150) {
+        groupSize = 5;
+        vm.rowsFlex = 20
+      } else if (windowWidth > 950) {
+        groupSize = 4;
+        vm.rowsFlex = 25
+      } else if (windowWidth > 730) {
+        groupSize = 3;
+        vm.rowsFlex = 33
+      } else if (windowWidth > 550) {
+        groupSize = 2;
+        vm.rowsFlex = 50
+      } else {
+        groupSize = 1;
+        vm.rowsFlex = 100
+      }
+
+      vm.groupSize = groupSize;
+
+    });
+
+    $scope.$watch ('vm.groupSize', function (nw,o) {
+
+      if (nw||0!==o||0) {
+        vm.rows = _.chunk(vm.articles, groupSize)
+      }
+
+    })
 
   }
 

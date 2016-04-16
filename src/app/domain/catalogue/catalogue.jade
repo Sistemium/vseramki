@@ -1,6 +1,8 @@
 section.busy(ng-if="!vm.ready" layout="row" layout-align="space-around")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
+
 md-content.articles(ng-if="vm.ready" layout="row")
+
   md-sidenav.md-sidenav-left.left-nav-pager(md-component-id="left-nav-pager" md-is-locked-open="true")
     md-content(layout-margin layout-padding)
       wan-material-paging(
@@ -11,23 +13,21 @@ md-content.articles(ng-if="vm.ready" layout="row")
         current-page="vm.currentPage"
         step="vm.pages"
       )
-  section(flex="" layout-margin layout-padding style="height: {{ windowHeight - 60 }}px; overflow-y: scroll;")
-    md-grid-list(
-      md-row-height-xs="450"
-      md-row-height-sm="450"
-      md-row-height-gt-sm="430"
-      md-cols-xs="1"
-      md-cols-sm="1"
-      md-cols-md="3"
-      md-cols-lg="4"
-      md-gutter="10"
+
+  md-content#scroll-main(flex style="height: {{ windowHeight - 56 }}px;")
+
+    section(
+      vs-repeat
+      vs-scroll-parent="#scroll-main"
+      vs-size="400"
+      vs-scrolled-to-end="vm.nextPage()"
     )
-      md-grid-tile(ng-repeat="a in vm.articles")
-        md-card.height-100
+      .row(ng-repeat="row in vm.rows" layout="row")
+        md-card(ng-repeat="a in row track by a.id" flex="vm.rowsFlex")
           md-card-header
             md-card-header-text
               .md-title Заголовок
-          img.thumbnail-(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
+          img.thumbnail(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
           md-card-title
             md-card-title-text
               .md-subhead {{ a.name }}
@@ -35,7 +35,8 @@ md-content.articles(ng-if="vm.ready" layout="row")
             md-card-icon-actions
               md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину")
                 i.material-icons add_shopping_cart
-  md-sidenav.md-sidenav-right(md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
-    md-content(layout-padding)
+
+  md-sidenav.md-sidenav-right(layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
+    md-content
       md-subnav Фильтры
-      | {{$mdMedia('min-width: 333px') | json}}
+      h3 {{ windowWidth }} х {{ windowHeight }}
