@@ -5,7 +5,8 @@
     .module('vseramki', [
       'ui.router',
       'ngMaterial',
-      'sistemium'
+      'sistemium',
+      'vs-repeat'
     ]);
 
 })();
