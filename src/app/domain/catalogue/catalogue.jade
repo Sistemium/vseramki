@@ -1,13 +1,23 @@
 section.busy(ng-if="!vm.ready" layout="row" layout-align="space-around")
-  md-progress-circular(md-diameter="200")
-md-content.articles(ng-if="vm.ready" layout="row" layout-xs="column")
-  section(layout-padding flex="" style="height: {{ windowHeight - 64 }}px; overflow-y: scroll;")
+  md-progress-circular(md-diameter="200" md-mode="indeterminate")
+md-content.articles(ng-if="vm.ready" layout="row")
+  md-sidenav.md-sidenav-left.left-nav-pager(md-component-id="left-nav-pager" md-is-locked-open="true")
+    md-content(layout-margin layout-padding)
+      wan-material-paging(
+        layout="column"
+        wmp-total="vm.total"
+        goto-page="vm.setPage()"
+        position="center"
+        current-page="vm.currentPage"
+        step="vm.pages"
+      )
+  section(flex="" layout-margin layout-padding style="height: {{ windowHeight - 60 }}px; overflow-y: scroll;")
     md-grid-list(
       md-row-height-xs="450"
       md-row-height-sm="450"
       md-row-height-gt-sm="430"
-      md-cols-xs="2"
-      md-cols-sm="2"
+      md-cols-xs="1"
+      md-cols-sm="1"
       md-cols-md="3"
       md-cols-lg="4"
       md-gutter="10"
@@ -25,6 +35,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-xs="column")
             md-card-icon-actions
               md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину")
                 i.material-icons add_shopping_cart
-  md-sidenav.md-sidenav-right(md-component-id="right-nav" md-is-locked-open="$mdMedia('min-width: 333px')")
+  md-sidenav.md-sidenav-right(md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
     md-content(layout-padding)
       md-subnav Фильтры
+      | {{$mdMedia('min-width: 333px') | json}}

@@ -1,5 +1,10 @@
 @import "../../styles/_vars.scss";
 
+md-toolbar.toolbar-fixed-top.white-background {
+  background: white !important;
+  color: #202020 !important;
+}
+
 .toolbar-fixed-top {
   position: fixed;
   top: 0;
