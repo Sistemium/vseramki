@@ -7,7 +7,13 @@ md-content.articles {
     margin-left: 0;
   }
 
+
+  .md-sidenav-left {
+    margin-top: 5px;
+  }
+
   .md-sidenav-right {
+    margin-top: 10px;
     max-width: 200px;
     width: 200px;
   }
@@ -15,12 +21,15 @@ md-content.articles {
   md-card {
 
     min-height: 400px;
+    //max-height: 400px;
 
     img.thumbnail {
       margin-left: auto;
       margin-right: auto;
       max-width: 250px;
     }
+
+//    height: 100%;
 
   }
 
