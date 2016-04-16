@@ -1,0 +1,22 @@
+md-sidenav.left-nav-pager {
+  max-width: 90px;
+
+  .wan-material-paging .wmp-button {
+    min-width: 40px;
+    flex: 1;
+  }
+
+  .layout-padding > wan-material-paging {
+    padding: 0;
+  }
+
+  @media screen and (max-width: 456px) {
+    min-width: 90px;
+  }
+
+}
+
+.wmp-button {
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .26);
+  background-color: rgb(250, 250, 250);
+}
