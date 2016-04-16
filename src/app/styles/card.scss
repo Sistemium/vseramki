@@ -1,9 +1,15 @@
-md-card md-card-title {
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-bottom: auto;
-}
+md-card {
+  md-card-title {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: auto;
+  }
 
-md-card md-card-actions md-card-icon-actions {
-  margin-bottom: 10px;
+  md-card-actions md-card-icon-actions {
+    margin-bottom: 10px;
+  }
+
+  &.vs-repeat-after-content, &.vs-repeat-before-content {
+    padding: 0;
+  }
 }
