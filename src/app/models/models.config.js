@@ -19,7 +19,7 @@
         getCount: function (params) {
           return $http
             .get(
-              basePath + '/' + this.endpoint,
+              basePath + this.endpoint,
               {
                 params: angular.extend({
                   'agg:': 'count'
