@@ -20,18 +20,18 @@
         currentPage: '='
       },
       controller: Controller,
-      controllerAs: 'vm',
+      controllerAs: 'dm',
       template: [
         '<div layout="{{ layout }}" class="wan-material-paging" layout-align="{{ position }}">',
-        '<md-button class="md-primary wmp-button" ng-click="vm.gotoFirst()" ng-show="vm.index > 0">{{ vm.first }}</md-button>',
-        '<md-button class="md-primary wmp-button" ng-click="vm.getoPre()" ng-show="vm.index - 1 >= 0">...</md-button>',
-        '<md-button class="md-primary wmp-button" ng-repeat="i in vm.stepInfo"',
-        ' ng-click="vm.goto(vm.index + i)" ng-show="vm.page[vm.index + i]" ',
-        ' ng-class="{true: \'md-raised\', false: \'\'}[vm.page[vm.index + i] === currentPage]">',
-        ' {{ vm.page[vm.index + i] }}',
+        '<md-button class="md-primary wmp-button" ng-click="dm.gotoFirst()" ng-show="dm.index > 0">{{ dm.first }}</md-button>',
+        '<md-button class="md-primary wmp-button" ng-click="dm.getoPre()" ng-show="dm.index - 1 >= 0">...</md-button>',
+        '<md-button class="md-primary wmp-button" ng-repeat="i in dm.stepInfo"',
+        ' ng-click="dm.goto(dm.index + i)" ng-show="dm.page[dm.index + i]" ',
+        ' ng-class="{true: \'md-raised\', false: \'\'}[dm.page[dm.index + i] === currentPage]">',
+        ' {{ dm.page[dm.index + i] }}',
         '</md-button>',
-        '<md-button class="md-primary wmp-button" ng-click="vm.getoNext()" ng-show="vm.index + vm.step < wmpTotal">...</md-button>',
-        '<md-button class="md-primary wmp-button" ng-click="vm.gotoLast()" ng-show="vm.index + vm.step < wmpTotal">{{ vm.last }}</md-button>',
+        '<md-button class="md-primary wmp-button" ng-click="dm.getoNext()" ng-show="dm.index + dm.step < wmpTotal">...</md-button>',
+        '<md-button class="md-primary wmp-button" ng-click="dm.gotoLast()" ng-show="dm.index + dm.step < wmpTotal">{{ dm.last }}</md-button>',
         '</div>'
       ].join('')
     };
@@ -41,34 +41,34 @@
    * @ngInject
    */
   function Controller($scope) {
-    var vm = this;
+    var dm = this;
 
-    vm.first = '1';
-    vm.index = 0;
-    vm.step = $scope.step;
+    dm.first = '1';
+    dm.index = 0;
+    dm.step = $scope.step;
 
-    vm.goto = function(index) {
-      $scope.currentPage = vm.page[index];
+    dm.goto = function(index) {
+      $scope.currentPage = dm.page[index];
     };
 
-    vm.getoPre = function(){
-      $scope.currentPage = vm.index;
-      vm.index -= vm.step;
+    dm.getoPre = function(){
+      $scope.currentPage = dm.index;
+      dm.index -= dm.step;
     };
 
-    vm.getoNext = function(){
-      vm.index += vm.step;
-      $scope.currentPage = vm.index + 1;
+    dm.getoNext = function(){
+      dm.index += dm.step;
+      $scope.currentPage = dm.index + 1;
     };
 
-    vm.gotoFirst = function(){
-      vm.index = 0;
+    dm.gotoFirst = function(){
+      dm.index = 0;
       $scope.currentPage = 1;
     };
 
-    vm.gotoLast = function(){
-      vm.index = parseInt($scope.wmpTotal / vm.step) * vm.step;
-      vm.index === $scope.wmpTotal ? vm.index = vm.index - vm.step : '';
+    dm.gotoLast = function(){
+      dm.index = parseInt($scope.wmpTotal / dm.step) * dm.step;
+      dm.index === $scope.wmpTotal ? dm.index = dm.index - dm.step : '';
       $scope.currentPage = $scope.wmpTotal;
     };
 
@@ -77,25 +77,33 @@
     });
 
     $scope.$watch('wmpTotal', function() {
-      vm.init();
+      dm.init();
     });
 
-    vm.init = function() {
-      vm.stepInfo = (function() {
+    $scope.$watch('step', function(n,o) {
+      if (n === o) {
+        return;
+      }
+      dm.step = n;
+      dm.init();
+    });
+
+    dm.init = function() {
+      dm.stepInfo = (function() {
         var i, result = [];
-        for (i = 0; i < vm.step; i++) {
+        for (i = 0; i < dm.step; i++) {
           result.push(i)
         }
         return result;
       })();
 
-      vm.page = (function() {
+      dm.page = (function() {
         var i, result = [];
         for (i = 1; i <= $scope.wmpTotal; i++) {
           result.push(i);
         }
 
-        vm.last = $scope.wmpTotal;
+        dm.last = $scope.wmpTotal;
         return result;
 
       })();

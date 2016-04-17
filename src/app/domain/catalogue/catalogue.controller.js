@@ -85,6 +85,24 @@
       vm.total = Math.ceil(res / vm.pageSize);
     });
 
+    $scope.$watch ('windowHeight', function (windowHeight) {
+
+      if (windowHeight > 710) {
+        vm.pages = 9;
+      } else if (windowHeight > 620) {
+        vm.pages = 7;
+      } else if (windowHeight > 530) {
+        vm.pages = 5;
+      } else if (windowHeight > 420) {
+        vm.pages = 3;
+      } else if (windowHeight > 380) {
+        vm.pages = 2;
+      } else {
+        vm.pages = 1;
+      }
+
+    });
+
     $scope.$watch ('windowWidth', function (windowWidth) {
 
       if (windowWidth > 1150) {
@@ -114,7 +132,11 @@
         vm.rows = _.chunk(vm.articles, groupSize)
       }
 
-    })
+    });
+
+    // $scope.$on ('vsRepeatInnerCollectionUpdated', function (e,a,b,c,d) {
+    //   DEBUG (e.name, a,':', b, '-', c, ':', d);
+    // });
 
   }
 

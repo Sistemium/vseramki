@@ -39,5 +39,7 @@ md-content.articles(ng-if="vm.ready" layout="row")
 
   md-sidenav.md-sidenav-right(layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
     md-content
-      md-subnav Фильтры
-      h3 {{ windowWidth }} х {{ windowHeight }}
+      md-subnav
+        h4 Фильтры
+      label window: {{ windowWidth }} х {{ windowHeight }}
+      label pages: {{ vm.pages }}
