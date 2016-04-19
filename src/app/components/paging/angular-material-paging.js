@@ -72,8 +72,12 @@
       $scope.currentPage = $scope.wmpTotal;
     };
 
-    $scope.$watch('currentPage', function() {
+    $scope.$watch('currentPage', function(currentPage) {
       $scope.gotoPage();
+      if (currentPage > dm.index + dm.step) {
+        dm.index = Math.floor (currentPage / dm.step) * dm.step;
+        init();
+      }
     });
 
     $scope.$watch('wmpTotal', function() {
@@ -88,7 +92,9 @@
       dm.init();
     });
 
-    dm.init = function() {
+    dm.init = init;
+
+    function init () {
       dm.stepInfo = (function() {
         var i, result = [];
         for (i = 0; i < dm.step; i++) {
@@ -108,7 +114,7 @@
 
       })();
 
-    };
+    }
   }
 
 })();
