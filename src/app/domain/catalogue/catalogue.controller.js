@@ -6,7 +6,6 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  /** @ngInject */
   function CatalogueController($scope, Article, DEBUG) {
 
     var vm = this;
@@ -29,6 +28,7 @@
         .then(function (data) {
 
           vm.articles = data;
+          vm.currentPage = page;
 
           var rows = _.chunk(data, groupSize);
 
@@ -36,9 +36,9 @@
             Array.prototype.push.apply (vm.rows, rows);
           } else if (direction<0) {
             vm.rows = Array.prototype.push.apply (rows, vm.rows);
-          } else {
+          }/* else {
             vm.rows = rows;
-          }
+          }*/
 
         })
         .finally(function(){
@@ -52,7 +52,7 @@
         return DEBUG ('vb.busy')
       }
       DEBUG ('nextPage',vm.currentPage);
-      //setPage(1);
+      setPage(1);
     }
 
     function prevPage () {
@@ -134,9 +134,9 @@
 
     });
 
-    // $scope.$on ('vsRepeatInnerCollectionUpdated', function (e,a,b,c,d) {
-    //   DEBUG (e.name, a,':', b, '-', c, ':', d);
-    // });
+     //$scope.$on ('vsRepeatInnerCollectionUpdated', function (e,a,b,c,d) {
+     //  DEBUG (e.name, a,':', b, '-', c, ':', d);
+     //});
 
   }
 
