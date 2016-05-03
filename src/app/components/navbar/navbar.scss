@@ -50,3 +50,26 @@ md-toolbar.toolbar-fixed-top.white-background {
     }
   }
 }
+
+.md-button.md-mini.custom-fab {
+  width: 100px;
+  border-radius: 3px;
+  margin-right: 56px;
+  & > p {
+    line-height: 8px;
+  }
+}
+
+md-fab-speed-dial {
+  position: fixed;
+  top: 8px;
+  right: -48px;
+}
+
+.md-fab-action-item {
+  margin-top: 6px;
+}
+
+.custom {
+  border: 1px solid blue;
+}

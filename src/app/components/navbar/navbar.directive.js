@@ -12,15 +12,13 @@
       replace: true,
       templateUrl: 'app/components/navbar/navbar.html',
       controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
+      controllerAs: 'vm'
     };
 
     return directive;
 
     /** @ngInject */
     function NavbarController() {
-
     }
   }
 

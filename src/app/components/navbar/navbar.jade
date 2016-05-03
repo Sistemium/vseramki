@@ -3,9 +3,24 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     img.top-logo(src='images/top-logo.jpg')
     //md-button.hide-xs(ui-sref='home' flex-offset="5") vseramki.ru
     span(flex)
-    md-button.tool-button(ui-sref='home' ui-sref-active='md-primary') Главная
-    md-button.tool-button(ui-sref='catalogue' ui-sref-active='md-primary') Каталог
-    span(flex="5" flex-xs="0")
-    div(flex="none")
+    md-fab-speed-dial.md-scale(
+      md-open='vm.isOpen'
+      md-direction='down'
+      hide-gt-xs
+    )
+      md-fab-trigger
+        md-button.md-fab.md-mini.md-icon-button.md-primary(aria-label='menu')
+          i.material-icons menu
+      md-fab-actions
+        md-button.md-raised.md-mini.custom-fab(aria-label='home' ui-sref='home', ui-sref-active='md-primary')
+          p Главная
+        md-button.md-raised.md-mini.custom-fab(aria-label='catalogue' ui-sref='catalogue', ui-sref-active='md-primary')
+          p Каталог
+        md-button.md-raised.md-mini.custom-fab(aria-label='cart' ui-sref='cart', ui-sref-active='md-primary')
+          p Корзина
+    md-button.tool-button(ui-sref='home' ui-sref-active='md-primary' hide show-gt-xs) Главная
+    md-button.tool-button(ui-sref='catalogue' ui-sref-active='md-primary' hide show-gt-xs) Каталог
+    span(flex="5" flex-xs="0" hide show-gt-xs)
+    div(flex="none" hide show-gt-xs)
       md-button.md-fab.md-mini.md-icon-button
         i.material-icons shopping_cart
