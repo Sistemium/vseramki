@@ -23,7 +23,7 @@ md-content.articles(ng-if="vm.ready" layout="row")
       vs-scrolled-to-end="vm.nextPage()"
     )
       .row(ng-repeat="row in vm.rows" layout="row")
-        md-card(ng-repeat="a in row track by a.id" flex="vm.rowsFlex")
+        md-card(ng-repeat="article in row track by article.id" flex="vm.rowsFlex")
           md-card-header
             md-card-header-text
               .md-title Заголовок
@@ -31,15 +31,17 @@ md-content.articles(ng-if="vm.ready" layout="row")
             img.thumbnail(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
           md-card-title
             md-card-title-text
-              .md-subhead {{ a.name }}
+              .md-subhead {{ article.name }}
           md-card-actions(layout="row" layout-align="start center")
             md-card-icon-actions
-              md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину")
-                i.material-icons add_shopping_cart
-
+              .with-badge(flex="none")
+                md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину" ng-click="vm.addToCart(article)")
+                  i.material-icons add_shopping_cart
+                span.badge(ng-if='article.inCart.length') {{ article.inCart[0].count }}
   md-sidenav.md-sidenav-right(layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
     md-content
       md-subnav
         h4 Фильтры
       p window: {{ windowWidth }} х {{ windowHeight }}
-
+      p(ng-repeat='item in vm.cart track by item.id')
+        span {{ item.count }} x {{ item.article.name }}

@@ -6,10 +6,13 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, DEBUG) {
+  function CatalogueController($scope, Article, Cart, DEBUG) {
 
     var vm = this;
     var groupSize = 3;
+
+    Cart.findAll();
+    Cart.bindAll({},$scope,'vm.cart');
 
     function setPage (direction) {
 
@@ -76,7 +79,9 @@
         setPage (0);
       },
       nextPage: nextPage,
-      prevPage: prevPage
+      prevPage: prevPage,
+
+      addToCart: Cart.addToCart
 
     });
 

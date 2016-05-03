@@ -9,7 +9,7 @@
 
   function Cart(Schema) {
 
-    return Schema.register({
+    var model = Schema.register({
 
       name: 'Cart',
       relations: {
@@ -21,9 +21,29 @@
         }
       },
 
-      defaultAdapter: 'localStorage'
+      defaultAdapter: 'localStorage',
+
+      addToCart: function (article) {
+
+        var inCart = article.inCart.length && article.inCart[0];
+
+        if (inCart) {
+          inCart.count++;
+        } else {
+          inCart = model.inject ({
+            id: uuid.v4(),
+            articleId: article.id,
+            count: 1
+          })
+        }
+
+        model.save(inCart);
+
+      }
 
     });
+
+    return model;
 
   }
 
