@@ -1,3 +1,27 @@
+@import "_vars.scss";
+
 .md-button.md-fab:not([disabled]):hover {
-  background-color: rgb(213, 0, 0);
+  background-color: rgb(213, 0, 0) !important;
+}
+
+
+.with-badge {
+
+  position: relative;
+
+  .badge {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    z-index: 100;
+    background: $primary-button-background-color;
+    color: white;
+    border-radius: 9px;
+    font-size: 13px;
+    min-width: 18px;
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 1px;
+  }
+
 }
