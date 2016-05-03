@@ -21,6 +21,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     md-button.tool-button(ui-sref='home' ui-sref-active='md-primary' hide show-gt-xs) Главная
     md-button.tool-button(ui-sref='catalogue' ui-sref-active='md-primary' hide show-gt-xs) Каталог
     span(flex="5" flex-xs="0" hide show-gt-xs)
-    div(flex="none" hide show-gt-xs)
-      md-button.md-fab.md-mini.md-icon-button
+    div.with-badge(flex="none" hide show-gt-xs)
+      md-button.md-fab.md-mini.md-icon-button(ui-sref='cart')
         i.material-icons shopping_cart
+      span.badge(ng-show='vm.cart.length') {{ vm.cart.length }}

@@ -5,7 +5,6 @@
     .module('vseramki')
     .directive('acmeNavbar', acmeNavbar);
 
-  /** @ngInject */
   function acmeNavbar() {
     var directive = {
       restrict: 'E',
@@ -17,8 +16,9 @@
 
     return directive;
 
-    /** @ngInject */
-    function NavbarController() {
+    function NavbarController(Cart,$scope) {
+      Cart.bindAll({},$scope,'vm.cart');
+      Cart.findAll();
     }
   }
 

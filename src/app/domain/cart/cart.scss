@@ -1,0 +1,26 @@
+.cartBody {
+  width: 100%;
+}
+
+.cartItem {
+  margin: 0 auto;
+  width: 98%;
+  margin: 3px;
+}
+
+.photo img {
+  width: 100px;
+  height: 100px;
+}
+
+.root.viewport {
+  background-color: white;
+}
+
+
+.emptyCart{
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #cccccc;
+}
