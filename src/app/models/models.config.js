@@ -34,10 +34,9 @@
 
     })
 
-    .service('Models', function (Schema) {
-
-      return Schema.models();
-
+    .run(function (DS,$window) {
+      var adapter = new $window.DSLocalStorageAdapter();
+      DS.registerAdapter('localStorage', adapter);
     })
   ;
 
