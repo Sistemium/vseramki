@@ -6,7 +6,8 @@
       'ui.router',
       'ngMaterial',
       'sistemium',
-      'vs-repeat'
+      'vs-repeat',
+      'md.data.table'
     ]);
 
 })();
