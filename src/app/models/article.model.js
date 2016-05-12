@@ -13,10 +13,14 @@
 
       name: 'Article',
       relations: {
-        hasMany: {
+        hasOne: {
           Cart: {
             localField: 'inCart',
             foreignKey: 'articleId'
+          },
+          FrameSize: {
+            localField: 'frameSize',
+            localKey: 'frameSizeId'
           }
         }
       }
