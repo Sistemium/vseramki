@@ -2,7 +2,6 @@ section.busy(ng-if="!vm.ready" layout="row" layout-align="space-around")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
 
 md-content.articles(ng-if="vm.ready" layout="row")
-
   md-sidenav.md-sidenav-left.left-nav-pager(md-component-id="left-nav-pager" md-is-locked-open="true")
     md-content(layout-margin layout-padding)
       wan-material-paging(
@@ -23,21 +22,53 @@ md-content.articles(ng-if="vm.ready" layout="row")
       vs-scrolled-to-end="vm.nextPage()"
     )
       .row(ng-repeat="row in vm.rows" layout="row")
-        md-card(ng-repeat="article in row track by article.id" flex="vm.rowsFlex")
-          md-card-header
+
+        md-card(
+          ng-repeat="article in row track by article.id"
+          flex="vm.rowsFlex"
+        )
+
+          md-card-header.pointer-style(ui-sref='item({ id: article.id })')
             md-card-header-text
               .md-title Заголовок
           .img(flex)
             img.thumbnail(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
+
+
           md-card-title
             md-card-title-text
               .md-subhead {{ article.name }}
-          md-card-actions(layout="row" layout-align="start center")
+
+          md-card-actions(ng-if='!article.inCart')
             md-card-icon-actions
               .with-badge(flex="none")
-                md-button.md-fab.md-mini.md-icon-button(aria-label="Добавить в корзину" ng-click="vm.addToCart(article)")
+                md-button.md-fab.md-mini.md-icon-button(
+                  aria-label="Добавить в корзину"
+                  ng-click="vm.addToCart(article)"
+                )
                   i.material-icons add_shopping_cart
-                span.badge(ng-if='article.inCart.length') {{ article.inCart[0].count }}
+
+          md-card-content.order-style(ng-if='article.inCart')
+            div.div-order-info(layout='row' layout-align="start center")
+              p.name-style Заказано:
+              div.div-order-info-num-picker
+                md-button.icon-button-catalogue(ng-click='vm.minusOne(article)') -
+                md-input-container
+                  input.custom-input(
+                    aria-label="Количество"
+                    ng-model="article.inCart.count"
+                    type="number"
+                    ng-change="vm.onCartChange(article)"
+                    ng-blur="vm.onBlur(article)"
+                    ng-pattern="vm.pattern"
+                    required
+                    min='0'
+                    step='1'
+                  )
+                md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
+
+
+
   md-sidenav.md-sidenav-right(layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
     md-content
       md-subnav
@@ -45,3 +76,31 @@ md-content.articles(ng-if="vm.ready" layout="row")
       p window: {{ windowWidth }} х {{ windowHeight }}
       p(ng-repeat='item in vm.cart track by item.id')
         span {{ item.count }} x {{ item.article.name }}
+
+
+    md-button(ng-click="vm.resetFilters()") Сбросить фильтры
+
+    md-menu.no-menu-padding(md-offset='20 0')
+      md-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Размер: {{vm.currentFilter.frameSize.name || 'Все'}}
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat="fs in vm.frameSizes | orderBy:'name' track by fs.id")
+          md-button(ng-click="vm.filterOptionClick(fs,'frameSize')")
+            span(md-menu-align-target='')
+              |{{fs.name}}
+
+    md-menu.no-menu-padding(md-offset='20 0')
+      md-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Бренд: {{ vm.currentFilter.brand.name || 'Все'}}
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat="br in vm.brands | orderBy:'name' track by br.id")
+          md-button(ng-click="vm.filterOptionClick(br, 'brand')")
+            span(md-menu-align-target='')
+              | {{br.name}}
+
+    md-menu.no-menu-padding(md-offset='20 0')
+      md-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Материал: {{ vm.currentFilter.material.name || 'Все'}}
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat="ma in vm.materials | orderBy:'name' track by ma.id")
+          md-button(ng-click="vm.filterOptionClick(ma, 'material')")
+            span(md-menu-align-target='')
+              | {{ma.name}}
+
