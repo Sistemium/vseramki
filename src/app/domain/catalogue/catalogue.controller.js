@@ -6,15 +6,25 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, DEBUG) {
+  function CatalogueController($scope, Article, Cart, Schema, DEBUG) {
+
+    var FrameSize = Schema.model('FrameSize');
+    var Brand = Schema.model('Brand');
+    var Material = Schema.model('Material');
 
     var vm = this;
     var groupSize = 3;
 
-    Cart.findAll();
-    Cart.bindAll({},$scope,'vm.cart');
+    vm.pattern = '\\d+';
 
-    function setPage (direction) {
+    FrameSize.bindAll({}, $scope, 'vm.frameSizes');
+    Brand.bindAll({}, $scope, 'vm.brands');
+    Material.bindAll({}, $scope, 'vm.materials');
+
+    Cart.findAll();
+    Cart.bindAll({}, $scope, 'vm.cart');
+
+    function setPage(direction) {
 
       var page = vm.currentPage + direction;
 
@@ -22,10 +32,10 @@
 
       vm.busy = true;
 
-      return Article.findAll({
+      return Article.findAll(angular.extend({
           limit: vm.pageSize,
           offset: page * vm.pageSize
-        }, {
+        }, vm.articleFilter || {}), {
           bypassCache: true
         })
         .then(function (data) {
@@ -35,35 +45,100 @@
 
           var rows = _.chunk(data, groupSize);
 
-          if (direction>0 || !vm.rows.length) {
+          if (direction > 0 || !vm.rows.length) {
             Array.prototype.push.apply (vm.rows, rows);
-          } else if (direction<0) {
+          } else if (direction < 0) {
             vm.rows = Array.prototype.push.apply (rows, vm.rows);
-          }/* else {
+          } else {
             vm.rows = rows;
-          }*/
+          }
 
         })
-        .finally(function(){
+        .finally(function () {
           vm.busy = false;
         });
 
     }
 
-    function nextPage () {
-      if (vm.busy) {
-        return DEBUG ('vb.busy')
-      }
-      DEBUG ('nextPage',vm.currentPage);
-      setPage(1);
+    function nextPage() {
+      //if (vm.busy) {
+      //  return DEBUG('vb.busy')
+      //}
+      //DEBUG('nextPage', vm.currentPage);
+      //setPage(1);
     }
 
-    function prevPage () {
-      if (vm.busy) {
-        return DEBUG ('vb.busy')
+    function prevPage() {
+      //if (vm.busy) {
+      //  return DEBUG('vb.busy')
+      //}
+      //DEBUG('prevPage', vm.currentPage);
+      //setPage(-1);
+    }
+
+    function plusOne(item) {
+      var cart = item.inCart;
+      cart.count = (cart.count || 0) + 1;
+      Cart.save(cart);
+    }
+
+    function minusOne(item) {
+
+      var cart = item.inCart;
+
+      cart.count--;
+
+      if (!cart.count) {
+        Cart.destroy(cart);
+      } else {
+        Cart.save(cart);
       }
-      DEBUG ('prevPage',vm.currentPage);
-      setPage(-1);
+    }
+
+    function onCartChange(article) {
+
+      Cart.save(article.inCart);
+    }
+
+    function onBlur(article) {
+      console.log(article);
+      if (!article.inCart.count) {
+        Cart.destroy(article.inCart);
+      }
+    }
+
+    function filterArticles(filter) {
+
+      var f = filter || vm.articleFilter;
+
+      vm.articles = Article.filter(f);
+      vm.rows = _.chunk(vm.articles, groupSize);
+
+    }
+
+
+    function resetFilters() {
+
+      vm.articleFilter = {};
+      vm.currentFilter = {};
+
+    }
+
+
+    function filterOptionClick(item, field) {
+
+      var fieldName = field + 'Id';
+
+      if (item) {
+        vm.articleFilter[fieldName] = item.id;
+      } else if (vm.articleFilter[fieldName]) {
+        delete vm.articleFilter[fieldName];
+      }
+
+      vm.currentFilter [field] = item;
+
+      filterArticles();
+
     }
 
     angular.extend(vm, {
@@ -73,22 +148,46 @@
       pageSize: 36,
       rows: [],
       rowsFlex: 33,
+      articleFilter: {},
+      currentFilter: {},
 
       setPage: function () {
         DEBUG('setPage', vm.currentPage);
-        setPage (0);
+        //setPage(0);
       },
+
+
       nextPage: nextPage,
       prevPage: prevPage,
-
+      plusOne: plusOne,
+      minusOne: minusOne,
+      onCartChange: onCartChange,
+      onBlur: onBlur,
+      filterOptionClick: filterOptionClick,
+      resetFilters: resetFilters,
       addToCart: Cart.addToCart
 
+
     });
 
-    Article.getCount().then(function (res) {
-      vm.ready = true;
-      vm.total = Math.ceil(res / vm.pageSize);
-    });
+    Article.findAll({limit: 1000})
+      .then(function (data) {
+
+        vm.articles = data;
+        vm.currentPage = 1;
+
+        vm.rows = _.chunk(data, groupSize);
+
+        vm.ready = true;
+        vm.total = Math.ceil(data.length / vm.pageSize);
+
+      })
+    ;
+
+    //Article.getCount().then(function (res) {
+    //  vm.ready = true;
+    //  vm.total = Math.ceil(res / vm.pageSize);
+    //});
 
     $scope.$watch ('windowHeight', function (windowHeight) {
 
@@ -111,16 +210,16 @@
     $scope.$watch ('windowWidth', function (windowWidth) {
 
       if (windowWidth > 1150) {
-        groupSize = 5;
+        groupSize = 4;
         vm.rowsFlex = 20
       } else if (windowWidth > 950) {
-        groupSize = 4;
+        groupSize = 3;
         vm.rowsFlex = 25
       } else if (windowWidth > 730) {
-        groupSize = 3;
+        groupSize = 2;
         vm.rowsFlex = 33
       } else if (windowWidth > 550) {
-        groupSize = 2;
+        groupSize = 1;
         vm.rowsFlex = 50
       } else {
         groupSize = 1;
@@ -131,17 +230,19 @@
 
     });
 
-    $scope.$watch ('vm.groupSize', function (nw,o) {
+    $scope.$watch ('vm.groupSize', function (nw, o) {
 
-      if (nw||0!==o||0) {
+      if (nw || 0 !== o || 0) {
         vm.rows = _.chunk(vm.articles, groupSize)
       }
 
     });
 
-     //$scope.$on ('vsRepeatInnerCollectionUpdated', function (e,a,b,c,d) {
-     //  DEBUG (e.name, a,':', b, '-', c, ':', d);
-     //});
+    $scope.$watch('vm.articleFilter', filterArticles);
+
+    //$scope.$on ('vsRepeatInnerCollectionUpdated', function (e,a,b,c,d) {
+    //  DEBUG (e.name, a,':', b, '-', c, ':', d);
+    //});
 
   }
 
