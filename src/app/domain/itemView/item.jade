@@ -1,0 +1,91 @@
+div.name-head(flex=100) {{vm.article.name}}
+.md-whiteframe-1dp(layout-align="" layout="row" layout-sm='column' layout-xs='column')
+  div.photo(layout='column')
+    img.image-size(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
+    md-button.md-raised.add-to-cart(ng-click='vm.addToCart(vm.article)' ng-if='!vm.article.inCart')
+      | {{'Добавить в корзину'}}
+
+  div.overall-info
+
+    div.order(ng-if='vm.article.inCart')
+      h1.header-h1 Заказ
+      md-table-container
+        table(md-table='')
+          tr(md-row colspan='2')
+            td
+              p.name-style Заказано:
+            td
+              div.action-buttons(layout='row' layout-align="start center")
+                div.div-order-info-num-picker
+                  md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
+                  md-input-container
+                    input.custom-input(
+                    aria-label="Количество"
+                    ng-model='vm.article.inCart.count'
+                    type="number"
+                    ng-blur="vm.onBlur(vm.article)"
+                    ng-change="vm.onCartChange(vm.article)"
+                    required
+                    min='1'
+                    step='1'
+                    )
+                  md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
+          tr(md-row)
+            td(md-cell='')
+              p Сумма:
+            td(md-cell='')
+              p {{vm.price * vm.article.inCart.count || 0}} руб.
+
+
+    div.item-info
+      h1.header-h1 О товаре
+      md-table-container
+        table(md-table='')
+          tr(md-row)
+            td(md-cell='')
+              p Размер:
+            td(md-cell='')
+              p {{vm.article.id}}
+          tr(md-row)
+            td(md-cell='')
+              p Материал:
+            td(md-cell='')
+              p {{vm.article.id}}
+          tr(md-row)
+            td(md-cell='')
+              p Цвет:
+            td(md-cell='')
+              p {{vm.article.id}}
+          tr(md-row)
+            td(md-cell='')
+              p Прозрачная вставка:
+            td(md-cell='')
+              p {{vm.article.id}}
+
+    div.price
+      h1.header-h1 Цена
+      md-table-container
+        table(md-table='')
+          tr(md-row)
+            td(md-cell='')
+              p Цена за 1 шт.:
+            td(md-cell='')
+              p {{vm.price}}
+          tr(md-row)
+            td(md-cell='')
+              p Цена со скидкой 10%:
+            td(md-cell='')
+              p {{vm.article.id}}
+          tr(md-row)
+            td(md-cell='')
+              p Цена со скидкой 20%:
+            td(md-cell='')
+              p {{vm.article.id}}
+          tr(md-row)
+            td(md-cell='' colspan='2')
+              cite * — при сумме заказа более 5000 р. скидка 10%, более 10000 р. — 20%
+
+
+
+
+
