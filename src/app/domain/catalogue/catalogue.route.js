@@ -15,8 +15,7 @@
         templateUrl: 'app/domain/catalogue/catalogue.html',
         controller: 'CatalogueController',
         controllerAs: 'vm'
-      })
-    ;
+      });
   }
 
 }());
