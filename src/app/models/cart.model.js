@@ -4,7 +4,7 @@
 
   angular
     .module('vseramki')
-    .service('Cart',Cart)
+    .service('Cart', Cart)
   ;
 
   function Cart(Schema) {
@@ -25,7 +25,7 @@
 
       addToCart: function (article) {
 
-        var inCart = article.inCart.length && article.inCart[0];
+        var inCart = article.inCart;
 
         if (inCart) {
           inCart.count++;
