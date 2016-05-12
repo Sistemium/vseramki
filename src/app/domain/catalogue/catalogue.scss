@@ -7,7 +7,6 @@ md-content.articles {
     margin-left: 0;
   }
 
-
   .md-sidenav-left {
     margin-top: 5px;
   }
@@ -29,8 +28,51 @@ md-content.articles {
       max-width: 250px;
     }
 
-//    height: 100%;
+    //height: 100%;
 
   }
 
+}
+
+.icon-button-catalogue {
+  height: 20px;
+  min-width: 0;
+  line-height: 24px;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 20px;
+}
+
+.div-order-info-num-picker {
+
+  line-height: 2.8;
+}
+
+
+md-card-content div > input {
+  font-size: 80%;
+}
+
+.name-style {
+  font-size: 14px;
+  margin-right: 3px;
+}
+
+.pointer-style{
+ cursor: pointer;
+}
+
+div md-card md-card-content {
+  display: block;
+  padding: 0 16px;
+}
+
+/* when clicking on cart button, the name of article is not moving! */
+
+.order-style{
+  max-height: 66px;
+}
+
+.no-menu-padding{
+  padding: 0px;
 }
