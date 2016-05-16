@@ -14,7 +14,7 @@ div.name-head(flex=100) {{vm.article.name}}
           tr(md-row colspan='2')
             td
               p.name-style Заказано:
-            td
+            td.td-fixed-size
               div.action-buttons(layout='row' layout-align="start center")
                 div.div-order-info-num-picker
                   md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
@@ -44,43 +44,48 @@ div.name-head(flex=100) {{vm.article.name}}
           tr(md-row)
             td(md-cell='')
               p Размер:
-            td(md-cell='')
-              p {{vm.article.id}}
+            td.td-fixed-size(md-cell='')
+              |{{vm.size.name}}
           tr(md-row)
             td(md-cell='')
               p Материал:
             td(md-cell='')
-              p {{vm.article.id}}
+              p {{vm.material.name}}
           tr(md-row)
             td(md-cell='')
               p Цвет:
             td(md-cell='')
-              p {{vm.article.id}}
+              p {{vm.colour.name}}
           tr(md-row)
             td(md-cell='')
-              p Прозрачная вставка:
+              p Вес:
             td(md-cell='')
-              p {{vm.article.id}}
+              p {{vm.article.pieceWeight}} кг
+          tr(md-row)
+            td(md-cell='')
+              p Штук в пачке:
+            td(md-cell='')
+              p {{vm.article.packageRel}}
 
     div.price
       h1.header-h1 Цена
       md-table-container
         table(md-table='')
-          tr(md-row)
+          tr(md-row flex='initial')
             td(md-cell='')
               p Цена за 1 шт.:
-            td(md-cell='')
-              p {{vm.price}}
+            td.td-fixed-size(md-cell='')
+              p {{vm.price | number: 2}}
           tr(md-row)
             td(md-cell='')
               p Цена со скидкой 10%:
             td(md-cell='')
-              p {{vm.article.id}}
+              p {{244 | number: 2}}
           tr(md-row)
             td(md-cell='')
               p Цена со скидкой 20%:
             td(md-cell='')
-              p {{vm.article.id}}
+              p {{244 | number: 2}}
           tr(md-row)
             td(md-cell='' colspan='2')
               cite * — при сумме заказа более 5000 р. скидка 10%, более 10000 р. — 20%
