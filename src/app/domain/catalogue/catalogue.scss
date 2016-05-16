@@ -12,9 +12,12 @@ md-content.articles {
   }
 
   .md-sidenav-right {
-    margin-top: 10px;
+    margin-top: 24px;
+    margin-right: 6px;
     max-width: 200px;
     width: 200px;
+    height: 30%;
+    background-color: #f3f4f6;
   }
 
   md-card {
@@ -75,4 +78,8 @@ div md-card md-card-content {
 
 .no-menu-padding{
   padding: 0px;
+}
+
+.custom-button{
+  line-height: 24px !important;
 }
