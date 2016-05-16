@@ -6,11 +6,12 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, Schema, DEBUG) {
+  function CatalogueController($scope, Article, Cart, Schema) {
 
     var FrameSize = Schema.model('FrameSize');
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
+    var Colour = Schema.model('Colour');
 
     var vm = this;
     var groupSize = 3;
@@ -21,44 +22,45 @@
     Brand.bindAll({}, $scope, 'vm.brands');
     Material.bindAll({}, $scope, 'vm.materials');
 
+
     Cart.findAll();
     Cart.bindAll({}, $scope, 'vm.cart');
 
-    function setPage(direction) {
-
-      var page = vm.currentPage + direction;
-
-      //Article.ejectAll();
-
-      vm.busy = true;
-
-      return Article.findAll(angular.extend({
-          limit: vm.pageSize,
-          offset: page * vm.pageSize
-        }, vm.articleFilter || {}), {
-          bypassCache: true
-        })
-        .then(function (data) {
-
-          vm.articles = data;
-          vm.currentPage = page;
-
-          var rows = _.chunk(data, groupSize);
-
-          if (direction > 0 || !vm.rows.length) {
-            Array.prototype.push.apply (vm.rows, rows);
-          } else if (direction < 0) {
-            vm.rows = Array.prototype.push.apply (rows, vm.rows);
-          } else {
-            vm.rows = rows;
-          }
-
-        })
-        .finally(function () {
-          vm.busy = false;
-        });
-
-    }
+    //function setPage(direction) {
+    //
+    //  var page = vm.currentPage + direction;
+    //
+    //  //Article.ejectAll();
+    //
+    //  vm.busy = true;
+    //
+    //  return Article.findAll(angular.extend({
+    //      limit: vm.pageSize,
+    //      offset: page * vm.pageSize
+    //    }, vm.articleFilter || {}), {
+    //      bypassCache: true
+    //    })
+    //    .then(function (data) {
+    //
+    //      vm.articles = data;
+    //      vm.currentPage = page;
+    //
+    //      var rows = _.chunk(data, groupSize);
+    //
+    //      if (direction > 0 || !vm.rows.length) {
+    //        Array.prototype.push.apply (vm.rows, rows);
+    //      } else if (direction < 0) {
+    //        vm.rows = Array.prototype.push.apply (rows, vm.rows);
+    //      } else {
+    //        vm.rows = rows;
+    //      }
+    //
+    //    })
+    //    .finally(function () {
+    //      vm.busy = false;
+    //    });
+    //
+    //}
 
     function nextPage() {
       //if (vm.busy) {
@@ -114,19 +116,36 @@
       vm.articles = Article.filter(f);
       vm.rows = _.chunk(vm.articles, groupSize);
 
+      function getVisibleBy (prop) {
+
+        var propFilter = _.pickBy(f, function(val,key){
+          return key !== prop;
+        });
+        var articles = Article.filter(propFilter);
+
+        return _.map(
+          _.groupBy(articles, prop),
+          function (val, key) {
+            return key;
+          }
+        );
+
+      }
+
+      vm.colours = Colour.getAll(getVisibleBy('colourId'));
+
     }
 
 
     function resetFilters() {
-
       vm.articleFilter = {};
       vm.currentFilter = {};
-
+      vm.filterChosen = false;
     }
 
 
     function filterOptionClick(item, field) {
-
+      vm.filterChosen = true;
       var fieldName = field + 'Id';
 
       if (item) {
@@ -151,10 +170,10 @@
       articleFilter: {},
       currentFilter: {},
 
-      setPage: function () {
-        DEBUG('setPage', vm.currentPage);
-        //setPage(0);
-      },
+      //setPage: function () {
+      //  DEBUG('setPage', vm.currentPage);
+      //  setPage(0);
+      //},
 
 
       nextPage: nextPage,
@@ -181,6 +200,12 @@
         vm.ready = true;
         vm.total = Math.ceil(data.length / vm.pageSize);
 
+      })
+    ;
+
+    Colour.findAll()
+      .then(function(data){
+        vm.colours = data;
       })
     ;
 
