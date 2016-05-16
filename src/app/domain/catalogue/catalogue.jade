@@ -69,16 +69,14 @@ md-content.articles(ng-if="vm.ready" layout="row")
 
 
 
-  md-sidenav.md-sidenav-right(layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
-    md-content
-      md-subnav
-        h4 Фильтры
-      p window: {{ windowWidth }} х {{ windowHeight }}
-      p(ng-repeat='item in vm.cart track by item.id')
-        span {{ item.count }} x {{ item.article.name }}
+  // Filters in sidenav
 
+  md-sidenav.md-sidenav-right.md-whiteframe-1dp(layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
+    p Фильтры
+      //p window: {{ windowWidth }} х {{ windowHeight }}
+      //p(ng-repeat='item in vm.cart track by item.id')
+      //  span {{ item.count }} x {{ item.article.name }}
 
-    md-button(ng-click="vm.resetFilters()") Сбросить фильтры
 
     md-menu.no-menu-padding(md-offset='20 0')
       md-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Размер: {{vm.currentFilter.frameSize.name || 'Все'}}
@@ -104,3 +102,14 @@ md-content.articles(ng-if="vm.ready" layout="row")
             span(md-menu-align-target='')
               | {{ma.name}}
 
+    md-menu.no-menu-padding(md-offset='20 0')
+      md-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Цвет ({{ vm.colours.length }}): {{ vm.currentFilter.colour.name || 'Все'}}
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat="co in vm.colours | orderBy:'name' track by co.id")
+          md-button(ng-click="vm.filterOptionClick(co, 'colour')")
+            span(md-menu-align-target='')
+              | {{co.name}}
+
+    md-button.md-raised.custom-button(aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterChosen") Сбросить фильтры
+
+    p {{ vm.visibleColours | json }}
