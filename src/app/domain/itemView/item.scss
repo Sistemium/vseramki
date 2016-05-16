@@ -22,26 +22,33 @@ cite {
   background-color: #f3f4f6;
   border-bottom: 5px solid #dbdbdb;
   padding: 5px;
-  margin-bottom:  0px;
+  margin-bottom: 0px;
 }
 
-.photo{
+.photo {
   margin-right: 20px;
 }
 
-.add-to-cart{
- width: 70%;
- margin: 0 auto;
+.add-to-cart {
+  width: 70%;
+  margin: 0 auto;
 }
 
-
-
-td{
+td {
   padding: 0 9px !important;
 }
 
-.image-size{
-  width:361px;
+.image-size {
+  width: 361px;
   height: 361px;
   margin: 0 auto;
 }
+
+.td-fixed-size {
+  width: 30%;
+}
+
+.borders{
+  border: 5px solid black;
+}
+
