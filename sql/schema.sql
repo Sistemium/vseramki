@@ -73,6 +73,16 @@ meta.createTable 'Article',
 ;
 
 
+meta.defineType 'src:STRING';
+
+meta.defineEntity 'ArticleImage',
+  'thumbnailSrc,src;smallSrc,src;largeSrc,src;isDeleted',
+  'Article,articleId'
+;
+
+meta.createTable 'ArticleImage',
+  @forceDrop = 1
+;
 
 meta.defineEntity 'ArticleImported',
   'parentName,name;code,name;name;artCode,name,,nullable;packageRel,name;pieceWeight,name;materialName,name;borderWidth,name;'
