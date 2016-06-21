@@ -6,7 +6,7 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, Schema) {
+  function CatalogueController($scope, Article, Cart, Schema, ArticleImage) {
 
     var FrameSize = Schema.model('FrameSize');
     var Brand = Schema.model('Brand');
@@ -16,67 +16,13 @@
     var vm = this;
     var groupSize = 3;
 
-    vm.pattern = '\\d+';
-
-    FrameSize.bindAll({}, $scope, 'vm.frameSizes');
-    Brand.bindAll({}, $scope, 'vm.brands');
-    Material.bindAll({}, $scope, 'vm.materials');
-
-
     Cart.findAll();
     Cart.bindAll({}, $scope, 'vm.cart');
 
-    //function setPage(direction) {
-    //
-    //  var page = vm.currentPage + direction;
-    //
-    //  //Article.ejectAll();
-    //
-    //  vm.busy = true;
-    //
-    //  return Article.findAll(angular.extend({
-    //      limit: vm.pageSize,
-    //      offset: page * vm.pageSize
-    //    }, vm.articleFilter || {}), {
-    //      bypassCache: true
-    //    })
-    //    .then(function (data) {
-    //
-    //      vm.articles = data;
-    //      vm.currentPage = page;
-    //
-    //      var rows = _.chunk(data, groupSize);
-    //
-    //      if (direction > 0 || !vm.rows.length) {
-    //        Array.prototype.push.apply (vm.rows, rows);
-    //      } else if (direction < 0) {
-    //        vm.rows = Array.prototype.push.apply (rows, vm.rows);
-    //      } else {
-    //        vm.rows = rows;
-    //      }
-    //
-    //    })
-    //    .finally(function () {
-    //      vm.busy = false;
-    //    });
-    //
-    //}
-
-    function nextPage() {
-      //if (vm.busy) {
-      //  return DEBUG('vb.busy')
-      //}
-      //DEBUG('nextPage', vm.currentPage);
-      //setPage(1);
-    }
-
-    function prevPage() {
-      //if (vm.busy) {
-      //  return DEBUG('vb.busy')
-      //}
-      //DEBUG('prevPage', vm.currentPage);
-      //setPage(-1);
-    }
+    ArticleImage.findAll({limit: 1000})
+      .then(function(data){
+        vm.images = data;
+      });
 
     function plusOne(item) {
       var cart = item.inCart;
@@ -90,6 +36,8 @@
 
       cart.count--;
 
+      console.log(cart.count);
+
       if (!cart.count) {
         Cart.destroy(cart);
       } else {
@@ -100,10 +48,18 @@
     function onCartChange(article) {
 
       Cart.save(article.inCart);
+
     }
 
+    function findPicture(){
+
+      console.log(vm.articles);
+      console.log(vm.cart);
+
+    }
+
+
     function onBlur(article) {
-      console.log(article);
       if (!article.inCart.count) {
         Cart.destroy(article.inCart);
       }
@@ -116,12 +72,18 @@
       vm.articles = Article.filter(f);
       vm.rows = _.chunk(vm.articles, groupSize);
 
-      function getVisibleBy (prop) {
+      function getVisibleBy(prop) {
+        var propFilter = _.pickBy(f, function (val, key) {
 
-        var propFilter = _.pickBy(f, function(val,key){
           return key !== prop;
         });
+
+
         var articles = Article.filter(propFilter);
+
+        if (!articles) {
+          articles = {a: 'fail'}
+        }
 
         return _.map(
           _.groupBy(articles, prop),
@@ -133,20 +95,51 @@
       }
 
       vm.colours = Colour.getAll(getVisibleBy('colourId'));
+      vm.materials = Material.getAll(getVisibleBy('materialId'));
+      vm.brands = Brand.getAll(getVisibleBy('brandId'));
+      vm.frameSizes = FrameSize.getAll(getVisibleBy('frameSizeId'));
 
     }
 
 
     function resetFilters() {
+
+      Colour.bindAll({}, $scope, 'vm.colours');
+      Brand.bindAll({}, $scope, 'vm.brands');
+      FrameSize.bindAll({}, $scope, 'vm.frameSizes');
+      Material.bindAll({}, $scope, 'vm.materials');
+
       vm.articleFilter = {};
       vm.currentFilter = {};
-      vm.filterChosen = false;
+
+      vm.filterLength = false;
+
     }
 
+    function delCurrFilter(a) {
+
+      Colour.bindAll({}, $scope, 'vm.colours');
+      FrameSize.bindAll({}, $scope, 'vm.frameSizes');
+      Brand.bindAll({}, $scope, 'vm.brands');
+      Material.bindAll({}, $scope, 'vm.materials');
+
+      _.unset(vm.currentFilter, a);
+      _.unset(vm.articleFilter, a + 'Id');
+
+      filterArticles(vm.articleFilter);
+
+      if (Object.keys(vm.currentFilter).length) {
+        vm.filterLength = true;
+      } else {
+        vm.filterLength = false;
+      }
+
+    }
 
     function filterOptionClick(item, field) {
-      vm.filterChosen = true;
+
       var fieldName = field + 'Id';
+
 
       if (item) {
         vm.articleFilter[fieldName] = item.id;
@@ -154,7 +147,13 @@
         delete vm.articleFilter[fieldName];
       }
 
+
       vm.currentFilter [field] = item;
+
+      if (Object.keys(vm.currentFilter).length) {
+        vm.filterLength = true;
+      }
+
 
       filterArticles();
 
@@ -169,21 +168,22 @@
       rowsFlex: 33,
       articleFilter: {},
       currentFilter: {},
+      filterLength: false,
+      price: 33,
 
       //setPage: function () {
       //  DEBUG('setPage', vm.currentPage);
       //  setPage(0);
       //},
 
-
-      nextPage: nextPage,
-      prevPage: prevPage,
       plusOne: plusOne,
       minusOne: minusOne,
       onCartChange: onCartChange,
       onBlur: onBlur,
       filterOptionClick: filterOptionClick,
       resetFilters: resetFilters,
+      delCurrFilter: delCurrFilter,
+      findPicture: findPicture,
       addToCart: Cart.addToCart
 
 
@@ -191,30 +191,43 @@
 
     Article.findAll({limit: 1000})
       .then(function (data) {
-
         vm.articles = data;
         vm.currentPage = 1;
-
         vm.rows = _.chunk(data, groupSize);
-
         vm.ready = true;
         vm.total = Math.ceil(data.length / vm.pageSize);
 
-      })
-    ;
+        Colour.findAll()
+          .then(function (data) {
+            vm.colours = data;
+          });
 
-    Colour.findAll()
-      .then(function(data){
-        vm.colours = data;
-      })
-    ;
+        Material.findAll()
+          .then(function (data) {
+            vm.materials = data;
+          });
+
+        FrameSize.findAll()
+          .then(function (data) {
+            vm.frameSizes = data;
+          });
+
+        Brand.findAll()
+          .then(function (data) {
+            vm.brands = data;
+          });
+
+        findPicture();
+
+      });
+
 
     //Article.getCount().then(function (res) {
     //  vm.ready = true;
     //  vm.total = Math.ceil(res / vm.pageSize);
     //});
 
-    $scope.$watch ('windowHeight', function (windowHeight) {
+    $scope.$watch('windowHeight', function (windowHeight) {
 
       if (windowHeight > 710) {
         vm.pages = 9;
@@ -232,7 +245,7 @@
 
     });
 
-    $scope.$watch ('windowWidth', function (windowWidth) {
+    $scope.$watch('windowWidth', function (windowWidth) {
 
       if (windowWidth > 1150) {
         groupSize = 4;
@@ -255,7 +268,7 @@
 
     });
 
-    $scope.$watch ('vm.groupSize', function (nw, o) {
+    $scope.$watch('vm.groupSize', function (nw, o) {
 
       if (nw || 0 !== o || 0) {
         vm.rows = _.chunk(vm.articles, groupSize)
