@@ -17,7 +17,6 @@ meta.defineType 'price:PRICE4';
 
 meta.defineType 'isDeleted:BOOL';
 
-
 meta.defineEntity 'Material',
  'name;isDeleted'
 ;
@@ -47,6 +46,7 @@ meta.defineEntity 'Article',
  + 'FrameSize,frameSizeId,nullable;'
  + 'Colour,colourId,nullable'
 ;
+
 
 meta.createTable 'FrameSize',
   @forceDrop = 1
