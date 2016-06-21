@@ -7,34 +7,59 @@ md-content.articles {
     margin-left: 0;
   }
 
-  .md-sidenav-left {
-    margin-top: 5px;
-  }
-
   .md-sidenav-right {
     margin-top: 24px;
     margin-right: 6px;
-    max-width: 200px;
-    width: 200px;
-    height: 30%;
-    background-color: #f3f4f6;
+    width: 345px;
   }
 
   md-card {
 
-    min-height: 400px;
-    //max-height: 400px;
+    min-height: 300px;
 
     img.thumbnail {
       margin-left: auto;
       margin-right: auto;
-      max-width: 250px;
+      max-width: 120px;
+      max-height: 170px;
     }
-
-    //height: 100%;
 
   }
 
+}
+
+.center {
+  text-align: center;
+}
+
+p.md-title {
+  margin: 0;
+}
+
+.first-div {
+  margin-top: 10px;
+}
+
+.custom-filter-reset-button {
+  border-radius: 0 !important;
+  min-height: 10px !important;
+  min-width: 10px !important;
+  line-height: 30px !important;
+  width: 25px !important;
+  height: 25px !important;
+  margin-left: 4px !important;
+  margin-right: 0 !important;
+}
+
+.choose-filter-button {
+  margin: 0 !important;
+}
+
+.custom-material-icons {
+  line-height: 0;
+  font-family: 'Material Icons';
+  text-transform: none;
+  font-style: normal;
 }
 
 .icon-button-catalogue {
@@ -51,7 +76,6 @@ md-content.articles {
   line-height: 2.8;
 }
 
-
 md-card-content div > input {
   font-size: 80%;
 }
@@ -61,25 +85,32 @@ md-card-content div > input {
   margin-right: 3px;
 }
 
-.pointer-style{
- cursor: pointer;
+.pointer-style {
+  cursor: pointer;
+}
+
+.center-div {
+  margin: 0 auto;
+}
+
+section md-card md-card-content {
+
 }
 
 div md-card md-card-content {
-  display: block;
-  padding: 0 16px;
+  padding: 0;
+
+}
+
+
+.custom-button {
+  line-height: 24px !important;
 }
 
 /* when clicking on cart button, the name of article is not moving! */
+/* md-card-content and md-card-actions should have the same height*/
 
-.order-style{
-  max-height: 66px;
-}
-
-.no-menu-padding{
-  padding: 0px;
-}
-
-.custom-button{
-  line-height: 24px !important;
+.fixed-height {
+  height: 70px;
+  line-height: 4;
 }
