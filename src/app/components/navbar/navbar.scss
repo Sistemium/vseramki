@@ -3,6 +3,7 @@
 .top-logo {
   max-height: 36px;
   margin-left: 6px;
+  cursor: pointer;
 }
 
 md-toolbar.toolbar-fixed-top.white-background {
@@ -14,7 +15,7 @@ md-toolbar.toolbar-fixed-top.white-background {
 
   position: fixed;
   top: 0;
-  z-index: 1000;
+  z-index: 50;
 
   & + * {
     margin-top: 64px;
