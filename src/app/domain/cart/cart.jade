@@ -24,9 +24,21 @@ div(layout-align="center center" layout="column")
           th(md-column='')
             span Удалить
       tbody(md-body='')
-        tr.animate-show(vr-animate-remove ar-watch='item.count' on-animate-end="vm.itemRemove(item)" animate-class='animate-remove' md-row='', md-on-select='logItem', ng-repeat='item in vm.data track by item.id')
+        tr.animate-show(
+          vr-animate-remove
+          ar-watch='item.count'
+          on-animate-end="vm.itemRemove(item)"
+          animate-class='animate-remove'
+          md-row='',
+          md-on-select='logItem',
+          ng-repeat='item in vm.data track by item.id'
+        )
           td.pointer-style(md-cell='' ng-click='vm.itemClick(item)' ui-sref='item({ id: item.article.id })')
-            img.thumbnail(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
+            img.cart-thumbnail(ng-src='{{item.article.images[0].thumbnailSrc}}' ng-if='item.article.images.length')
+            img.cart-thumbnail(
+              src='http://bit.ly/1Yu4VIb'
+              ng-if='!item.article.images.length'
+            )
           td(md-cell='') {{item.article.name}}
           td(md-cell='')
             div.number-picker
@@ -36,4 +48,3 @@ div(layout-align="center center" layout="column")
           td(md-cell='')
             md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
               i.material-icons.clear-icon-size clear
-
