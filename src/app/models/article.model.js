@@ -4,7 +4,7 @@
 
   angular
     .module('vseramki')
-    .service('Article',Article)
+    .service('Article', Article)
   ;
 
   function Article(Schema) {
@@ -17,10 +17,12 @@
           Cart: {
             localField: 'inCart',
             foreignKey: 'articleId'
-          },
-          FrameSize: {
-            localField: 'frameSize',
-            localKey: 'frameSizeId'
+          }
+        },
+        hasMany: {
+          ArticleImage: {
+            localField: 'images',
+            foreignKey: 'articleId'
           }
         }
       }
