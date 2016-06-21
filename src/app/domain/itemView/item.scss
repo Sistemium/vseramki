@@ -25,13 +25,8 @@ cite {
   margin-bottom: 0px;
 }
 
-.photo {
-  margin-right: 20px;
-}
-
 .add-to-cart {
   width: 70%;
-  margin: 0 auto;
 }
 
 td {
@@ -39,16 +34,34 @@ td {
 }
 
 .image-size {
-  width: 361px;
-  height: 361px;
-  margin: 0 auto;
+  width: 300px;
+  height: 360px;
+  margin: 20px;
 }
 
 .td-fixed-size {
   width: 30%;
 }
 
-.borders{
+.borders {
   border: 5px solid black;
 }
+
+.price {
+  margin-bottom: 20px;
+}
+
+md-backdrop{
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+}
+
+.for-md-dialog{
+  overflow:scroll;
+}
+
 
