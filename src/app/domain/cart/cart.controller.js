@@ -7,16 +7,21 @@
     .controller('CartController', CartController)
   ;
 
-  function CartController(Cart, Article, $scope) {
+  function CartController(Cart, Article, $scope, ArticleImage) {
 
     var vm = this;
+    var stateParam = [];
 
     Cart.bindAll({}, $scope, 'vm.data');
+    ArticleImage.findAll();
     Cart.findAll().then(function (carts) {
       _.each(carts, function (cart) {
+        stateParam.push({articleId: cart['articleId']});
         Article.find(cart.articleId);
+
       });
     });
+
 
     function clearCart() {
       Cart.destroyAll();
@@ -47,27 +52,14 @@
       Cart.save(item);
     }
 
-    function itemClick(item){
-      console.log(item);
-    }
-
-
-    /* on remove article add animation */
-
-    function itemRemove(item) {
-      console.log (item, 'item');
-    }
 
     angular.extend(vm, {
       clearCart: clearCart,
       clearItem: clearItem,
       saveItem: saveItem,
       plusOne: plusOne,
-      minusOne: minusOne,
-      itemClick: itemClick,
-      itemRemove: itemRemove
+      minusOne: minusOne
     });
-
 
   }
 
