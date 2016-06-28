@@ -9,10 +9,7 @@
       'vs-repeat',
       'md.data.table',
       'lfNgMdFileInput',
-      'ngFileUpload',
-      //'jkuri.gallery',  // should be deleted on succeess
-      //'angular-carousel',
-      'jkAngularCarousel'
+      'ngFileUpload'
     ]);
 
 })();
