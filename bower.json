@@ -14,16 +14,9 @@
     "js-data-localstorage": "~2.3.2",
     "angular-material-data-table": "~0.10.9",
     "lf-ng-md-file-input": "^1.4.6",
-    "ng-file-upload": "^12.0.4",
-    "angular-jk-carousel": "^0.1.4"
+    "ng-file-upload": "^12.0.4"
   },
   "overrides": {
-    "angular-jk-carousel": {
-      "main": [
-        "dist/jk-carousel.js",
-        "dist/jk-carousel.css"
-      ]
-    }
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"
