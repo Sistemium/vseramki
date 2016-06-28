@@ -15,48 +15,14 @@
                           $scope,
                           $mdDialog,
                           $mdMedia,
-                          $window
-  ) {
+                          $window) {
 
     var Colour = Schema.model('Colour');
     var Material = Schema.model('Material');
     var FrameSize = Schema.model('FrameSize');
-
-
+    var FilteredArticle = Schema.model('FilteredArticle');
 
     var vm = this;
-
-    vm.testImg = [
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'https://s3-eu-west-1.amazonaws.com/sisdev/Article/9d73f7ae9eeca99f60c914a92701d703/largeImage.png'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://cs4.pikabu.ru/post_img/2016/06/20/7/146642042213246053.jpg'},
-      { img:'http://photo.withqiuliang.com/_images/equipment/dslr/nikon/nikon_d7200/sample_images/High_res/Nikon-D7200-Sample-Images-1.jpg'}
-
-    ];
 
     var body2 = $window.document.getElementsByClassName('for-md-dialog');
 
@@ -89,8 +55,6 @@
 
           });
 
-        }, function () {
-          console.log('You cancelled the dialog.');
         });
 
       $scope.$watch(function () {
@@ -128,8 +92,12 @@
 
     function onCartChange(article) {
       Cart.save(article.inCart);
-      console.log(vm.colour);
     }
+
+    Article.findAll({limit: 1000})
+      .then(function (data) {
+        vm.allArt = data;
+      });
 
 
     Article.find($stateParams.id).then(function (article) {
@@ -149,6 +117,10 @@
           vm.size = size;
         });
 
+        FilteredArticle.findAll({}).then(function (article){
+          vm.filteredArticle = article;
+        });
+
         ArticleImage.findAll(stateFilter);
 
         ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages');
@@ -164,9 +136,7 @@
 
     function deletePhoto(photo) {
 
-      ArticleImage.destroy(photo).then(function (a) {
-        console.log(a, 'deleted.');
-      });
+      ArticleImage.destroy(photo);
 
     }
 
@@ -181,7 +151,7 @@
       addToCart: Cart.addToCart,
       price: 33,
       article: '',
-      isEditable: true
+      isEditable: false
     }, stateFilter);
 
     //Article.find(vm.articleId).then(function(article){
@@ -192,7 +162,9 @@
 
     //ArticleImage.bindAll(stateFilter,$scope,'vm.articleImages');
 
-
+    $scope.$on('$stateChangeSuccess', function (event, to) {
+      vm.isRootState = /^item$/.test(to.name);
+    });
   }
 
 }());
