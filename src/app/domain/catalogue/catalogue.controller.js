@@ -6,12 +6,13 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, Schema, ArticleImage) {
+  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q) {
 
     var FrameSize = Schema.model('FrameSize');
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
+    var FilteredArticle = Schema.model('FilteredArticle');
 
     var vm = this;
     var groupSize = 3;
@@ -20,7 +21,7 @@
     Cart.bindAll({}, $scope, 'vm.cart');
 
     ArticleImage.findAll({limit: 1000})
-      .then(function(data){
+      .then(function (data) {
         vm.images = data;
       });
 
@@ -46,18 +47,8 @@
     }
 
     function onCartChange(article) {
-
       Cart.save(article.inCart);
-
     }
-
-    function findPicture(){
-
-      console.log(vm.articles);
-      console.log(vm.cart);
-
-    }
-
 
     function onBlur(article) {
       if (!article.inCart.count) {
@@ -71,13 +62,23 @@
 
       vm.articles = Article.filter(f);
       vm.rows = _.chunk(vm.articles, groupSize);
+      vm.filterLength = !!Object.keys(f).length;
 
-      function getVisibleBy(prop) {
-        var propFilter = _.pickBy(f, function (val, key) {
 
-          return key !== prop;
+      if (Object.keys(vm.articleFilter).length) {
+        var test = FilteredArticle.inject({
+          articleItems: vm.articles
         });
 
+        FilteredArticle.save(test);
+
+      }
+
+      function getVisibleBy(prop) {
+
+        var propFilter = _.pickBy(f, function (val, key) {
+          return key !== prop;
+        });
 
         var articles = Article.filter(propFilter);
 
@@ -104,35 +105,18 @@
 
     function resetFilters() {
 
-      Colour.bindAll({}, $scope, 'vm.colours');
-      Brand.bindAll({}, $scope, 'vm.brands');
-      FrameSize.bindAll({}, $scope, 'vm.frameSizes');
-      Material.bindAll({}, $scope, 'vm.materials');
-
       vm.articleFilter = {};
       vm.currentFilter = {};
-
-      vm.filterLength = false;
+      FilteredArticle.destroyAll();
 
     }
 
     function delCurrFilter(a) {
 
-      Colour.bindAll({}, $scope, 'vm.colours');
-      FrameSize.bindAll({}, $scope, 'vm.frameSizes');
-      Brand.bindAll({}, $scope, 'vm.brands');
-      Material.bindAll({}, $scope, 'vm.materials');
-
       _.unset(vm.currentFilter, a);
       _.unset(vm.articleFilter, a + 'Id');
 
       filterArticles(vm.articleFilter);
-
-      if (Object.keys(vm.currentFilter).length) {
-        vm.filterLength = true;
-      } else {
-        vm.filterLength = false;
-      }
 
     }
 
@@ -149,11 +133,6 @@
 
 
       vm.currentFilter [field] = item;
-
-      if (Object.keys(vm.currentFilter).length) {
-        vm.filterLength = true;
-      }
-
 
       filterArticles();
 
@@ -183,9 +162,7 @@
       filterOptionClick: filterOptionClick,
       resetFilters: resetFilters,
       delCurrFilter: delCurrFilter,
-      findPicture: findPicture,
       addToCart: Cart.addToCart
-
 
     });
 
@@ -197,27 +174,14 @@
         vm.ready = true;
         vm.total = Math.ceil(data.length / vm.pageSize);
 
-        Colour.findAll()
-          .then(function (data) {
-            vm.colours = data;
-          });
-
-        Material.findAll()
-          .then(function (data) {
-            vm.materials = data;
-          });
-
-        FrameSize.findAll()
-          .then(function (data) {
-            vm.frameSizes = data;
-          });
-
-        Brand.findAll()
-          .then(function (data) {
-            vm.brands = data;
-          });
-
-        findPicture();
+        $q.all([
+          Colour.findAll(),
+          Material.findAll(),
+          FrameSize.findAll(),
+          Brand.findAll()
+        ]).then(function () {
+          filterArticles();
+        });
 
       });
 
