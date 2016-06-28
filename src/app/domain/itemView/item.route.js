@@ -14,7 +14,17 @@
         url: '/item/:id',
         controller: 'ItemController',
         templateUrl: 'app/domain/itemView/item.html',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+
+        children:[
+          {
+            name: 'image',
+            url: '/image/:imageId',
+            controller: 'ItemImageController',
+            templateUrl: 'app/domain/itemView/itemImage.html',
+            controllerAs: 'vm'
+          }
+        ]
       })
     ;
   }
