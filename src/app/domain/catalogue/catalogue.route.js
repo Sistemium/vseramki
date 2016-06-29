@@ -14,7 +14,26 @@
         url: '/catalogue',
         templateUrl: 'app/domain/catalogue/catalogue.html',
         controller: 'CatalogueController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+
+        children: [
+          {
+            name: 'item',
+            url: '/:id',
+            controller: 'ItemController',
+            templateUrl: 'app/domain/itemView/item.html',
+            controllerAs: 'vm',
+            children:[
+              {
+                name: 'image',
+                url: '/image/:imageId',
+                controller: 'ItemImageController',
+                templateUrl: 'app/domain/itemView/itemImage.html',
+                controllerAs: 'vm'
+              }
+            ]
+          }
+        ]
       });
   }
 
