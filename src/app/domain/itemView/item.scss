@@ -8,6 +8,7 @@
   font-size: 30px;
   margin: 20px;
   padding-top: 10px;
+  text-align: center;
 }
 
 .action-buttons {
@@ -33,9 +34,13 @@ td {
   padding: 0 9px !important;
 }
 
-.left-contaiter {
+.left-container {
   width: 500px;
-  border: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.left-container2 {
+  width: 300px;
 }
 
 .main-photo-margin {
@@ -76,6 +81,4 @@ md-backdrop.md-opaque {
   margin-left: 8px;
 }
 
-.overall-info{
-  border: 2px solid pink
-}
+
