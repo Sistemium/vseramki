@@ -246,6 +246,10 @@
     //  DEBUG (e.name, a,':', b, '-', c, ':', d);
     //});
 
+    $scope.$on('$stateChangeSuccess', function (event, to) {
+      vm.isRootState = /^catalogue$/.test(to.name);
+    });
+
   }
 
 }());
