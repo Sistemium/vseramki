@@ -1,24 +1,28 @@
 .for-md-dialog(style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;")
-  div(
+  .name-head() {{vm.article.name}}
+  div.md-margin(
     layout="row"
     layout-sm='column'
     layout-xs='column'
     ng-attr-layout-align="{{vm.isRootState ? 'center top' : 'center center'}}"
   )
-    div(layout='column' layout-align='top center' ng-if='vm.isRootState')
-      a.left-contaiter(href ui-sref='.image({imageId: vm.article.images[0].id})')
-        img.main-photo-margin(ng-src='{{vm.article.images[0].smallSrc}}')
-      ng-gallery.left-contaiter(images='vm.articleImages' thumbs-num='5' layout='row' layout-align='center center')
+    div(layout='column' layout-align='center center' ng-if='vm.isRootState' style='margin-bottom: 130px')
+      a.left-container(
+        ui-sref='.image({imageId: vm.article.images[0].id})'
+        layout="row"
+        layout-align="center center"
+      )
+        img.main-photo-margin.md-whiteframe-1dp.md-padding(ng-src='{{vm.article.images[0].smallSrc}}')
+      ng-gallery.left-container2(images='vm.articleImages' thumbs-num='5' layout='row' layout-align='center center')
       md-button.md-raised.add-to-cart(ng-click='vm.addToCart(vm.article)' ng-if='!vm.article.inCart && !vm.isEditable')
         | {{'Добавить в корзину'}}
       md-button.md-raised.add-to-cart(ng-click='vm.showAdvanced($event)' ng-if='vm.isEditable')
         | {{'Загрузить фото '}}
 
-    div.overall-info.ui-view(layout='column')
-      .name-head(style='border: 1px solid yellow') {{vm.article.name}}
+    div.overall-info.ui-view(layout='column' flex-gt-sm='40')
       .item-info
         h1.header-h1 О товаре
-        md-table-container(flex=100)
+        md-table-container
           table(md-table='')
             tr(md-row)
               td(md-cell='')
