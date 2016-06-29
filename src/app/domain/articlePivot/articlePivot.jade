@@ -1,0 +1,53 @@
+md-content.md-padding
+
+  section.busy(ng-if='!vm.ready' layout='row' layout-align='center center')
+    md-progress-circular(md-diameter='200' md-mode='indeterminate')
+
+  md-menu(md-offset='20 0')
+    md-button.choose-filter-button(aria-label='Группировка' ng-click='$mdOpenMenu($event)')
+      label Группировка
+      span(ng-if='vm.groups') :
+      = ' '
+      span {{ vm.groups.label }}
+    md-menu-content(width='2')
+      md-menu-item(ng-repeat='prop in vm.props track by prop.label')
+        md-button(ng-click='vm.setGroups(prop)')
+          span(md-menu-align-target)
+            | {{ prop.label }}
+
+  md-menu(md-offset='20 0')
+    md-button.choose-filter-button(aria-label='Строки' ng-click='$mdOpenMenu($event)')
+      label Строки
+      span(ng-if='vm.rows') :
+      = ' '
+      span {{ vm.rows.label }}
+    md-menu-content(width='2')
+      md-menu-item(ng-repeat='prop in vm.props track by prop.label')
+        md-button(ng-click='vm.setRows(prop)')
+          span(md-menu-align-target)
+            | {{ prop.label }}
+
+  md-menu(md-offset='20 0')
+    md-button.choose-filter-button(aria-label='Столбцы' ng-click='$mdOpenMenu($event)')
+      label Столбцы
+      span(ng-if='vm.columns') :
+      = ' '
+      span {{ vm.columns.label }}
+    md-menu-content(width='2')
+      md-menu-item(ng-repeat='prop in vm.props track by prop.label')
+        md-button(ng-click='vm.setColumns(prop)')
+          span(md-menu-align-target)
+            | {{ prop.label }}
+
+  section(ng-repeat='group in vm.groups.data track by group.id')
+    h4 {{ group.name }}
+    md-table-container
+      table(md-table='')
+        thead(md-head='')
+          th(md-column='') {{ vm.rows.label }}
+          th(md-column='' ng-repeat='column in vm.columnsByGroup(group) track by column.id') {{ column.name }}
+        tbody(md-body='')
+          tr(md-table='' ng-repeat='row in vm.rowsByGroup(group) track by row.id')
+            td(md-cell='') {{ ::row.name }}
+            td(md-cell='' ng-repeat='column in vm.columnsByGroup(group) track by column.id')
+              | {{ ::vm.cellByGroupRowColumn (group, row, column) }}
