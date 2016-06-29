@@ -151,7 +151,8 @@
       addToCart: Cart.addToCart,
       price: 33,
       article: '',
-      isEditable: false
+      isEditable: false,
+      isRootState: true
     }, stateFilter);
 
     //Article.find(vm.articleId).then(function(article){
@@ -163,7 +164,7 @@
     //ArticleImage.bindAll(stateFilter,$scope,'vm.articleImages');
 
     $scope.$on('$stateChangeSuccess', function (event, to) {
-      vm.isRootState = /^item$/.test(to.name);
+      vm.isRootState = /(^|\.)item$/.test(to.name);
     });
   }
 
