@@ -7,8 +7,12 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
     p Товаров не найдено. Сбросьте фильтры.
 
+  .ui-view(flex ng-if='!vm.isRootState')
 
-  md-content#scroll-main(flex style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;")
+  md-content#scroll-main(
+  flex
+  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRootState ? "100%" : "0"}};'
+  )
 
     section(
       vs-repeat
@@ -29,7 +33,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
           //    .md-title {{}}
 
           .img.md-padding(flex)
-            a(href ui-sref='item({id: article.id})')
+            a(href ui-sref='.item({id: article.id})')
               img.thumbnail(ng-src='{{article.images[0].thumbnailSrc}}' ng-if='article.images.length')
               img.thumbnail(
                 src='http://bit.ly/1Yu4VIb'
