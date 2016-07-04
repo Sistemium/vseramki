@@ -36,7 +36,7 @@ div(layout-align="center center" layout="column")
           td.pointer-style(md-cell='' ng-click='vm.itemClick(item)' ui-sref='item({ id: item.article.id })')
             img.cart-thumbnail(ng-src='{{item.article.images[0].thumbnailSrc}}' ng-if='item.article.images.length')
             img.cart-thumbnail(
-              src='http://bit.ly/1Yu4VIb'
+              ng-src='http://bit.ly/1Yu4VIb'
               ng-if='!item.article.images.length'
             )
           td(md-cell='') {{item.article.name}}
