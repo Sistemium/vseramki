@@ -76,36 +76,43 @@
 
     }
 
+    var dropdownValues = {};
+    var valArr = [];
+    var collisionIn;
+
     angular.extend(vm, {
 
       props: props,
 
-      setGroups: function (prop) {
-        console.log(prop);
-        if (vm.rows === prop) {
-          vm.rows = vm.groups;
-        } else if (vm.columns === prop) {
-          vm.columns = vm.groups;
-        }
-        vm.groups = prop;
-      },
+      setFilterCriterias: function (obj, event, labelId) {
+        console.log(obj);
 
-      setRows: function (prop) {
-        if (vm.groups === prop) {
-          vm.groups = vm.rows;
-        } else if (vm.columns === prop) {
-          vm.columns = vm.rows;
+        if ((_.intersection(valArr, [labelId])).length) { // if duplication
+          _(dropdownValues).forEach(function (val, key) { // checking which dropdown contains duplication
+            if (val == labelId) {
+              collisionIn = key;
+            }
+          });
+          if (vm[event.srcElement.id]) { // if dropdown has value
+            var temp = vm[event.srcElement.id];
+            var temp2 = dropdownValues[event.srcElement.id];
+            vm[event.srcElement.id] = obj;
+            vm[collisionIn] = temp;
+            dropdownValues[event.srcElement.id] = labelId;
+            dropdownValues[collisionIn] = temp2;
+            valArr = _.values(dropdownValues);
+          } else {
+            delete (vm[collisionIn]);
+            dropdownValues[event.srcElement.id] = labelId;
+            dropdownValues[collisionIn] = false;
+            vm[event.srcElement.id] = obj;
+            valArr = _.values(dropdownValues);
+          }
+        } else {
+          vm[event.srcElement.id] = obj;
+          dropdownValues[event.srcElement.id] = labelId;
+          valArr = _.values(dropdownValues);
         }
-        vm.rows = prop;
-      },
-
-      setColumns: function (prop) {
-        if (vm.groups === prop) {
-          vm.groups = vm.columns;
-        } else if (vm.rows === prop) {
-          vm.rows = vm.columns;
-        }
-        vm.columns = prop;
       },
 
       columnsByGroup: function (group) {
