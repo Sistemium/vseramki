@@ -1,10 +1,45 @@
-.radius{
+.radius {
   background: #f3f4f6; /* Цвет фона */
   padding: 15px; /* Поля вокруг текста */
   border-radius: 10px 10px 10px 10px;
 }
 
-.pink-button{
-  background-color: rgb(255,64,129) !important;
+.pink-button {
+  background-color: rgb(255, 64, 129) !important;
   color: white !important;
 }
+
+#filterTable > md-table-container > table.md-table td.md-cell {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 13px;
+  border-right: 1px rgba(0, 0, 0, 0.12) solid;
+}
+
+#filterTable > md-table-container > table.md-table td.md-cell,
+table.md-table th.md-column {
+  text-align: center;
+}
+
+#filterTable > md-table-container > table.md-table td.md-cell:last-child,
+table.md-table th.md-column:last-child {
+  border-right: 0;
+}
+
+.vertical-text {
+  transform: rotate(180deg);
+  transform-origin: left top 0;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+.teststyle{
+
+}
+
+.first{
+  text-align: right;
+}
+
+.second{
+}
+

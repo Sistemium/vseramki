@@ -41,10 +41,10 @@ meta.defineEntity 'Article',
  'name;code;packageRel;pieceWeight;borderWidth;'
   + 'optPrice,price;specialPrice,price;buyPrice,price;isDeleted',
  'Category,categoryId;'
- + 'Material,materialId;'
- + 'Brand,brandId,nullable;'
- + 'FrameSize,frameSizeId,nullable;'
- + 'Colour,colourId,nullable'
+  + 'Material,materialId;'
+  + 'Brand,brandId,nullable;'
+  + 'FrameSize,frameSizeId,nullable;'
+  + 'Colour,colourId,nullable'
 ;
 
 

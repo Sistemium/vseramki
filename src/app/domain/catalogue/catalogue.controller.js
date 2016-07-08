@@ -12,7 +12,6 @@
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
-    var FilteredArticle = Schema.model('FilteredArticle');
 
     var vm = this;
     var groupSize = 3;
@@ -22,6 +21,7 @@
 
     ArticleImage.findAll({limit: 1000})
       .then(function (data) {
+        console.log(data);
         vm.images = data;
       });
 
@@ -64,16 +64,6 @@
       vm.rows = _.chunk(vm.articles, groupSize);
       vm.filterLength = !!Object.keys(f).length;
 
-
-      if (Object.keys(vm.articleFilter).length) {
-        var test = FilteredArticle.inject({
-          articleItems: vm.articles
-        });
-
-        FilteredArticle.save(test);
-
-      }
-
       function getVisibleBy(prop) {
 
         var propFilter = _.pickBy(f, function (val, key) {
@@ -107,7 +97,6 @@
 
       vm.articleFilter = {};
       vm.currentFilter = {};
-      FilteredArticle.destroyAll();
 
     }
 

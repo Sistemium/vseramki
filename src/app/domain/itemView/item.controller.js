@@ -117,10 +117,6 @@
           vm.size = size;
         });
 
-        FilteredArticle.findAll({}).then(function (article){
-          vm.filteredArticle = article;
-        });
-
         ArticleImage.findAll(stateFilter);
 
         ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages');

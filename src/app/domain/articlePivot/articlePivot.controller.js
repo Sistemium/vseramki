@@ -15,6 +15,8 @@
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
+    var FilterCriteria = Schema.model('FilterCriteria');
+
 
     var props = [
       {
@@ -56,8 +58,9 @@
     function propsByGroup(name, group) {
 
       var filter = {};
-      var prop = vm.groups.name;
-      filter[prop] = group.id;
+      var prop = vm.groups.name; // brandId || colourId || materialId || frameSizeId
+
+      filter[prop] = group.id; // brandId: '24324-sfsdf-3234-234234'
 
       var articles = Article.filter(filter);
 
@@ -65,11 +68,20 @@
         return;
       }
 
-      prop = vm[name].name;
+      prop = vm[name].name; // brandId || colourId || materialId || frameSizeId (vm.
+      console.log(prop);
 
-      return _.map(
-        _.groupBy(articles, prop),
-        function (val, key) {
+      //console.log(_.groupBy(articles, prop));
+
+      var a = _.map(_.groupBy(articles, prop), function (val, key) {
+
+          return vm[name].model.get(key);
+        }
+      );
+
+      //console.log(a);
+
+      return _.map(_.groupBy(articles, prop), function (val, key) {
           return vm[name].model.get(key);
         }
       );
@@ -85,7 +97,8 @@
       props: props,
 
       setFilterCriterias: function (obj, event, labelId) {
-        console.log(obj);
+
+        console.log(vm);
 
         if ((_.intersection(valArr, [labelId])).length) { // if duplication
           _(dropdownValues).forEach(function (val, key) { // checking which dropdown contains duplication
@@ -93,26 +106,27 @@
               collisionIn = key;
             }
           });
-          if (vm[event.srcElement.id]) { // if dropdown has value
+          if (vm[event.srcElement.id]) { // if dropdown already has value
             var temp = vm[event.srcElement.id];
             var temp2 = dropdownValues[event.srcElement.id];
-            vm[event.srcElement.id] = obj;
             vm[collisionIn] = temp;
-            dropdownValues[event.srcElement.id] = labelId;
             dropdownValues[collisionIn] = temp2;
-            valArr = _.values(dropdownValues);
+            vm.assignValues(obj, labelId);
           } else {
             delete (vm[collisionIn]);
-            dropdownValues[event.srcElement.id] = labelId;
             dropdownValues[collisionIn] = false;
-            vm[event.srcElement.id] = obj;
-            valArr = _.values(dropdownValues);
+            vm.assignValues(obj, labelId);
           }
         } else {
-          vm[event.srcElement.id] = obj;
-          dropdownValues[event.srcElement.id] = labelId;
-          valArr = _.values(dropdownValues);
+          vm.assignValues(obj, labelId);
         }
+
+      },
+
+      assignValues: function (obj, labelId) {
+        dropdownValues[event.srcElement.id] = labelId;
+        vm[event.srcElement.id] = obj;
+        valArr = _.values(dropdownValues);
       },
 
       columnsByGroup: function (group) {
@@ -133,10 +147,49 @@
         var articles = Article.filter(filter);
 
         return articles.length || '';
+      },
+
+      deleteFilters: function () {
+        delete (vm.groups);
+        delete (vm.rows);
+        delete (vm.columns);
+        //FilterCriteria.destroyAll();
+      },
+
+      filterData: function () {
+
+
+        var prop = vm.groups.name;
+        var groupLabel = [];
+
+        _(vm.groups.data).forEach(function (a) {
+          console.log({[prop]: a.id});
+          groupLabel.push(Article.filter({[prop]: a.id}));
+        });
+
+        console.log(groupLabel);
+
+        console.log(vm.groups);
+
+
+        //filter[prop] = group.id;
+        //
+        //if (!articles || !vm[name]) {
+        //  return;
+        //}
+        //
+        //prop = vm[name].name;
+        //
+        //return _.map(
+        //  _.groupBy(articles, prop),
+        //  function (val, key) {
+        //    return vm[name].model.get(key);
+        //  }
+        ////);
+
       }
 
     });
-
 
   }
 
