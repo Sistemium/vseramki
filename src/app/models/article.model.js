@@ -17,6 +17,10 @@
           Cart: {
             localField: 'inCart',
             foreignKey: 'articleId'
+          },
+          Baguette: {
+            localField: 'baguette',
+            foreignKey: 'baguetteId'
           }
         },
         hasMany: {
