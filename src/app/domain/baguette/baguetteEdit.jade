@@ -1,0 +1,35 @@
+.md-whiteframe-1dp.md-margin()
+  h2.md-margin Создание нового багета
+  div(layout-align='center center' layout='column')
+    form(name="widthForm")
+      md-input-container()
+        label Ширина багета (мм)
+        input.teste(step='0.01' type='number' ng-model='vm.baguette.borderWidth' min='1' required name='baguetteWidth' )
+        div(ng-messages="widthForm.baguetteWidth.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+    md-menu(md-offset='20 0')
+      md-button.pink-button(aria-label='Material menu' ng-click='$mdOpenMenu($event)') Материал: {{ vm.baguette.material.name || 'Выбрать'}}
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat="ma in vm.materials | orderBy:'name' track by ma.id")
+          md-button(ng-click="vm.saveClickedOption(ma, 'materialId')")
+            span(md-menu-align-target)
+              | {{ma.name}}
+
+    md-menu(md-offset='20 0')
+      md-button.pink-button(aria-label='Colour menu' ng-click='$mdOpenMenu($event)') Цвет: {{ vm.baguette.colour.name || 'Выбрать'}}
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat="co in vm.colours | orderBy:'name' track by co.id")
+          md-button(ng-click="vm.saveClickedOption(co, 'colourId')")
+            span(md-menu-align-target)
+              | {{co.name}}
+
+    md-menu(md-offset='20 0')
+      md-button.pink-button(aria-label='Size menu' ng-click='$mdOpenMenu($event)') Бренд: {{ vm.baguette.brand.name || 'Выбрать'}}
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat="br in vm.brands | orderBy:'name' track by br.id")
+          md-button(ng-click="vm.saveClickedOption(br, 'brandId')")
+            span(md-menu-align-target)
+              | {{br.name}}
+
+    md-button.md-raised.createBaguette(ng-if='vm.selectParamsChecker()' ng-click='vm.createBaguette()') Создать новый багет
