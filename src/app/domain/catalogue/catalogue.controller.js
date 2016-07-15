@@ -221,9 +221,9 @@
 
     });
 
-    $scope.$watch('vm.groupSize', function (nw, o) {
+    $scope.$watch('vm.groupSize', function (nv, ov) {
 
-      if (nw || 0 !== o || 0) {
+      if (nv || 0 !== ov || 0) {
         vm.rows = _.chunk(vm.articles, groupSize)
       }
 
