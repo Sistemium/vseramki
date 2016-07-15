@@ -1,0 +1,41 @@
+div > form > md-input-container {
+  margin: 4px !important;
+}
+
+md-input-container > input {
+  width: 180px !important;
+}
+
+.createBaguette {
+  margin-bottom: 20px
+}
+
+.image-size {
+  width: 200px;
+  height: auto;
+  margin: 0 auto;
+}
+
+figure {
+  box-shadow: none;
+}
+
+.md-button.md-pink-bottom-left {
+  top: auto;
+  left: 70px;
+  bottom: 20px;
+  left: auto;
+  position: fixed;
+}
+
+.md-padding > md-table-container > table.md-table th.md-column {
+  font-size: 16px;
+}
+
+tr {
+  height: 50px;
+}
+
+table.md-table td.md-cell, table.md-table th.md-column {
+  text-align: center;
+}
