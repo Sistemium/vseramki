@@ -5,7 +5,7 @@
   angular
     .module('vseramki')
     .service('Colour', Colour)
-    .run(function(Colour){
+    .run(function (Colour) {
       Colour.findAll();
     })
   ;
@@ -19,7 +19,7 @@
       relations: {
         hasMany: {
           Article: {
-            localField: 'articles',
+            localField: 'baguettes',
             foreignKey: 'colourId'
           }
         }
