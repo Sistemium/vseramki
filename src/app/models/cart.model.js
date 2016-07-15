@@ -30,7 +30,7 @@
         if (inCart) {
           inCart.count++;
         } else {
-          inCart = model.inject ({
+          inCart = model.inject({
             id: uuid.v4(),
             articleId: article.id,
             count: 1
