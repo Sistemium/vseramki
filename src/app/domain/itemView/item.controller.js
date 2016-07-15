@@ -20,7 +20,6 @@
     var Colour = Schema.model('Colour');
     var Material = Schema.model('Material');
     var FrameSize = Schema.model('FrameSize');
-    var FilteredArticle = Schema.model('FilteredArticle');
 
     var vm = this;
 
@@ -151,13 +150,6 @@
       isRootState: true
     }, stateFilter);
 
-    //Article.find(vm.articleId).then(function(article){
-    //  vm.article = article;
-    //});
-
-    //ArticleImage.findAll(stateFilter);
-
-    //ArticleImage.bindAll(stateFilter,$scope,'vm.articleImages');
 
     $scope.$on('$stateChangeSuccess', function (event, to) {
       vm.isRootState = /(^|\.)item$/.test(to.name);
