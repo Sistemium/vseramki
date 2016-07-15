@@ -4,7 +4,7 @@
 
   angular
     .module('vseramki')
-    .service('ArticleImage',ArticleImage)
+    .service('ArticleImage', ArticleImage)
   ;
 
   function ArticleImage(Schema) {
