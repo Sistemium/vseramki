@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -9,7 +9,8 @@
       'vs-repeat',
       'md.data.table',
       'lfNgMdFileInput',
-      'ngFileUpload'
+      'ngFileUpload',
+      'ngMessages'
     ]);
 
 })();
