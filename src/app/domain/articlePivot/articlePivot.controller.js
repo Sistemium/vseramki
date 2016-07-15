@@ -15,8 +15,6 @@
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
-    var FilterCriteria = Schema.model('FilterCriteria');
-
 
     var props = [
       {
@@ -58,9 +56,9 @@
     function propsByGroup(name, group) {
 
       var filter = {};
-      var prop = vm.groups.name; // brandId || colourId || materialId || frameSizeId
+      var prop = vm.groups.name;
 
-      filter[prop] = group.id; // brandId: '24324-sfsdf-3234-234234'
+      filter[prop] = group.id;
 
       var articles = Article.filter(filter);
 
@@ -68,18 +66,7 @@
         return;
       }
 
-      prop = vm[name].name; // brandId || colourId || materialId || frameSizeId (vm.
-      console.log(prop);
-
-      //console.log(_.groupBy(articles, prop));
-
-      var a = _.map(_.groupBy(articles, prop), function (val, key) {
-
-          return vm[name].model.get(key);
-        }
-      );
-
-      //console.log(a);
+      prop = vm[name].name;
 
       return _.map(_.groupBy(articles, prop), function (val, key) {
           return vm[name].model.get(key);
@@ -97,8 +84,6 @@
       props: props,
 
       setFilterCriterias: function (obj, event, labelId) {
-
-        console.log(vm);
 
         if ((_.intersection(valArr, [labelId])).length) { // if duplication
           _(dropdownValues).forEach(function (val, key) { // checking which dropdown contains duplication
@@ -154,39 +139,6 @@
         delete (vm.rows);
         delete (vm.columns);
         //FilterCriteria.destroyAll();
-      },
-
-      filterData: function () {
-
-
-        var prop = vm.groups.name;
-        var groupLabel = [];
-
-        _(vm.groups.data).forEach(function (a) {
-          console.log({[prop]: a.id});
-          groupLabel.push(Article.filter({[prop]: a.id}));
-        });
-
-        console.log(groupLabel);
-
-        console.log(vm.groups);
-
-
-        //filter[prop] = group.id;
-        //
-        //if (!articles || !vm[name]) {
-        //  return;
-        //}
-        //
-        //prop = vm[name].name;
-        //
-        //return _.map(
-        //  _.groupBy(articles, prop),
-        //  function (val, key) {
-        //    return vm[name].model.get(key);
-        //  }
-        ////);
-
       }
 
     });
