@@ -48,8 +48,6 @@ md-content.md-padding
     md-button.md-fab.md-mini.md-icon-button(ng-click='vm.deleteFilters()' ng-if='vm.groups && vm.rows && vm.columns')
       i.material-icons clear
 
-    md-button(ng-click='vm.filterData()') Рассчитать
-
 
   div(layout='column' ng-repeat='group in vm.groups.data track by group.id')
     h3 {{ group.name }}
