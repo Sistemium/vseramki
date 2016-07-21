@@ -1,31 +1,69 @@
-p {{ vm.isRoot }}
+div(layout='row')
 
-.md-padding.ui-view
-  md-toolbar.md-table-toolbar.md-default
-    .md-toolbar-tools
-      span Просмотр и редактирование имеющихся багетов (таблица)
-  md-table-container
-    table(md-table md-row-select multiple ng-model='vm.selected')
-      thead(md-head md-order='filterBy')
-        th.align-center(md-column) Фото
-        th(md-column md-order-by='colour.name') Цвет
-        th(md-column md-order-by='material.name') Материал
-        th(md-column md-order-by='brand.name') Бренд
-        th(md-column md-order-by='borderWidth') Ширина (мм.)
-        th(md-column) Редактировать
-      tbody(md-body)
-        tr(md-row ng-repeat='bag in vm.baguettes | orderBy: filterBy track by bag.id' md-select='bag' md-select-id='id')
-          td(md-cell)
-            img.cart-thumbnail(ng-src='http://bit.ly/1Yu4VIb')
-          td(md-cell) {{bag.colour.name}}
-          td(md-cell) {{bag.material.name}}
-          td(md-cell) {{bag.brand.name}}
-          td(md-cell) {{bag.borderWidth}}
-          td(md-cell)
-            md-button.md-mini.md-icon-button(ng-click='vm.editBaguette(bag)')
-              i.material-icons.clear-icon-size create
+  div.scrolling-contents(
+    ng-if='!vm.isRoot'
+    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
+  )
 
-  md-button.pink-button.md-pink-bottom-left(
-    ng-if='vm.selected.length'
-    ng-click='vm.deleteBaguette(vm.selected)'
-  ) Удалить {{vm.selected.length}}
+    md-list.custom-list
+      md-list-item.md-item-text.md-whiteframe-z1(layout='row' layout-wrap='')
+        h3 Всего багетов: {{vm.baguettes.length}}
+        span(flex)
+        md-button.pink-button(ng-click='vm.backToList()') Вернуться к списку
+
+      md-list-item.md-2-line.veggie-option(
+        ng-repeat='bag in vm.baguettes |orderBy: bag.name track by bag.id',
+        layout='row',
+        layout-wrap=''
+      )
+        .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
+          h3 ID: {{bag.id}}
+          ul
+            li Ширина багета: {{bag.borderWidth}} мм.
+            li Материал: {{bag.material.name}}
+            li Цвет: {{bag.colour.name}}
+            li Бренд: {{bag.brand.name}}
+
+
+  .ui-view(flex)
+    md-toolbar.md-table-toolbar.md-default
+      .md-toolbar-tools
+        span Просмотр и редактирование имеющихся багетов (таблица)
+        span(flex)
+        md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
+          ng-click='vm.goToCreateBaguette()'
+          ng-class="{'styles-for-mobile-button': vm.useMobile}"
+        )
+          i.material-icons add circle
+    md-table-container
+      table(md-table md-row-select multiple ng-model='vm.selected')
+        thead(md-head md-order='filterBy')
+          th.align-center(md-column) Фото
+          th(md-column md-order-by='colour.name') Цвет
+          th(md-column md-order-by='material.name') Материал
+          th(md-column md-order-by='brand.name') Бренд
+          th(md-column md-order-by='borderWidth') Ширина (мм.)
+          th(md-column) Редактировать
+        tbody(md-body)
+          tr(md-row ng-repeat='bag in vm.baguettes | orderBy: filterBy track by bag.id' md-select='bag' md-select-id='id')
+            td(md-cell)
+              img.cart-thumbnail(ng-src='http://bit.ly/1Yu4VIb')
+            td(md-cell) {{bag.colour.name}}
+            td(md-cell) {{bag.material.name}}
+            td(md-cell) {{bag.brand.name}}
+            td(md-cell) {{bag.borderWidth}}
+            td(md-cell)
+              md-button.md-mini.md-icon-button(ng-click='vm.editBaguette(bag)')
+                i.material-icons.clear-icon-size create
+
+      div.fixed(ng-if='vm.selected.length')
+
+        md-button.pink-button(
+          ng-if='vm.selected.length'
+          ng-click='vm.deleteBaguette(vm.selected)'
+        ) Удалить {{vm.selected.length}}
+
+        md-button.pink-button(
+          ng-if='vm.selected.length'
+          ng-click='vm.resetCheckedBaguette()'
+        ) Сбросить
