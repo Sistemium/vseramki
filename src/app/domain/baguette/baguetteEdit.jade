@@ -1,10 +1,11 @@
-.md-whiteframe-1dp.md-margin()
-  h2.md-margin Создание нового багета
+.md-whiteframe-1dp.custom-margin(style="height: {{ windowHeight - 85 }}px; min-height: 400px;")
+  h2.md-margin(ng-if='vm.id') Редактирование багета
+  h2.md-margin(ng-if='vm.isCreateState') Создание нового багета
   div(layout-align='center center' layout='column')
     form(name="widthForm")
       md-input-container()
         label Ширина багета (мм)
-        input.teste(step='0.01' type='number' ng-model='vm.baguette.borderWidth' min='1' required name='baguetteWidth' )
+        input.teste(step='1' type='number' ng-model='vm.baguette.borderWidth' min='1' required name='baguetteWidth')
         div(ng-messages="widthForm.baguetteWidth.$error")
           div(ng-message="required") Поле не может быть пустым
 
@@ -32,4 +33,5 @@
             span(md-menu-align-target)
               | {{br.name}}
 
-    md-button.md-raised.createBaguette(ng-if='vm.selectParamsChecker()' ng-click='vm.createBaguette()') Создать новый багет
+    md-button.md-raised.createBaguette(ng-if='vm.selectParamsChecker() && vm.id' ng-click='vm.createBaguette()') Сохранить изменения
+    md-button.md-raised.createBaguette(ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()') Создать багет
