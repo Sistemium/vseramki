@@ -11,6 +11,8 @@
 
     var vm = this;
 
+    var el = angular.element(document.getElementsByClassName('toolbar-fixed-top'));
+
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
@@ -34,26 +36,26 @@
       baguette: Baguette.createInstance(),
       selected: [],
 
-      showToast: function (resStr) {
+      showToast: function (resStr, status) {
+
+        var theme;
+
+        if (status) {
+          theme = 'success-toast';
+        } else {
+          theme = 'fail-toast';
+        }
+
         $mdToast.show(
           $mdToast.simple()
             .textContent(resStr)
             .position('top right')
             .hideDelay(1500)
+            .theme(theme)
+            .parent(el)
         );
       },
 
-      createBaguette: function () {
-        Baguette.create(vm.baguette)
-          .then(function () {
-            vm.showToast('Багет сохранен');
-            vm.baguette = Baguette.createInstance();
-            $scope.widthForm.$setUntouched();
-          })
-          .catch(function () {
-            vm.showToast('Ошибка. Багет не сохранен');
-          });
-      },
 
       editBaguette: function (item) {
         $state.go('.edit', {id: item.id});
@@ -65,28 +67,71 @@
           _(item).forEach(function (item) {
             Baguette.destroy(item);
           });
+          vm.showToast('Багет удален', true);
           vm.selected = [];
         }
         else {
           Baguette.destroy(item);
+          vm.showToast('Багет удален', true);
         }
 
       },
 
+      resetCheckedBaguette: function () {
+        vm.selected = [];
+      },
+
       saveClickedOption: function (obj, name) {
         vm.baguette[name] = obj.id;
+      },
+
+      changeBaguette: function (bag) {
+        $state.go($state.current.name, {id: bag.id});
+      },
+
+      goToCreateBaguette: function () {
+        $state.go('.create');
+      },
+
+      backToList: function () {
+        $state.go($state.current.parent.name);
       }
 
     });
 
-    var subscription = $scope.$on('$stateChangeSuccess', function (event, toState) {
+    var subscription = $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
 
       vm.isRoot = /(table|tiles)$/.test(toState.name);
+
+      if (/\.edit$/.test(toState.name)) {
+        Baguette.find(toParams.id)
+          .then(function (item) {
+            vm.currId = item.id;
+          });
+      }
+
+    });
+
+    $scope.$watch('windowWidth', function (windowWidth) {
+
+      if (windowWidth < 600) {
+        vm.useMobile = true;
+      }
+      else
+        vm.useMobile = false;
 
     });
 
     $scope.$on('$destroy', subscription);
 
+    //$scope.$on('$destroy', $scope.$on('BaguetteEditController', function (event, id) {
+    //
+    //  Baguette.find(id)
+    //    .then(function(item){
+    //      vm.currId = item.id;
+    //    });
+    //
+    //}));
 
   }
 
