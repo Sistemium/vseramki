@@ -37,9 +37,6 @@
       },
 
       computed: {
-        name: ['colour', 'material', 'brand', function(colour, material, brand) {
-          return [_.get(colour,'name'), _.get(brand,'name'), _.get(material,'name')].join('-');
-        }]
       }
 
     });
