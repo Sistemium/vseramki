@@ -22,10 +22,10 @@ figure {
 
 .md-button.md-pink-bottom-left {
   top: auto;
-  left: 70px;
   bottom: 20px;
   left: auto;
   position: fixed;
+  overflow: hidden;
 }
 
 .md-padding > md-table-container > table.md-table th.md-column {
@@ -38,4 +38,110 @@ tr {
 
 table.md-table td.md-cell, table.md-table th.md-column {
   text-align: center;
+}
+
+.md-item-text {
+  padding: 8px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.md-item-text h3,
+.md-item-text p {
+  padding: 0;
+  margin: 0;
+}
+
+.active-baguette {
+  background: #f395b5;
+}
+
+.custom-margin {
+  margin: 8px 22px 8px 8px;
+}
+
+div > md-list > md-list-item.md-clickable:hover {
+  cursor: default;
+}
+
+.scrolling-contents {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: scroll;
+  min-height: 400px;
+}
+
+.fixed-elements {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+md-list-item > button {
+  margin: 0;
+}
+
+.margin-custom {
+  margin-top: 40px;
+}
+
+.padding-custom {
+  padding: 0 50px;
+}
+
+.md-toolbar-tools > .md-button:last-child {
+  margin-right: 30px;
+}
+
+.fixed {
+  position: fixed;
+  bottom: 0;
+  right: 3px;
+}
+
+md-list.custom-list {
+  padding: 3px 0px 8px 0px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.styles-for-mobile-button {
+  position: fixed;
+  bottom: 10px;
+  right: 26px;
+  margin-right: -13px !important;
+}
+
+.styles-for-mobile-text{
+  text-align: center;
+}
+
+// styles for md-toast
+
+md-toast .md-toast-content {
+  font-size: 15px;
+  text-align: center;
+}
+
+md-toast.md-success-toast-theme {
+  .md-toast-content {
+    background-color: #0c7c02;
+  }
+}
+
+md-toast.md-fail-toast-theme {
+  .md-toast-content {
+    background-color: #d63030;
+  }
+}
+
+md-toast {
+  //position: fixed;
+  //top: 0;
+  padding: 4px;
 }
