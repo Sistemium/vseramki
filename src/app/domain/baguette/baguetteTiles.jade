@@ -1,31 +1,75 @@
-.ui-view.md-padding
-  h2 Просмотр и редактирование имеющихся багетов (картинки)
+div(layout='row')
 
-  md-grid-list(
-  md-row-height="200px"
-  md-cols-xs='1'
-  md-cols-gt-xs="2"
-  md-cols-gt-sm="3"
-  md-cols-gt-md="4"
-  md-cols-gt-lg="5"
-  layout-xl="6"
+  div.scrolling-contents(
+    ng-if='!vm.isRoot'
+    style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;"
   )
-    md-grid-tile(
-    md-rowspan="2"
-    md-colspan="1"
-    ng-repeat= "bag in vm.baguettes track by bag.id"
+
+    md-list.custom-list
+      md-list-item.md-item-text.md-whiteframe-z1(layout='row' layout-wrap='')
+        h3 Всего багетов: {{vm.baguettes.length}}
+        span(flex)
+        md-button.pink-button(ng-click='vm.backToList()') Вернуться к списку
+
+      md-list-item(
+        ng-repeat='bag in vm.baguettes |orderBy: bag.name track by bag.id',
+        layout='row',
+        layout-wrap=''
+      )
+        .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
+          h3 ID: {{bag.id}}
+          ul
+            li Ширина багета: {{bag.borderWidth}} мм.
+            li Материал: {{bag.material.name}}
+            li Цвет: {{bag.colour.name}}
+            li Бренд: {{bag.brand.name}}
+
+  .ui-view(flex)
+    md-toolbar.md-table-toolbar.md-default
+      .md-toolbar-tools
+        h2(ng-class="{'styles-for-mobile-text': vm.useMobile}") Просмотр и редактирование имеющихся багетов (плитка)
+        span(flex)
+        md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
+          ng-click='vm.goToCreateBaguette()'
+          ng-class="{'styles-for-mobile-button': vm.useMobile}"
+        )
+          i.material-icons add circle
+
+
+    md-grid-list(
+      md-row-height="200px"
+      md-cols-xs='1'
+      md-cols-gt-xs="2"
+      md-cols-gt-sm="3"
+      md-cols-gt-md="4"
+      md-cols-gt-lg="5"
+      layout-xl="6"
     )
-      md-card
-        img.md-card-image.image-size(ng-src='http://bit.ly/1Yu4VIb' alt='Baguette {{$index}}')
-        md-card-content(align='center')
-          div
-            span(ng-if='!vm.editable') Цвет: {{bag.colour.name}}
-            md-button(ng-if='vm.editable') Цвет
-          p Материал: {{bag.material.name}}
-          p Бренд: {{bag.brand.name}}
-          p Ширина багета: {{bag.borderWidth}} мм.
-        md-card-actions.pink-button(layout='row', layout-align='center center')
-          md-button(ng-click='vm.editBaguette(bag)') Редактировать
-          md-button(ng-click='vm.deleteBaguette(bag)') Удалить
+      md-grid-tile(
+        md-rowspan="2"
+        md-colspan="1"
+        ng-repeat= "bag in vm.baguettes track by bag.id"
+      )
+        md-card.margin-custom
+
+          img.md-card-image.image-size(ng-src='http://bit.ly/1Yu4VIb' alt='Baguette {{$index}}')
+
+          md-card-content(align='center')
+            p
+              span.bold Цвет:&nbsp
+              span {{bag.colour.name}}
+            p
+              span.bold Материал:&nbsp
+              span {{bag.material.name}}
+            p
+              span.bold Бренд:&nbsp
+              span {{bag.brand.name}}
+            p
+              span.bold Ширина багета:&nbsp
+              span {{bag.borderWidth}} мм.
+
+          md-card-actions.pink-button(layout='row', layout-align='center center')
+            md-button(ng-click='vm.editBaguette(bag)') Редактировать
+            md-button(ng-click='vm.deleteBaguette(bag)') Удалить
 
 
