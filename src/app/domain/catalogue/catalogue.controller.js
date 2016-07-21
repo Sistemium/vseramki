@@ -21,7 +21,6 @@
 
     ArticleImage.findAll({limit: 1000})
       .then(function (data) {
-        console.log(data);
         vm.images = data;
       });
 
@@ -34,10 +33,7 @@
     function minusOne(item) {
 
       var cart = item.inCart;
-
       cart.count--;
-
-      console.log(cart.count);
 
       if (!cart.count) {
         Cart.destroy(cart);
@@ -113,16 +109,13 @@
 
       var fieldName = field + 'Id';
 
-
       if (item) {
         vm.articleFilter[fieldName] = item.id;
       } else if (vm.articleFilter[fieldName]) {
         delete vm.articleFilter[fieldName];
       }
 
-
       vm.currentFilter [field] = item;
-
       filterArticles();
 
     }
