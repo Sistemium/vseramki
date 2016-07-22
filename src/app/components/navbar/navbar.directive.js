@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -16,9 +16,21 @@
 
     return directive;
 
-    function NavbarController(Cart,$scope) {
-      Cart.bindAll({},$scope,'vm.cart');
+    function NavbarController(Cart, $scope, $mdMedia) {
+      Cart.bindAll({}, $scope, 'vm.cart');
       Cart.findAll();
+
+      var vm = this;
+      $scope.$watch(
+
+        function () {
+          return $mdMedia('max-width: 800px');
+        },
+
+        function (value) {
+          vm.breakpoint = value;
+        }
+      );
     }
   }
 
