@@ -2,7 +2,7 @@
   "name": "vseramki",
   "version": "0.1.0",
   "dependencies": {
-    "angular-material": "~1.0.0",
+    "angular-material": "^1.0.9",
     "material-design-iconfont": "~0.0.2",
     "lodash": "^4.x",
     "moment": "~2.10.6",
@@ -14,8 +14,7 @@
     "lf-ng-md-file-input": "^1.4.6",
     "ng-file-upload": "^12.0.4"
   },
-  "overrides": {
-  },
+  "overrides": {},
   "devDependencies": {
     "angular-mocks": "~1.5.3"
   },
