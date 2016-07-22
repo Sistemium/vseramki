@@ -1,11 +1,16 @@
 md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
   .md-toolbar-tools
-    img.top-logo(src='images/top-logo.jpg' ui-sref='catalogue')
+    img.top-logo(src='images/top-logo.jpg' ui-sref='home')
     span(flex)
-    md-fab-speed-dial.md-scale(
-      md-open='vm.isOpen'
+
+    md-button.tool-button(ui-sref='home' ui-sref-active='md-primary' ng-if='!vm.breakpoint') Главная
+    md-button.tool-button(ui-sref='catalogue' ui-sref-active='md-primary' ng-if='!vm.breakpoint') Каталог
+    md-button.tool-button(ui-sref='baguettes' ui-sref-active='md-primary' ng-if='!vm.breakpoint') Багет
+    md-button.tool-button(ui-sref='articlePivot' ui-sref-active='md-primary' ng-if='!vm.breakpoint') Таблица товаров
+
+    md-fab-speed-dial.md-scale.margin-fab-cust(
       md-direction='down'
-      hide-gt-xs
+      ng-if='vm.breakpoint'
     )
       md-fab-trigger
         md-button.md-fab.md-mini.md-icon-button.md-primary(aria-label='menu')
@@ -17,16 +22,14 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
           p Каталог
         md-button.md-raised.md-mini.custom-fab(aria-label='cart' ui-sref='cart', ui-sref-active='md-primary')
           p Корзина
-    md-button.tool-button(ui-sref='home' ui-sref-active='md-primary' hide show-gt-xs) Главная
-    md-button.tool-button(ui-sref='catalogue' ui-sref-active='md-primary' hide show-gt-xs) Каталог
-    md-button.tool-button(ui-sref='baguettes.tiles' ui-sref-active='md-primary' hide show-gt-xs) Багет (плитка)
-    md-button.tool-button(ui-sref='baguettes.table' ui-sref-active='md-primary' hide show-gt-xs) Багет (таблица)
-    md-button.tool-button(ui-sref='articlePivot' ui-sref-active='md-primary' hide show-gt-xs) Таблица товаров
+        md-button.md-raised.md-mini.custom-fab(aria-label='articleList' ui-sref='articlePivot', ui-sref-active='md-primary')
+          p Таблица товаров
+        md-button.md-raised.md-mini.custom-fab(aria-label='baguette' ui-sref='baguettes', ui-sref-active='md-primary')
+          p Багет
 
+    span(flex='5' ng-if='!vm.breakpoint')
 
-    span(flex="5" flex-xs="0" hide show-gt-xs)
-
-    div.with-badge(flex="none" hide show-gt-xs)
+    div.with-badge(flex='none' ng-if='!vm.breakpoint')
       md-button.md-fab.md-mini.md-icon-button(ui-sref='cart')
         i.material-icons shopping_cart
       span.badge(ng-show='vm.cart.length') {{ vm.cart.length }}
