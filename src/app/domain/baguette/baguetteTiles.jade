@@ -2,10 +2,10 @@ div(layout='row')
 
   div.scrolling-contents(
     ng-if='!vm.isRoot'
-    style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;"
+    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
   )
 
-    md-list.custom-list
+    md-list.custom-list(ng-hide='vm.hideBaguetteList')
       md-list-item.md-item-text.md-whiteframe-z1(layout='row' layout-wrap='')
         h3 Всего багетов: {{vm.baguettes.length}}
         span(flex)
@@ -19,16 +19,21 @@ div(layout='row')
         .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
           h3 ID: {{bag.id}}
           ul
-            li Ширина багета: {{bag.borderWidth}} мм.
+            li Ширина: {{bag.borderWidth}} мм.
             li Материал: {{bag.material.name}}
             li Цвет: {{bag.colour.name}}
             li Бренд: {{bag.brand.name}}
 
   .ui-view(flex)
     md-toolbar.md-table-toolbar.md-default
-      .md-toolbar-tools
-        h2(ng-class="{'styles-for-mobile-text': vm.useMobile}") Просмотр и редактирование имеющихся багетов (плитка)
-        span(flex)
+      .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
+
+        div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
+          h2 Плитка багетов
+          md-switch(ng-model="vm.switchPosition" aria-label="Switch 2" )
+
+        span(ng-if='!vm.useMobile' flex)
+
         md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
           ng-click='vm.goToCreateBaguette()'
           ng-class="{'styles-for-mobile-button': vm.useMobile}"
@@ -65,7 +70,7 @@ div(layout='row')
               span.bold Бренд:&nbsp
               span {{bag.brand.name}}
             p
-              span.bold Ширина багета:&nbsp
+              span.bold Ширина:&nbsp
               span {{bag.borderWidth}} мм.
 
           md-card-actions.pink-button(layout='row', layout-align='center center')
