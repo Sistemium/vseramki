@@ -96,26 +96,27 @@
 
     });
 
+
     $scope.$watch('vm.toCheckForDuplicates', function () {
 
-      if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand) {
+      if (vm.isCreateState || vm.id && (typeof(vm.toCheckForDuplicates) !== 'undefined')) {
+        if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand) {
 
-        var filter = _.pick(vm.baguette, keys);
+          var filter = _.pick(vm.baguette, keys);
+          Baguette.findAll(filter, {bypassCache: true}).then(function (data) {
 
-        Baguette.findAll(filter, {bypassCache: true}).then(function (data) {
+            if (data.length) {
+              vm.showToast('Такой багет уже существует', false);
+              vm.unique = false;
+            } else {
+              vm.unique = true;
+            }
 
-          if (data.length) {
-            vm.showToast('Такой багет уже существует', false);
-            vm.unique = false;
-          } else {
-            vm.unique = true;
-          }
-        });
-
-
+          });
+        }
       }
-    })
 
+    });
 
   }
 
