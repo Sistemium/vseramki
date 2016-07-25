@@ -1,3 +1,15 @@
+@media only screen and (max-width: 959px) and (min-width: 746px) and (orientation: landscape) {
+  md-grid-list {
+    top: 8px;
+  }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 746px) and (orientation: landscape) {
+  md-table-container {
+    margin-top: 8px;
+  }
+}
+
 div > form > md-input-container {
   margin: 4px !important;
 }
@@ -59,7 +71,7 @@ table.md-table td.md-cell, table.md-table th.md-column {
 }
 
 .custom-margin {
-  margin: 8px 22px 8px 8px;
+  margin: 0 4px;
 }
 
 div > md-list > md-list-item.md-clickable:hover {
@@ -114,12 +126,36 @@ md-list.custom-list {
   position: fixed;
   bottom: 10px;
   right: 26px;
-  margin-right: -13px !important;
 }
 
-.styles-for-mobile-text{
-  text-align: center;
+.styles-for-mobile-text {
+  margin: 0 auto;
 }
+
+.styles-for-mobile-buttons {
+  margin-right: -8px !important;
+}
+
+md-switch > div {
+  top: 2px;
+  left: 8px;
+}
+
+.fixed-toolbar {
+  position: fixed !important;
+  background: white;
+}
+
+md-toolbar > .fixed-toolbar {
+  min-width: 56px !important;
+  height: 56px !important;
+}
+
+.center-header {
+  text-align: center;
+  padding: 20px;
+}
+
 
 // styles for md-toast
 
@@ -145,3 +181,5 @@ md-toast {
   //top: 0;
   padding: 4px;
 }
+
+
