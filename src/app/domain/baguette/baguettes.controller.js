@@ -7,15 +7,22 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state) {
+  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state, $window) {
 
     var vm = this;
-
-    var el = angular.element(document.getElementsByClassName('toolbar-fixed-top'));
+    var el = $window.document.getElementsByClassName('toolbar-fixed-top');
 
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
+
+    var currentState = $state.current.url;
+
+    if (currentState == '/tiles') {
+      vm.switchPosition = true;
+    } else {
+      vm.switchPosition = false;
+    }
 
     $q.all([
       Colour.findAll(),
@@ -114,15 +121,21 @@
 
     $scope.$watch('windowWidth', function (windowWidth) {
 
-      if (windowWidth < 600) {
-        vm.useMobile = true;
-      }
-      else
-        vm.useMobile = false;
+      windowWidth < 800 ? vm.hideBaguetteList = true : vm.hideBaguetteList = false;
+      windowWidth < 600 ? vm.useMobile = true : vm.useMobile = false;
 
     });
 
     $scope.$on('$destroy', subscription);
+
+    $scope.$watch('vm.switchPosition', function () {
+      if (vm.switchPosition == true) {
+        $state.go('baguettes.tiles');
+      } else {
+        $state.go('baguettes.table');
+      }
+    });
+
 
     //$scope.$on('$destroy', $scope.$on('BaguetteEditController', function (event, id) {
     //
