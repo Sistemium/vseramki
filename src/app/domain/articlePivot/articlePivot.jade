@@ -4,7 +4,7 @@ md-content.md-padding
     md-progress-circular(md-diameter='200' md-mode='indeterminate')
 
   // Dropdown lists
-  .md-whiteframe-1dp.radius(layout='row', layout-align='center center' ng-if='vm.ready')
+  .md-whiteframe-1dp.radius(layout='row', layout-align='center center' ng-if='vm.ready' layout-xs='column')
 
     md-menu(md-offset='0 60')
       md-button.md-raised.pink-button(aria-label='Группировка' ng-click='$mdOpenMenu($event)' )
@@ -45,7 +45,7 @@ md-content.md-padding
             span(md-menu-align-target id='columns')
               | {{ prop.label }}
 
-    md-button.md-fab.md-mini.md-icon-button(ng-click='vm.deleteFilters()' ng-if='vm.groups && vm.rows && vm.columns')
+    md-button.md-fab.md-mini.md-icon-button.pink-button-fab(ng-click='vm.deleteFilters()' ng-if='vm.groups && vm.rows && vm.columns')
       i.material-icons clear
 
 
