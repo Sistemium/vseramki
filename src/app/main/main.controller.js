@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -17,7 +17,7 @@
     activate();
 
     function activate() {
-      $timeout(function() {
+      $timeout(function () {
         vm.classAnimation = 'rubberBand';
       }, 4000);
     }
