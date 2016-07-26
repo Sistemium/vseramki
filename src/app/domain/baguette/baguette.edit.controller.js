@@ -84,16 +84,17 @@
 
       saveClickedOption: function (obj, name) {
 
-        vm.baguette[name] = obj.id;
+        if (obj && name) {
+          vm.baguette[name] = obj.id;
+        }
 
         if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand) {
-          vm.toCheckForDuplicates = true + obj.id;
+          vm.toCheckForDuplicates = true + (obj.id || vm.baguette[obj]);
         } else {
           vm.toCheckForDuplicates = false;
         }
 
       }
-
     });
 
 
