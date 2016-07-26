@@ -18,10 +18,6 @@ md-input-container > input {
   width: 180px !important;
 }
 
-.createBaguette {
-  margin-bottom: 20px
-}
-
 .image-size {
   width: 200px;
   height: auto;
@@ -38,6 +34,10 @@ figure {
   left: auto;
   position: fixed;
   overflow: hidden;
+}
+
+fieldset{
+  padding: 0
 }
 
 .md-padding > md-table-container > table.md-table th.md-column {
@@ -153,9 +153,16 @@ md-toolbar > .fixed-toolbar {
 
 .center-header {
   text-align: center;
-  padding: 20px;
+  padding-bottom: 10px;
 }
 
+.scrollable-list {
+  overflow: scroll;
+}
+
+.h3-no-margin{
+  margin: 5px 0;
+}
 
 // styles for md-toast
 
