@@ -119,6 +119,7 @@
 
     });
 
+
     $scope.$watch('windowWidth', function (windowWidth) {
 
       windowWidth < 800 ? vm.hideBaguetteList = true : vm.hideBaguetteList = false;
@@ -135,16 +136,6 @@
         $state.go('baguettes.table');
       }
     });
-
-
-    //$scope.$on('$destroy', $scope.$on('BaguetteEditController', function (event, id) {
-    //
-    //  Baguette.find(id)
-    //    .then(function(item){
-    //      vm.currId = item.id;
-    //    });
-    //
-    //}));
 
   }
 
