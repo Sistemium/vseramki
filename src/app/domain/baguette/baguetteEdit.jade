@@ -9,29 +9,71 @@
         div(ng-messages="widthForm.baguetteWidth.$error")
           div(ng-message="required") Поле не может быть пустым
 
-    md-menu(md-offset='20 0')
-      md-button.pink-button(aria-label='Material menu' ng-click='$mdOpenMenu($event)') Материал: {{ vm.baguette.material.name || 'Выбрать'}}
-      md-menu-content(width='2')
-        md-menu-item(ng-repeat="ma in vm.materials | orderBy:'name' track by ma.id")
-          md-button(ng-click="vm.saveClickedOption(ma, 'materialId')")
-            span(md-menu-align-target)
-              | {{ma.name}}
+    div(ng-if='vm.id' layout='column' layout-align='center center')
+      md-menu(md-offset='20 0')
+        md-button.pink-button(aria-label='Material menu' ng-click='$mdOpenMenu($event)') Материал: {{ vm.baguette.material.name || 'Выбрать'}}
+        md-menu-content(width='2')
+          md-menu-item(ng-repeat="ma in vm.materials | orderBy:'name' track by ma.id")
+            md-button(ng-click="vm.saveClickedOption(ma, 'materialId')")
+              span(md-menu-align-target)
+                | {{ma.name}}
 
-    md-menu(md-offset='20 0')
-      md-button.pink-button(aria-label='Colour menu' ng-click='$mdOpenMenu($event)') Цвет: {{ vm.baguette.colour.name || 'Выбрать'}}
-      md-menu-content(width='2')
-        md-menu-item(ng-repeat="co in vm.colours | orderBy:'name' track by co.id")
-          md-button(ng-click="vm.saveClickedOption(co, 'colourId')")
-            span(md-menu-align-target)
-              | {{co.name}}
+      md-menu(md-offset='20 0')
+        md-button.pink-button(aria-label='Colour menu' ng-click='$mdOpenMenu($event)') Цвет: {{ vm.baguette.colour.name || 'Выбрать'}}
+        md-menu-content(width='2')
+          md-menu-item(ng-repeat="co in vm.colours | orderBy:'name' track by co.id")
+            md-button(ng-click="vm.saveClickedOption(co, 'colourId')")
+              span(md-menu-align-target)
+                | {{co.name}}
 
-    md-menu(md-offset='20 0')
-      md-button.pink-button(aria-label='Size menu' ng-click='$mdOpenMenu($event)') Бренд: {{ vm.baguette.brand.name || 'Выбрать'}}
-      md-menu-content(width='2')
-        md-menu-item(ng-repeat="br in vm.brands | orderBy:'name' track by br.id")
-          md-button(ng-click="vm.saveClickedOption(br, 'brandId')")
-            span(md-menu-align-target)
-              | {{br.name}}
+      md-menu(md-offset='20 0')
+        md-button.pink-button(aria-label='Size menu' ng-click='$mdOpenMenu($event)') Бренд: {{ vm.baguette.brand.name || 'Выбрать'}}
+        md-menu-content(width='2')
+          md-menu-item(ng-repeat="br in vm.brands | orderBy:'name' track by br.id")
+            md-button(ng-click="vm.saveClickedOption(br, 'brandId')")
+              span(md-menu-align-target)
+                | {{br.name}}
 
-    md-button.md-raised.createBaguette(ng-if='vm.selectParamsChecker() && vm.id' ng-click='vm.createBaguette()') Сохранить изменения
-    md-button.md-raised.createBaguette(ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()') Создать багет
+    div.scrollable-list(style='height: {{ windowHeight - 240 }}px' layout='row' ng-if='vm.isCreateState')
+
+      div(layout='column')
+        h3.h3-no-margin Цвет:
+        div.md-margin.scrollable-list(style='height: {{ windowHeight - 275 }}px' )
+          md-radio-group(ng-model='vm.baguette.colourId' md-no-ink='true' ng-change="vm.saveClickedOption('colourId')")
+            md-radio-button(
+              ng-repeat="co in vm.colours | orderBy:'name' track by co.id"
+              aria-label="{{co.name}}"
+              ng-value='co.id'
+            )
+              span {{co.name}}
+
+      div(layout='column')
+        h3.h3-no-margin Бренд:
+        div.md-margin.scrollable-list(style='height: {{ windowHeight - 275 }}px')
+          md-radio-group(ng-model='vm.baguette.brandId' md-no-ink='true' ng-change="vm.saveClickedOption('brandId')")
+            md-radio-button(
+              ng-repeat="br in vm.brands | orderBy:'name' track by br.id"
+              aria-label="{{br.name}}"
+              ng-value='br.id'
+            )
+              span {{br.name}}
+
+      div(layout='column')
+        h3.h3-no-margin Материал:
+        div.md-margin.scrollable-list(style='height: {{ windowHeight - 275 }}px' )
+          md-radio-group(ng-model='vm.baguette.materialId' md-no-ink='true' ng-change="vm.saveClickedOption('materialId')")
+            md-radio-button(
+              ng-repeat="ma in vm.materials | orderBy:'name' track by ma.id"
+              aria-label="{{ma.name}}"
+              ng-value='ma.id'
+            )
+              span {{ma.name}}
+
+
+    md-button.md-raised(
+      ng-if='vm.selectParamsChecker() && vm.id' ng-click='vm.createBaguette()'
+    ) Сохранить изменения
+
+    md-button.md-raised.pink-button(
+      ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()'
+    ) Создать багет
