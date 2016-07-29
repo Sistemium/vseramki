@@ -29,6 +29,7 @@
       articleId: $stateParams.id
     };
 
+
     vm.showAdvanced = function (ev) {
 
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
@@ -146,7 +147,7 @@
       addToCart: Cart.addToCart,
       price: 33,
       article: '',
-      isEditable: false,
+      isEditable: true,     // admin settings !!
       isRootState: true
     }, stateFilter);
 
