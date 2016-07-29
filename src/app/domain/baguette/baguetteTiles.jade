@@ -17,7 +17,6 @@ div(layout='row')
         layout-wrap=''
       )
         .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
-          h3 ID: {{bag.id}}
           ul
             li Ширина: {{bag.borderWidth}} мм.
             li Материал: {{bag.material.name}}
@@ -57,7 +56,8 @@ div(layout='row')
       )
         md-card.margin-custom
 
-          img.md-card-image.image-size(ng-src='http://bit.ly/1Yu4VIb' alt='Baguette {{$index}}')
+          img.md-card-image.image-size(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length' ng-click='vm.showImageDialog($event, bag.id)' alt='Baguette {{$index}}')
+          img.md-card-image.image-size( ng-src='http://bit.ly/1Yu4VIb' ng-if='!bag.images.length' ng-click='vm.showImageDialog($event, bag.id)' alt='Baguette {{$index}}')
 
           md-card-content(align='center')
             p
@@ -77,4 +77,6 @@ div(layout='row')
             md-button(ng-click='vm.editBaguette(bag)') Редактировать
             md-button(ng-click='vm.deleteBaguette(bag)') Удалить
 
-
+    div(layout='row' layout-align='center center' style=' height: {{ windowHeight - 140 }}px' ng-show='!vm.baguettes.length')
+      md-button.md-raised.pink-button(ng-click='vm.goToCreateBaguette()')
+        | {{'Добавить багет'}}
