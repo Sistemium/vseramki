@@ -1,7 +1,7 @@
 .ng-gallery {
   width: 100%;
   height: 100%;
-  display: inline-block;
+  display: block;
 }
 
 img.ng-thumb {
@@ -108,9 +108,6 @@ img.ng-thumb {
   -webkit-user-drag: none;
 }
 
-.ng-gallery-content > img.effect {
-  animation: fadeIn 0.5s;
-}
 
 @keyframes fadeIn {
     from { opacity: 0.3; }
