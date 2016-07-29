@@ -32,12 +32,16 @@
           Article: {
             localField: 'article',
             foreignKey: 'articleId'
+          },
+          BaguetteImage: {
+            localField: 'images',
+            foreignKey: 'baguetteId'
           }
+
         }
       },
 
-      computed: {
-      }
+      computed: {}
 
     });
   }
