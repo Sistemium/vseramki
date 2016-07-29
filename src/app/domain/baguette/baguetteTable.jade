@@ -1,8 +1,8 @@
 div(layout='row')
 
   div.scrolling-contents(
-    ng-if='!vm.isRoot'
-    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
+  ng-if='!vm.isRoot'
+  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
   )
 
     md-list.custom-list(ng-hide='vm.hideBaguetteList')
@@ -12,12 +12,11 @@ div(layout='row')
         md-button.pink-button(ng-click='vm.backToList()') Вернуться к списку
 
       md-list-item(
-        ng-repeat='bag in vm.baguettes |orderBy: bag.name track by bag.id',
-        layout='row',
-        layout-wrap=''
+      ng-repeat='bag in vm.baguettes |orderBy: bag.name track by bag.id',
+      layout='row',
+      layout-wrap=''
       )
         .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
-          h3 ID: {{bag.id}}
           ul
             li Ширина: {{bag.borderWidth}} мм.
             li Материал: {{bag.material.name}}
@@ -34,23 +33,22 @@ div(layout='row')
         span(flex)
 
         md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
-          ng-click='vm.deleteBaguette(vm.selected)'
-          ng-if='vm.selected.length'
+        ng-click='vm.deleteBaguette(vm.selected)'
+        ng-if='vm.selected.length'
         )
           i.material-icons delete
 
         md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
-          ng-click='vm.resetCheckedBaguette()'
-          ng-if='vm.selected.length'
+        ng-click='vm.resetCheckedBaguette()'
+        ng-if='vm.selected.length'
         )
           i.material-icons redo
 
         md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
-          ng-click='vm.goToCreateBaguette()'
+        ng-click='vm.goToCreateBaguette()'
         )
           i.material-icons add circle
-
-    md-table-container
+    md-table-container(ng-if='vm.baguettes.length')
       table(md-table md-row-select multiple ng-model='vm.selected')
         thead(md-head md-order='filterBy')
           th(md-column) Фото
@@ -61,12 +59,17 @@ div(layout='row')
           th(md-column) Редактировать
         tbody(md-body)
           tr(md-row ng-repeat='bag in vm.baguettes | orderBy: filterBy track by bag.id' md-select='bag' md-select-id='id')
-            td(md-cell)
-              img.cart-thumbnail(ng-src='http://bit.ly/1Yu4VIb')
+            td(md-cell ng-click='vm.showImageDialog($event, bag.id)')
+              img.cart-thumbnail(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
+              img.cart-thumbnail(ng-src='http://bit.ly/1Yu4VIb' ng-if='!bag.images.length')
             td(md-cell) {{bag.colour.name}}
             td(md-cell) {{bag.material.name}}
             td(md-cell) {{bag.brand.name}}
             td(md-cell) {{bag.borderWidth}}
             td(md-cell)
-              md-button.md-mini.md-icon-button(ng-click='vm.editBaguette(bag)')
+              md-button.md-mini.md-icon-button(ng-click='vm.editBaguette(bag, $event)')
                 i.material-icons.clear-icon-size create
+
+    div(layout='row' layout-align='center center' style=' height: {{ windowHeight - 140 }}px;' ng-show='!vm.baguettes.length' ng-cloak)
+      md-button.md-raised.pink-button(ng-click='vm.goToCreateBaguette()')
+        | {{'Добавить багет'}}
