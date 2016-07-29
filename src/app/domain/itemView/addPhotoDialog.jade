@@ -23,9 +23,9 @@ md-dialog(aria-label='Add photo', ng-cloak='')
               drag='',
               preview=''
             )
-        div(layout='row' layout-align='center center')
+        div(layout='column' layout-align='center center')
           md-button.md-raised.button-upload(ng-click='vm.uploadFiles()' ng-if='vm.files.length') Загрузить картинки
-
+          md-progress-linear(value='{{vm.progressPercent}}' ng-if='vm.busy' md-mode='determinate')
     //md-dialog-actions(layout='row')
 
 
