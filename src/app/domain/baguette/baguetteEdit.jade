@@ -10,6 +10,7 @@
           div(ng-message="required") Поле не может быть пустым
 
     div(ng-if='vm.id' layout='column' layout-align='center center')
+
       md-menu(md-offset='20 0')
         md-button.pink-button(aria-label='Material menu' ng-click='$mdOpenMenu($event)') Материал: {{ vm.baguette.material.name || 'Выбрать'}}
         md-menu-content(width='2')
@@ -41,9 +42,9 @@
         div.md-margin.scrollable-list(style='height: {{ windowHeight - 275 }}px' )
           md-radio-group(ng-model='vm.baguette.colourId' md-no-ink='true' ng-change="vm.saveClickedOption('colourId')")
             md-radio-button(
-              ng-repeat="co in vm.colours | orderBy:'name' track by co.id"
-              aria-label="{{co.name}}"
-              ng-value='co.id'
+            ng-repeat="co in vm.colours | orderBy:'name' track by co.id"
+            aria-label="{{co.name}}"
+            ng-value='co.id'
             )
               span {{co.name}}
 
@@ -52,9 +53,9 @@
         div.md-margin.scrollable-list(style='height: {{ windowHeight - 275 }}px')
           md-radio-group(ng-model='vm.baguette.brandId' md-no-ink='true' ng-change="vm.saveClickedOption('brandId')")
             md-radio-button(
-              ng-repeat="br in vm.brands | orderBy:'name' track by br.id"
-              aria-label="{{br.name}}"
-              ng-value='br.id'
+            ng-repeat="br in vm.brands | orderBy:'name' track by br.id"
+            aria-label="{{br.name}}"
+            ng-value='br.id'
             )
               span {{br.name}}
 
@@ -77,3 +78,15 @@
     md-button.md-raised.pink-button(
       ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()'
     ) Создать багет
+
+  md-divider.md-margin
+
+  div(ng-if='vm.id ' layout='column' layout-align='center center' style='overflow: scroll')
+    div(layout='row')
+      h2.md-margin.center-header Загруженные фото ({{vm.baguetteImages.length}})
+      md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top(ng-if='vm.baguetteImages' ng-click='vm.showImageDialog($event, vm.id)')
+        i.material-icons add
+
+    md-button.pink-button(ng-if='!vm.baguetteImages.length' ng-click='vm.showImageDialog($event, vm.id)') Загрузить фото
+    div.gallery-wrapper(style='height: {{ windowHeight - (windowHeight / 1.45) }}px')
+      ng-gallery(images='vm.baguetteImages' thumbs-num='5')
