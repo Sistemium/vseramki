@@ -1,11 +1,25 @@
+'use-strict';
+
 (function () {
-  'use-strict';
 
   angular.module('vseramki').directive('ngGallery', ngGallery);
 
-  function ngGallery($document, $timeout, $q, $templateCache, $window) {
+  function ngGallery($document, $timeout, $q, $templateCache, $window, $state, Schema) {
 
     var el = $window.$;
+    var model;
+
+    if (/^cat/.test($state.current.name)) {
+      var ArticleImage = Schema.model('ArticleImage');
+      model = ArticleImage;
+
+    } else if (/^bag/.test($state.current.name)) {
+      var BaguetteImage = Schema.model('BaguetteImage');
+      model = BaguetteImage;
+
+    } else {
+      console.error('Unknown state');
+    }
 
     var defaults = {
       baseClass: 'ng-gallery',
@@ -38,15 +52,16 @@
       '</div>' +
       '<div class="ng-gallery-content" unselectable="on" ng-show="opened" ng-swipe-left="nextImage()" ng-swipe-right="prevImage()">' +
       '  <div class="uil-ring-css" ng-show="loading"><div></div></div>' +
-      '  <a class="close-popup forbid-marking" ng-click="closeGallery()"><i class="fa fa-close custom-material-icons">close</i></a>' +
+      '  <a class="close-popup forbid-marking" ng-click="closeGallery()"><i class="custom-material-icons">close</i></a>' +
+      '  <a class="close-popup forbid-marking" ng-click="deletePhoto(id, index)" style="right: 50px"><i class="custom-material-icons">delete</i></a>' +
       '  <a class="nav-left forbid-marking" ng-click="prevImage()"><i class="fa fa-angle-left custom-material-icons">chevron_left</i></a>' +
-      '  <img ondragstart="return false;" draggable="false" ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" />' +
-      '  <a class="nav-right forbid-marking" ng-click="nextImage()"><i class="fa fa-angle-right custom-material-icons">chevron_right</i></a>' +
-      '  <span class="info-text">{{ index + 1 }}/{{ images.length }} - {{ description }}</span>' +
+      '  <img ondragstart="return false;" draggable="false" ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" />' +
+      '  <a class="nav-right forbid-marking" ng-click="nextImage()"><i class="custom-material-icons">chevron_right</i></a>' +
+      '  <span class="info-text">{{ index + 1 }}/{{ images.length }} - {{ description }}  </span>' +
       '  <div class="ng-thumbnails-wrapper">' +
       '    <div class="ng-thumbnails">' +
       '      <div ng-repeat="i in images">' +
-      '        <img ng-src="{{ i.thumbnailSrc }}" ng-class="{\'active\': index === $index}" ng-click="changeImage($index)" />' +
+      '        <img draggable="false" ng-src="{{ i.thumbnailSrc }}" ng-class="{\'active\': index === $index}" ng-click="changeImage($index)" />' +
       '      </div>' +
       '    </div>' +
       '  </div>' +
@@ -55,11 +70,15 @@
 
     return {
       restrict: 'EA',
+
       scope: {
         images: '=',
         thumbsNum: '@',
         hideOverflow: '='
       },
+
+      //scope: 'true',
+
       controller: [
         '$scope',
         function ($scope) {
@@ -68,10 +87,13 @@
           });
         }
       ],
+
       templateUrl: function (element, attrs) {
         return attrs.templateUrl || defaults.templateUrl;
       },
+
       link: function (scope, element, attrs) {
+
         setScopeValues(scope, attrs);
 
         if (scope.thumbsNum >= 11) {
@@ -103,7 +125,6 @@
           image.onerror = function () {
             deferred.reject();
           };
-
           image.src = scope.images[i].largeSrc;
           scope.loading = true;
 
@@ -113,20 +134,10 @@
         var showImage = function (i) {
           loadImage(scope.index).then(function (resp) {
             scope.img = resp.src;
+            scope.id = scope.description;
             smartScroll(scope.index);
           });
           scope.description = scope.images[i].id || '';
-        };
-
-        scope.showImageDownloadButton = function () {
-          if (scope.images[scope.index] == null || scope.images[scope.index].downloadSrc == null) return
-          var image = scope.images[scope.index];
-          return angular.isDefined(image.downloadSrc) && 0 < image.downloadSrc.length;
-        };
-
-        scope.getImageDownloadSrc = function () {
-          if (scope.images[scope.index] == null || scope.images[scope.index].downloadSrc == null) return
-          return scope.images[scope.index].downloadSrc;
         };
 
         scope.changeImage = function (i) {
@@ -135,10 +146,13 @@
         };
 
         scope.nextImage = function () {
+
           scope.index += 1;
+
           if (scope.index === scope.images.length) {
             scope.index = 0;
           }
+
           showImage(scope.index);
         };
 
@@ -151,6 +165,7 @@
         };
 
         scope.openGallery = function (i) {
+
           if (angular.isDefined(i)) {
             scope.index = i;
             showImage(scope.index);
@@ -169,6 +184,7 @@
             $thumbnails.css({width: thumbnailsWidth + 'px'});
             $thumbwrapper.css({width: calculatedWidth.visible_width + 'px'});
             smartScroll(scope.index);
+
           });
         };
 
@@ -178,6 +194,25 @@
             el('body').css({overflow: ''});
           }
         };
+
+        scope.deletePhoto = function (id, index) {
+
+          if (scope.images.length == 1) {
+            model.destroy(id);
+            scope.closeGallery();
+          } else if ((scope.index + 1) == scope.images.length) {
+            model.destroy(id);
+            scope.index = 0;
+            showImage(scope.index + 1);
+          } else {
+            model.destroy(id);
+            scope.index = index;
+            scope.changeImage(index);
+
+          }
+
+        };
+
 
         $body.bind('keydown', function (event) {
           if (!scope.opened) {
@@ -196,8 +231,10 @@
         });
 
         var calculateThumbsWidth = function () {
-          var width = 0,
-            visible_width = 0;
+
+          var width = 0;
+          var visible_width = 0;
+
           angular.forEach($thumbnails.find('img'), function (thumb) {
             width += thumb.clientWidth;
             width += 10; // margin-right
