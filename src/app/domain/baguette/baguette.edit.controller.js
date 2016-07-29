@@ -7,42 +7,55 @@
     .controller('BaguetteEditController', BaguetteEditController)
   ;
 
-  function BaguetteEditController(Schema, Baguette, $mdToast, $scope, $state) {
+  function BaguetteEditController(Schema, Baguette, $mdToast, $scope, $state, $window, ImageHelper) {
 
     var vm = this;
+
     var keys = ['brandId', 'colourId', 'materialId'];
 
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
+    var BaguetteImage = Schema.model('BaguetteImage');
 
     vm.id = $state.params.id;
-    var el = angular.element(document.getElementsByClassName('toolbar-fixed-top'));
+    var el = $window.document.getElementsByClassName('toolbar-fixed-top');
     vm.unique = true;
 
     Colour.bindAll(false, $scope, 'vm.colours');
     Material.bindAll(false, $scope, 'vm.materials');
     Brand.bindAll(false, $scope, 'vm.brands');
+    BaguetteImage.bindAll({
+      baguetteId: vm.id
+    }, $scope, 'vm.baguetteImages');
 
     if (vm.id) {
-      Baguette.find(vm.id);
-      Baguette.bindOne(vm.id, $scope, 'vm.baguette');
-      //$scope.$emit('BaguetteEditController', id);
+      Baguette.find(vm.id)
+        .then(function (baguette) {
+          vm.baguette = baguette;
+        });
     } else {
       vm.isCreateState = true;
       vm.baguette = Baguette.createInstance();
-      Baguette.bindAll('', $scope, 'vm.baguetteTest');
     }
+
 
     function selectParamsChecker() {
       return vm.unique && vm.baguette && vm.baguette.colour && vm.baguette.material && vm.baguette.brand && vm.baguette.borderWidth;
     }
 
-
     angular.extend(vm, {
 
       selectParamsChecker: selectParamsChecker,
       selected: [],
+
+      showImageDialog: ImageHelper.mdDialogHelper(
+        function (imsImg, id) {
+          BaguetteImage.create(
+            angular.extend(imsImg, {
+              baguetteId: id
+            }));
+        }),
 
       showToast: function (resStr, status) {
         var theme;
@@ -84,6 +97,8 @@
 
       saveClickedOption: function (obj, name) {
 
+        console.log(vm.baguette);
+
         if (obj && name) {
           vm.baguette[name] = obj.id;
         }
@@ -93,7 +108,6 @@
         } else {
           vm.toCheckForDuplicates = false;
         }
-
       }
     });
 
