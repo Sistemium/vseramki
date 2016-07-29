@@ -7,30 +7,27 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state, $window) {
+  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state, $window, $mdDialog, $mdMedia, ImageHelper) {
 
     var vm = this;
     var el = $window.document.getElementsByClassName('toolbar-fixed-top');
+    var body2 = $window.document.getElementsByClassName('for-md-dialog');
 
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
+    var BaguetteImage = Schema.model('BaguetteImage');
 
     var currentState = $state.current.url;
 
-    if (currentState == '/tiles') {
-      vm.switchPosition = true;
-    } else {
-      vm.switchPosition = false;
-    }
-
     $q.all([
       Colour.findAll(),
-      Material.findAll({}),
-      Brand.findAll({})
+      Material.findAll(),
+      Brand.findAll(),
+      BaguetteImage.findAll()
     ]);
 
-    Baguette.findAll({});
+    Baguette.findAll();
 
     Baguette.bindAll({
       orderBy: [
@@ -38,10 +35,24 @@
       ]
     }, $scope, 'vm.baguettes');
 
+
+    if (currentState == '/tiles') {
+      vm.switchPosition = true;
+    } else {
+      vm.switchPosition = false;
+    }
+
     angular.extend(vm, {
 
-      baguette: Baguette.createInstance(),
       selected: [],
+
+      showImageDialog: ImageHelper.mdDialogHelper(
+        function (imsImg, id) {
+          BaguetteImage.create(
+            angular.extend(imsImg, {
+              baguetteId: id
+            }));
+        }),
 
       showToast: function (resStr, status) {
 
@@ -63,8 +74,9 @@
         );
       },
 
-
       editBaguette: function (item) {
+        //$event.stopPropagation();
+        //$event.preventDefault();
         $state.go('.edit', {id: item.id});
       },
 
@@ -118,7 +130,6 @@
       }
 
     });
-
 
     $scope.$watch('windowWidth', function (windowWidth) {
 
