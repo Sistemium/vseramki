@@ -20,8 +20,9 @@ md-input-container > input {
 
 .image-size {
   width: 200px;
-  height: auto;
+  height: 200px;
   margin: 0 auto;
+  padding: 2px;
 }
 
 figure {
@@ -162,6 +163,16 @@ md-toolbar > .fixed-toolbar {
 
 .h3-no-margin{
   margin: 5px 0;
+}
+
+.gallery-wrapper{
+  margin: 0 auto;
+  width: 50%;
+  overflow: scroll;
+}
+
+.pink-top{
+  top: 5px;
 }
 
 // styles for md-toast
