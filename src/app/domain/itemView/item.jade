@@ -80,14 +80,14 @@
                     md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
                     md-input-container
                       input.custom-input(
-                      aria-label="Количество"
-                      ng-model='vm.article.inCart.count'
-                      type="number"
-                      ng-blur="vm.onBlur(vm.article)"
-                      ng-change="vm.onCartChange(vm.article)"
-                      required
-                      min='1'
-                      step='1'
+                        aria-label="Количество"
+                        ng-model='vm.article.inCart.count'
+                        type="number"
+                        ng-blur="vm.onBlur(vm.article)"
+                        ng-change="vm.onCartChange(vm.article)"
+                        required
+                        min='1'
+                        step='1'
                       )
                     md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
             tr(md-row)
