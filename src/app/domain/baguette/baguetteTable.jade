@@ -1,8 +1,8 @@
 div(layout='row')
 
   div.scrolling-contents(
-  ng-if='!vm.isRoot'
-  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
+    ng-if='!vm.isRoot'
+    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
   )
 
     md-list.custom-list(ng-hide='vm.hideBaguetteList')
@@ -12,9 +12,9 @@ div(layout='row')
         md-button.pink-button(ng-click='vm.backToList()') Вернуться к списку
 
       md-list-item(
-      ng-repeat='bag in vm.baguettes |orderBy: bag.name track by bag.id',
-      layout='row',
-      layout-wrap=''
+        ng-repeat='bag in vm.baguettes |orderBy: bag.name track by bag.id',
+        layout='row',
+        layout-wrap=''
       )
         .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
           ul
@@ -60,8 +60,8 @@ div(layout='row')
         tbody(md-body)
           tr(md-row ng-repeat='bag in vm.baguettes | orderBy: filterBy track by bag.id' md-select='bag' md-select-id='id')
             td(md-cell ng-click='vm.showImageDialog($event, bag.id)')
-              img.cart-thumbnail(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
-              img.cart-thumbnail(ng-src='http://bit.ly/1Yu4VIb' ng-if='!bag.images.length')
+              img.image-thumbnail(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
+              img.image-thumbnail(ng-src='http://bit.ly/1Yu4VIb' ng-if='!bag.images.length')
             td(md-cell) {{bag.colour.name}}
             td(md-cell) {{bag.material.name}}
             td(md-cell) {{bag.brand.name}}
