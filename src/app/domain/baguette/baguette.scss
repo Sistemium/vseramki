@@ -23,6 +23,7 @@ md-input-container > input {
   height: 200px;
   margin: 0 auto;
   padding: 2px;
+  object-fit: contain;
 }
 
 figure {
@@ -37,7 +38,7 @@ figure {
   overflow: hidden;
 }
 
-fieldset{
+fieldset {
   padding: 0
 }
 
@@ -161,18 +162,59 @@ md-toolbar > .fixed-toolbar {
   overflow: scroll;
 }
 
-.h3-no-margin{
+.h3-no-margin {
   margin: 5px 0;
 }
 
-.gallery-wrapper{
+.gallery-wrapper {
   margin: 0 auto;
   width: 50%;
   overflow: scroll;
 }
 
-.pink-top{
+.pink-top {
   top: 5px;
+}
+
+.search:hover {
+  color: #ff4081;
+  cursor: pointer;
+}
+
+.search {
+  margin-top: 7px;
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+
+}
+
+.no-margin {
+  margin: 0;
+}
+
+md-input-container > .md-errors-spacer {
+  display: none !important;
+}
+
+.md-title {
+  text-align: center;
+}
+
+.input-padding {
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.min-width-choose-attr-div{
+  min-width: 300px
 }
 
 // styles for md-toast
@@ -199,5 +241,3 @@ md-toast {
   //top: 0;
   padding: 4px;
 }
-
-
