@@ -49,16 +49,16 @@
             )
 
         div.scrollable-list(style='height: {{ windowHeight - 280 }}px;' )
-          
+
           div.md-margin(
-            ng-if='vm.attrsSearchColour.name.length > 2 || filteredResultsColour.length < 1'
+            ng-if='vm.attrsSearchColour.name.length > 1 || filteredResultsColour.length < 1'
             layout='row'
             layout-align='center center'
           )
             md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
               i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchColour.name, 'Colour')") add
 
-          md-radio-group(ng-model='vm.baguette.colourId' md-no-ink='true' ng-change="vm.saveClickedOption('colourId')")
+          md-radio-group(ng-if='vm.colours.length' ng-model='vm.baguette.colourId' md-no-ink='true' ng-change="vm.saveClickedOption('colourId')")
             md-radio-button(
               ng-repeat="co in vm.colours | filter:vm.attrsSearchColour | orderBy:'name' as filteredResultsColour track by co.id"
               aria-label="{{co.name}}"
@@ -80,14 +80,14 @@
         div.scrollable-list(style='height: {{ windowHeight - 280 }}px')
 
           div.md-margin(
-            ng-if='vm.attrsSearchBrand.name.length > 2 || filteredResultsBrand.length < 1'
+            ng-if='vm.attrsSearchBrand.name.length > 1 || filteredResultsBrand.length < 1'
             layout='row'
             layout-align='center center'
           )
             md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
               i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchBrand.name, 'Brand')") add
 
-          md-radio-group(ng-model='vm.baguette.brandId' md-no-ink='true' ng-change="vm.saveClickedOption('brandId')")
+          md-radio-group(ng-if='vm.brands.length' ng-model='vm.baguette.brandId' md-no-ink='true' ng-change="vm.saveClickedOption('brandId')")
             md-radio-button(
               ng-repeat="br in vm.brands | filter:vm.attrsSearchBrand | orderBy:'name' as filteredResultsBrand track by br.id"
               aria-label="{{br.name}}"
@@ -110,14 +110,14 @@
         div.scrollable-list(style='height: {{ windowHeight - 280 }}px' )
 
           div.md-margin(
-            ng-if='vm.attrsSearchMaterial.name.length > 2 || filteredResultsMaterial.length < 1'
+            ng-if='vm.attrsSearchMaterial.name.length > 1 || filteredResultsMaterial.length < 1'
             layout='row'
             layout-align='center center'
           )
             md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
               i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchMaterial.name, 'Material')") add
 
-          md-radio-group(ng-model='vm.baguette.materialId' md-no-ink='true' ng-change="vm.saveClickedOption('materialId')")
+          md-radio-group(ng-if='vm.materials.length' ng-model='vm.baguette.materialId' md-no-ink='true' ng-change="vm.saveClickedOption('materialId')")
             md-radio-button(
               ng-repeat="ma in vm.materials | filter:vm.attrsSearchMaterial | orderBy:'name' as filteredResultsMaterial track by ma.id"
               aria-label="{{ma.name}}"
