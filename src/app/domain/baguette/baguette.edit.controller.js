@@ -7,7 +7,8 @@
     .controller('BaguetteEditController', BaguetteEditController)
   ;
 
-  function BaguetteEditController(Schema, Baguette, $mdToast, $scope, $state, $window, ImageHelper) {
+  function BaguetteEditController(Schema, Baguette, $mdToast, $scope, $state, $window, ImageHelper, ModalHelper) {
+
 
     var vm = this;
 
@@ -46,8 +47,11 @@
 
     angular.extend(vm, {
 
-      selectParamsChecker: selectParamsChecker,
+      attrsSearchMaterial: {},
+      attrsSearchColour: {},
+      attrsSearchBrand: {},
       selected: [],
+      selectParamsChecker: selectParamsChecker,
 
       showImageDialog: ImageHelper.mdDialogHelper(
         function (imsImg, id) {
@@ -97,8 +101,6 @@
 
       saveClickedOption: function (obj, name) {
 
-        console.log(vm.baguette);
-
         if (obj && name) {
           vm.baguette[name] = obj.id;
         }
@@ -108,9 +110,35 @@
         } else {
           vm.toCheckForDuplicates = false;
         }
-      }
-    });
+      },
 
+      addAttr: ModalHelper.showModal(
+        function (answer, attr, model) {
+          if (answer) {
+            var foundModel = (Schema.model(model));
+            foundModel.findAll({name: attr}, {bypassCache: true}).then(function (item) {
+              if (item.length) {
+                vm.showToast('Такой атрибут уже сущетвует', false)
+              } else {
+                var formatedAttr = attr.slice(0, 1).toUpperCase() + attr.slice(1).toLowerCase();
+
+                foundModel.create({name: formatedAttr}).then(function (a) {
+                  vm.showToast('Атрибут ' + a.name + ' сохранен', true);
+
+                  var resetFiled = 'attrsSearch' + model;
+                  vm[resetFiled].name = '';
+
+                  var markAdded = model.toLowerCase() + 'Id';
+                  vm.baguette[markAdded] = a.id;
+                });
+              }
+            });
+
+          }
+        }
+      )
+
+    });
 
     $scope.$watch('vm.toCheckForDuplicates', function () {
 
