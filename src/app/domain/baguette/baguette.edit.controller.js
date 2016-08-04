@@ -85,7 +85,9 @@
         Baguette.create(vm.baguette)
           .then(function () {
             vm.showToast('Багет сохранен', true);
-            vm.baguette = Baguette.createInstance();
+            if (!vm.id) {
+              vm.baguette = Baguette.createInstance();
+            }
             $scope.widthForm.$setUntouched();
           })
           .catch(function (obj) {
