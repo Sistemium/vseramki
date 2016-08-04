@@ -30,8 +30,6 @@
       folder = 'Unknown'
     }
 
-    console.log(folder);
-
     var un = $scope.$on('uploadProgress', function (e, progressPercent) {
       vm.progressPercent = progressPercent;
     });
