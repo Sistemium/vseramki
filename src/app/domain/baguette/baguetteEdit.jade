@@ -35,41 +35,95 @@
               span(md-menu-align-target)
                 | {{br.name}}
 
-    div.scrollable-list(style='height: {{ windowHeight - 240 }}px' layout='row' ng-if='vm.isCreateState')
+    div.scrollable-list(style='height: {{ windowHeight - 230 }}px' layout='row' ng-if='vm.isCreateState')
 
-      div(layout='column')
-        h3.h3-no-margin Цвет:
-        div.md-margin.scrollable-list(style='height: {{ windowHeight - 275 }}px' )
+      div.md-padding.min-width-choose-attr-div(layout='column')
+        div.no-select(layout='row')
+          h3.h3-no-margin Цвет:
+          md-input-container.no-margin
+            input.input-padding(
+              aria-label='ColourInput'
+              type='text'
+              ng-model='vm.attrsSearchColour.name'
+              input-clear='black'
+            )
+
+        div.scrollable-list(style='height: {{ windowHeight - 280 }}px;' )
+          
+          div.md-margin(
+            ng-if='vm.attrsSearchColour.name.length > 2 || filteredResultsColour.length < 1'
+            layout='row'
+            layout-align='center center'
+          )
+            md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
+              i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchColour.name, 'Colour')") add
+
           md-radio-group(ng-model='vm.baguette.colourId' md-no-ink='true' ng-change="vm.saveClickedOption('colourId')")
             md-radio-button(
-            ng-repeat="co in vm.colours | orderBy:'name' track by co.id"
-            aria-label="{{co.name}}"
-            ng-value='co.id'
+              ng-repeat="co in vm.colours | filter:vm.attrsSearchColour | orderBy:'name' as filteredResultsColour track by co.id"
+              aria-label="{{co.name}}"
+              ng-value='co.id'
             )
               span {{co.name}}
 
-      div(layout='column')
-        h3.h3-no-margin Бренд:
-        div.md-margin.scrollable-list(style='height: {{ windowHeight - 275 }}px')
+      div.md-padding.min-width-choose-attr-div(layout='column')
+        div.no-select(layout='row')
+          h3.h3-no-margin Бренд:
+          md-input-container.no-margin
+            input.input-padding(
+              aria-label='BrandInput'
+              type='text'
+              ng-model='vm.attrsSearchBrand.name'
+              input-clear='black'
+            )
+
+        div.scrollable-list(style='height: {{ windowHeight - 280 }}px')
+
+          div.md-margin(
+            ng-if='vm.attrsSearchBrand.name.length > 2 || filteredResultsBrand.length < 1'
+            layout='row'
+            layout-align='center center'
+          )
+            md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
+              i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchBrand.name, 'Brand')") add
+
           md-radio-group(ng-model='vm.baguette.brandId' md-no-ink='true' ng-change="vm.saveClickedOption('brandId')")
             md-radio-button(
-            ng-repeat="br in vm.brands | orderBy:'name' track by br.id"
-            aria-label="{{br.name}}"
-            ng-value='br.id'
+              ng-repeat="br in vm.brands | filter:vm.attrsSearchBrand | orderBy:'name' as filteredResultsBrand track by br.id"
+              aria-label="{{br.name}}"
+              ng-value='br.id'
             )
               span {{br.name}}
 
-      div(layout='column')
-        h3.h3-no-margin Материал:
-        div.md-margin.scrollable-list(style='height: {{ windowHeight - 275 }}px' )
+
+      div.md-padding.min-width-choose-attr-div(layout='column')
+        div.no-select(layout='row')
+          h3.h3-no-margin Материал:
+          md-input-container.no-margin
+            input.input-padding(
+              aria-label='MaterialInput'
+              type='text'
+              ng-model='vm.attrsSearchMaterial.name'
+              input-clear='black'
+            )
+
+        div.scrollable-list(style='height: {{ windowHeight - 280 }}px' )
+
+          div.md-margin(
+            ng-if='vm.attrsSearchMaterial.name.length > 2 || filteredResultsMaterial.length < 1'
+            layout='row'
+            layout-align='center center'
+          )
+            md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
+              i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchMaterial.name, 'Material')") add
+
           md-radio-group(ng-model='vm.baguette.materialId' md-no-ink='true' ng-change="vm.saveClickedOption('materialId')")
             md-radio-button(
-              ng-repeat="ma in vm.materials | orderBy:'name' track by ma.id"
+              ng-repeat="ma in vm.materials | filter:vm.attrsSearchMaterial | orderBy:'name' as filteredResultsMaterial track by ma.id"
               aria-label="{{ma.name}}"
               ng-value='ma.id'
             )
               span {{ma.name}}
-
 
     md-button.md-raised(
       ng-if='vm.selectParamsChecker() && vm.id' ng-click='vm.createBaguette()'
@@ -84,7 +138,10 @@
   div(ng-if='vm.id ' layout='column' layout-align='center center' style='overflow: scroll')
     div(layout='row')
       h2.md-margin.center-header Загруженные фото ({{vm.baguetteImages.length}})
-      md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top(ng-if='vm.baguetteImages' ng-click='vm.showImageDialog($event, vm.id)')
+      md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top(
+        ng-if='vm.baguetteImages.length'
+        ng-click='vm.showImageDialog($event, vm.id)'
+      )
         i.material-icons add
 
     md-button.pink-button(ng-if='!vm.baguetteImages.length' ng-click='vm.showImageDialog($event, vm.id)') Загрузить фото
