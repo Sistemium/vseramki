@@ -36,11 +36,7 @@
     }, $scope, 'vm.baguettes');
 
 
-    if (currentState == '/tiles') {
-      vm.switchPosition = true;
-    } else {
-      vm.switchPosition = false;
-    }
+    vm.switchPosition = /tiles/g.test(currentState);
 
     angular.extend(vm, {
 
@@ -143,7 +139,10 @@
 
     $scope.$on('$destroy', subscription);
 
-    $scope.$watch('vm.switchPosition', function () {
+    $scope.$watch('vm.switchPosition', function (o,n) {
+      if (o===n) {
+        return;
+      }
       if (vm.switchPosition == true) {
         $state.go('baguettes.tiles');
       } else {
