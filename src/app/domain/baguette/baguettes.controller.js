@@ -7,7 +7,7 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state, $window, $mdDialog, $mdMedia, ImageHelper) {
+  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state, $window, ImageHelper) {
 
     var vm = this;
     var el = $window.document.getElementsByClassName('toolbar-fixed-top');
@@ -75,8 +75,6 @@
       },
 
       editBaguette: function (item) {
-        //$event.stopPropagation();
-        //$event.preventDefault();
         $state.go('.edit', {id: item.id});
       },
 
@@ -100,7 +98,12 @@
         vm.selected = [];
       },
 
+
+      ///???????????????????????????????????????////
+
       saveClickedOption: function (obj, name) {
+        console.log('sfsdfsdf');
+        console.log(obj, name);
         vm.baguette[name] = obj.id;
       },
 
