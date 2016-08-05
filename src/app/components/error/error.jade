@@ -1,0 +1,9 @@
+md-card(ng-if='!vm.hidden')
+  md-card-header
+    md-card-header-text
+      .md-title
+        span Auth Error
+        md-button.vr-button-right.md-icon-button(aria-label='dismiss' ng-click='vm.close()')
+          md-icon(md-svg-icon='md-close')
+  md-card-content
+    div {{vm.errorText}}
