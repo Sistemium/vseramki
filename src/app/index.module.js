@@ -10,7 +10,8 @@
       'md.data.table',
       'lfNgMdFileInput',
       'ngFileUpload',
-      'ngMessages'
+      'ngMessages',
+      'sistemiumAngularAuth'
     ]);
 
 })();
