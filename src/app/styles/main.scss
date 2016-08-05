@@ -7,3 +7,8 @@
 .pull-right {
   float: right;
 }
+
+#scroll-main {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
