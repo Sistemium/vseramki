@@ -80,54 +80,50 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
   // Filters in sidenav
 
-  md-sidenav.md-sidenav-right.md-whiteframe-1dp(layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')")
+  md-sidenav.md-sidenav-right.md-whiteframe-1dp(
+  layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
+  )
     p.md-title Фильтры
 
-    div.first-div
-      md-button(ng-if='vm.currentFilter.frameSize.name' ng-click="vm.delCurrFilter('frameSize')").md-fab.md-mini.custom-filter-reset-button
-        i.custom-material-icons clear
-      md-menu(md-offset='20 0')
-        md-button.choose-filter-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Размер ({{ vm.frameSizes.length }}): {{vm.currentFilter.frameSize.name || 'Все'}}
-        md-menu-content(width='2')
-          md-menu-item(ng-repeat="fs in vm.frameSizes | orderBy:'name' track by fs.id")
-            md-button(ng-click="vm.filterOptionClick(fs,'frameSize')")
-              span(md-menu-align-target='')
-                | {{fs.name}}
+    property-filter(
+    property-name='frameSize'
+    property-label='Брэнд'
+    options='vm.frameSizes'
+    current-option='vm.currentFilter.frameSize'
+    set-option-fn='vm.filterOptionClick',
+    clear-fn='vm.delCurrFilter'
+    )
 
-    div
-      md-button(ng-if='vm.currentFilter.brand.name' ng-click="vm.delCurrFilter('brand')").md-fab.md-mini.custom-filter-reset-button
-        i.custom-material-icons clear
-      md-menu(md-offset='20 0')
-        md-button.choose-filter-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Бренд ({{ vm.brands.length }}): {{ vm.currentFilter.brand.name || 'Все'}}
-        md-menu-content(width='2')
-          md-menu-item(ng-repeat="br in vm.brands | orderBy:'name' track by br.id")
-            md-button(ng-click="vm.filterOptionClick(br, 'brand')")
-              span(md-menu-align-target='')
-                | {{br.name}}
+    property-filter(
+    property-name='brand'
+    property-label='Брэнд'
+    options='vm.brands'
+    current-option='vm.currentFilter.brand'
+    set-option-fn='vm.filterOptionClick',
+    clear-fn='vm.delCurrFilter'
+    )
 
-    div
-      md-button(ng-if='vm.currentFilter.material.name' ng-click="vm.delCurrFilter('material')").md-fab.md-mini.custom-filter-reset-button
-        i.custom-material-icons clear
-      md-menu(md-offset='20 0')
-        md-button.choose-filter-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Материал ({{ vm.materials.length }}): {{ vm.currentFilter.material.name || 'Все'}}
-        md-menu-content(width='2')
-          md-menu-item(ng-repeat="ma in vm.materials | orderBy:'name' track by ma.id")
-            md-button(ng-click="vm.filterOptionClick(ma, 'material')")
-              span(md-menu-align-target='')
-                | {{ma.name}}
+    property-filter(
+    property-name='material'
+    property-label='Материал'
+    options='vm.materials'
+    current-option='vm.currentFilter.material'
+    set-option-fn='vm.filterOptionClick',
+    clear-fn='vm.delCurrFilter'
+    )
 
-    div
-      md-button(ng-if='vm.currentFilter.colour.name' ng-click="vm.delCurrFilter('colour')").md-fab.md-mini.custom-filter-reset-button
-        i.custom-material-icons clear
-      md-menu(md-offset='20 0')
-        md-button.choose-filter-button(aria-label='Size menu', ng-click='$mdOpenMenu($event)') Цвет ({{ vm.colours.length }}): {{ vm.currentFilter.colour.name || 'Все'}}
-        md-menu-content(width='2')
-          md-menu-item(ng-repeat="co in vm.colours | orderBy:'name' track by co.id")
-            md-button(ng-click="vm.filterOptionClick(co, 'colour')")
-              span(md-menu-align-target='')
-                | {{co.name}}
+    property-filter(
+    property-name='colour'
+    property-label='Цвет'
+    options='vm.colours'
+    current-option='vm.currentFilter.colour'
+    set-option-fn='vm.filterOptionClick',
+    clear-fn='vm.delCurrFilter'
+    )
 
-    md-button.md-raised.custom-button(aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength") Сбросить фильтры
+    md-button.md-raised.custom-button(
+    aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
+    ) Сбросить фильтры
 
 
 
