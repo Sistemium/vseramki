@@ -1,0 +1,13 @@
+md-button.md-fab.md-mini.custom-filter-reset-button(
+ng-click="vm.clearFilter()" ng-if='vm.currentOption'
+)
+  i.custom-material-icons clear
+md-menu(md-offset='20 0')
+  md-button.choose-filter-button(
+  aria-label='{{vm.propertyName}} menu', ng-click='$mdOpenMenu($event)'
+  ) {{vm.propertyLabel}} ({{ vm.options.length }}): {{ vm.currentOption.name || 'Любой'}}
+  md-menu-content(width='2')
+    md-menu-item(ng-repeat="o in vm.options | orderBy:'name' track by o.id")
+      md-button(ng-click="vm.optionClick(o)")
+        span(md-menu-align-target)
+          | {{o.name}}
