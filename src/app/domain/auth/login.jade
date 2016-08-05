@@ -1,0 +1,11 @@
+md-content(layout='column' layout-align='center center')
+
+  error(error-text='vm.error' ng-if='vm.error')
+
+  md-card
+    md-card-header
+      md-card-header-text
+        .md-title
+          span Войти
+    md-card-content(layout='column' layout-aling='center center')
+      oauth-buttons(buttons-config='vm.buttons')
