@@ -11,8 +11,7 @@
 
     var vm = this;
     var el = $window.document.getElementsByClassName('toolbar-fixed-top');
-    var body2 = $window.document.getElementsByClassName('for-md-dialog');
-
+    
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
