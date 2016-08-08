@@ -1,2 +1,11 @@
-md-content(layout='column')
-  md-button(type='button' ng-click='$ctrl.loginOauth(btn.url)' ng-repeat='btn in $ctrl.buttonsConfig') {{btn.name}}
+md-content.oauth-buttons(layout='column' style='padding: 10px')
+  md-button(
+    ng-click='$ctrl.loginOauth(btn.url)'
+    ng-repeat='btn in $ctrl.buttonsConfig'
+    class='{{btn.class}}'
+    layout='row'
+  )
+    i.fa.fa-lg(class='fa-{{btn.class}}')
+    span.divider
+    span(flex) {{btn.name}}
+
