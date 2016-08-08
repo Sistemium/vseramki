@@ -12,19 +12,23 @@
     vm.buttons = [
       {
         url: 'sms/vseramki',
-        name: 'Мобильный номер'
+        name: 'Мобильный номер',
+        class: 'mobile'
       },
       {
         url: 'facebook/vseramki',
-        name: 'Facebook'
+        name: 'Facebook',
+        class: 'facebook-official'
       },
       {
         url: 'ok/vseramki',
-        name: 'Одноклассники'
+        name: 'Одноклассники',
+        class: 'odnoklassniki'
       },
       {
         url: 'vk/vseramki',
-        name: 'Вконтакте'
+        name: 'Вконтакте',
+        class: 'vk'
       }
     ];
 
