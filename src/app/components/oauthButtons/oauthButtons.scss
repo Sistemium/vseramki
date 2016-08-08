@@ -1,0 +1,74 @@
+$oab-facebook-color: #3b5998;
+$oab-odnoklassniki-color: #f4731c;
+$oab-mobile-color: #d87a68;
+$oab-vk-color: #587ea3;
+
+.facebook-official {
+  color: #fff;
+  background-color: $oab-facebook-color;
+}
+
+.odnoklassniki {
+  color: #fff;
+  background-color: $oab-odnoklassniki-color;
+}
+
+.mobile {
+  color: #fff;
+  background-color: $oab-mobile-color;
+}
+
+i.fa-mobile {
+  font-size: 30px;
+}
+
+.vk {
+  color: #fff;
+  background-color: $oab-vk-color;
+}
+
+.oauth-buttons {
+
+  .divider {
+    border-left: 1px solid white;
+    height: 36px;
+    margin: 0 5px;
+  }
+
+  button:hover .divider {
+    border-color: lighten(silver, 90);
+  }
+
+  .facebook-official .divider {
+    border-color: lighten(#f0f0f0, 10);
+  }
+  .mobile .divider {
+    border-color: lighten(#f0f0f0, 10);
+  }
+  .vk .divider {
+    border-color: lighten(#f0f0f0, 10);
+  }
+  .odnoklassniki .divider {
+    border-color: lighten(#f0f0f0, 10);
+  }
+
+  i.fa {
+    min-width: 25px;
+    text-align: center;
+  }
+
+}
+
+.card-back-color {
+  background-color: #f3f4f6;
+}
+
+md-content.oauth-buttons {
+  background-color: #f3f4f6;
+}
+
+.login-div-center {
+  width: 100%;
+  height: 85%;
+  position: fixed;
+}
