@@ -31,8 +31,8 @@
       }
 
       $scope.$on('logged-in', setUser);
-      $scope.$on('logged-off', function() {
-        $window.location.href='';
+      $scope.$on('logged-off', function () {
+        $window.location.href = '';
       });
 
       _.assign(vm, {
@@ -49,6 +49,9 @@
           }, {
             sref: 'baguettes',
             label: 'Багет'
+          }, {
+            sref: 'login',
+            label: 'Авторизация'
           }
         ]
 
