@@ -1,11 +1,13 @@
 md-content.oauth-buttons(layout='column' style='padding: 10px')
-  md-button(
+
+  div.no-select.button-styles-for-div(
     ng-click='$ctrl.loginOauth(btn.url)'
     ng-repeat='btn in $ctrl.buttonsConfig'
     class='{{btn.class}}'
     layout='row'
+    layout-align='center center'
   )
-    i.fa.fa-lg(class='fa-{{btn.class}}')
+    i.fa(class='fa-{{btn.class}}')
     span.divider
-    span(flex) {{btn.name}}
+    span.bold-style(flex) {{btn.name}}
 
