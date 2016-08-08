@@ -5,10 +5,10 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
       a(href ng-if='vm.user.name' ng-click='vm.logout()') {{vm.user.name}}
 
     md-button.tool-button(
-    ng-repeat='btn in vm.navs track by btn.sref'
-    ui-sref='{{btn.sref}}'
-    ui-sref-active='md-primary'
-    ng-if='!vm.breakpoint'
+      ng-repeat='btn in vm.navs track by btn.sref'
+      ui-sref='{{btn.sref}}'
+      ui-sref-active='md-primary'
+      ng-if='!vm.breakpoint'
     ) {{ btn.label }}
 
     md-fab-speed-dial.md-scale.margin-fab-cust(
