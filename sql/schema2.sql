@@ -45,8 +45,8 @@ meta.defineEntity 'Baguette',
 ;
 
 meta.defineEntity 'Article',
- 'name;code;packageRel;pieceWeight;'
-  + 'lowPrice,price;highPrice,price;'
+ 'name;code,code,,nullable;packageRel;pieceWeight,pieceWeight,,nullable;'
+  + 'lowPrice,price,,nullable;highPrice,price,,nullable;'
   + 'isDeleted',
  'Baguette,baguetteId;FrameSize,frameSizeId'
 ;
