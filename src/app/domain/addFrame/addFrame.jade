@@ -1,0 +1,82 @@
+div(layout='row')
+
+  div.scrolling-contents(
+    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
+  )
+
+    md-list.custom-list(ng-hide='vm.hideBaguetteList')
+
+
+
+      md-list-item.md-item-text-header.md-whiteframe-z1(layout='row' layout-wrap='')
+        h3(style='text-align: center') Всего багетов: {{vm.baguettes.length}}
+        span(flex)
+        md-progress-circular(ng-if='!vm.baguettes')
+
+      md-list-item(
+        ng-repeat='bag in vm.baguettes |orderBy: bag.name track by bag.id',
+        layout='row'
+      )
+        .md-item-text.md-whiteframe-z1(flex='',  ng-click='vm.selectBaguette(bag)')
+          ul
+            li Ширина: {{bag.borderWidth}} мм.
+            li Материал: {{bag.material.name}}
+            li Цвет: {{bag.colour.name}}
+            li Бренд: {{bag.brand.name}}
+
+  div.md-whiteframe-z1(flex)
+
+    h2.center-text-input Свойства выбранного багета
+
+    form(name="frameAttrsForm" layout='column' layout-align='center center')
+      md-input-container
+        label Ширина багета (мм)
+        input(type='number' ng-model='vm.frameData.borderWidth' name='baguetteWidth' disabled)
+
+      md-input-container(style='margin-top: 12px')
+        label Материал
+        input.center-text-input(ng-model='vm.frameData.material.name' name='baguetteMaterial' disabled)
+
+      md-input-container(style='margin-top: 12px')
+        label Цвет
+        input.center-text-input(ng-model='vm.frameData.colour.name' name='baguetteColour' disabled)
+
+      md-input-container(style='margin-top: 12px')
+        label Бренд
+        input.center-text-input(ng-model='vm.frameData.brand.name' name='baguetteColour' disabled)
+
+
+    div(ng-if='vm.bagSelected')
+      h2.center-text-input Свойства рамки
+      form(name="frameAttrsForm" layout='column' layout-align='center center')
+
+        md-input-container
+          label Рыночная цена (руб.)
+          input(step='1' type='number' ng-model='vm.frameDataToWrite.highPrice' min='1'  name='highPrice' input-clear='black')
+
+        md-input-container(style='margin-top: 12px')
+          label Оптовая цена (руб.)
+          input(step='1' type='number' ng-model='vm.frameDataToWrite.lowPrice' min='1'  name='lowPrice' input-clear='black')
+
+        md-input-container(style='margin-top: 12px')
+          label Вес (кг)
+          input(step='0.1' type='number' ng-model='vm.frameDataToWrite.pieceWeight' min='1' required name='pieceWeight' input-clear='black')
+          div(ng-messages="frameAttrsForm.pieceWeight.$error")
+            div(ng-message="required") Поле не может быть пустым
+
+        md-input-container(style='margin-top: 12px')
+          label Штук в коробке
+          input(step='1' type='number' ng-model='vm.frameDataToWrite.packageRel' min='1' required name='packageRel' input-clear='black')
+          div(ng-messages="frameAttrsForm.packageRel.$error")
+            div(ng-message="required") Поле не может быть пустым
+
+      div(layout='column' layout-align='center center')
+        md-menu(md-offset='20 0')
+          md-button.pink-button(style='width:180px' aria-label='Frame Size Menu' ng-click='$mdOpenMenu($event)') Размер: {{ vm.frameData.frameSize || 'Выбрать'}}
+          md-menu-content(width='2')
+            md-menu-item(ng-repeat="fs in vm.frameSize | orderBy:'name' track by fs.id")
+              md-button(aria-label='Select Size' ng-click="vm.saveClickedOption(fs, 'frameSizeId')")
+                span(md-menu-align-target)
+                  | {{fs.name}}
+      div.cust-divider(layout='column' layout-align='center center')
+        md-button.md-raised(ng-click='vm.saveFrame()') Сохранить рамку
