@@ -6,7 +6,7 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q) {
+  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette) {
 
     var FrameSize = Schema.model('FrameSize');
     var Brand = Schema.model('Brand');
@@ -18,6 +18,11 @@
 
     Cart.findAll();
     Cart.bindAll({}, $scope, 'vm.cart');
+
+    Baguette.findAll().then(function (data) {
+      vm.baguette = data;
+      console.log(vm.baguette);
+    });
 
     ArticleImage.findAll({limit: 1000})
       .then(function (data) {
@@ -144,12 +149,17 @@
       filterOptionClick: filterOptionClick,
       resetFilters: resetFilters,
       delCurrFilter: delCurrFilter,
-      addToCart: Cart.addToCart
+      addToCart: Cart.addToCart,
+
+      goToCreateFrame: function () {
+        $state.go('addFrame');
+      }
 
     });
 
     Article.findAll({limit: 1000})
       .then(function (data) {
+        console.log(data);
         vm.articles = data;
         vm.currentPage = 1;
         vm.rows = _.chunk(data, groupSize);
