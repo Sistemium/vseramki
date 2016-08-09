@@ -77,7 +77,6 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
                   md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
 
 
-
   // Filters in sidenav
 
   md-sidenav.md-sidenav-right.md-whiteframe-1dp(
@@ -124,6 +123,10 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
     md-button.md-raised.custom-button(
     aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
     ) Сбросить фильтры
+
+    span(flex)
+
+    md-button.pink-button(style='padding: 0' ng-click="vm.goToCreateFrame()") Добавить рамку
 
 
 
