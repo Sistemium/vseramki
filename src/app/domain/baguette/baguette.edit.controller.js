@@ -81,7 +81,6 @@
       },
 
       createBaguette: function () {
-
         Baguette.create(vm.baguette)
           .then(function () {
             vm.showToast('Багет сохранен', true);
