@@ -40,6 +40,7 @@ function browserSyncInit(baseDir, browser) {
     server: server,
     browser: browser,
     ui:false,
+    logFileChanges: false,
     port: 3004
   });
 }
