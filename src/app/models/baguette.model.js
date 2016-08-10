@@ -4,7 +4,10 @@
 
   angular
     .module('vseramki')
-    .service('Baguette', Baguette)
+    .run(Baguette)
+    .service('Baguette',function(Schema){
+      return Schema.model('Baguette');
+    })
   ;
 
   function Baguette(Schema) {
@@ -30,8 +33,8 @@
         },
         hasMany: {
           Article: {
-            localField: 'article',
-            foreignKey: 'articleId'
+            localField: 'articles',
+            foreignKey: 'baguetteId'
           },
           BaguetteImage: {
             localField: 'images',
@@ -39,9 +42,7 @@
           }
 
         }
-      },
-
-      computed: {}
+      }
 
     });
   }

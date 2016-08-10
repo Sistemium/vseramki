@@ -20,8 +20,13 @@
           },
           Baguette: {
             localField: 'baguette',
-            foreignKey: 'baguetteId'
+            localKey: 'baguetteId'
+          },
+          FrameSize: {
+            localField: 'frameSize',
+            localKey: 'frameSizeId'
           }
+
         },
         hasMany: {
           ArticleImage: {

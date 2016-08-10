@@ -18,7 +18,7 @@
 
       relations: {
         hasMany: {
-          Article: {
+          Baguette: {
             localField: 'baguettes',
             foreignKey: 'colourId'
           }

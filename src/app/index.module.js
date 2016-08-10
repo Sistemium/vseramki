@@ -11,7 +11,8 @@
       'lfNgMdFileInput',
       'ngFileUpload',
       'ngMessages',
-      'sistemiumAngularAuth'
+      'sistemiumAngularAuth',
+      'models'
     ]);
 
 })();
