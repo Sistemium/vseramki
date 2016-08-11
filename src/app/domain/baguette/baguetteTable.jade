@@ -22,6 +22,7 @@ div(layout='row')
             li Материал: {{bag.material.name}}
             li Цвет: {{bag.colour.name}}
             li Бренд: {{bag.brand.name}}
+            li Рамок: {{ bag.articles.length }}
 
   .ui-view(flex)
     md-toolbar.md-table-toolbar.md-default
