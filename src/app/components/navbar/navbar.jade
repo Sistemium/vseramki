@@ -2,7 +2,6 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
   .md-toolbar-tools
     img.top-logo(src='images/top-logo.jpg' ui-sref='home')
     span(flex)
-      a(href ng-if='vm.user.name' ng-click='vm.logout()') {{vm.user.name}}
 
     md-button.tool-button(
       ng-repeat='btn in vm.navs track by btn.sref'
@@ -20,14 +19,20 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
           i.material-icons menu
       md-fab-actions
         md-button.md-raised.md-mini.custom-fab(
-        ng-repeat='fab in vm.navs track by fab.sref'
-        aria-label='{{fab.sref}}'
-        ui-sref='{{fab.sref}}'
-        ui-sref-active='md-primary'
+          ng-repeat='fab in vm.navs track by fab.sref'
+          aria-label='{{fab.sref}}'
+          ui-sref='{{fab.sref}}'
+          ui-sref-active='md-primary'
         )
           p {{ fab.label }}
 
     span(flex='5' ng-if='!vm.breakpoint')
+
+    md-button.md-fab.md-icon-button.md-mini(ng-if='vm.user.name' ng-click='vm.goToUserInfo()' ng-class="{auth: vm.breakpoint}")
+      i.material-icons lock_outline
+
+    md-button.md-fab.md-mini.md-icon-button(ng-if='!vm.user.name' ng-click='vm.login()' ng-class="{auth: vm.breakpoint}")
+      i.material-icons lock_open
 
     div.with-badge(flex='none' ng-if='!vm.breakpoint')
       md-button.md-fab.md-mini.md-icon-button(ui-sref='cart')
