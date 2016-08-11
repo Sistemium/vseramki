@@ -17,7 +17,7 @@
     },{
       name: 'create',
       url: '/create',
-      templateUrl: 'app/domain/baguette/baguetteEdit.html',
+      templateUrl: 'app/domain/baguette/baguetteCreate.html',
       controller: 'BaguetteEditController',
       controllerAs: 'vm'
     }];
