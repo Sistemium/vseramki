@@ -59,7 +59,15 @@ div(layout='row')
           th(md-column md-order-by='borderWidth') Ширина (мм.)
           th(md-column) Редактировать
         tbody(md-body)
-          tr(md-row ng-repeat='bag in vm.baguettes | orderBy: filterBy track by bag.id' md-select='bag' md-select-id='id')
+          tr(
+            md-row
+            ng-repeat='bag in vm.baguettes ' +
+            '| orderBy: filterBy ' +
+            '|limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+            ' track by bag.id'
+            md-select='bag'
+            md-select-id='id'
+          )
             td(md-cell ng-click='vm.showImageDialog($event, bag.id)')
               img.image-thumbnail(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
               img.image-thumbnail(ng-src='http://bit.ly/1Yu4VIb' ng-if='!bag.images.length')
@@ -70,6 +78,17 @@ div(layout='row')
             td(md-cell)
               md-button.md-mini.md-icon-button(ng-click='vm.editBaguette(bag, $event)')
                 i.material-icons.clear-icon-size create
+
+    md-table-pagination(
+      md-limit='vm.pagination.query.limit',
+      md-label='{{vm.pagination.labels}}',
+      md-limit-options='vm.pagination.limitOptions',
+      md-page='vm.pagination.query.page',
+      md-total='{{vm.baguettes.length}}',
+      md-page-select='true',
+      md-boundary-links='true'
+    )
+
 
     div(layout='row' layout-align='center center' style=' height: {{ windowHeight - 140 }}px;' ng-show='!vm.baguettes.length' ng-cloak)
       md-button.md-raised.pink-button(ng-click='vm.goToCreateBaguette()')
