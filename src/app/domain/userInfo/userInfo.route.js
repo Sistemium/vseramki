@@ -10,10 +10,10 @@
   function routerConfig(stateHelperProvider) {
     stateHelperProvider
       .state({
-        name: 'admin',
-        url: '/admin/:articleId',
-        templateUrl: 'app/admin/admin.html',
-        controller: 'AdminController',
+        name: 'userInfo',
+        url: '/userInfo',
+        templateUrl: 'app/domain/userInfo/userInfo.html',
+        controller: 'UserInfoController',
         controllerAs: 'vm'
       })
     ;
