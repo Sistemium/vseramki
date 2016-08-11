@@ -46,7 +46,7 @@
     vm.switchPosition = /tiles/g.test(currentState);
 
     var un = $scope.$on('baguetteRefresh', function (e, a) {
-      rebind(_.assign({},baguetteFilter, a));
+      rebind(_.assign({}, baguetteFilter, a));
     });
 
     $scope.$on('$destroy', un);
@@ -54,6 +54,19 @@
     angular.extend(vm, {
 
       selected: [],
+
+      pagination: {
+        labels: {
+          page: 'Страница:',
+          rowsPerPage: 'Кол-во элементов: ',
+          of: 'из'
+        },
+        query: {
+          limit: 5,
+          page: 1
+        },
+        limitOptions: [5, 10, 20, 40]
+      },
 
       showImageDialog: ImageHelper.mdDialogHelper(
         function (imsImg, id) {
@@ -154,6 +167,7 @@
       windowWidth < 600 ? vm.useMobile = true : vm.useMobile = false;
 
     });
+
 
     $scope.$on('$destroy', subscription);
 
