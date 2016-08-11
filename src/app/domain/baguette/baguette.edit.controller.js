@@ -45,12 +45,26 @@
       return vm.unique && vm.baguette && vm.baguette.colour && vm.baguette.material && vm.baguette.brand && vm.baguette.borderWidth;
     }
 
+    function hasChanges() {
+      return Baguette.hasChanges(vm.id);
+    }
+
+    function cancelChanges() {
+      return Baguette.revert(vm.baguette);
+    }
+
+    $scope.$on('$destroy', cancelChanges);
+
     angular.extend(vm, {
 
       attrsSearchMaterial: {},
       attrsSearchColour: {},
       attrsSearchBrand: {},
       selected: [],
+
+      hasChanges: hasChanges,
+      cancelChanges: cancelChanges,
+
       selectParamsChecker: selectParamsChecker,
 
       showImageDialog: ImageHelper.mdDialogHelper(
