@@ -17,7 +17,7 @@
 
     return directive;
 
-    function NavbarController(Cart, $scope, $mdMedia, Auth, $window) {
+    function NavbarController(Cart, $scope, $mdMedia, Auth, $window, $state) {
       Cart.bindAll({}, $scope, 'vm.cart');
       Cart.findAll();
 
@@ -37,7 +37,13 @@
 
       _.assign(vm, {
 
-        logout: Auth.logout,
+        goToUserInfo: function(){
+          $state.go('userInfo');
+        },
+
+        login: function(){
+           $state.go('login');
+        },
 
         navs: [
           {
@@ -49,9 +55,6 @@
           }, {
             sref: 'baguettes',
             label: 'Багет'
-          }, {
-            sref: 'login',
-            label: 'Авторизация'
           }
         ]
 
