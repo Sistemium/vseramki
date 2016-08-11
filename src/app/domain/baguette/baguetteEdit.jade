@@ -14,7 +14,7 @@
 
       md-input-container
         label Материал
-        md-select(ng-model='vm.baguette.materialId')
+        md-select(ng-model='vm.baguette.materialId' md-on-close="vm.saveClickedOption(vm.baguette.material, 'materialId')")
           md-option(ng-repeat="ma in vm.materials | orderBy:'name' track by ma.id" value="{{ma.id}}")
             | {{ma.name}}
       //md-menu(md-offset='20 0')
@@ -45,7 +45,7 @@
       md-button.md-raised(ng-click='vm.cancelChanges()') Отменить изменения
 
       md-button.md-raised(
-        ng-show='vm.selectParamsChecker()' ng-click='vm.createBaguette()'
+        ng-disabled='!vm.selectParamsChecker()' ng-click='vm.createBaguette()'
       ) Сохранить изменения
 
     md-button.md-raised.pink-button(
