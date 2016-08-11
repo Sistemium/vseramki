@@ -11,7 +11,7 @@
 
     var vm = this;
     var el = $window.document.getElementsByClassName('toolbar-fixed-top');
-    
+
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
@@ -28,14 +28,28 @@
 
     Baguette.findAll();
 
-    Baguette.bindAll({
+    var baguetteFilter = {
       orderBy: [
         ['ts', 'DESC']
       ]
-    }, $scope, 'vm.baguettes');
+    };
 
+    var unbindBaguettes;
+
+    function rebind(filter) {
+      if (unbindBaguettes) {
+        unbindBaguettes();
+      }
+      unbindBaguettes = Baguette.bindAll(filter, $scope, 'vm.baguettes');
+    }
 
     vm.switchPosition = /tiles/g.test(currentState);
+
+    var un = $scope.$on('baguetteRefresh', function (e, a) {
+      rebind(_.assign({},baguetteFilter, a));
+    });
+
+    $scope.$on('$destroy', un);
 
     angular.extend(vm, {
 
@@ -72,6 +86,7 @@
       editBaguette: function (item) {
         $state.go('.edit', {id: item.id});
       },
+
 
       deleteBaguette: function (item) {
 
@@ -120,6 +135,10 @@
 
       vm.isRoot = /(table|tiles)$/.test(toState.name);
 
+      if (vm.isRoot || !unbindBaguettes) {
+        rebind(baguetteFilter);
+      }
+
       if (/\.edit$/.test(toState.name)) {
         Baguette.find(toParams.id)
           .then(function (item) {
@@ -138,8 +157,8 @@
 
     $scope.$on('$destroy', subscription);
 
-    $scope.$watch('vm.switchPosition', function (o,n) {
-      if (o===n) {
+    $scope.$watch('vm.switchPosition', function (o, n) {
+      if (o === n) {
         return;
       }
       if (vm.switchPosition == true) {
