@@ -46,11 +46,13 @@
     }
 
     function hasChanges() {
-      return Baguette.hasChanges(vm.id);
+      return vm.id && Baguette.hasChanges(vm.id);
     }
 
     function cancelChanges() {
-      return Baguette.revert(vm.baguette);
+      if (hasChanges()) {
+        return Baguette.revert(vm.baguette);
+      }
     }
 
     $scope.$on('$destroy', cancelChanges);
@@ -120,11 +122,14 @@
           vm.baguette[name] = obj.id;
         }
 
-        if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand) {
-          vm.toCheckForDuplicates = true + (obj.id || vm.baguette[obj]);
-        } else {
-          vm.toCheckForDuplicates = false;
+        if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand && hasChanges()) {
+          checkForDuplicates();
         }
+
+        if (!vm.id) {
+          $scope.$emit('baguetteRefresh', _.pick(vm.baguette, keys));
+        }
+
       },
 
       addAttr: ModalHelper.showModal(
@@ -155,26 +160,22 @@
 
     });
 
-    $scope.$watch('vm.toCheckForDuplicates', function () {
+    function checkForDuplicates() {
 
-      if (vm.isCreateState || vm.id && (typeof(vm.toCheckForDuplicates) !== 'undefined')) {
-        if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand) {
+      var filter = _.pick(vm.baguette, keys);
+      Baguette.findAll(filter, {bypassCache: true})
+        .then(function (data) {
 
-          var filter = _.pick(vm.baguette, keys);
-          Baguette.findAll(filter, {bypassCache: true}).then(function (data) {
+          if (data.length) {
+            vm.showToast('Такой багет уже существует', false);
+            vm.unique = false;
+          } else {
+            vm.unique = true;
+          }
 
-            if (data.length) {
-              vm.showToast('Такой багет уже существует', false);
-              vm.unique = false;
-            } else {
-              vm.unique = true;
-            }
-
-          });
-        }
-      }
-
-    });
+        });
+      
+    }
 
   }
 
