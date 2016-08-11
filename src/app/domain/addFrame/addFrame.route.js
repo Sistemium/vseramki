@@ -13,7 +13,7 @@
         name: 'addFrame',
         url: '/addFrame',
         templateUrl: 'app/domain/addFrame/addFrame.html',
-        controller: 'AddFrame',
+        controller: 'AddFrameController',
         controllerAs: 'vm'
       });
   }
