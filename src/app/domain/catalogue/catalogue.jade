@@ -17,8 +17,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
     section(
       vs-repeat
       vs-scroll-parent="#scroll-main"
-      vs-size="400"
-      vs-scrolled-to-end="vm.nextPage()"
+      vs-size="250"
     )
 
       .row(ng-repeat="row in vm.rows" layout="row")
@@ -39,11 +38,10 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
                 src='http://bit.ly/1Yu4VIb'
                 ng-if='!article.images.length'
               )
-
           md-card-title
             md-card-title-text
               .md-subhead.center {{ article.name }}
-              .md-title.center.md-padding {{article.packageRel + ' руб.'}}
+              .md-title.center.md-padding {{ article.lowPrice + ' руб.'}}
 
 
           md-card-actions.center-div.fixed-height(ng-if='!article.inCart')
@@ -80,48 +78,48 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
   // Filters in sidenav
 
   md-sidenav.md-sidenav-right.md-whiteframe-1dp(
-  layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
+    layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
   )
     p.md-title Фильтры
 
     property-filter(
-    property-name='frameSize'
-    property-label='Размер'
-    options='vm.frameSizes'
-    current-option='vm.currentFilter.frameSize'
-    set-option-fn='vm.filterOptionClick',
-    clear-fn='vm.delCurrFilter'
+      property-name='frameSize'
+      property-label='Размер'
+      options='vm.frameSizes'
+      current-option='vm.currentFilter.frameSize'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
     )
 
     property-filter(
-    property-name='brand'
-    property-label='Брэнд'
-    options='vm.brands'
-    current-option='vm.currentFilter.brand'
-    set-option-fn='vm.filterOptionClick',
-    clear-fn='vm.delCurrFilter'
+      property-name='brand'
+      property-label='Брэнд'
+      options='vm.brands'
+      current-option='vm.currentFilter.brand'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
     )
 
     property-filter(
-    property-name='material'
-    property-label='Материал'
-    options='vm.materials'
-    current-option='vm.currentFilter.material'
-    set-option-fn='vm.filterOptionClick',
-    clear-fn='vm.delCurrFilter'
+      property-name='material'
+      property-label='Материал'
+      options='vm.materials'
+      current-option='vm.currentFilter.material'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
     )
 
     property-filter(
-    property-name='colour'
-    property-label='Цвет'
-    options='vm.colours'
-    current-option='vm.currentFilter.colour'
-    set-option-fn='vm.filterOptionClick',
-    clear-fn='vm.delCurrFilter'
+      property-name='colour'
+      property-label='Цвет'
+      options='vm.colours'
+      current-option='vm.currentFilter.colour'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
     )
 
     md-button.md-raised.custom-button(
-    aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
+      aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
     ) Сбросить фильтры
 
     span(flex)
