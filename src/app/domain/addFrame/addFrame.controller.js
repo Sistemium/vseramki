@@ -3,10 +3,10 @@
 
   angular
     .module('vseramki')
-    .controller('AddFrame', AddFrame)
+    .controller('AddFrameController', AddFrameController)
   ;
 
-  function AddFrame(Baguette, Schema, Article, $mdToast, $window) {
+  function AddFrameController(Baguette, Schema, Article, $mdToast, $window) {
 
     var vm = this;
 
@@ -18,37 +18,34 @@
         vm.baguettes = baguette;
       });
 
-    FrameSize.findAll().then(function (frames) {
-      vm.frameSize = frames
+    FrameSize.findAll().then(function (data) {
+      vm.frameSizes = data
     });
 
 
     angular.extend(vm, {
 
-      frameData: {},
-      frameDataToWrite: {},
+      baguette: false,
+      article: Article.createInstance(),
 
       selectBaguette: function (data) {
-        vm.frameData = data;
-        vm.bagSelected = true;
-        vm.frameDataToWrite.baguetteId = data.id;
-        vm.frameDataToWrite.name = 'Рамкa ' + data.material.name + ' ' + '\"' + data.brand.name + '\"' + ' ' + data.colour.name + ' ';
+        vm.baguette = data;
+        vm.article.baguetteId = data.id;
+        vm.article.name = 'Рамкa ' + data.material.name + ' ' + '\"' + data.brand.name + '\"' + ' ' + data.colour.name + ' ';
       },
 
       saveClickedOption: function (obj, id) {
-        vm.frameDataToWrite[id] = obj.id;
-        vm.frameDataToWrite.name += obj.name;
-
-        vm.frameData.frameSize = obj.name;
+        vm.article[id] = obj.id;
+        vm.article.name += obj.name;
       },
 
       deleteParams: function () {
-        vm.frameData = {};
-        vm.frameDataToWrite = {};
-        vm.bagSelected = false;
+        vm.baguette = false;
+        vm.article = Article.createInstance();
       },
 
       showToast: function (resStr, status) {
+
         var theme;
 
         if (status) {
@@ -68,16 +65,11 @@
       },
 
       saveFrame: function () {
-        vm.frameDataToWrite.name += '\/' + vm.frameDataToWrite.packageRel;
+        vm.article.name += '\/' + vm.article.packageRel;
 
-        Article.create(vm.frameDataToWrite).then(function (article) {
+        Article.create(vm.article).then(function () {
 
-          if (article) {
-            vm.showToast('Рамка сохранена', true);
-          }
-          else {
-            vm.showToast('Ошибка. Рамка не сохранена', false);
-          }
+          vm.showToast('Рамка сохранена', true);
           vm.deleteParams();
 
         }).catch(function (obj) {
@@ -87,8 +79,6 @@
           } else {
             vm.showToast('Ошибка. Обратитесь в тех. поддержку', false);
           }
-
-          vm.deleteParams();
 
         });
       }
