@@ -6,7 +6,7 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette) {
+  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper) {
 
     var FrameSize = Schema.model('FrameSize');
     var Brand = Schema.model('Brand');
@@ -201,35 +201,10 @@
 
     });
 
-    $scope.$watch('windowWidth', function (windowWidth) {
-
-      if (windowWidth > 1150) {
-        groupSize = 4;
-        vm.rowsFlex = 20
-      } else if (windowWidth > 950) {
-        groupSize = 3;
-        vm.rowsFlex = 25
-      } else if (windowWidth > 730) {
-        groupSize = 2;
-        vm.rowsFlex = 33
-      } else if (windowWidth > 550) {
-        groupSize = 1;
-        vm.rowsFlex = 50
-      } else {
-        groupSize = 1;
-        vm.rowsFlex = 100
-      }
-
-      vm.groupSize = groupSize;
-
-    });
-
-    $scope.$watch('vm.groupSize', function (nv, ov) {
-
-      if (nv || 0 !== ov || 0) {
-        vm.rows = _.chunk(vm.articles, groupSize)
-      }
-
+    VSHelper.watchForGroupSize($scope, 345, 240, function (nv) {
+      groupSize = nv;
+      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
+      vm.rows = _.chunk(vm.articles, nv);
     });
 
     $scope.$watch('vm.articleFilter', filterArticles);
