@@ -7,7 +7,7 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state, $window, ImageHelper) {
+  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state, $window, ImageHelper, VSHelper) {
 
     var vm = this;
     var el = $window.document.getElementsByClassName('toolbar-fixed-top');
@@ -26,7 +26,21 @@
       BaguetteImage.findAll()
     ]);
 
-    Baguette.findAll();
+    var chunkSize;
+
+
+    function setChunks (nv) {
+      chunkSize = nv;
+      vm.chunked = _.chunk(vm.baguettes, nv);
+    }
+
+    Baguette.findAll()
+      .then(function (baguettes) {
+        vm.baguettes = baguettes;
+        setChunks(chunkSize);
+      })
+    ;
+
 
     var baguetteFilter = {
       orderBy: [
@@ -181,6 +195,8 @@
         $state.go('baguettes.table');
       }
     });
+
+    VSHelper.watchForGroupSize($scope, 50, 250, setChunks);
 
   }
 
