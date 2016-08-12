@@ -253,3 +253,34 @@ md-toast {
   //top: 0;
   padding: 4px;
 }
+
+// virtual repeat test styles
+
+md-virtual-repeat-container {
+  width: 100%;
+}
+
+.baguettes {
+
+  .repeated-group {
+    height: 400px;
+    padding: 2px;
+    margin: 2px;
+  }
+
+  .repeated-group-item {
+    border: 1px solid black;
+    height: 400px;
+    max-width: 250px;
+    padding-top: 10px;
+    margin: 2px;
+    display: inline-block;
+  }
+
+}
+
+
+
+
+
+
