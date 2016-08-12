@@ -4,8 +4,7 @@
 
   angular
     .module('vseramki')
-    .controller('BaguetteEditController', BaguetteEditController)
-  ;
+    .controller('BaguetteEditController', BaguetteEditController);
 
   function BaguetteEditController(Schema, Baguette, $mdToast, $scope, $state, $window, ImageHelper, ModalHelper) {
 
@@ -116,13 +115,9 @@
           });
       },
 
-      saveClickedOption: function (obj, name) {
+      saveClickedOption: function () {
 
-        if (obj && name) {
-          vm.baguette[name] = obj.id;
-        }
-
-        if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand && hasChanges()) {
+        if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand && (hasChanges() || vm.isCreateState)) {
           checkForDuplicates();
         }
 
@@ -174,8 +169,21 @@
           }
 
         });
-      
+
     }
+
+    vm.inputReady = function(){
+
+      var elem = angular.element($window.document.getElementById('materialInput'));
+
+      console.error(elem);
+
+      elem.on('keydown', function (ev) {
+          console.log(ev);
+          ev.stopPropagation();
+        });
+
+    };
 
   }
 
