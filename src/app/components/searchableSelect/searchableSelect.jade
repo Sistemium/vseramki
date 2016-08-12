@@ -1,0 +1,12 @@
+md-input-container
+  label {{ vm.label }}
+  md-select(ng-model='vm.model' md-on-close="vm.onCloseFn()")
+    md-select-header.select-header
+      input(
+      elem-ready='vm.inputReady'
+      ng-model="search.name"
+      type="text"
+      placeholder="Поиск {{ vm.label }}а"
+      )
+    md-option(ng-repeat="option in vm.options | filter:search | orderBy:'name' track by option.id" ng-value="option.id")
+      | {{option.name}}
