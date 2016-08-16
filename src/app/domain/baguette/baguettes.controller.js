@@ -17,7 +17,7 @@
     var Colour = Schema.model('Colour');
     var BaguetteImage = Schema.model('BaguetteImage');
 
-    var currentState = $state.current.url;
+    vm.currentState = $state.current.url;
 
     $q.all([
       Colour.findAll(),
@@ -29,7 +29,7 @@
     var chunkSize;
 
 
-    function setChunks (nv) {
+    function setChunks(nv) {
       chunkSize = nv;
       vm.chunked = _.chunk(vm.baguettes, nv);
     }
@@ -56,8 +56,6 @@
       }
       unbindBaguettes = Baguette.bindAll(filter, $scope, 'vm.baguettes');
     }
-
-    vm.switchPosition = /tiles/g.test(currentState);
 
     var un = $scope.$on('baguetteRefresh', function (e, a) {
       rebind(_.assign({}, baguetteFilter, a));
@@ -154,6 +152,10 @@
 
       backToList: function () {
         $state.go($state.current.parent.name);
+      },
+
+      changeView: function (goTo) {
+        $state.go(goTo);
       }
 
     });
@@ -185,16 +187,6 @@
 
     $scope.$on('$destroy', subscription);
 
-    $scope.$watch('vm.switchPosition', function (o, n) {
-      if (o === n) {
-        return;
-      }
-      if (vm.switchPosition == true) {
-        $state.go('baguettes.tiles');
-      } else {
-        $state.go('baguettes.table');
-      }
-    });
 
     VSHelper.watchForGroupSize($scope, 50, 250, setChunks);
 
