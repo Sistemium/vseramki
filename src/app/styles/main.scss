@@ -12,3 +12,19 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
+
+.root.viewport {
+  background-color: white;
+}
+
+*:focus {
+  outline: none;
+}
+
+/* hiding input arrows */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
