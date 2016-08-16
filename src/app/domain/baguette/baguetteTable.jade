@@ -28,8 +28,19 @@ div(layout='row')
     md-toolbar.md-table-toolbar.md-default
       .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
         span Таблица багетов
+        div(style='display:inherit; margin-top: 3px')
 
-        md-switch(ng-model="vm.switchPosition" aria-label="Switch 1")
+          i.material-icons.icon-button.icon-button-disabled(
+            ng-click="vm.changeView('baguettes.table')"
+            ng-class="{'icons-button-active': vm.currentState == '/table'}"
+          ) view_headline
+
+          span.forbid-marking(style='cursor:default') |
+
+          i.material-icons.icon-button.icon-button-disabled(
+            ng-click="vm.changeView('baguettes.tiles')"
+            ng-class="{'icons-button-active': vm.currentState == '/tiles'}"
+          ) view_comfy
 
         span(flex)
 
