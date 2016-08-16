@@ -17,12 +17,7 @@ div(layout='row')
         layout-wrap=''
       )
         .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
-          ul
-            li Ширина: {{bag.borderWidth}} мм.
-            li Материал: {{bag.material.name}}
-            li Цвет: {{bag.colour.name}}
-            li Бренд: {{bag.brand.name}}
-            li Рамок: {{ bag.articles.length }}
+          p {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
 
   .ui-view(flex)
     md-toolbar.md-table-toolbar.md-default
@@ -80,8 +75,8 @@ div(layout='row')
             md-select-id='id'
           )
             td(md-cell ng-click='vm.showImageDialog($event, bag.id)')
-              img.image-thumbnail(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
-              img.image-thumbnail(ng-src='http://bit.ly/1Yu4VIb' ng-if='!bag.images.length')
+              img.image-thumbnail-table(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
+              img.image-thumbnail-table(ng-src='http://bit.ly/1Yu4VIb' ng-if='!bag.images.length')
             td(md-cell) {{bag.colour.name}}
             td(md-cell) {{bag.material.name}}
             td(md-cell) {{bag.brand.name}}
@@ -90,7 +85,7 @@ div(layout='row')
               md-button.md-mini.md-icon-button(ng-click='vm.editBaguette(bag, $event)')
                 i.material-icons.clear-icon-size create
 
-    md-table-pagination(
+    md-table-pagination.fixed-pagination(
       md-limit='vm.pagination.query.limit',
       md-label='{{vm.pagination.labels}}',
       md-limit-options='vm.pagination.limitOptions',
