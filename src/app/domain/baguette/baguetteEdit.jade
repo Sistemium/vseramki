@@ -11,24 +11,24 @@
           div(ng-message="required") Поле не может быть пустым
 
     searchable-select(
-    label='Материал'
-    model='vm.baguette.materialId'
-    options='vm.materials'
-    on-close='vm.saveClickedOption()'
+      label='Материал'
+      model='vm.baguette.materialId'
+      options='vm.materials'
+      on-close='vm.saveClickedOption()'
     )
 
     searchable-select(
-    label='Цвет'
-    model='vm.baguette.colourId'
-    options='vm.colours'
-    on-close='vm.saveClickedOption()'
+      label='Цвет'
+      model='vm.baguette.colourId'
+      options='vm.colours'
+      on-close='vm.saveClickedOption()'
     )
 
     searchable-select(
-    label='Бренд'
-    model='vm.baguette.brandId'
-    options='vm.brands'
-    on-close='vm.saveClickedOption()'
+      label='Бренд'
+      model='vm.baguette.brandId'
+      options='vm.brands'
+      on-close='vm.saveClickedOption()'
     )
 
     div(layout='row' ng-if='vm.hasChanges()')
