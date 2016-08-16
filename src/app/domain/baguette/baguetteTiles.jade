@@ -1,8 +1,8 @@
 div.baguettes(layout='row')
 
   div.scrolling-contents(
-  ng-if='!vm.isRoot'
-  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
+    ng-if='!vm.isRoot'
+    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
   )
 
     md-list.custom-list(ng-hide='vm.hideBaguetteList')
@@ -29,21 +29,53 @@ div.baguettes(layout='row')
 
         div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
           h2 Плитка багетов
-          md-switch(ng-model="vm.switchPosition" aria-label="Switch 2" )
+          div(style='display:inherit; margin-top: 3px;')
+            i.material-icons.icon-button.icon-button-disabled(ng-click="vm.changeView('baguettes.table')" ng-class="{'icons-button-active': vm.currentState == '/table'}") view_headline
+            span.forbid-marking(style='cursor:default') |
+            i.material-icons.icon-button.icon-button-disabled(ng-click="vm.changeView('baguettes.tiles')" ng-class="{'icons-button-active': vm.currentState == '/tiles'}") view_comfy
 
         span(ng-if='!vm.useMobile' flex)
 
         md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
-        ng-click='vm.goToCreateBaguette()'
-        ng-class="{'styles-for-mobile-button': vm.useMobile}"
+          ng-click='vm.goToCreateBaguette()'
+          ng-class="{'styles-for-mobile-button': vm.useMobile}"
         )
           i.material-icons add circle
 
-    div(layout='row' layout-align='center center' style='border: 1px solid black; margin: 12px; margin-bottom:0')
+    div.repeat-wrapper(layout='row' layout-align='center center')
       md-virtual-repeat-container(style='height: {{windowHeight - 150}}px')
         .repeated-group(md-virtual-repeat='bag in vm.chunked' layout='row' layout-align='center center')
           div.repeated-group-item(ng-repeat='i in bag' flex)
-            p {{i.colour.name}}
-            p {{i.brand.name}}
-            p {{i.borderWidth}}
-            p {{i.material.name}}
+            md-card(layout='column' layout-align='center center')
+
+              img.md-card-image.image-size(
+                ng-src='{{i.images[0].thumbnailSrc}}'
+                ng-if='i.images.length'
+                ng-click='vm.showImageDialog($event, i.id)'
+                alt='Baguette {{$index}}'
+              )
+
+              img.md-card-image.image-size(
+                ng-src='http://bit.ly/1Yu4VIb'
+                ng-if='!i.images.length'
+                ng-click='vm.showImageDialog($event, i.id)'
+                alt='Baguette {{$index}}'
+              )
+
+              md-card-content(align='center')
+                p
+                  span.bold Цвет:&nbsp
+                  span {{i.colour.name}}
+                p
+                  span.bold Материал:&nbsp
+                  span {{i.material.name}}
+                p
+                  span.bold Бренд:&nbsp
+                  span {{i.brand.name}}
+                p
+                  span.bold Ширина:&nbsp
+                  span {{i.borderWidth}} мм.
+
+              md-card-actions.pink-button(layout='row', layout-align='center center')
+                md-button(ng-click='vm.editBaguette(i)') Редактировать
+                md-button(ng-click='vm.deleteBaguette(i)') Удалить
