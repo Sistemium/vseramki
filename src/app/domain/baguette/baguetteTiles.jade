@@ -17,11 +17,7 @@ div.baguettes(layout='row')
       layout-wrap=''
       )
         .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
-          ul
-            li Ширина: {{bag.borderWidth}} мм.
-            li Материал: {{bag.material.name}}
-            li Цвет: {{bag.colour.name}}
-            li Бренд: {{bag.brand.name}}
+          p {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
 
   .ui-view(flex)
     md-toolbar.md-table-toolbar.md-default
