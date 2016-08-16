@@ -14,10 +14,6 @@ div > form > md-input-container {
   margin: 4px;
 }
 
-md-input-container > input {
-  width: 180px !important;
-}
-
 .image-size {
   width: 200px;
   height: 200px;
@@ -118,6 +114,7 @@ md-list-item > button {
 
 md-list.custom-list {
   padding: 3px 0 8px 0;
+  min-width: 410px;
 }
 
 .bold {
@@ -284,7 +281,12 @@ md-virtual-repeat-container {
   md-card {
     overflow: hidden;
   }
+}
 
+.image-thumbnail-table {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
 }
 
 .icon-button {
@@ -299,5 +301,28 @@ md-virtual-repeat-container {
   color: rgba(0, 0, 0, 0.12);
 }
 
+.component-container {
 
+  md-select {
+    width: 173px;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
 
+  .custom-label {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+  }
+
+}
+
+md-input-container {
+  margin-bottom: 0 !important;
+}
+
+.fixed-pagination {
+  position: fixed;
+  bottom: 0;
+  background: white;
+  width: 100%;
+}
