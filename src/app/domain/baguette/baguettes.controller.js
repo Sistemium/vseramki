@@ -74,10 +74,10 @@
           of: 'из'
         },
         query: {
-          limit: 5,
+          limit: 10,
           page: 1
         },
-        limitOptions: [5, 10, 20, 40]
+        limitOptions: [10, 20, 40, 80]
       },
 
       showImageDialog: ImageHelper.mdDialogHelper(
