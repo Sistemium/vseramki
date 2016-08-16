@@ -1,73 +1,59 @@
-.cartBody {
-  width: 100%;
+.cart{
+
+  .cartBody {
+    width: 100%;
+  }
+
+  .cartItem {
+    width: 98%;
+    margin: 3px;
+  }
+
+
+  .emptyCart {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #f3f4f6;
+    margin: 3px;
+    padding: 20px;
+  }
+
+  .table-container-class {
+    width: 100%;
+  }
+
+  .th-left-align {
+    margin-left: 20px;
+  }
+
+  .number-picker {
+    min-width: 150px;
+  }
+
+  .custom-input {
+    width: 30px !important;
+  }
+
+  input[type="number"] {
+    border: none;
+    border-bottom: solid 2px #c9c9c9;
+    -webkit-transition: border 0.3s;
+    -moz-transition: border 0.3s;
+    -o-transition: border 0.3s;
+    transition: border 0.3s;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  input[type="number"]:focus, .style-4 input[type="number"].focus {
+    border-bottom: solid 2px #969696;
+  }
+
+  .clear-icon-size{
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+
 }
-
-.cartItem {
-  margin: 0 auto;
-  width: 98%;
-  margin: 3px;
-}
-
-.root.viewport {
-  background-color: white;
-}
-
-.emptyCart {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  background-color: #f3f4f6;
-  margin: 3px;
-  padding: 20px;
-}
-
-.table-container-class {
-  width: 100%;
-}
-
-.th-left-align {
-  margin-left: 20px;
-}
-
-.number-picker {
-  min-width: 150px;
-}
-
-.custom-input {
-  width: 30px !important;
-}
-
-input[type="number"] {
-  border: none;
-  border-bottom: solid 2px #c9c9c9;
-  -webkit-transition: border 0.3s;
-  -moz-transition: border 0.3s;
-  -o-transition: border 0.3s;
-  transition: border 0.3s;
-  text-align: center;
-  font-size: 13px;
-}
-
-input[type="number"]:focus, .style-4 input[type="number"].focus {
-  border-bottom: solid 2px #969696;
-}
-
-/* standard browser border on focus disabled */
-
-*:focus {
-  outline: none;
-}
-
-/* hiding input arrows */
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.clear-icon-size{
-  font-size: 16px;
-  line-height: 1.7;
-}
-
