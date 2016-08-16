@@ -117,7 +117,7 @@ md-list-item > button {
 }
 
 md-list.custom-list {
-  padding: 3px 0px 8px 0px;
+  padding: 3px 0 8px 0;
 }
 
 .bold {
@@ -126,8 +126,8 @@ md-list.custom-list {
 
 .styles-for-mobile-button {
   position: fixed;
-  bottom: 10px;
-  right: 26px;
+  bottom: 42px;
+  right: 0;
 }
 
 .styles-for-mobile-text {
@@ -269,18 +269,35 @@ md-virtual-repeat-container {
   }
 
   .repeated-group-item {
-    border: 1px solid black;
     height: 400px;
-    max-width: 250px;
+    max-width: 300px;
     padding-top: 10px;
     margin: 2px;
     display: inline-block;
   }
 
+  md-card-actions {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  md-card {
+    overflow: hidden;
+  }
+
 }
 
+.icon-button {
+  cursor: pointer;
+}
 
+.icons-button-active {
+  color: rgb(255, 64, 129) !important;
+}
 
+.icon-button-disabled {
+  color: rgba(0, 0, 0, 0.12);
+}
 
 
 
