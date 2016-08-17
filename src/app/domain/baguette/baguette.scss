@@ -55,7 +55,16 @@ table.md-table td.md-cell, table.md-table th.md-column {
   background: #f3f4f6;
   border-radius: 3px;
   cursor: pointer;
-  margin: 5px;
+  margin: 5px 2px;
+}
+
+.md-item-header {
+  padding: 0 5px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  margin-left: 3px;
+  margin-bottom: 3px;
+  z-index: 2;
 }
 
 .md-item-text h3,
@@ -113,8 +122,7 @@ md-list-item > button {
 }
 
 md-list.custom-list {
-  padding: 3px 0 8px 0;
-  min-width: 410px;
+  min-width: 400px;
 }
 
 .bold {
@@ -326,3 +334,5 @@ md-input-container {
   background: white;
   width: 100%;
 }
+
+

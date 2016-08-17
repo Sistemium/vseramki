@@ -6,18 +6,19 @@ div(layout='row')
   )
 
     md-list.custom-list(ng-hide='vm.hideBaguetteList')
-      md-list-item.md-item-text-header.md-whiteframe-z1(layout='row' layout-wrap='')
+
+      md-list-item.md-item-header.md-whiteframe-z1(layout='row')
         h3 Всего багетов: {{vm.baguettes.length}}
         span(flex)
         md-button.pink-button(ng-click='vm.backToList()') Вернуться к списку
 
-      md-list-item(
-        ng-repeat='bag in vm.baguettes |orderBy: bag.name track by bag.id',
-        layout='row',
-        layout-wrap=''
-      )
-        .md-item-text.md-whiteframe-z1(flex='', ng-class="{'active-baguette ': vm.currId == bag.id }" ng-click='vm.changeBaguette(bag)')
-          p {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
+      md-virtual-repeat-container(style='height: {{windowHeight - 143 }}px')
+        div.md-item-text.md-whiteframe-z1(
+          md-virtual-repeat='bag in vm.baguettes'
+          ng-class="{'active-baguette ': vm.currId == bag.id }"
+          ng-click='vm.changeBaguette(bag)'
+        )
+          | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
 
   .ui-view(flex)
     md-toolbar.md-table-toolbar.md-default
