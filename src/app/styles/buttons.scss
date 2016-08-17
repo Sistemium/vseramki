@@ -39,3 +39,33 @@
   margin-right: 8px !important;
 }
 
+.yellow-button-fab {
+  width: 20px;
+  height: 20px;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  margin-right: 8px !important;
+  background-color: #eee400 !important;
+  color: white !important;
+}
+
+.green-button-fab {
+  width: 20px;
+  height: 20px;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  margin-right: 8px !important;
+  background-color: #0c7c02 !important;
+  color: white !important;
+}
+
+.button-cust-fab {
+  width: 30px;
+  height: 30px;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  margin-right: 8px !important;
+  border-radius: 50%;
+  line-height: 7px;
+  padding: 3px;
+}
