@@ -12,11 +12,11 @@
         modelName: '@',
         options: '=',
         label: '@',
-        onClose: '&'
+        onClose: '&',
+        notAddable: '='
       },
 
       controllerAs: 'vm',
-
 
       controller: function (Schema, $mdSelect, $mdToast, $window) {
 
@@ -80,7 +80,7 @@
                 .theme(theme)
                 .parent(el)
             );
-          },
+          }
 
         });
 
