@@ -335,4 +335,11 @@ md-input-container {
   width: 100%;
 }
 
-
+.alert-div {
+  background-color: #d63030;
+  padding: 10px;
+  color: white;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 2px;
+  font-size: 15px;
+}
