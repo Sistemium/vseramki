@@ -102,7 +102,7 @@
           $mdToast.simple()
             .textContent(resStr)
             .position('top right')
-            .hideDelay(1500)
+            .hideDelay(2000)
             .theme(theme)
             .parent(el)
         );
@@ -135,10 +135,7 @@
 
 
       ///???????????????????????????????????????////
-
       saveClickedOption: function (obj, name) {
-        console.log('sfsdfsdf');
-        console.log(obj, name);
         vm.baguette[name] = obj.id;
       },
 
@@ -162,6 +159,7 @@
 
     var subscription = $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
 
+
       vm.isRoot = /(table|tiles)$/.test(toState.name);
 
       if (vm.isRoot || !unbindBaguettes) {
@@ -179,7 +177,6 @@
 
     $scope.$watch('windowWidth', function (windowWidth) {
 
-      windowWidth < 800 ? vm.hideBaguetteList = true : vm.hideBaguetteList = false;
       windowWidth < 600 ? vm.useMobile = true : vm.useMobile = false;
 
     });
