@@ -51,7 +51,7 @@
             label: 'Главная'
           }, {
             sref: 'catalogue',
-            label: 'Каталог'
+            label: 'Рамки'
           }, {
             sref: 'baguettes',
             label: 'Багет'
