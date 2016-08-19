@@ -6,7 +6,7 @@
     .module('vseramki')
     .controller('BaguetteEditController', BaguetteEditController);
 
-  function BaguetteEditController(Schema, Baguette, $mdToast, $scope, $state, $window, ImageHelper, ModalHelper) {
+  function BaguetteEditController(Schema, Baguette, $mdToast, $scope, $state, $window, ImageHelper, ModalHelper, $timeout) {
 
 
     var vm = this;
@@ -62,6 +62,7 @@
       attrsSearchColour: {},
       attrsSearchBrand: {},
       selected: [],
+      dupMessage: '',
 
       hasChanges: hasChanges,
       cancelChanges: cancelChanges,
@@ -83,13 +84,18 @@
           theme = 'success-toast';
         } else {
           theme = 'fail-toast';
+          vm.dupMessage = '';
+          $timeout(function () {
+            vm.dupMessage = resStr;
+          }, 2500);
+
         }
 
         $mdToast.show(
           $mdToast.simple()
             .textContent(resStr)
             .position('top right')
-            .hideDelay(1500)
+            .hideDelay(2000)
             .theme(theme)
             .parent(el)
         );
@@ -166,22 +172,20 @@
             vm.unique = false;
           } else {
             vm.unique = true;
+            vm.dupMessage = '';
           }
 
         });
 
     }
 
-    vm.inputReady = function(){
+    vm.inputReady = function () {
 
       var elem = angular.element($window.document.getElementById('materialInput'));
 
-      console.error(elem);
-
       elem.on('keydown', function (ev) {
-          console.log(ev);
-          ev.stopPropagation();
-        });
+        ev.stopPropagation();
+      });
 
     };
 
