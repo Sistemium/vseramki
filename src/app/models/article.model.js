@@ -25,6 +25,18 @@
           FrameSize: {
             localField: 'frameSize',
             localKey: 'frameSizeId'
+          },
+          Colour: {
+            localField: 'colour',
+            localKey: 'colourId'
+          },
+          Brand: {
+            localField: 'brand',
+            localKey: 'brandId'
+          },
+          Material: {
+            localField: 'material',
+            localKey: 'materialId'
           }
 
         },
