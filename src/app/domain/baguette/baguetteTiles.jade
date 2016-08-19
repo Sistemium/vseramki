@@ -5,7 +5,7 @@ div.baguettes(layout='row')
     style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
   )
 
-    md-list.custom-list(ng-hide='vm.hideBaguetteList')
+    md-list.custom-list(hide-xs)
 
       md-list-item.md-item-header.md-whiteframe-z1(layout='row')
         h3 Всего багетов: {{vm.baguettes.length}}
@@ -19,7 +19,7 @@ div.baguettes(layout='row')
           ng-click='vm.changeBaguette(bag)'
         )
           | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
-          
+
   .ui-view(flex)
     md-toolbar.md-table-toolbar.md-default
       .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
@@ -27,20 +27,28 @@ div.baguettes(layout='row')
         div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
           h2 Плитка багетов
           div(style='display:inherit; margin-top: 3px;')
-            i.material-icons.icon-button.icon-button-disabled(ng-click="vm.changeView('baguettes.table')" ng-class="{'icons-button-active': vm.currentState == '/table'}") view_headline
+
+            i.material-icons.icon-button.icon-button-disabled(
+              ng-click="vm.changeView('baguettes.table')"
+              ng-class="{'icons-button-active': vm.currentState == '/table'}"
+            ) view_headline
+
             span.forbid-marking(style='cursor:default') |
-            i.material-icons.icon-button.icon-button-disabled(ng-click="vm.changeView('baguettes.tiles')" ng-class="{'icons-button-active': vm.currentState == '/tiles'}") view_comfy
+
+            i.material-icons.icon-button.icon-button-disabled(
+              ng-click="vm.changeView('baguettes.tiles')"
+              ng-class="{'icons-button-active': vm.currentState == '/tiles'}"
+            ) view_comfy
 
         span(ng-if='!vm.useMobile' flex)
 
         md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
           ng-click='vm.goToCreateBaguette()'
-          ng-class="{'styles-for-mobile-button': vm.useMobile}"
         )
           i.material-icons add circle
 
     div.repeat-wrapper(layout='row' layout-align='center center')
-      md-virtual-repeat-container(style='height: {{windowHeight - 150}}px')
+      md-virtual-repeat-container(style='height: {{windowHeight - 130}}px')
         .repeated-group(md-virtual-repeat='bag in vm.chunked' layout='row' layout-align='center center')
           div.repeated-group-item(ng-repeat='i in bag' flex)
             md-card(layout='column' layout-align='center center')
