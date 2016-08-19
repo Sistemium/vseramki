@@ -21,7 +21,7 @@
 
     Baguette.findAll().then(function (data) {
       vm.baguette = data;
-      console.log(vm.baguette);
+
     });
 
     ArticleImage.findAll({limit: 1000})
@@ -159,7 +159,7 @@
 
     Article.findAll({limit: 1000})
       .then(function (data) {
-        console.log(data);
+
         vm.articles = data;
         vm.currentPage = 1;
         vm.rows = _.chunk(data, groupSize);
