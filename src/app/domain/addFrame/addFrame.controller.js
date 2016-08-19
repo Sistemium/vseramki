@@ -6,7 +6,7 @@
     .controller('AddFrameController', AddFrameController)
   ;
 
-  function AddFrameController(Baguette, Schema, Article, $mdToast, $window) {
+  function AddFrameController(Baguette, Schema, Article, $mdToast, $window, $scope) {
 
     var vm = this;
 
@@ -15,37 +15,61 @@
 
     Baguette.findAll()
       .then(function (baguette) {
-        vm.baguettes = baguette;
+        vm.baguettes = baguette
       });
 
-    FrameSize.findAll().then(function (data) {
-      vm.frameSizes = data
-    });
+    Article.findAll()
+      .then(function (frame) {
+        vm.frames = frame
+      });
+
+    FrameSize.findAll()
+      .then(function (fSize) {
+        vm.frameSize = fSize
+      });
 
 
     angular.extend(vm, {
 
-      baguette: false,
-      article: Article.createInstance(),
+      frame: Article.createInstance(),
 
-      selectBaguette: function (data) {
-        vm.baguette = data;
-        vm.article.baguetteId = data.id;
-        vm.article.name = 'Рамкa ' + data.material.name + ' ' + '\"' + data.brand.name + '\"' + ' ' + data.colour.name + ' ';
+      refreshName: function () {
+        vm.frame.name =
+          'Рамкa ' +
+          vm.selectedBaguette.material.name + ' ' + '\"' + vm.selectedBaguette.brand.name + '\"' + ' ' +
+          vm.selectedBaguette.colour.name + ' ' +
+          (_.get(vm.frame, 'frameSize.name') || '') + ( _.get(vm.frame, 'packageRel') ? '/' + _.get(vm.frame, 'packageRel') : '');
+
+        vm.paramsCheck = (vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel);
+        vm.paramsCheck ? vm.checkAttrs() : angular.noop()
       },
 
-      saveClickedOption: function (obj, id) {
-        vm.article[id] = obj.id;
-        vm.article.name += obj.name;
+      useClickedBaguette: function () {
+        Baguette.find(vm.frame.baguetteId).then(function (data) {
+          vm.selectedBaguette = data;
+          vm.refreshName();
+        });
+
       },
 
       deleteParams: function () {
-        vm.baguette = false;
-        vm.article = Article.createInstance();
+        vm.frame = Article.createInstance();
+      },
+
+      checkAttrs: function () {
+        var params = {};
+        _.assign(params, {baguetteId: vm.frame.baguetteId}, {frameSizeId: vm.frame.frameSizeId});
+
+
+        // vm.something && vm.frame.pieceWeight then save!!!!
+        
+        Article.findAll(params).then(function (a, b) {
+          console.log(a, b);
+        });
+
       },
 
       showToast: function (resStr, status) {
-
         var theme;
 
         if (status) {
@@ -58,16 +82,16 @@
           $mdToast.simple()
             .textContent(resStr)
             .position('top right')
-            .hideDelay(1500)
+            .hideDelay(2000)
             .theme(theme)
             .parent(el)
         );
       },
 
       saveFrame: function () {
-        vm.article.name += '\/' + vm.article.packageRel;
 
-        Article.create(vm.article).then(function () {
+
+        Article.create(vm.frame).then(function () {
 
           vm.showToast('Рамка сохранена', true);
           vm.deleteParams();
@@ -75,12 +99,14 @@
         }).catch(function (obj) {
 
           if (obj.status == '500') {
-            vm.showToast('Ошибка. Багет не сохранен', false);
+            vm.showToast('Ошибка. Рамка не сохранена', false);
           } else {
             vm.showToast('Ошибка. Обратитесь в тех. поддержку', false);
           }
 
         });
+
+        $scope.frameAttrsForm.$setUntouched();
       }
     });
   }
