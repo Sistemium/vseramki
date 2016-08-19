@@ -17,10 +17,27 @@
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.input-margin{
-  margin-top: 12px;
-}
 
-.fixed-button-width{
+.fixed-button-width {
   width: 180px;
 }
+
+.md-item-text-frame {
+  padding: 8px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  cursor: default;
+  margin: 5px 2px;
+}
+
+.addFrame {
+  md-select {
+    width: 250px !important;
+  }
+
+  .input-margin {
+    margin-top: 12px;
+    width: 250px;
+  }
+}
+
