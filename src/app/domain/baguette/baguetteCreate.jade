@@ -1,124 +1,43 @@
 .md-whiteframe-1dp.custom-margin(style="height: {{ windowHeight - 80 }}px; min-height: 400px;")
   h2.md-margin.center-header(ng-if='vm.isCreateState') Создание нового багета
-  
   div(layout-align='center center' layout='column')
 
     form(name="widthForm")
-      md-input-container()
+      md-input-container
         label Ширина багета (мм)
-        input.teste(step='1' type='number' ng-model='vm.baguette.borderWidth' min='1' required name='baguetteWidth')
+        input(step='1' type='number' ng-model='vm.baguette.borderWidth' min='1' required name='baguetteWidth')
         div(ng-messages="widthForm.baguetteWidth.$error")
           div(ng-message="required") Поле не может быть пустым
 
-    div.scrollable-list(style='height: {{ windowHeight - 230 }}px' layout='row' ng-if='vm.isCreateState')
 
-      div.md-padding.min-width-choose-attr-div(layout='column')
-        div.no-select(layout='row')
-          h3.h3-no-margin Цвет:
-          md-input-container.no-margin
-            input.input-padding(
-            aria-label='ColourInput'
-            type='text'
-            ng-model='vm.attrsSearchColour.name'
-            input-clear='black'
-            )
+    searchable-select(
+      label='Материал'
+      model='vm.baguette.materialId'
+      model-name='Material'
+      options='vm.materials'
+      on-close='vm.saveClickedOption()'
+    )
 
-        div.scrollable-list(style='height: {{ windowHeight - 280 }}px;' )
+    searchable-select(
+      label='Бренд'
+      model='vm.baguette.brandId'
+      model-name='Brand'
+      options='vm.brands'
+      on-close='vm.saveClickedOption()'
+    )
 
-          div.md-margin(
-          ng-if='vm.attrsSearchColour.name.length > 1 || filteredResultsColour.length < 1'
-          layout='row'
-          layout-align='center center'
-          )
-            md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
-              i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchColour.name, 'Colour')") add
-
-          md-radio-group(ng-if='vm.colours.length' ng-model='vm.baguette.colourId' md-no-ink='true' ng-change="vm.saveClickedOption('colourId')")
-            md-radio-button(
-            ng-repeat="co in vm.colours | filter:vm.attrsSearchColour | orderBy:'name' as filteredResultsColour track by co.id"
-            aria-label="{{co.name}}"
-            ng-value='co.id'
-            )
-              span {{co.name}}
-
-      div.md-padding.min-width-choose-attr-div(layout='column')
-        div.no-select(layout='row')
-          h3.h3-no-margin Бренд:
-          md-input-container.no-margin
-            input.input-padding(
-            aria-label='BrandInput'
-            type='text'
-            ng-model='vm.attrsSearchBrand.name'
-            input-clear='black'
-            )
-
-        div.scrollable-list(style='height: {{ windowHeight - 280 }}px')
-
-          div.md-margin(
-          ng-if='vm.attrsSearchBrand.name.length > 1 || filteredResultsBrand.length < 1'
-          layout='row'
-          layout-align='center center'
-          )
-            md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
-              i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchBrand.name, 'Brand')") add
-
-          md-radio-group(ng-if='vm.brands.length' ng-model='vm.baguette.brandId' md-no-ink='true' ng-change="vm.saveClickedOption('brandId')")
-            md-radio-button(
-            ng-repeat="br in vm.brands | filter:vm.attrsSearchBrand | orderBy:'name' as filteredResultsBrand track by br.id"
-            aria-label="{{br.name}}"
-            ng-value='br.id'
-            )
-              span {{br.name}}
-
-
-      div.md-padding.min-width-choose-attr-div(layout='column')
-        div.no-select(layout='row')
-          h3.h3-no-margin Материал:
-          md-input-container.no-margin
-            input.input-padding(
-            aria-label='MaterialInput'
-            type='text'
-            ng-model='vm.attrsSearchMaterial.name'
-            input-clear='black'
-            )
-
-        div.scrollable-list(style='height: {{ windowHeight - 280 }}px' )
-
-          div.md-margin(
-          ng-if='vm.attrsSearchMaterial.name.length > 1 || filteredResultsMaterial.length < 1'
-          layout='row'
-          layout-align='center center'
-          )
-            md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top()
-              i.material-icons.md-fab(ng-click="vm.addAttr($event, vm.attrsSearchMaterial.name, 'Material')") add
-
-          md-radio-group(ng-if='vm.materials.length' ng-model='vm.baguette.materialId' md-no-ink='true' ng-change="vm.saveClickedOption('materialId')")
-            md-radio-button(
-            ng-repeat="ma in vm.materials | filter:vm.attrsSearchMaterial | orderBy:'name' as filteredResultsMaterial track by ma.id"
-            aria-label="{{ma.name}}"
-            ng-value='ma.id'
-            )
-              span {{ma.name}}
-
-    md-button.md-raised(
-    ng-if='vm.selectParamsChecker() && vm.id' ng-click='vm.createBaguette()'
-    ) Сохранить изменения
+    searchable-select(
+      label='Цвет'
+      model='vm.baguette.colourId'
+      model-name='Colour'
+      options='vm.colours'
+      on-close='vm.saveClickedOption()'
+    )
 
     md-button.md-raised.pink-button(
-    ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()'
+      ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()'
     ) Создать багет
 
   md-divider.md-margin
-
-  div(ng-if='vm.id ' layout='column' layout-align='center center' style='overflow: scroll')
-    div(layout='row')
-      h2.md-margin.center-header Загруженные фото ({{vm.baguetteImages.length}})
-      md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top(
-      ng-if='vm.baguetteImages.length'
-      ng-click='vm.showImageDialog($event, vm.id)'
-      )
-        i.material-icons add
-
-    md-button.pink-button(ng-if='!vm.baguetteImages.length' ng-click='vm.showImageDialog($event, vm.id)') Загрузить фото
-    div.gallery-wrapper(style='height: {{ windowHeight - (windowHeight / 1.45) }}px')
-      ng-gallery(images='vm.baguetteImages' thumbs-num='5')
+    div.alert-div.md-margin.md-whiteframe-1dp(ng-if='vm.dupMessage.length' layout='row' layout-align='center center')
+      span {{vm.dupMessage}}
