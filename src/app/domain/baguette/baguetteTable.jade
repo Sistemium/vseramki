@@ -4,13 +4,14 @@ div(layout='row')
     ng-if='!vm.isRoot'
     style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
   )
-
-    md-list.custom-list(ng-hide='vm.hideBaguetteList')
+    //TODO After saving baguette refresh list of baguettes
+    md-list.custom-list(hide-xs)
 
       md-list-item.md-item-header.md-whiteframe-z1(layout='row')
         h3 Всего багетов: {{vm.baguettes.length}}
         span(flex)
-        md-button.pink-button(ng-click='vm.backToList()') Вернуться к списку
+        md-progress-circular(ng-if='!vm.baguettes.length')
+        md-button.pink-button(ng-click='vm.backToList()' ng-hide='!vm.baguettes.length') Вернуться к списку
 
       md-virtual-repeat-container(style='height: {{windowHeight - 143 }}px')
         div.md-item-text.md-whiteframe-z1(
@@ -64,7 +65,6 @@ div(layout='row')
           th(md-column md-order-by='material.name') Материал
           th(md-column md-order-by='brand.name') Бренд
           th(md-column md-order-by='borderWidth') Ширина (мм.)
-          th(md-column) Редактировать
         tbody(md-body)
           tr(
             md-row
@@ -74,6 +74,7 @@ div(layout='row')
             ' track by bag.id'
             md-select='bag'
             md-select-id='id'
+            ng-click='vm.editBaguette(bag, $event)'
           )
             td(md-cell ng-click='vm.showImageDialog($event, bag.id)')
               img.image-thumbnail-table(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
@@ -82,9 +83,7 @@ div(layout='row')
             td(md-cell) {{bag.material.name}}
             td(md-cell) {{bag.brand.name}}
             td(md-cell) {{bag.borderWidth}}
-            td(md-cell)
-              md-button.md-mini.md-icon-button(ng-click='vm.editBaguette(bag, $event)')
-                i.material-icons.clear-icon-size create
+
 
     md-table-pagination.fixed-pagination(
       md-limit='vm.pagination.query.limit',
@@ -92,11 +91,9 @@ div(layout='row')
       md-limit-options='vm.pagination.limitOptions',
       md-page='vm.pagination.query.page',
       md-total='{{vm.baguettes.length}}',
-      md-page-select='true',
-      md-boundary-links='true'
+      md-page-select='true && !vm.useMobile',
+      md-boundary-links='true && !vm.useMobile'
     )
-
-
-    div(layout='row' layout-align='center center' style=' height: {{ windowHeight - 140 }}px;' ng-show='!vm.baguettes.length' ng-cloak)
-      md-button.md-raised.pink-button(ng-click='vm.goToCreateBaguette()')
-        | {{'Добавить багет'}}
+    //div(layout='row' layout-align='center center' style=' height: {{ windowHeight - 140 }}px;' ng-show='!vm.baguettes.length' ng-cloak)
+    //  md-button.md-raised.pink-button(ng-click='vm.goToCreateBaguette()')
+    //    | {{'Добавить багет'}}
