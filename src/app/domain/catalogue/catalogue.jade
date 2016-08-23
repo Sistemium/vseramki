@@ -3,15 +3,66 @@ section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
 
 md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
-  div(ng-if='!vm.rows.length' flex='')
+  md-sidenav.md-sidenav-right.md-whiteframe-1dp(
+    layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
+  )
+    p.md-title Фильтры
 
-    p Товаров не найдено. Сбросьте фильтры.
+    property-filter.custom-padding(
+      property-name='frameSize'
+      property-label='Размер'
+      options='vm.frameSizes'
+      current-option='vm.currentFilter.frameSize'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
+    )
+
+    property-filter.custom-padding(
+      property-name='brand'
+      property-label='Брэнд'
+      options='vm.brands'
+      current-option='vm.currentFilter.brand'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
+    )
+
+    property-filter.custom-padding(
+      property-name='material'
+      property-label='Материал'
+      options='vm.materials'
+      current-option='vm.currentFilter.material'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
+    )
+
+    property-filter.custom-padding(
+      property-name='colour'
+      property-label='Цвет'
+      options='vm.colours'
+      current-option='vm.currentFilter.colour'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
+    )
+
+    md-button.md-raised.custom-button(
+      aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
+    ) Сбросить фильтры
+
+    md-divider(flex)
+    div(style='height: 300px; overflow: scroll;' ng-if)
+      .md-whiteframe-1dp.items(ng-repeat='frame in vm.articles | limitTo:20')
+        | {{frame.name}}
+
+
+    md-button.pink-button(style='padding: 0' ng-click="vm.goToCreateFrame()") Добавить рамку
+
+
 
   .ui-view(flex ng-if='!vm.isRootState')
 
   md-content#scroll-main(
-  flex
-  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRootState ? "100%" : "0"}};'
+    flex
+    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRootState ? "100%" : "0"}};'
   )
 
     section(
@@ -26,10 +77,6 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
           ng-repeat="article in row track by article.id"
           flex="vm.rowsFlex"
         )
-
-          //md-card-header.pointer-style(ui-sref='item({ id: article.id })')
-          //  md-card-header-text
-          //    .md-title {{}}
 
           .img.md-padding(flex)
             a(href ui-sref='.item({id: article.id})')
@@ -75,56 +122,6 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
                   md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
 
 
-  // Filters in sidenav
-
-  md-sidenav.md-sidenav-right.md-whiteframe-1dp(
-    layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
-  )
-    p.md-title Фильтры
-
-    property-filter(
-      property-name='frameSize'
-      property-label='Размер'
-      options='vm.frameSizes'
-      current-option='vm.currentFilter.frameSize'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
-    )
-
-    property-filter(
-      property-name='brand'
-      property-label='Брэнд'
-      options='vm.brands'
-      current-option='vm.currentFilter.brand'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
-    )
-
-    property-filter(
-      property-name='material'
-      property-label='Материал'
-      options='vm.materials'
-      current-option='vm.currentFilter.material'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
-    )
-
-    property-filter(
-      property-name='colour'
-      property-label='Цвет'
-      options='vm.colours'
-      current-option='vm.currentFilter.colour'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
-    )
-
-    md-button.md-raised.custom-button(
-      aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
-    ) Сбросить фильтры
-
-    span(flex)
-
-    md-button.pink-button(style='padding: 0' ng-click="vm.goToCreateFrame()") Добавить рамку
 
 
 
