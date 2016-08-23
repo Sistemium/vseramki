@@ -10,7 +10,6 @@ div(layout='row')
       md-list-item.md-item-header.md-whiteframe-z1(layout='row')
         h3 Всего багетов: {{vm.baguettes.length}}
         span(flex)
-        md-progress-circular(ng-if='!vm.baguettes.length')
         md-button.pink-button(ng-click='vm.backToList()' ng-hide='!vm.baguettes.length') Вернуться к списку
 
       md-virtual-repeat-container(style='height: {{windowHeight - 143 }}px')
