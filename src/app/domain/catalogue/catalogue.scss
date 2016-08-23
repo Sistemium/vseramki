@@ -8,9 +8,9 @@ md-content.articles {
   }
 
   .md-sidenav-right {
-    margin-top: 24px;
     margin-right: 6px;
     width: 345px;
+
   }
 
   md-card {
@@ -102,7 +102,6 @@ div md-card md-card-content {
 
 }
 
-
 .custom-button {
   line-height: 24px !important;
 }
@@ -113,4 +112,15 @@ div md-card md-card-content {
 .fixed-height {
   height: 70px;
   line-height: 4;
+}
+
+.articles {
+  .custom-padding {
+    padding: 2px;
+  }
+  .items{
+    padding: 6px;
+    margin: 5px;
+    border-radius: 5px;
+  }
 }
