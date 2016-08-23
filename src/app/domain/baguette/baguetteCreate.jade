@@ -5,37 +5,43 @@
     form(name="widthForm")
       md-input-container
         label Ширина багета (мм)
-        input(step='1' type='number' ng-model='vm.baguette.borderWidth' min='1' required name='baguetteWidth')
+        input(
+        required type='number' step='1' min='1'
+        ng-model='vm.baguette.borderWidth'
+        name='baguetteWidth'
+        input-clear='black'
+        input-clear-value='null'
+        )
         div(ng-messages="widthForm.baguetteWidth.$error")
           div(ng-message="required") Поле не может быть пустым
 
 
     searchable-select(
-      label='Материал'
-      model='vm.baguette.materialId'
-      model-name='Material'
-      options='vm.materials'
-      on-close='vm.saveClickedOption()'
+    label='Материал'
+    model='vm.baguette.materialId'
+    model-name='Material'
+    options='vm.materials'
+    on-close='vm.saveClickedOption()'
     )
 
     searchable-select(
-      label='Бренд'
-      model='vm.baguette.brandId'
-      model-name='Brand'
-      options='vm.brands'
-      on-close='vm.saveClickedOption()'
+    label='Бренд'
+    model='vm.baguette.brandId'
+    model-name='Brand'
+    options='vm.brands'
+    on-close='vm.saveClickedOption()'
     )
 
     searchable-select(
-      label='Цвет'
-      model='vm.baguette.colourId'
-      model-name='Colour'
-      options='vm.colours'
-      on-close='vm.saveClickedOption()'
+    label='Цвет'
+    model='vm.baguette.colourId'
+    model-name='Colour'
+    options='vm.colours'
+    on-close='vm.saveClickedOption()'
     )
 
     md-button.md-raised.pink-button(
-      ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()'
+    ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()'
     ) Создать багет
 
   md-divider.md-margin
