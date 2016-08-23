@@ -51,13 +51,13 @@
               if (item.length) {
                 vm.showToast('Такой атрибут уже сущетвует', false)
               } else {
-                var formatedAttr = vm.search.name.slice(0, 1).toUpperCase() + vm.search.name.slice(1).toLowerCase();
+                var formattedAttr = vm.search.name.slice(0, 1).toUpperCase() + vm.search.name.slice(1).toLowerCase();
 
-                foundModel.create({name: formatedAttr}).then(function (a) {
+                foundModel.create({name: formattedAttr}).then(function (data) {
                   vm.showToast('Атрибут ' + vm.search.name + ' сохранен', true);
                   $mdSelect.hide();
-                  vm.search.name = '';
-                  vm.model = a.id;
+                  vm.search = '';
+                  vm.model = data.id;
                 });
               }
             });
