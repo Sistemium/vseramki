@@ -14,9 +14,20 @@
     "lf-ng-md-file-input": "^1.4.6",
     "ng-file-upload": "^12.0.4",
     "sistemium-angular-auth": "latest",
-    "font-awesome": "^4.6.3"
+    "components-font-awesome": "^4.6.3"
   },
-  "overrides": {},
+  "overrides": {
+    "components-font-awesome": {
+      "main": [
+        "css/font-awesome.css",
+        "fonts/fontawesome-webfont.eot",
+        "fonts/fontawesome-webfont.woff",
+        "fonts/fontawesome-webfont.woff2",
+        "fonts/fontawesome-webfont.ttf",
+        "fonts/fontawesome-webfont.svg"
+      ]
+    }
+  },
   "devDependencies": {
     "angular-mocks": "~1.5.3"
   },
