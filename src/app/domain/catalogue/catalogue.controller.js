@@ -126,21 +126,11 @@
     }
 
     angular.extend(vm, {
-
-      currentPage: 1,
-      pages: 9,
-      pageSize: 36,
       rows: [],
       rowsFlex: 33,
       articleFilter: {},
       currentFilter: {},
       filterLength: false,
-      price: 33,
-
-      //setPage: function () {
-      //  DEBUG('setPage', vm.currentPage);
-      //  setPage(0);
-      //},
 
       plusOne: plusOne,
       minusOne: minusOne,
@@ -161,7 +151,6 @@
       .then(function (data) {
 
         vm.articles = data;
-        vm.currentPage = 1;
         vm.rows = _.chunk(data, groupSize);
         vm.ready = true;
         vm.total = Math.ceil(data.length / vm.pageSize);
@@ -177,11 +166,6 @@
 
       });
 
-
-    //Article.getCount().then(function (res) {
-    //  vm.ready = true;
-    //  vm.total = Math.ceil(res / vm.pageSize);
-    //});
 
     $scope.$watch('windowHeight', function (windowHeight) {
 
@@ -209,9 +193,6 @@
 
     $scope.$watch('vm.articleFilter', filterArticles);
 
-    //$scope.$on ('vsRepeatInnerCollectionUpdated', function (e,a,b,c,d) {
-    //  DEBUG (e.name, a,':', b, '-', c, ':', d);
-    //});
 
     $scope.$on('$stateChangeSuccess', function (event, to) {
       vm.isRootState = /^catalogue$/.test(to.name);
