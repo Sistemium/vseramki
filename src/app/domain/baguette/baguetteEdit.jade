@@ -38,17 +38,17 @@
       md-button.md-raised(ng-click='vm.cancelChanges()') Отменить изменения
 
       md-button.md-raised(
-      ng-disabled='!vm.selectParamsChecker()' ng-click='vm.createBaguette()'
+        ng-disabled='!vm.selectParamsChecker()' ng-click='vm.createBaguette()'
       ) Сохранить изменения
 
   md-divider.md-margin
 
-  div(ng-if='vm.id ' layout='column' layout-align='center center' style='overflow: scroll')
+  div(ng-if='vm.id' layout='column' layout-align='center center' style='overflow: scroll')
     div(layout='row')
       h2.md-margin.center-header Загруженные фото ({{vm.baguetteImages.length}})
       md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top(
-      ng-if='vm.baguetteImages.length'
-      ng-click='vm.showImageDialog($event, vm.id)'
+        ng-if='vm.baguetteImages.length'
+        ng-click='vm.showImageDialog($event, vm.id)'
       )
         i.material-icons add
 
