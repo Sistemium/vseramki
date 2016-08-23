@@ -37,7 +37,7 @@ div.addFrame(layout='row')
 
         md-input-container.input-margin
           label Название рамки
-          input(type='text' ng-model='vm.frame.name' name='name' )
+          input(type='text' ng-model='vm.frame.name' name='name')
 
         md-input-container.input-margin
           label Рыночная цена (руб.)
@@ -54,11 +54,9 @@ div.addFrame(layout='row')
             type='number'
             ng-model='vm.frame.pieceWeight'
             min='1'
-            required name='pieceWeight'
+            name='pieceWeight'
             input-clear='black'
           )
-          div(ng-messages="frameAttrsForm.pieceWeight.$error")
-            div(ng-message="required") Поле не может быть пустым
 
         md-input-container.input-margin
           label Штук в коробке
@@ -70,7 +68,6 @@ div.addFrame(layout='row')
             required
             name='packageRel'
             input-clear='black'
-            ng-change="vm.refreshName()"
           )
           div(ng-messages="frameAttrsForm.packageRel.$error")
             div(ng-message="required") Поле не может быть пустым
@@ -79,10 +76,14 @@ div.addFrame(layout='row')
           label='Размер'
           model='vm.frame.frameSizeId'
           model-name='FrameSize'
-          options='vm.frameSize'
+          options='vm.frameSizes'
           not-addable='false'
-          on-close="vm.refreshName()"
         )
 
-    div.cust-divider(layout='column' layout-align='center center' style='width: 100%')
-      md-button.md-raised(ng-click='vm.saveFrame()' ng-if='vm.paramsCheck') Сохранить рамку
+    md-divider(flex style='width:100%' ng-if='vm.dupMessage.length')
+      .alert-div.md-margin.md-whiteframe-1dp(flex)
+        span {{vm.dupMessage}}
+
+    md-button.md-raised(ng-click='vm.saveFrame()' ng-if='vm.paramsCheck') Сохранить рамку
+
+
