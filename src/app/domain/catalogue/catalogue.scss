@@ -93,14 +93,6 @@ md-card-content div > input {
   margin: 0 auto;
 }
 
-section md-card md-card-content {
-
-}
-
-div md-card md-card-content {
-  padding: 0;
-
-}
 
 .custom-button {
   line-height: 24px !important;
@@ -122,5 +114,13 @@ div md-card md-card-content {
     padding: 6px;
     margin: 5px;
     border-radius: 5px;
+  }
+
+  md-input-container{
+    margin: 0px;
+  }
+  input{
+    width: 50px;
+    text-align: center;
   }
 }
