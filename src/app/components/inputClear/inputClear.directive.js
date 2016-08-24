@@ -16,12 +16,11 @@
         var color = attrs.inputClear;
         var style = color ? "color:" + color + ";" : "";
 
-        var template = angular.element('<md-button class="md-icon-button input-clear-button"' +
-          ' ng-show="$parent.' + attrs.ngModel + '"'+
-          ' ng-click="clearModel()" ' +
-          '>' +
-          '<i style="' + style + '" class="material-icons">close</i>' +
-          '</md-button>'
+        var template = angular.element(
+          `<md-button class="md-icon-button input-clear-button" ng-click="clearModel()"`
+          +` ng-show="$parent.${attrs.ngModel}">`
+          + `<i style="${style}" class="material-icons">close</i>`
+          + `</md-button>`
         );
 
         $compile (template)(scope);
