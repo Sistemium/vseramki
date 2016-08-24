@@ -62,49 +62,30 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
   md-content#scroll-main(
   flex
-  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRootState ? "100%" : "0"}};'
+  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRootState ? "100%" : "0"}}'
   )
+    md-virtual-repeat-container(style='height: {{windowHeight - 65}}px')
+      .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
+        .repeated-group-item(ng-repeat='article in row' flex)
+          md-card(layout='column' layout-align='center center')
+            md-card-header
+              a(href ui-sref='.item({id: article.id})')
+                img.image-thumbnail(ng-src='{{article.images[0].thumbnailSrc}}' ng-if='article.images.length')
+                img.image-thumbnail( src='http://bit.ly/1Yu4VIb' ng-if='!article.images.length')
 
-    section(
-    vs-repeat
-    vs-scroll-parent="#scroll-main"
-    vs-size="250"
-    )
+            md-card-title.md-margin
+              md-card-title-text
+                .md-subhead.center {{ article.name }}
 
-      .row(ng-repeat="row in vm.rows" layout="row")
+            .md-margin
+              .md-title.center {{ article.lowPrice + ' руб.'}}
+            span(flex)
 
-        md-card(
-        ng-repeat="article in row track by article.id"
-        flex="vm.rowsFlex"
-        )
-
-          .img.md-padding(flex)
-            a(href ui-sref='.item({id: article.id})')
-              img.thumbnail(ng-src='{{article.images[0].thumbnailSrc}}' ng-if='article.images.length')
-              img.thumbnail(
-              src='http://bit.ly/1Yu4VIb'
-              ng-if='!article.images.length'
-              )
-          md-card-title
-            md-card-title-text
-              .md-subhead.center {{ article.name }}
-              .md-title.center.md-padding {{ article.lowPrice + ' руб.'}}
-
-
-          md-card-actions.center-div.fixed-height(ng-if='!article.inCart')
-            md-card-icon-actions
-              .with-badge(flex="none")
-                md-button.md-fab.md-mini.md-icon-button(
-                aria-label="Добавить в корзину"
-                ng-click="vm.addToCart(article)"
-                )
-                  i.material-icons add_shopping_cart
-
-
-          md-card-content.center-div(ng-if='article.inCart')
-            div
+            md-card-content.fixed-height(ng-if='article.inCart')
               .div-order-info(layout='row' layout-align="start center")
+
                 p.name-style Заказано:
+
                 div(layout='row' layout-align='center center')
                   md-button.icon-button-catalogue(ng-click='vm.minusOne(article)') -
 
@@ -123,9 +104,10 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
                   md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
 
-
-
-
-
-
-
+            md-card-actions(ng-if='!article.inCart' flex)
+              md-card-icon-actions
+                md-button.md-fab.md-mini.md-icon-button(
+                aria-label="Добавить в корзину"
+                ng-click="vm.addToCart(article)"
+                )
+                  i.material-icons add_shopping_cart
