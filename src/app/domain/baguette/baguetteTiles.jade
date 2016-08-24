@@ -26,8 +26,7 @@ div.baguettes(layout='row')
 
         div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
           h2 Плитка багетов
-          div(style='display:inherit; margin-top: 3px;')
-
+          .toolbar-class
             i.material-icons.icon-button.icon-button-disabled(
               ng-click="vm.changeView('baguettes.table')"
               ng-class="{'icons-button-active': vm.currentState == '/table'}"
@@ -47,10 +46,10 @@ div.baguettes(layout='row')
         )
           i.material-icons add circle
 
-    div.repeat-wrapper(layout='row' layout-align='center center')
+    .repeat-wrapper(layout='row' layout-align='center center')
       md-virtual-repeat-container(style='height: {{windowHeight - 130}}px')
         .repeated-group(md-virtual-repeat='bag in vm.chunked' layout='row' layout-align='center center')
-          div.repeated-group-item(ng-repeat='i in bag' flex)
+          .repeated-group-item(ng-repeat='i in bag' flex)
             md-card(layout='column' layout-align='center center')
 
               img.md-card-image.image-size(
