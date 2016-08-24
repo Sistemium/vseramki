@@ -1,8 +1,6 @@
 md-content.articles {
 
   #scroll-main {
-    padding-top: 16px;
-    padding-bottom: 46px;
     padding-left: 0;
     margin-left: 0;
   }
@@ -10,20 +8,46 @@ md-content.articles {
   .md-sidenav-right {
     margin-right: 6px;
     width: 345px;
+  }
 
+  .repeated-group {
+    padding: 2px;
+    margin: 2px;
+  }
+
+  .repeated-group-item {
+    display: inline-block;
+  }
+
+  .custom-padding {
+    padding: 2px;
+  }
+
+  .items {
+    padding: 6px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+
+  md-input-container {
+    margin: 0;
+  }
+
+  input {
+    width: 50px;
+    text-align: center;
   }
 
   md-card {
+    height: 340px;
 
-    min-height: 300px;
-
-    img.thumbnail {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 120px;
-      max-height: 170px;
+    md-card-content {
+      padding: 0;
     }
+  }
 
+  .fixed-height {
+    height: 61.33px
   }
 
 }
@@ -72,12 +96,7 @@ p.md-title {
 }
 
 .div-order-info-num-picker {
-
   line-height: 2.8;
-}
-
-md-card-content div > input {
-  font-size: 80%;
 }
 
 .name-style {
@@ -89,38 +108,9 @@ md-card-content div > input {
   cursor: pointer;
 }
 
-.center-div {
-  margin: 0 auto;
-}
-
-
 .custom-button {
   line-height: 24px !important;
 }
 
-/* when clicking on cart button, the name of article is not moving! */
-/* md-card-content and md-card-actions should have the same height*/
 
-.fixed-height {
-  height: 70px;
-  line-height: 4;
-}
 
-.articles {
-  .custom-padding {
-    padding: 2px;
-  }
-  .items{
-    padding: 6px;
-    margin: 5px;
-    border-radius: 5px;
-  }
-
-  md-input-container{
-    margin: 0px;
-  }
-  input{
-    width: 50px;
-    text-align: center;
-  }
-}
