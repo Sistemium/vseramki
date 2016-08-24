@@ -131,9 +131,7 @@
     }
 
     function deletePhoto(photo) {
-
       ArticleImage.destroy(photo);
-
     }
 
     angular.extend(vm, {
