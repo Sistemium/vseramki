@@ -4,48 +4,48 @@ section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
 md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
   md-sidenav.md-sidenav-right.md-whiteframe-1dp(
-    layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
+  layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
   )
     p.md-title Фильтры
 
     property-filter.custom-padding(
-      property-name='frameSize'
-      property-label='Размер'
-      options='vm.frameSizes'
-      current-option='vm.currentFilter.frameSize'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
+    property-name='frameSize'
+    property-label='Размер'
+    options='vm.frameSizes'
+    current-option='vm.currentFilter.frameSize'
+    set-option-fn='vm.filterOptionClick',
+    clear-fn='vm.delCurrFilter'
     )
 
     property-filter.custom-padding(
-      property-name='brand'
-      property-label='Брэнд'
-      options='vm.brands'
-      current-option='vm.currentFilter.brand'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
+    property-name='brand'
+    property-label='Брэнд'
+    options='vm.brands'
+    current-option='vm.currentFilter.brand'
+    set-option-fn='vm.filterOptionClick',
+    clear-fn='vm.delCurrFilter'
     )
 
     property-filter.custom-padding(
-      property-name='material'
-      property-label='Материал'
-      options='vm.materials'
-      current-option='vm.currentFilter.material'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
+    property-name='material'
+    property-label='Материал'
+    options='vm.materials'
+    current-option='vm.currentFilter.material'
+    set-option-fn='vm.filterOptionClick',
+    clear-fn='vm.delCurrFilter'
     )
 
     property-filter.custom-padding(
-      property-name='colour'
-      property-label='Цвет'
-      options='vm.colours'
-      current-option='vm.currentFilter.colour'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
+    property-name='colour'
+    property-label='Цвет'
+    options='vm.colours'
+    current-option='vm.currentFilter.colour'
+    set-option-fn='vm.filterOptionClick',
+    clear-fn='vm.delCurrFilter'
     )
 
     md-button.md-raised.custom-button(
-      aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
+    aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
     ) Сбросить фильтры
 
     md-divider(flex)
@@ -61,29 +61,29 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
   .ui-view(flex ng-if='!vm.isRootState')
 
   md-content#scroll-main(
-    flex
-    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRootState ? "100%" : "0"}};'
+  flex
+  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRootState ? "100%" : "0"}};'
   )
 
     section(
-      vs-repeat
-      vs-scroll-parent="#scroll-main"
-      vs-size="250"
+    vs-repeat
+    vs-scroll-parent="#scroll-main"
+    vs-size="250"
     )
 
       .row(ng-repeat="row in vm.rows" layout="row")
 
         md-card(
-          ng-repeat="article in row track by article.id"
-          flex="vm.rowsFlex"
+        ng-repeat="article in row track by article.id"
+        flex="vm.rowsFlex"
         )
 
           .img.md-padding(flex)
             a(href ui-sref='.item({id: article.id})')
               img.thumbnail(ng-src='{{article.images[0].thumbnailSrc}}' ng-if='article.images.length')
               img.thumbnail(
-                src='http://bit.ly/1Yu4VIb'
-                ng-if='!article.images.length'
+              src='http://bit.ly/1Yu4VIb'
+              ng-if='!article.images.length'
               )
           md-card-title
             md-card-title-text
@@ -95,30 +95,32 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
             md-card-icon-actions
               .with-badge(flex="none")
                 md-button.md-fab.md-mini.md-icon-button(
-                  aria-label="Добавить в корзину"
-                  ng-click="vm.addToCart(article)"
+                aria-label="Добавить в корзину"
+                ng-click="vm.addToCart(article)"
                 )
                   i.material-icons add_shopping_cart
 
 
           md-card-content.center-div(ng-if='article.inCart')
             div
-              div.div-order-info(layout='row' layout-align="start center")
+              .div-order-info(layout='row' layout-align="start center")
                 p.name-style Заказано:
-                div.div-order-info-num-picker
+                div(layout='row' layout-align='center center')
                   md-button.icon-button-catalogue(ng-click='vm.minusOne(article)') -
+
                   md-input-container
                     input.custom-input(
-                      aria-label="Количество"
-                      ng-model="article.inCart.count"
-                      type="number"
-                      ng-change="vm.onCartChange(article)"
-                      ng-blur="vm.onBlur(article)"
-                      ng-pattern="vm.pattern"
-                      required
-                      min='0'
-                      step='1'
+                    aria-label="Количество"
+                    ng-model="article.inCart.count"
+                    type="number"
+                    ng-change="vm.onCartChange(article)"
+                    ng-blur="vm.onBlur(article)"
+                    ng-pattern="vm.pattern"
+                    required
+                    min='0'
+                    step='1'
                     )
+
                   md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
 
 
