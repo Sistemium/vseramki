@@ -2,7 +2,6 @@ section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
 
 md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
-
   md-sidenav.md-sidenav-right.md-whiteframe-1dp(
   layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
   )
@@ -48,14 +47,13 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
     aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
     ) Сбросить фильтры
 
-    md-divider(flex)
-    div(style='height: 300px; overflow: scroll;' ng-if)
+    md-divider(flex ng-if='vm.isRootState')
+    div(style='height: {{windowHeight - 370}}px; overflow: scroll;' ng-show='!vm.isRootState')
       .md-whiteframe-1dp.items(ng-repeat='frame in vm.articles | limitTo:20')
         | {{frame.name}}
-
+    md-divider(flex ng-if='!vm.isRootState')
 
     md-button.pink-button(style='padding: 0' ng-click="vm.goToCreateFrame()") Добавить рамку
-
 
 
   .ui-view(flex ng-if='!vm.isRootState')
