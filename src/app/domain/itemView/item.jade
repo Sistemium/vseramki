@@ -43,7 +43,7 @@
               td(md-cell='')
                 p Вес:
               td(md-cell='')
-                p {{vm.article.pieceWeight}} кг
+                p {{ vm.article.pieceWeight ? vm.article.pieceWeight + 'кг' : 'Не указан' }}
             tr(md-row)
               td(md-cell='')
                 p Штук в пачке:
@@ -99,7 +99,7 @@
 
 
 
-  div.overall-info(ng-if='vm.isEditable')
+  .overall-info(ng-if='vm.isEditable')
     div.md-padding.custom-h3(ng-if='vm.articleImages.length')
       h2 Для текущей рамки загружено {{vm.articleImages.length}} фото
       md-grid-list(
