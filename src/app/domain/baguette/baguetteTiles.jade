@@ -20,8 +20,14 @@ div.baguettes(layout='row')
         )
           | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
 
-  .ui-view(flex)
-    md-toolbar.md-table-toolbar.md-default
+  .ui-view(flex ng-if='!vm.isRoot')
+
+  md-content#scroll-main(
+   flex
+   style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRoot ? "100%" : "0"}}'
+  )
+
+    md-toolbar().md-table-toolbar.md-default
       .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
 
         div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
