@@ -54,7 +54,8 @@
       if (unbindBaguettes) {
         unbindBaguettes();
       }
-      unbindBaguettes = Baguette.bindAll(filter, $scope, 'vm.baguettes');
+      // TODO: check tiles flickering after nth delete
+      unbindBaguettes = Baguette.bindAll(filter, $scope, 'vm.baguettes', () => setChunks(chunkSize));
     }
 
     var un = $scope.$on('baguetteRefresh', function (e, a) {
@@ -128,6 +129,7 @@
         }
 
       },
+
 
       resetCheckedBaguette: function () {
         vm.selected = [];
