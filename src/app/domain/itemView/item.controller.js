@@ -15,7 +15,9 @@
                           $scope,
                           $mdDialog,
                           $mdMedia,
-                          $window) {
+                          $window,
+                          $mdToast,
+                          $state) {
 
     var Colour = Schema.model('Colour');
     var Material = Schema.model('Material');
@@ -24,6 +26,7 @@
     var vm = this;
 
     var body2 = $window.document.getElementsByClassName('for-md-dialog');
+    var el = $window.document.getElementsByClassName('toolbar-fixed-top');
 
     var stateFilter = {
       articleId: $stateParams.id
@@ -143,10 +146,46 @@
       onBlur: onBlur,
       onCartChange: onCartChange,
       addToCart: Cart.addToCart,
-      price: 33,
       article: '',
       isEditable: true,     // admin settings !!
-      isRootState: true
+      isRootState: true,
+
+      editFrame: function (frameId) {
+        $state.go('catalogue.item.edit', {id: frameId});
+      },
+
+      deleteFrame: function (frameId) {
+        Article.destroy(frameId).then(function (frameId) {
+          if (frameId) {
+            console.log(vm.articles);
+            vm.showToast('Рамка удалена', true);
+          }
+
+        }).catch(function () {
+          vm.showToast('Ошибка', false);
+        });
+      },
+
+      showToast: function (resStr, status) {
+        var theme;
+
+        if (status) {
+          theme = 'success-toast';
+        } else {
+          theme = 'fail-toast';
+
+        }
+
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(resStr)
+            .position('top right')
+            .hideDelay(2000)
+            .theme(theme)
+            .parent(el)
+        );
+      }
+
     }, stateFilter);
 
 
