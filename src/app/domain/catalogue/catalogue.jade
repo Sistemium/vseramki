@@ -3,55 +3,63 @@ section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
 
 md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
   md-sidenav.md-sidenav-right.md-whiteframe-1dp(
-  layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
+  layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-sm')"
   )
     p.md-title Фильтры
+    div(layout='column' layout-align='start start' style='height: 230px')
 
-    property-filter.custom-padding(
-    property-name='frameSize'
-    property-label='Размер'
-    options='vm.frameSizes'
-    current-option='vm.currentFilter.frameSize'
-    set-option-fn='vm.filterOptionClick',
-    clear-fn='vm.delCurrFilter'
-    )
+      property-filter.custom-padding(
+      property-name='frameSize'
+      property-label='Размер'
+      options='vm.frameSizes'
+      current-option='vm.currentFilter.frameSize'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
+      )
 
-    property-filter.custom-padding(
-    property-name='brand'
-    property-label='Брэнд'
-    options='vm.brands'
-    current-option='vm.currentFilter.brand'
-    set-option-fn='vm.filterOptionClick',
-    clear-fn='vm.delCurrFilter'
-    )
+      property-filter.custom-padding(
+      property-name='brand'
+      property-label='Брэнд'
+      options='vm.brands'
+      current-option='vm.currentFilter.brand'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
+      )
 
-    property-filter.custom-padding(
-    property-name='material'
-    property-label='Материал'
-    options='vm.materials'
-    current-option='vm.currentFilter.material'
-    set-option-fn='vm.filterOptionClick',
-    clear-fn='vm.delCurrFilter'
-    )
+      property-filter.custom-padding(
+      property-name='material'
+      property-label='Материал'
+      options='vm.materials'
+      current-option='vm.currentFilter.material'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
+      )
 
-    property-filter.custom-padding(
-    property-name='colour'
-    property-label='Цвет'
-    options='vm.colours'
-    current-option='vm.currentFilter.colour'
-    set-option-fn='vm.filterOptionClick',
-    clear-fn='vm.delCurrFilter'
-    )
+      property-filter.custom-padding(
+      property-name='colour'
+      property-label='Цвет'
+      options='vm.colours'
+      current-option='vm.currentFilter.colour'
+      set-option-fn='vm.filterOptionClick',
+      clear-fn='vm.delCurrFilter'
+      )
+      div(layout-align='center center' layout='column' style='width: 100%')
+        md-button.md-raised.custom-button(
+        aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
+        ) Сбросить фильтры
 
-    md-button.md-raised.custom-button(
-    aria-label='Reset filters' ng-click="vm.resetFilters()" ng-if="vm.filterLength"
-    ) Сбросить фильтры
+    md-divider(ng-if='!vm.isRootState' style='padding: 2px')
 
     md-divider(flex ng-if='vm.isRootState')
-    div(style='height: {{windowHeight - 370}}px; overflow: scroll;' ng-show='!vm.isRootState')
-      .md-whiteframe-1dp.items(ng-repeat='frame in vm.articles | limitTo:20')
-        | {{frame.name}}
-    md-divider(flex ng-if='!vm.isRootState')
+    div(style='height: {{windowHeight - 460}}px; overflow: scroll' ng-show='!vm.isRootState' )
+      .md-whiteframe-1dp.items(
+      ng-repeat='frame in vm.articles'
+      ng-class="{'active-frame' : vm.currId == frame.id }"
+      ng-click='vm.changeFrame(frame)'
+      )
+        span {{frame.name}}
+
+    span(flex)
 
     md-button.pink-button(style='padding: 0' ng-click="vm.goToCreateFrame()") Добавить рамку
 
@@ -67,7 +75,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
         .repeated-group-item(ng-repeat='article in row' flex)
           md-card(layout='column' layout-align='center center')
             md-card-header
-              a(href ui-sref='.item({id: article.id})')
+              a(href ui-sref='catalogue.item({id: article.id})')
                 img.image-thumbnail(ng-src='{{article.images[0].thumbnailSrc}}' ng-if='article.images.length')
                 img.image-thumbnail( src='http://bit.ly/1Yu4VIb' ng-if='!article.images.length')
 
@@ -102,10 +110,10 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
                   md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
 
-            md-card-actions(ng-if='!article.inCart' flex)
-              md-card-icon-actions
-                md-button.md-fab.md-mini.md-icon-button(
-                aria-label="Добавить в корзину"
-                ng-click="vm.addToCart(article)"
-                )
-                  i.material-icons add_shopping_cart
+            md-card-actions(ng-if='!article.inCart' flex fng-class="{'pink-button': vm.isEditable}")
+              md-button.md-fab.md-mini.md-icon-button(
+              aria-label="Добавить в корзину"
+              ng-click="vm.addToCart(article)"
+              ng-if='!vm.isEditable'
+              )
+                i.material-icons add_shopping_cart
