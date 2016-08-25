@@ -31,7 +31,7 @@ div.baguettes(layout='row')
       .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
 
         div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
-          h2 Плитка багетов
+          h2(style='width: 160px') Плитка багетов
           .toolbar-class
             i.material-icons.icon-button.icon-button-disabled(
               ng-click="vm.changeView('baguettes.table')"
@@ -54,38 +54,38 @@ div.baguettes(layout='row')
 
     .repeat-wrapper(layout='row' layout-align='center center')
       md-virtual-repeat-container(style='height: {{windowHeight - 130}}px')
-        .repeated-group(md-virtual-repeat='bag in vm.chunked' layout='row' layout-align='center center')
-          .repeated-group-item(ng-repeat='i in bag' flex)
+        .repeated-group(md-virtual-repeat='chunk in vm.chunked' layout='row' layout-align='center center')
+          .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
             md-card(layout='column' layout-align='center center')
 
               img.md-card-image.image-size(
-                ng-src='{{i.images[0].thumbnailSrc}}'
-                ng-if='i.images.length'
-                ng-click='vm.showImageDialog($event, i.id)'
+                ng-src='{{bag.images[0].thumbnailSrc}}'
+                ng-if='bag.images.length'
+                ng-click='vm.showImageDialog($event, bag.id)'
                 alt='Baguette {{$index}}'
               )
 
               img.md-card-image.image-size(
                 ng-src='http://bit.ly/1Yu4VIb'
-                ng-if='!i.images.length'
-                ng-click='vm.showImageDialog($event, i.id)'
+                ng-if='!bag.images.length'
+                ng-click='vm.showImageDialog($event, bag.id)'
                 alt='Baguette {{$index}}'
               )
 
               md-card-content(align='center')
                 p
                   span.bold Цвет:&nbsp
-                  span {{i.colour.name}}
+                  span {{bag.colour.name}}
                 p
                   span.bold Материал:&nbsp
-                  span {{i.material.name}}
+                  span {{bag.material.name}}
                 p
                   span.bold Бренд:&nbsp
-                  span {{i.brand.name}}
+                  span {{bag.brand.name}}
                 p
                   span.bold Ширина:&nbsp
-                  span {{i.borderWidth}} мм.
+                  span {{bag.borderWidth}} мм.
 
               md-card-actions.pink-button(layout='row', layout-align='center center')
-                md-button(ng-click='vm.editBaguette(i)') Редактировать
-                md-button(ng-click='vm.deleteBaguette(i)') Удалить
+                md-button(ng-click='vm.editBaguette(bag)') Редактировать
+                md-button(ng-click='vm.deleteBaguette(bag)') Удалить
