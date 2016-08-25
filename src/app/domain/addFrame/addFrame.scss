@@ -17,7 +17,6 @@
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-
 .fixed-button-width {
   width: 180px;
 }
@@ -38,6 +37,11 @@
   .input-margin {
     margin-top: 12px;
     width: 250px;
+    input {
+      width: 250px;
+      text-align: left !important;
+    }
   }
+
 }
 
