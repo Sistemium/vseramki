@@ -1,126 +1,125 @@
-.for-md-dialog(style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;")
-  .name-head() {{vm.article.name}}
-  div.md-margin(
-    layout="row"
-    layout-sm='column'
-    layout-xs='column'
-    ng-attr-layout-align="{{vm.isRootState ? 'center top' : 'center center'}}"
-  )
-    div(layout='column' layout-align='center center' ng-if='vm.isRootState' style='margin-bottom: 130px')
+.for-md-dialog.item-closed(style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px")
+  div(layout='row' layout-align='center center')
+    .name-head {{vm.article.name}}
+    md-button.md-fab.md-mini.md-icon-button.pink-button(ng-click='vm.editFrame(vm.article.id)' ng-if='vm.isEditable')
+      i.material-icons edit
+    md-button.md-fab.md-mini.md-icon-button.pink-button(ng-click='vm.deleteFrame(vm.article.id)' ng-if='vm.isEditable')
+      i.material-icons delete
+
+  .ui-view(layout='row' layout-align='center top' layout-xs='column' layout-sm='column')
+    div(layout='column' layout-align='top center' ng-if='vm.isRootState')
       a.left-container(
-        ui-sref='.image({imageId: vm.article.images[0].id})'
-        layout="row"
-        layout-align="center center"
+      layout="row"
+      layout-align="center center"
       )
-        img.main-photo-margin.md-whiteframe-1dp.md-padding(ng-src='{{vm.article.images[0].smallSrc}}')
+        img.main-photo.md-whiteframe-1dp.md-padding(ng-src='{{vm.article.images[0].smallSrc}}')
       ng-gallery.left-container2(images='vm.articleImages' thumbs-num='5' layout='row' layout-align='center center')
       md-button.md-raised.add-to-cart(ng-click='vm.addToCart(vm.article)' ng-if='!vm.article.inCart && !vm.isEditable')
         | {{'Добавить в корзину'}}
       md-button.md-raised.add-to-cart(ng-click='vm.showAdvanced($event)' ng-if='vm.isEditable')
         | {{'Загрузить фото '}}
 
-    div.overall-info.ui-view(layout='column' flex-gt-sm='40')
-      .item-info
-        h1.header-h1 О товаре
+
+    div
+      div.order-prop-width
+        h1.header-h1 Свойства
         md-table-container
-          table(md-table='')
-            tr(md-row)
-              td(md-cell='')
+          table(md-table)
+            tr(md-row flex='space-around')
+              td(md-cell)
                 p Размер:
-              td.td-fixed-size(md-cell='')
+              td.td-fixed-size(md-cell)
                 | {{vm.size.name}}
             tr(md-row)
-              td(md-cell='')
+              td.td-width(md-cell)
                 p Материал:
-              td(md-cell='')
+              td(md-cell)
                 p {{vm.material.name}}
             tr(md-row)
-              td(md-cell='')
+              td(md-cell)
                 p Цвет:
-              td(md-cell='')
+              td(md-cell)
                 p {{vm.colour.name}}
             tr(md-row)
-              td(md-cell='')
+              td(md-cell)
                 p Вес:
-              td(md-cell='')
-                p {{ vm.article.pieceWeight ? vm.article.pieceWeight + 'кг' : 'Не указан' }}
+              td(md-cell)
+                p {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг' : 'Не указан' }}
             tr(md-row)
-              td(md-cell='')
-                p Штук в пачке:
-              td(md-cell='')
+              td(md-cell)
+                p Штук в коробке:
+              td(md-cell)
                 p {{vm.article.packageRel}}
 
-      .order(ng-if='vm.article.inCart && !vm.isEditable')
+      div.order-prop-width(ng-if='!vm.isEditable')
         h1.header-h1 Заказ
         md-table-container
           table(md-table='')
-            tr(md-row flex='initial')
-              td(md-cell='')
+            tr(md-row)
+
+              td.td-width(md-cell)
                 p Цена за 1 шт.:
-              td.td-fixed-size(md-cell='')
-                p {{vm.price | number: 2}}
+
+              td(md-cell)
+                p {{(vm.article.highPrice | number: 2) || 'Не указана' }}
             tr(md-row)
-              td(md-cell='')
+
+              td(md-cell)
                 p Цена со скидкой 10%:
-              td(md-cell='')
-                p {{244 | number: 2}}
-            tr(md-row)
-              td(md-cell='')
-                p Цена со скидкой 20%:
-              td(md-cell='')
-                p {{244 | number: 2}}
-            tr(md-row)
-              td(md-cell='' colspan='2')
-            tr(md-row colspan='2')
-              td
-                p.name-style Заказано:
-              td.td-fixed-size
+
+              td(md-cell)
+                p {{(vm.article.lowPrice | number: 2) || 'Не указана' }}
+            tr(md-row  ng-if='vm.article.inCart')
+
+              td(md-cell)
+                p Заказано:
+
+              span(flex)
+
+              td(md-cell)
                 div.action-buttons(layout='row' layout-align="start center")
                   div.div-order-info-num-picker
                     md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
                     md-input-container
-                      input.custom-input(
-                        aria-label="Количество"
-                        ng-model='vm.article.inCart.count'
-                        type="number"
-                        ng-blur="vm.onBlur(vm.article)"
-                        ng-change="vm.onCartChange(vm.article)"
-                        required
-                        min='1'
-                        step='1'
+                      input(
+                      aria-label="Количество"
+                      ng-model='vm.article.inCart.count'
+                      type="number"
+                      ng-blur="vm.onBlur(vm.article)"
+                      ng-change="vm.onCartChange(vm.article)"
+                      required
+                      min='1'
+                      step='1'
                       )
                     md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
-            tr(md-row)
-              td(md-cell='')
+            tr(md-row ng-if='vm.article.inCart')
+              td(md-cell)
                 p Сумма:
-              td(md-cell='')
-                p {{vm.price * vm.article.inCart.count || 0}} руб.
-            cite * — при сумме заказа более 5000 р. скидка 10%, более 10000 р. — 20%
+              td(md-cell)
+                p {{vm.article.lowPrice * vm.article.inCart.count || 0}} руб.
 
-
-
-  .overall-info(ng-if='vm.isEditable')
-    div.md-padding.custom-h3(ng-if='vm.articleImages.length')
-      h2 Для текущей рамки загружено {{vm.articleImages.length}} фото
-      md-grid-list(
-        md-cols='1',
-        md-cols-sm='2',
-        md-cols-md='3',
-        md-cols-gt-md='6',
-        md-row-height-gt-md='1:1',
-        md-row-height='4:3',
-        md-gutter='2px',
-        md-gutter-gt-sm='1px'
-      )
-
-        md-grid-tile.md-padding(
-          ng-repeat='img in vm.articleImages track by img.id',
-          md-rowspan='1',
-          md-colspan='1',
-          md-colspan-sm='1',
-          md-colspan-xs='1'
-          ui-sref='.image({imageId: img.id})'
-        )
-          .photo-wrapper(ng-class="{'clicked': img.id == vm.clickedImage.id}", layout="column", layout-align="center center")
-            img.md-padding(ng-src='{{img.thumbnailSrc}}' )
-            md-button.md-raised(ng-click="vm.deletePhoto(img)") Удалить фото
+  //.overall-info(ng-if='vm.isEditable')
+  //  div.md-padding.custom-h3(ng-if='vm.articleImages.length')
+  //    h2 Для текущей рамки загружено {{vm.articleImages.length}} фото
+  //    md-grid-list(
+  //    md-cols='1',
+  //    md-cols-sm='2',
+  //    md-cols-md='3',
+  //    md-cols-gt-md='6',
+  //    md-row-height-gt-md='1:1',
+  //    md-row-height='4:3',
+  //    md-gutter='2px',
+  //    md-gutter-gt-sm='1px'
+  //    )
+  //
+  //      md-grid-tile.md-padding(
+  //      ng-repeat='img in vm.articleImages track by img.id',
+  //      md-rowspan='1',
+  //      md-colspan='1',
+  //      md-colspan-sm='1',
+  //      md-colspan-xs='1'
+  //      ui-sref='.image({imageId: img.id})'
+  //      )
+  //        .photo-wrapper(ng-class="{'clicked': img.id == vm.clickedImage.id}", layout="column", layout-align="center center")
+  //          img.md-padding(ng-src='{{img.thumbnailSrc}}' )
+  //          md-button.md-raised(ng-click="vm.deletePhoto(img)") Удалить фото
