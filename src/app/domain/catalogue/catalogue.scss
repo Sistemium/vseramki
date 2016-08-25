@@ -27,6 +27,7 @@ md-content.articles {
     padding: 6px;
     margin: 5px;
     border-radius: 5px;
+    cursor: pointer;
   }
 
   md-input-container {
@@ -48,6 +49,10 @@ md-content.articles {
 
   .fixed-height {
     height: 61.33px
+  }
+
+  .active-frame{
+    background: #f395b5;
   }
 
 }
