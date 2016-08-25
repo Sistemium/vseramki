@@ -23,7 +23,8 @@ cite {
   background-color: #f3f4f6;
   border-bottom: 5px solid #dbdbdb;
   padding: 5px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
 .add-to-cart {
@@ -32,20 +33,19 @@ cite {
 
 .left-container {
   width: 500px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .left-container2 {
   width: 300px;
 }
 
-.main-photo-margin {
+.main-photo {
   max-width: 455px;
   max-height: 360px;
-}
-
-.td-fixed-size {
-  width: 30%;
+  min-height: 400px;
+  min-width: 300px;
+  object-fit: contain;
 }
 
 .borders {
@@ -73,4 +73,22 @@ md-backdrop.md-opaque {
   opacity: .70;
 }
 
+.item-closed {
+  table.md-table td.md-cell, table.md-table th.md-column {
+    text-align: left;
+  }
 
+  md-input-container input {
+    width: 20px;
+    text-align: center;
+  }
+
+  .td-width {
+    width: 210px !important
+  }
+
+  .order-prop-width {
+    min-width: 360px
+  }
+
+}
