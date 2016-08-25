@@ -13,6 +13,7 @@
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
 
+
     var vm = this;
     var groupSize = 3;
 
@@ -131,6 +132,7 @@
       articleFilter: {},
       currentFilter: {},
       filterLength: false,
+      isEditable: true,
 
       plusOne: plusOne,
       minusOne: minusOne,
@@ -142,7 +144,11 @@
       addToCart: Cart.addToCart,
 
       goToCreateFrame: function () {
-        $state.go('addFrame');
+        $state.go('catalogue.add');
+      },
+
+      changeFrame: function (frame) {
+        $state.go($state.current.name, {id: frame.id});
       }
 
     });
@@ -166,6 +172,12 @@
 
       });
 
+    Article.bindAll({}, $scope, 'vm.articles', () => VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
+      groupSize = nv;
+      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
+      vm.rows = _.chunk(vm.articles, nv);
+    }));
+
 
     $scope.$watch('windowHeight', function (windowHeight) {
 
@@ -185,17 +197,20 @@
 
     });
 
-    VSHelper.watchForGroupSize($scope, 345, 240, function (nv) {
+
+    VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
       groupSize = nv;
       vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
       vm.rows = _.chunk(vm.articles, nv);
     });
 
+
     $scope.$watch('vm.articleFilter', filterArticles);
 
 
-    $scope.$on('$stateChangeSuccess', function (event, to) {
-      vm.isRootState = /^catalogue$/.test(to.name);
+    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+      vm.isRootState = /^catalogue$/.test(toState.name);
+      vm.currId = toParams.id;
     });
 
   }
