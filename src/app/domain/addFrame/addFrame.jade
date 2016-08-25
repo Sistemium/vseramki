@@ -1,20 +1,4 @@
-div.addFrame(layout='row')
-
-  div.scrolling-contents(
-    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
-  )
-
-    md-list.custom-list(hide-xs)
-
-      md-list-item.md-item-header.md-whiteframe-z1(layout='row')
-        h3 Всего рамок: {{vm.frames.length}}
-        span(flex)
-        md-progress-circular(ng-if='!vm.frames.length')
-      md-virtual-repeat-container(style='height: {{windowHeight - 143 }}px')
-        div.md-item-text-frame.md-whiteframe-z1(
-          md-virtual-repeat='frame in vm.frames'
-        )
-          | {{frame.material.name}} "{{frame.brand.name}}" {{frame.colour.name}} {{frame.frameSize.name}}/{{frame.packageRel}}
+div.addFrame(layout='row' style='height:{{ windowHeight - 70 }}px')
 
   div.md-whiteframe-z1.custom-margin(layout='column' layout-align='top center' flex)
 
