@@ -17,19 +17,36 @@
         controllerAs: 'vm',
 
         children: [
+
+          {
+            name: 'add',
+            url: '/add',
+            templateUrl: 'app/domain/addFrame/addFrame.html',
+            controller: 'AddFrameController',
+            controllerAs: 'vm'
+          },
+
           {
             name: 'item',
             url: '/:id',
             controller: 'ItemController',
             templateUrl: 'app/domain/itemView/item.html',
             controllerAs: 'vm',
-            children:[
+            children: [
               {
                 name: 'image',
                 url: '/image/:imageId',
                 controller: 'ItemImageController',
                 templateUrl: 'app/domain/itemView/itemImage.html',
                 controllerAs: 'vm'
+              },
+              {
+                name: 'edit',
+                url: '/edit',
+                template: '<p>Test Edit</p>'
+                //controller: 'AddFrameController',
+                //templateUrl: 'app/domain/addFrame/addFrame.html',
+                //controllerAs: 'vm'
               }
             ]
           }
