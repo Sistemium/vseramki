@@ -1,27 +1,32 @@
 .for-md-dialog.item-closed(style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px")
   div(layout='row' layout-align='center center')
     .name-head {{vm.article.name}}
-    md-button.md-fab.md-mini.md-icon-button.pink-button(ng-click='vm.editFrame(vm.article.id)' ng-if='vm.isEditable')
-      i.material-icons edit
-    md-button.md-fab.md-mini.md-icon-button.pink-button(ng-click='vm.deleteFrame(vm.article.id)' ng-if='vm.isEditable')
-      i.material-icons delete
 
   .ui-view(layout='row' layout-align='center top' layout-xs='column' layout-sm='column')
-    div(layout='column' layout-align='top center' ng-if='vm.isRootState')
+    div(
+    layout='column'
+    layout-align='top center'
+    ng-if='vm.isRootState'
+    flex
+    flex-offset='10'
+    style='min-width:300px; margin-right: 10px;'
+    flex-offset-xs='0'
+    flex-offset-sm='0'
+    )
       a.left-container(
       layout="row"
       layout-align="center center"
       )
         img.main-photo.md-whiteframe-1dp.md-padding(ng-src='{{vm.article.images[0].smallSrc}}')
       ng-gallery.left-container2(images='vm.articleImages' thumbs-num='5' layout='row' layout-align='center center')
-      md-button.md-raised.add-to-cart(ng-click='vm.addToCart(vm.article)' ng-if='!vm.article.inCart && !vm.isEditable')
+      md-button.md-raised.md-margin(ng-click='vm.addToCart(vm.article)' ng-if='!vm.article.inCart && !vm.isEditable' style='width: 300px')
         | {{'Добавить в корзину'}}
-      md-button.md-raised.add-to-cart(ng-click='vm.showAdvanced($event)' ng-if='vm.isEditable')
+      md-button.md-raised.md-margin(ng-click='vm.showAdvanced($event)' ng-if='vm.isEditable' style='width: 300px')
         | {{'Загрузить фото '}}
 
 
     div
-      div.order-prop-width
+      .order-prop-width.md-whiteframe-1dp(style='border-radius: 5px')
         h1.header-h1 Свойства
         md-table-container
           table(md-table)
@@ -51,7 +56,7 @@
               td(md-cell)
                 p {{vm.article.packageRel}}
 
-      div.order-prop-width(ng-if='!vm.isEditable')
+      .order-prop-width.md-whiteframe-1dp(style='border-radius: 5px; margin-top:10px' ng-if='!vm.isEditable')
         h1.header-h1 Заказ
         md-table-container
           table(md-table='')
@@ -97,6 +102,14 @@
                 p Сумма:
               td(md-cell)
                 p {{vm.article.lowPrice * vm.article.inCart.count || 0}} руб.
+    div(flex-offset='5' flex-offset-xs='0')
+
+    div(layout='row' style='right: 27px; bottom:10px; position: fixed')
+      md-button.md-fab.md-mini.md-icon-button.pink-button(ng-click='vm.editFrame(vm.article.id)' ng-if='vm.isEditable')
+        i.material-icons edit
+      md-button.md-fab.md-mini.md-icon-button.pink-button(ng-click='vm.deleteFrame(vm.article.id)' ng-if='vm.isEditable')
+        i.material-icons delete
+
 
   //.overall-info(ng-if='vm.isEditable')
   //  div.md-padding.custom-h3(ng-if='vm.articleImages.length')
