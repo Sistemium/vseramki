@@ -6,12 +6,26 @@
     .controller('AddFrameController', AddFrameController)
   ;
 
-  function AddFrameController(Baguette, Schema, Article, $mdToast, $window, $scope, $timeout) {
+  function AddFrameController(Baguette, Schema, Article, $mdToast, $window, $scope, $timeout, $state) {
 
     var vm = this;
-
     var FrameSize = Schema.model('FrameSize');
     var el = $window.document.getElementsByClassName('toolbar-fixed-top');
+
+    if ($state.params.id) {
+      var reverted = false;
+      vm.id = $state.params.id;
+      vm.editState = true;
+
+      Article.find(vm.id).then(function (frame) {
+        vm.frame = frame;
+        Baguette.find(vm.frame.baguetteId).then(function (data) {
+          vm.selectedBaguette = data;
+        });
+      });
+
+      vm.unique = true;
+    }
 
     Baguette.findAll();
     Baguette.bindAll({}, $scope, 'vm.baguettes');
@@ -22,10 +36,31 @@
     FrameSize.findAll();
     FrameSize.bindAll({}, $scope, 'vm.frameSizes');
 
+
+    function hasChanges() {
+      if (!vm.id) {
+        return true;
+      } else {
+        vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.unique;
+        return vm.id && Article.hasChanges(vm.id);
+      }
+    }
+
+    function cancelChanges() {
+      if (hasChanges()) {
+        reverted = true;
+        return Article.revert(vm.frame);
+      }
+    }
+
+    $scope.$on('$destroy', cancelChanges);
+
     angular.extend(vm, {
 
       frame: Article.createInstance(),
       saved: false,
+      hasChanges,
+      cancelChanges,
 
       refreshName: function () {
         vm.frame.name =
@@ -39,11 +74,6 @@
         Baguette.find(vm.frame.baguetteId).then(function (data) {
           vm.selectedBaguette = data;
           vm.refreshName();
-
-          if (vm.frame.frameSizeId) {
-            vm.checkAttrs();
-          }
-
         });
 
       },
@@ -60,8 +90,9 @@
 
         _.assign(params, {baguetteId: vm.frame.baguetteId}, {frameSizeId: vm.frame.frameSizeId});
 
-        if (params.baguetteId) {
+        if (params.baguetteId && params.frameSizeId) {
           Article.findAll(params).then(function (data) {
+
             if (data.length) {
               vm.paramsCheck = false;
               vm.dupMessage = 'Такая рамка уже существует';
@@ -83,10 +114,6 @@
           theme = 'success-toast';
         } else {
           theme = 'fail-toast';
-          vm.dupMessage = '';
-          $timeout(function () {
-            vm.dupMessage = resStr;
-          }, 2500);
         }
 
         $mdToast.show(
@@ -104,7 +131,9 @@
         Article.create(vm.frame).then(function () {
 
           vm.showToast('Рамка сохранена', true);
-          vm.deleteParams();
+          if (!vm.editState) {
+            vm.deleteParams();
+          }
 
         }).catch(function (obj) {
 
@@ -121,16 +150,22 @@
 
     });
 
-    $scope.$watch('vm.frame.frameSizeId', function (nv, ov) {
-      if (nv != ov) {
+    $scope.$watchGroup(['vm.frame.frameSizeId', 'vm.frame.baguetteId'], function (nv, ov) {
+
+      if ((nv != ov) && hasChanges() && !reverted) {
         vm.checkAttrs();
+      } else {
+        reverted = false;
       }
+
     });
 
     $scope.$watch('vm.frame', function () {
+
       vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.unique;
+
       if (vm.selectedBaguette) {
-        vm.refreshName()
+        vm.refreshName();
       }
     }, true);
 
