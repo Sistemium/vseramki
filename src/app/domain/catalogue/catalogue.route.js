@@ -43,10 +43,9 @@
               {
                 name: 'edit',
                 url: '/edit',
-                template: '<p>Test Edit</p>'
-                //controller: 'AddFrameController',
-                //templateUrl: 'app/domain/addFrame/addFrame.html',
-                //controllerAs: 'vm'
+                templateUrl: 'app/domain/addFrame/editFrame.html',
+                controller: 'AddFrameController',
+                controllerAs: 'vm'
               }
             ]
           }
