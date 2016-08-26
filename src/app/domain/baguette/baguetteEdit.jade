@@ -11,34 +11,36 @@
             div(ng-message="required") Поле не может быть пустым
 
       searchable-select(
-        label='Материал'
-        model='vm.baguette.materialId'
-        model-name='Material'
-        options='vm.materials'
-        on-close='vm.saveClickedOption()'
+      label='Материал'
+      model='vm.baguette.materialId'
+      model-name='Material'
+      options='vm.materials'
+      on-close='vm.saveClickedOption()'
       )
 
       searchable-select(
-        label='Цвет'
-        model='vm.baguette.colourId'
-        model-name='Colour'
-        options='vm.colours'
-        on-close='vm.saveClickedOption()'
+      label='Цвет'
+      model='vm.baguette.colourId'
+      model-name='Colour'
+      options='vm.colours'
+      on-close='vm.saveClickedOption()'
       )
 
       searchable-select(
-        label='Бренд'
-        model='vm.baguette.brandId'
-        model-name='Brand'
-        options='vm.brands'
-        on-close='vm.saveClickedOption()'
+      label='Бренд'
+      model='vm.baguette.brandId'
+      model-name='Brand'
+      options='vm.brands'
+      on-close='vm.saveClickedOption()'
       )
 
     div(layout='row' ng-if='vm.hasChanges()')
-      md-button.md-raised(ng-click='vm.cancelChanges()') Отменить изменения
+      md-button.md-raised(
+      ng-click='vm.cancelChanges()'
+      ) Отменить изменения
 
       md-button.md-raised(
-        ng-disabled='!vm.selectParamsChecker()' ng-click='vm.createBaguette()'
+      ng-disabled='!vm.selectParamsChecker()' ng-click='vm.createBaguette()'
       ) Сохранить изменения
 
   md-divider.md-margin
@@ -47,8 +49,8 @@
     div(layout='row')
       h2.md-margin.center-header Загруженные фото ({{vm.baguetteImages.length}})
       md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top(
-        ng-if='vm.baguetteImages.length'
-        ng-click='vm.showImageDialog($event, vm.id)'
+      ng-if='vm.baguetteImages.length'
+      ng-click='vm.showImageDialog($event, vm.id)'
       )
         i.material-icons add
 
