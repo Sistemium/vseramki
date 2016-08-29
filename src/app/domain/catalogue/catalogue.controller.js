@@ -197,16 +197,13 @@
 
     });
 
-
     VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
       groupSize = nv;
       vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
       vm.rows = _.chunk(vm.articles, nv);
     });
 
-
     $scope.$watch('vm.articleFilter', filterArticles);
-
 
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
       vm.isRootState = /^catalogue$/.test(toState.name);
