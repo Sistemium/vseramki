@@ -3,7 +3,7 @@
 }
 
 .name-head {
-  text-shadow: 0px 0px 7px rgba(159, 159, 159, 0.75);
+  text-shadow: 0 0 7px rgba(159, 159, 159, 0.75);
   color: #000000;
   font-size: 30px;
   margin: 20px;
@@ -26,6 +26,9 @@ cite {
   margin-bottom: 0;
   margin-top: 0;
   color: white;
+  height: 35px;
+  border-radius: 5px 5px 0 0;
+  line-height: 38px;
 }
 
 .add-to-cart {
@@ -90,6 +93,17 @@ md-backdrop.md-opaque {
 
   .order-prop-width {
     min-width: 360px
+  }
+
+  .left-nav-photo {
+    min-width: 300px;
+    margin-right: 10px;
+  }
+
+  .edit-buttons {
+    right: 27px;
+    bottom: 10px;
+    position: fixed;
   }
 
 }
