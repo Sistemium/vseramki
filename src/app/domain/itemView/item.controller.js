@@ -22,6 +22,7 @@
     var Colour = Schema.model('Colour');
     var Material = Schema.model('Material');
     var FrameSize = Schema.model('FrameSize');
+    var BaguetteImage = Schema.model('BaguetteImage');
 
     var vm = this;
 
@@ -102,7 +103,6 @@
         vm.allArt = data;
       });
 
-
     Article.find($stateParams.id).then(function (article) {
       vm.article = article;
 
@@ -120,9 +120,26 @@
           vm.size = size;
         });
 
-        ArticleImage.findAll(stateFilter);
+        ArticleImage.findAll(stateFilter).then(function () {
 
-        ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages');
+          ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', function (a, b) {
+
+            vm.articleImages = b;
+            vm.images = _.union(vm.baguetteImages, vm.articleImages);
+          });
+
+          var baguetteImageFilter = {
+            baguetteId: vm.article.baguetteId
+          };
+
+          BaguetteImage.findAll(baguetteImageFilter).then(function () {
+            BaguetteImage.bindAll(baguetteImageFilter, $scope, 'vm.baguetteImages', function (a, b) {
+              vm.baguetteImages = b;
+              vm.images = _.union(vm.baguetteImages, vm.articleImages);
+            });
+          });
+
+        });
 
       }
 
@@ -157,10 +174,9 @@
       deleteFrame: function (frameId) {
         Article.destroy(frameId).then(function (frameId) {
           if (frameId) {
-            console.log(vm.articles);
             vm.showToast('Рамка удалена', true);
+            $state.go('catalogue')
           }
-
         }).catch(function () {
           vm.showToast('Ошибка', false);
         });
@@ -192,6 +208,7 @@
     $scope.$on('$stateChangeSuccess', function (event, to) {
       vm.isRootState = /(^|\.)item$/.test(to.name);
     });
+
   }
 
 }());
