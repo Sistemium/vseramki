@@ -1,4 +1,4 @@
-'use-strict';
+'use strict';
 
 (function () {
 
@@ -8,6 +8,7 @@
 
     var el = $window.$;
     var model;
+
 
     if (/^cat/.test($state.current.name)) {
       var ArticleImage = Schema.model('ArticleImage');
@@ -24,7 +25,7 @@
     var defaults = {
       baseClass: 'ng-gallery',
       thumbClass: 'ng-thumb',
-      templateUrl: 'ng-gallery.html'
+      templateUrl: 'app/components/gallery/galleryTemplate.html'
     };
 
     var keys_codes = {
@@ -40,33 +41,9 @@
       scope.thumbsNum = scope.thumbsNum || 3; // should be odd
     }
 
-    var template_url = defaults.templateUrl;
+
     // Set the default template
-    $templateCache.put(template_url,
-      '<div class="{{ baseClass }}" layout="row" layout-align="center center">' +
-      '  <div ng-repeat="i in images">' +
-      '    <img ng-src="{{ i.thumbnailSrc }}" class="{{ thumbClass }}" ng-click="openGallery($index)" alt="Image {{ $index + 1 }}" />' +
-      '  </div>' +
-      '</div>' +
-      '<div class="ng-overlay" ng-show="opened">' +
-      '</div>' +
-      '<div class="ng-gallery-content" unselectable="on" ng-show="opened" ng-swipe-left="nextImage()" ng-swipe-right="prevImage()">' +
-      '  <div class="uil-ring-css" ng-show="loading"><div></div></div>' +
-      '  <a class="close-popup forbid-marking" ng-click="closeGallery()"><i class="custom-material-icons">close</i></a>' +
-      '  <a class="close-popup forbid-marking" ng-click="deletePhoto(id, index)" style="right: 50px"><i class="custom-material-icons">delete</i></a>' +
-      '  <a class="nav-left forbid-marking" ng-click="prevImage()"><i class="fa fa-angle-left custom-material-icons">chevron_left</i></a>' +
-      '  <img ondragstart="return false;" draggable="false" ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" />' +
-      '  <a class="nav-right forbid-marking" ng-click="nextImage()"><i class="custom-material-icons">chevron_right</i></a>' +
-      '  <span class="info-text">{{ index + 1 }}/{{ images.length }} - {{ description }}  </span>' +
-      '  <div class="ng-thumbnails-wrapper">' +
-      '    <div class="ng-thumbnails">' +
-      '      <div ng-repeat="i in images">' +
-      '        <img draggable="false" ng-src="{{ i.thumbnailSrc }}" ng-class="{\'active\': index === $index}" ng-click="changeImage($index)" />' +
-      '      </div>' +
-      '    </div>' +
-      '  </div>' +
-      '</div>'
-    );
+    $templateCache.put('galleryTemplate.html');
 
     return {
       restrict: 'EA',
@@ -76,8 +53,6 @@
         thumbsNum: '@',
         hideOverflow: '='
       },
-
-      //scope: 'true',
 
       controller: [
         '$scope',
@@ -96,6 +71,7 @@
 
         setScopeValues(scope, attrs);
 
+
         if (scope.thumbsNum >= 11) {
           scope.thumbsNum = 11;
         }
@@ -111,6 +87,7 @@
         scope.thumbs_width = 0;
 
         var loadImage = function (i) {
+
           var deferred = $q.defer();
           var image = new Image();
 
@@ -125,14 +102,20 @@
           image.onerror = function () {
             deferred.reject();
           };
-          image.src = scope.images[i].largeSrc;
+
           scope.loading = true;
+
+          $timeout(function () {
+            image.src = scope.images[i].largeSrc;
+          }, 500);
+
 
           return deferred.promise;
         };
 
         var showImage = function (i) {
           loadImage(scope.index).then(function (resp) {
+            //defineClass(_.get(resp, 'naturalWidth'), _.get(resp, 'naturalHeight'));
             scope.img = resp.src;
             scope.id = scope.description;
             smartScroll(scope.index);
@@ -140,12 +123,25 @@
           scope.description = scope.images[i].id || '';
         };
 
+        scope.testSwipe = function(){
+          alert('asd');
+        };
+
+
+        //var defineClass = function (width, height) {
+        //  scope.useWide = false, scope.useTall = false;
+        //  width >= height ? scope.useWide = true : scope.useTall = true;
+        //};
+
+
         scope.changeImage = function (i) {
           scope.index = i;
           showImage(i);
         };
 
         scope.nextImage = function () {
+
+          console.log('NextImageIsClicked');
 
           scope.index += 1;
 
@@ -240,6 +236,8 @@
             width += 10; // margin-right
             visible_width = thumb.clientWidth + 10;
           });
+          scope.width = width;
+          scope.visibleWidth = visible_width * scope.thumbsNum;
           return {
             width: width,
             visible_width: visible_width * scope.thumbsNum

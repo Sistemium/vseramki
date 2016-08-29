@@ -1,0 +1,61 @@
+// Images thumbnail
+div(class='{{ baseClass }}', layout='row', layout-align='center center')
+  div(ng-repeat='i in images')
+    img.thumb-image-fit-div(ng-src='{{ i.thumbnailSrc }}', class='{{ thumbClass }}', ng-click='openGallery($index)', alt='Image {{ $index + 1 }}')
+
+
+// On open image
+div.ng-overlay(ng-show='opened' layout='row' layout-align='center center')
+
+  div.main-div-settings.min-settings(flex layout='row' layout-align='start center' hide-xs style='min-width: 80px !important')
+    p(ng-click='prevImage()' style='margin: 0px').material-icons.custom-chevron chevron_left
+
+  div.main-div-settings(flex='80' layout='column' layout-align='space-between center' flex-xs='100')
+
+    div.main-div-settings(flex='10' style='width: 100%' layout='row' show-xs hide)
+      p.md-margin(style='color: white;') {{index + 1}}/{{images.length}}
+      span(flex='')
+      i.material-icons(style='color: white; margin-top: 8px; margin-right: 5px; cursor: pointer' ng-click="alert('soon')") delete
+      i.material-icons(style='color: white; margin-top: 8px; margin-right: 3px; cursor: pointer' ng-click='closeGallery()') close
+
+    // Photo div
+    div.main-div-settings(
+    layout='column'
+    layout-align='center center'
+    style='width: 100%;'
+    md-swipe-left='nextImage()'
+    md-swipe-right='prevImage()'
+    md-swipe-up='closeGallery()'
+    )
+      img.my-img.image-fit-div(
+      ondragstart='return false;'
+      draggable='false'
+      ng-src='{{ img }}'
+      ng-show='!loading'
+      )
+      md-progress-circular(md-mode="indeterminate" md-diameter='170' ng-show='loading')
+
+    //Info div
+    div.main-div-settings(flex='25' style='width: 100%' hide-xs)
+
+      div
+        p(style='color: white; text-align: center; font-weight: bold') {{index + 1}}/{{images.length}}
+
+      .ng-gallery-content(unselectable='on', ng-show='opened')
+        .ng-thumbnails-wrapper
+          .ng-thumbnails
+            div(ng-repeat='i in images')
+              img.thumb-image-fit-div(
+              draggable='false'
+              ng-src='{{ i.thumbnailSrc }}'
+              ng-class='{active : index === $index}'
+              ng-click='changeImage($index)'
+              style='border: 1px solid white; padding: 2px; border-radius: 5px;'
+              )
+
+
+  div.main-div-settings.min-settings(flex layout='row' layout-align='end center' hide-xs style='min-width: 80px !important')
+
+    i.material-icons.close-icon(ng-click='closeGallery()') close
+    i.material-icons.delete-icon(ng-click="") delete
+    div(ng-click='nextImage()' style='margin: 0px').material-icons.custom-chevron chevron_right
