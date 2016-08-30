@@ -13,11 +13,9 @@
                           Schema,
                           ArticleImage,
                           $scope,
-                          $mdDialog,
-                          $mdMedia,
-                          $window,
-                          $mdToast,
-                          $state) {
+                          $state,
+                          ToastHelper,
+                          ImageHelper) {
 
     var Colour = Schema.model('Colour');
     var Material = Schema.model('Material');
@@ -26,48 +24,10 @@
 
     var vm = this;
 
-    var body2 = $window.document.getElementsByClassName('for-md-dialog');
-    var el = $window.document.getElementsByClassName('toolbar-fixed-top');
-
     var stateFilter = {
       articleId: $stateParams.id
     };
 
-
-    vm.showAdvanced = function (ev) {
-
-      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
-
-      $mdDialog.show({
-          controller: 'AddPhotoDialogController as vm',
-          templateUrl: "app/domain/itemView/addPhotoDialog.html",
-          parent: body2,
-          targetEvent: ev,
-          clickOutsideToClose: false,
-          fullscreen: useFullScreen
-        })
-        .then(function (answer) {
-
-          _.each(answer, function (obj) {
-
-            ArticleImage.create({
-              smallSrc: obj.data.pictures[0].src,
-              largeSrc: obj.data.pictures[1].src,
-              thumbnailSrc: obj.data.pictures[2].src,
-              articleId: vm.articleId
-            });
-
-          });
-
-        });
-
-      $scope.$watch(function () {
-        return $mdMedia('xs') || $mdMedia('sm');
-      }, function (wantsFullScreen) {
-        vm.customFullscreen = (wantsFullScreen === true);
-      });
-
-    };
 
     function minusOne(item) {
 
@@ -156,16 +116,24 @@
 
     angular.extend(vm, {
       uploading: true,
-      imageClick: imageClick,
-      deletePhoto: deletePhoto,
-      minusOne: minusOne,
-      plusOne: plusOne,
-      onBlur: onBlur,
-      onCartChange: onCartChange,
+      imageClick,
+      deletePhoto,
+      minusOne,
+      plusOne,
+      onBlur,
+      onCartChange,
       addToCart: Cart.addToCart,
       article: '',
       isEditable: true,     // admin settings !!
       isRootState: true,
+
+      showImageDialog: ImageHelper.mdDialogHelper(
+        function (imsImg, id) {
+          ArticleImage.create(
+            angular.extend(imsImg, {
+              articleId: id
+            }));
+        }),
 
       editFrame: function (frameId) {
         $state.go('catalogue.item.edit', {id: frameId});
@@ -174,32 +142,12 @@
       deleteFrame: function (frameId) {
         Article.destroy(frameId).then(function (frameId) {
           if (frameId) {
-            vm.showToast('Рамка удалена', true);
+            ToastHelper.showToast('Рамка удалена', true);
             $state.go('catalogue')
           }
         }).catch(function () {
-          vm.showToast('Ошибка', false);
+          ToastHelper.showToast('Ошибка. Рамка не удалена', false);
         });
-      },
-
-      showToast: function (resStr, status) {
-        var theme;
-
-        if (status) {
-          theme = 'success-toast';
-        } else {
-          theme = 'fail-toast';
-
-        }
-
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(resStr)
-            .position('top right')
-            .hideDelay(2000)
-            .theme(theme)
-            .parent(el)
-        );
       }
 
     }, stateFilter);
