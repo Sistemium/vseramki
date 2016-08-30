@@ -7,10 +7,9 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, $mdToast, $scope, $q, $state, $window, ImageHelper, VSHelper) {
+  function BaguettesController(Schema, Baguette, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper) {
 
     var vm = this;
-    var el = $window.document.getElementsByClassName('toolbar-fixed-top');
 
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
@@ -89,25 +88,6 @@
             }));
         }),
 
-      showToast: function (resStr, status) {
-
-        var theme;
-
-        if (status) {
-          theme = 'success-toast';
-        } else {
-          theme = 'fail-toast';
-        }
-
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(resStr)
-            .position('top right')
-            .hideDelay(2000)
-            .theme(theme)
-            .parent(el)
-        );
-      },
 
       editBaguette: function (item) {
         $state.go('.edit', {id: item.id});
@@ -120,21 +100,19 @@
           _(item).forEach(function (item) {
             Baguette.destroy(item);
           });
-          vm.showToast('Багет удален', true);
+          ToastHelper.showToast('Багет удален', true);
           vm.selected = [];
         }
         else {
           Baguette.destroy(item);
-          vm.showToast('Багет удален', true);
+          ToastHelper.showToast('Багет удален', true);
         }
 
       },
 
-
       resetCheckedBaguette: function () {
         vm.selected = [];
       },
-
 
       ///???????????????????????????????????????////
       saveClickedOption: function (obj, name) {
@@ -161,7 +139,6 @@
 
     var subscription = $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
 
-
       vm.isRoot = /(table|tiles)$/.test(toState.name);
 
       if (vm.isRoot || !unbindBaguettes) {
@@ -183,9 +160,7 @@
 
     });
 
-
     $scope.$on('$destroy', subscription);
-
 
     VSHelper.watchForGroupSize($scope, 50, 250, setChunks);
 
