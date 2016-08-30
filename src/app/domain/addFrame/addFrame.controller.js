@@ -6,11 +6,10 @@
     .controller('AddFrameController', AddFrameController)
   ;
 
-  function AddFrameController(Baguette, Schema, Article, $mdToast, $window, $scope, $timeout, $state) {
+  function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper) {
 
     var vm = this;
     var FrameSize = Schema.model('FrameSize');
-    var el = $window.document.getElementsByClassName('toolbar-fixed-top');
 
     if ($state.params.id) {
       var reverted = false;
@@ -95,8 +94,7 @@
 
             if (data.length) {
               vm.paramsCheck = false;
-              vm.dupMessage = 'Такая рамка уже существует';
-              vm.showToast(vm.dupMessage, false);
+              ToastHelper.showToast('Такая рамка уже существует', false, vm);
               vm.unique = false;
             } else {
               vm.dupMessage = '';
@@ -107,30 +105,10 @@
         }
       },
 
-      showToast: function (resStr, status) {
-        var theme;
-
-        if (status) {
-          theme = 'success-toast';
-        } else {
-          theme = 'fail-toast';
-        }
-
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(resStr)
-            .position('top right')
-            .hideDelay(2000)
-            .theme(theme)
-            .parent(el)
-        );
-      },
-
       saveFrame: function () {
 
         Article.create(vm.frame).then(function () {
-
-          vm.showToast('Рамка сохранена', true);
+          ToastHelper.showToast('Рамка сохранена', true);
           if (!vm.editState) {
             vm.deleteParams();
           }
@@ -138,9 +116,9 @@
         }).catch(function (obj) {
 
           if (obj.status == '500') {
-            vm.showToast('Ошибка. Рамка не сохранена', false);
+            ToastHelper.showToast('Ошибка. Рамка не сохранена', false, vm);
           } else {
-            vm.showToast('Ошибка. Обратитесь в тех. поддержку', false);
+            ToastHelper.showToast('Ошибка. Обратитесь в тех. поддержку', false, vm);
           }
 
         });
