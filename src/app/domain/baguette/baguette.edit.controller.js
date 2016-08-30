@@ -6,8 +6,7 @@
     .module('vseramki')
     .controller('BaguetteEditController', BaguetteEditController);
 
-  function BaguetteEditController(Schema, Baguette, $mdToast, $scope, $state, $window, ImageHelper, ModalHelper, $timeout) {
-
+  function BaguetteEditController(Schema, Baguette, $scope, $state, $window, ImageHelper, ToastHelper) {
 
     var vm = this;
 
@@ -19,7 +18,7 @@
     var BaguetteImage = Schema.model('BaguetteImage');
 
     vm.id = $state.params.id;
-    var el = $window.document.getElementsByClassName('toolbar-fixed-top');
+
     vm.unique = true;
 
     Colour.bindAll(false, $scope, 'vm.colours');
@@ -77,34 +76,10 @@
             }));
         }),
 
-      showToast: function (resStr, status) {
-        var theme;
-
-        if (status) {
-          theme = 'success-toast';
-        } else {
-          theme = 'fail-toast';
-          vm.dupMessage = '';
-          $timeout(function () {
-            vm.dupMessage = resStr;
-          }, 2500);
-
-        }
-
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(resStr)
-            .position('top right')
-            .hideDelay(2000)
-            .theme(theme)
-            .parent(el)
-        );
-      },
-
       createBaguette: function () {
         Baguette.create(vm.baguette)
           .then(function () {
-            vm.showToast('Багет сохранен', true);
+            ToastHelper.showToast('Багет сохранен', true);
             if (!vm.id) {
               vm.baguette = Baguette.createInstance();
             }
@@ -113,9 +88,9 @@
           .catch(function (obj) {
 
             if (obj.status == '500') {
-              vm.showToast('Ошибка. Багет не сохранен', false);
+              ToastHelper.showToast('Ошибка. Багет не сохранен', false, vm);
             } else {
-              vm.showToast('Ошибка. Обратитесь в тех. поддержку', false);
+              ToastHelper.showToast('Ошибка. Обратитесь в тех. поддержку', false, vm);
             }
 
           });
@@ -131,33 +106,33 @@
           $scope.$emit('baguetteRefresh', _.pick(vm.baguette, keys));
         }
 
-      },
+      }
 
-      addAttr: ModalHelper.showModal(
-        function (answer, attr, model) {
-          if (answer) {
-            var foundModel = (Schema.model(model));
-            foundModel.findAll({name: attr}, {bypassCache: true}).then(function (item) {
-              if (item.length) {
-                vm.showToast('Такой атрибут уже сущетвует', false)
-              } else {
-                var formatedAttr = attr.slice(0, 1).toUpperCase() + attr.slice(1).toLowerCase();
-
-                foundModel.create({name: formatedAttr}).then(function (a) {
-                  vm.showToast('Атрибут ' + a.name + ' сохранен', true);
-
-                  var resetFiled = 'attrsSearch' + model;
-                  vm[resetFiled].name = '';
-
-                  var markAdded = model.toLowerCase() + 'Id';
-                  vm.baguette[markAdded] = a.id;
-                });
-              }
-            });
-
-          }
-        }
-      )
+      //addAttr: ModalHelper.showModal(
+      //  function (answer, attr, model) {
+      //    if (answer) {
+      //      var foundModel = (Schema.model(model));
+      //      foundModel.findAll({name: attr}, {bypassCache: true}).then(function (item) {
+      //        if (item.length) {
+      //          ToastHelper.showToast('Такой атрибут уже сущетвуетss', false);
+      //        } else {
+      //          var formatedAttr = attr.slice(0, 1).toUpperCase() + attr.slice(1).toLowerCase();
+      //
+      //          foundModel.create({name: formatedAttr}).then(function (a) {
+      //            vm.showToast('Атрибут ' + a.name + ' сохраненs', true);
+      //
+      //            var resetFiled = 'attrsSearch' + model;
+      //            vm[resetFiled].name = '';
+      //
+      //            var markAdded = model.toLowerCase() + 'Id';
+      //            vm.baguette[markAdded] = a.id;
+      //          });
+      //        }
+      //      });
+      //
+      //    }
+      //  }
+      //)
 
     });
 
@@ -168,21 +143,18 @@
         .then(function (data) {
 
           if (data.length) {
-            vm.showToast('Такой багет уже существует', false);
+            ToastHelper.showToast('Такой багет уже существует', false, vm);
             vm.unique = false;
           } else {
             vm.unique = true;
             vm.dupMessage = '';
           }
-
         });
-
     }
 
     vm.inputReady = function () {
 
       var elem = angular.element($window.document.getElementById('materialInput'));
-
       elem.on('keydown', function (ev) {
         ev.stopPropagation();
       });
