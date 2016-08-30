@@ -4,13 +4,13 @@
 
   .ui-view(layout='row' layout-align='center top' layout-xs='column' layout-sm='column')
     div.left-nav-photo(
-      layout='column'
-      layout-align='top center'
-      ng-if='vm.isRootState'
-      flex
-      flex-offset='10'
-      flex-offset-xs='0'
-      flex-offset-sm='0'
+    layout='column'
+    layout-align='top center'
+    ng-if='vm.isRootState'
+    flex
+    flex-offset='10'
+    flex-offset-xs='0'
+    flex-offset-sm='0'
     )
       a.left-container(
       layout="row"
@@ -20,7 +20,7 @@
       ng-gallery.left-container2(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
       md-button.md-raised.md-margin(ng-click='vm.addToCart(vm.article)' ng-if='!vm.article.inCart && !vm.isEditable' style='width: 300px')
         | {{'Добавить в корзину'}}
-      md-button.md-raised.md-margin(ng-click='vm.showAdvanced($event)' ng-if='vm.isEditable' style='width: 300px')
+      md-button.md-raised.md-margin(ng-click='vm.showImageDialog($event, vm.article.id)' ng-if='vm.isEditable' style='width: 300px')
         | {{'Загрузить фото '}}
 
 
