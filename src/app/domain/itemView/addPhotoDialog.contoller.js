@@ -21,7 +21,6 @@
       $mdDialog.hide(answer);
     };
 
-
     if (/^cat/.test($state.current.name)) {
       folder = 'Article';
     } else if (/^bag/.test($state.current.name)) {
