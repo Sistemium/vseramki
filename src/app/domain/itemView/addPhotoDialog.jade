@@ -1,15 +1,15 @@
-md-dialog(aria-label='Add photo', ng-cloak='')
+md-dialog(aria-label='Add photo' ng-cloak)
   form
     md-toolbar
       .md-toolbar-tools
         h2 Добавление фото
-        span(flex='')
+        span(flex)
         md-button(ng-click='vm.hide()').md-fab.md-mini.custom-filter-reset-button
           i.custom-material-icons clear
     md-dialog-content
       .md-dialog-content
         div(layout="column")
-          form.custom-form(name='pictureUpload', layout='column')
+          form.custom-form(name='pictureUpload' layout='column')
             lf-ng-md-file-input(
               name='files',
               lf-files='vm.files',
@@ -26,6 +26,5 @@ md-dialog(aria-label='Add photo', ng-cloak='')
         div(layout='column' layout-align='center center')
           md-button.md-raised.button-upload(ng-click='vm.uploadFiles()' ng-if='vm.files.length') Загрузить картинки
           md-progress-linear(value='{{vm.progressPercent}}' ng-if='vm.busy' md-mode='determinate')
-    //md-dialog-actions(layout='row')
 
 
