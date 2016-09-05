@@ -53,7 +53,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
     md-divider(flex ng-if='vm.isRootState')
     div(style='height: {{windowHeight - 460}}px; overflow: scroll' ng-show='!vm.isRootState' )
       .md-whiteframe-1dp.items(
-      ng-repeat='frame in vm.articles'
+      ng-repeat='frame in vm.articles | limitTo: 20'
       ng-class="{'active-frame' : vm.currId == frame.id }"
       ng-click='vm.changeFrame(frame)'
       )
@@ -61,7 +61,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
     span(flex)
 
-    md-button.pink-button(style='padding: 0' ng-click="vm.goToCreateFrame()") Добавить рамку
+    md-button.pink-button(style='padding: 0' ng-click="vm.goToCreateFrame()" ng-show='vm.isLoggedIn && vm.isAdmin') Добавить рамку
 
 
   .ui-view(flex ng-if='!vm.isRootState')
@@ -87,7 +87,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
               .md-title.center {{ article.lowPrice + ' руб.'}}
             span(flex)
 
-            md-card-content.fixed-height(ng-if='article.inCart')
+            md-card-content.fixed-height(ng-show='article.inCart && (vm.isLoggedIn && !vm.isAdmin)')
               .div-order-info(layout='row' layout-align="start center")
 
                 p.name-style Заказано:
@@ -110,10 +110,9 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
                   md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
 
-            md-card-actions(ng-if='!article.inCart' flex fng-class="{'pink-button': vm.isEditable}")
+            md-card-actions(flex ng-show='!article.inCart && (vm.isLoggedIn && !vm.isAdmin)')
               md-button.md-fab.md-mini.md-icon-button(
               aria-label="Добавить в корзину"
               ng-click="vm.addToCart(article)"
-              ng-if='!vm.isEditable'
               )
                 i.material-icons add_shopping_cart
