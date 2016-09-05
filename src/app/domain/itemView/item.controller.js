@@ -15,7 +15,8 @@
                           $scope,
                           $state,
                           ToastHelper,
-                          ImageHelper) {
+                          ImageHelper,
+                          AuthHelper) {
 
     var Colour = Schema.model('Colour');
     var Material = Schema.model('Material');
@@ -24,10 +25,12 @@
 
     var vm = this;
 
+    vm.isLoggedIn = AuthHelper.isLoggedIn();
+    vm.isAdmin = AuthHelper.isAdmin();
+
     var stateFilter = {
       articleId: $stateParams.id
     };
-
 
     function minusOne(item) {
 
@@ -124,7 +127,6 @@
       onCartChange,
       addToCart: Cart.addToCart,
       article: '',
-      isEditable: true,     // admin settings !!
       isRootState: true,
 
       showImageDialog: ImageHelper.mdDialogHelper(
@@ -151,7 +153,6 @@
       }
 
     }, stateFilter);
-
 
     $scope.$on('$stateChangeSuccess', function (event, to) {
       vm.isRootState = /(^|\.)item$/.test(to.name);
