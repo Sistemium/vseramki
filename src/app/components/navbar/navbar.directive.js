@@ -17,11 +17,39 @@
 
     return directive;
 
-    function NavbarController(Cart, $scope, $mdMedia, Auth, $window, $state) {
+    function NavbarController(Cart, $scope, $mdMedia, Auth, $window, $state, AuthHelper) {
       Cart.bindAll({}, $scope, 'vm.cart');
       Cart.findAll();
 
       var vm = this;
+
+      vm.isLoggedIn = AuthHelper.isLoggedIn();
+      vm.isAdmin = AuthHelper.isAdmin();
+
+      if (vm.isAdmin) {
+        var navs = [
+          {
+            sref: 'home',
+            label: 'Главная'
+          }, {
+            sref: 'catalogue',
+            label: 'Рамки'
+          }, {
+            sref: 'baguettes',
+            label: 'Багет'
+          }
+        ]
+      } else {
+        navs = [
+          {
+            sref: 'home',
+            label: 'Главная'
+          }, {
+            sref: 'catalogue',
+            label: 'Рамки'
+          }
+        ];
+      }
 
       function setUser() {
         Auth.getCurrentUser(null)
@@ -37,26 +65,15 @@
 
       _.assign(vm, {
 
-        goToUserInfo: function(){
+        goToUserInfo: function () {
           $state.go('userInfo');
         },
 
-        login: function(){
-           $state.go('login');
+        login: function () {
+          $state.go('login');
         },
 
-        navs: [
-          {
-            sref: 'home',
-            label: 'Главная'
-          }, {
-            sref: 'catalogue',
-            label: 'Рамки'
-          }, {
-            sref: 'baguettes',
-            label: 'Багет'
-          }
-        ]
+        navs: navs
 
       });
 
