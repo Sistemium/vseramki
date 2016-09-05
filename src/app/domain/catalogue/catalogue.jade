@@ -51,9 +51,12 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
     md-divider(ng-if='!vm.isRootState' style='padding: 2px')
 
     md-divider(flex ng-if='vm.isRootState')
-    div(style='height: {{windowHeight - 460}}px; overflow: scroll' ng-show='!vm.isRootState' )
+
+    md-virtual-repeat-container(style='height: {{windowHeight - 460}}px; overflow: scroll' ng-show='!vm.isRootState' )
       .md-whiteframe-1dp.items(
-      ng-repeat='frame in vm.articles | limitTo: 20'
+      md-virtual-repeat='frame in vm.articles'
+      layout='row'
+      layout-align='start center'
       ng-class="{'active-frame' : vm.currId == frame.id }"
       ng-click='vm.changeFrame(frame)'
       )
