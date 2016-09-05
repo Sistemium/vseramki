@@ -6,7 +6,7 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper) {
+  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper, AuthHelper) {
 
     var FrameSize = Schema.model('FrameSize');
     var Brand = Schema.model('Brand');
@@ -16,6 +16,9 @@
 
     var vm = this;
     var groupSize = 3;
+
+    vm.isLoggedIn = AuthHelper.isLoggedIn();
+    vm.isAdmin = AuthHelper.isAdmin();
 
     Cart.findAll();
     Cart.bindAll({}, $scope, 'vm.cart');
@@ -132,7 +135,6 @@
       articleFilter: {},
       currentFilter: {},
       filterLength: false,
-      isEditable: true,
 
       plusOne: plusOne,
       minusOne: minusOne,
