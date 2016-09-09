@@ -12,7 +12,8 @@
     var vm = this;
     var stateParam = [];
 
-    Cart.bindAll({}, $scope, 'vm.data');
+    Cart.bindAll({}, $scope, 'vm.data', refreshPrice);
+
     ArticleImage.findAll();
     Cart.findAll().then(function (carts) {
       _.each(carts, function (cart) {
@@ -22,6 +23,10 @@
       });
     });
 
+    function refreshPrice() {
+      vm.cartSubTotal = Cart.orderSubTotal();
+      vm.cartTotal = Cart.orderTotal();
+    }
 
     function clearCart() {
       Cart.destroyAll();
@@ -48,17 +53,16 @@
       if (item.count < 1) {
         item.count = 1;
       }
-
-      Cart.save(item);
+      saveItem();
     }
 
 
     angular.extend(vm, {
-      clearCart: clearCart,
-      clearItem: clearItem,
-      saveItem: saveItem,
-      plusOne: plusOne,
-      minusOne: minusOne
+      clearCart,
+      clearItem,
+      saveItem,
+      plusOne,
+      minusOne
     });
 
   }
