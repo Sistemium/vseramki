@@ -22,7 +22,7 @@ cite {
 .header-h1 {
   background-color: #ff4081;
   border-bottom: 5px solid #ee6e99;
-  padding: 5px;
+  padding-left: 12px;
   margin-bottom: 0;
   margin-top: 0;
   color: white;
@@ -92,7 +92,8 @@ md-backdrop.md-opaque {
   }
 
   .order-prop-width {
-    min-width: 360px
+    min-width: 380px;
+    max-width: 380px;
   }
 
   .left-nav-photo {
@@ -110,13 +111,13 @@ md-backdrop.md-opaque {
     width: 300px;
   }
 
-  .item-info{
+  .item-info {
     border-radius: 5px;
   }
 
-  .item-info-margin{
+  .item-info-margin {
     border-radius: 5px;
-    margin-top:10px;
+    margin-top: 10px;
   }
 
 }
