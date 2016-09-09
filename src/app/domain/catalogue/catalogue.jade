@@ -87,7 +87,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
                 .md-subhead.center {{ article.name }}
 
             .md-margin
-              .md-title.center {{ article.lowPrice + ' руб.'}}
+              .md-title.center {{ article.lowPrice + ' ₽'}}
             span(flex)
 
             md-card-content.fixed-height(ng-show='article.inCart && (!vm.isAdmin)')
