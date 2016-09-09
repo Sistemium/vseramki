@@ -2,22 +2,34 @@
 
 (function () {
 
-  function AuthHelper(Auth) {
+  function AuthHelper(Auth, $q) {
 
-    function isLoggedIn() {
-      var token = Auth.getToken();
-      return token ? true : false;
-    }
+    var currentUser;
 
     function isAdmin() {
-      var promise = Auth.getCurrentUser();
-      return promise.name == 'Denis Mosin';
+
+      if (!currentUser) {
+        return false;
+      } else {
+        return currentUser.name === 'Denis Mosin';
+      }
+
     }
 
+    function hasUser() {
+
+      if (currentUser) {
+        return $q.resolve(currentUser);
+      } else if (Auth.getToken()) {
+        return Auth.getCurrentUser(_.noop)
+          .then(user => currentUser = user);
+      }
+
+    }
 
     return {
-      isLoggedIn: isLoggedIn,
-      isAdmin: isAdmin
+      isAdmin,
+      hasUser
     }
 
   }
