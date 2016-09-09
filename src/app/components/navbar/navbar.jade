@@ -2,27 +2,26 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
   .md-toolbar-tools
     img.top-logo(src='images/top-logo.jpg' ui-sref='home')
     span(flex)
-
     md-button.tool-button(
-      ng-repeat='btn in vm.navs track by btn.sref'
-      ui-sref='{{btn.sref}}'
-      ui-sref-active='md-primary'
-      ng-if='!vm.breakpoint'
+    ng-repeat='btn in vm.navs track by btn.sref'
+    ui-sref='{{btn.sref}}'
+    ui-sref-active='md-primary'
+    ng-if='!vm.breakpoint'
     ) {{ btn.label }}
 
     md-fab-speed-dial.md-scale.margin-fab-cust(
-      md-direction='down'
-      ng-if='vm.breakpoint'
+    md-direction='down'
+    ng-if='vm.breakpoint'
     )
       md-fab-trigger
         md-button.md-fab.md-mini.md-icon-button.md-primary(aria-label='menu')
           i.material-icons menu
       md-fab-actions
         md-button.md-raised.md-mini.custom-fab(
-          ng-repeat='fab in vm.navs track by fab.sref'
-          aria-label='{{fab.sref}}'
-          ui-sref='{{fab.sref}}'
-          ui-sref-active='md-primary'
+        ng-repeat='fab in vm.navs track by fab.sref'
+        aria-label='{{fab.sref}}'
+        ui-sref='{{fab.sref}}'
+        ui-sref-active='md-primary'
         )
           p {{ fab.label }}
 
