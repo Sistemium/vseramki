@@ -9,6 +9,8 @@
 
   function Article(Schema) {
 
+    var totalThreshold = 100000;
+
     return Schema.register({
 
       name: 'Article',
@@ -45,6 +47,15 @@
             localField: 'images',
             foreignKey: 'articleId'
           }
+        }
+      },
+
+      methods: {
+        discountedPrice: function (total) {
+          total = total < totalThreshold ? total : totalThreshold;
+          total = total >= 0 ? total : 0;
+
+          return Math.floor(100.0 * (this.highPrice - (this.highPrice - this.lowPrice) * Math.pow(total/totalThreshold,2)))/100.0;
         }
       }
 
