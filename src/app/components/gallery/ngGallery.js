@@ -106,7 +106,7 @@
           scope.loading = true;
 
           $timeout(function () {
-            image.src = scope.images[i].largeSrc;
+            image.src = scope.images[i].smallSrc;
           }, 500);
 
 
@@ -123,10 +123,6 @@
           scope.description = scope.images[i].id || '';
         };
 
-        scope.testSwipe = function(){
-          alert('asd');
-        };
-
 
         //var defineClass = function (width, height) {
         //  scope.useWide = false, scope.useTall = false;
@@ -140,8 +136,6 @@
         };
 
         scope.nextImage = function () {
-
-          console.log('NextImageIsClicked');
 
           scope.index += 1;
 
@@ -189,6 +183,11 @@
           if (scope.hideOverflow) {
             el('body').css({overflow: ''});
           }
+        };
+
+        scope.showAlert = function () {
+          model.destroy(scope.images[scope.index]);
+          scope.closeGallery();
         };
 
         scope.deletePhoto = function (id, index) {
