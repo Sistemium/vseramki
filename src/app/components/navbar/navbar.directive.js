@@ -23,38 +23,20 @@
 
       var vm = this;
 
-      vm.isLoggedIn = AuthHelper.isLoggedIn();
-      vm.isAdmin = AuthHelper.isAdmin();
-
-      if (vm.isAdmin) {
-        var navs = [
-          {
-            sref: 'home',
-            label: 'Главная'
-          }, {
-            sref: 'catalogue',
-            label: 'Рамки'
-          }, {
-            sref: 'baguettes',
-            label: 'Багет'
-          }
-        ]
-      } else {
-        navs = [
-          {
-            sref: 'home',
-            label: 'Главная'
-          }, {
-            sref: 'catalogue',
-            label: 'Рамки'
-          }
-        ];
-      }
-
       function setUser() {
         Auth.getCurrentUser(null)
           .then(function (user) {
             vm.user = user;
+
+            var isAdmin = AuthHelper.isAdmin();
+
+            if (isAdmin) {
+              vm.navs.push ({
+                sref: 'baguettes',
+                label: 'Багет'
+              })
+            }
+
           });
       }
 
@@ -73,7 +55,16 @@
           $state.go('login');
         },
 
-        navs: navs
+        navs: [
+          {
+            sref: 'home',
+            label: 'Главная'
+          }, {
+            sref: 'catalogue',
+            label: 'Рамки'
+          }
+        ]
+
 
       });
 
