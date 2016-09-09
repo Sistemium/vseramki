@@ -25,8 +25,15 @@
 
     var vm = this;
 
-    vm.isLoggedIn = AuthHelper.isLoggedIn();
+    function recalcTotals () {
+      vm.cartSubTotal = Cart.orderSubTotal();
+      vm.cartTotal = Cart.orderTotal();
+    }
+
+    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
+
     vm.isAdmin = AuthHelper.isAdmin();
+
 
     var stateFilter = {
       articleId: $stateParams.id
@@ -43,11 +50,13 @@
       } else {
         Cart.save(cart);
       }
+
     }
 
     function plusOne(item) {
       var cart = item.inCart;
       cart.count = (cart.count || 0) + 1;
+
       Cart.save(cart);
     }
 
@@ -61,7 +70,7 @@
       Cart.save(article.inCart);
     }
 
-    Article.findAll({limit: 1000})
+    Article.findAll({limit: 100})
       .then(function (data) {
         vm.allArt = data;
       });
