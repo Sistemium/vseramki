@@ -17,8 +17,8 @@
     var vm = this;
     var groupSize = 3;
 
-    vm.isLoggedIn = AuthHelper.isLoggedIn();
     vm.isAdmin = AuthHelper.isAdmin();
+
 
     Cart.findAll();
     Cart.bindAll({}, $scope, 'vm.cart');
@@ -155,7 +155,7 @@
 
     });
 
-    Article.findAll({limit: 1000})
+    Article.findAll({limit: 10})
       .then(function (data) {
 
         vm.articles = data;
