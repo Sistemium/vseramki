@@ -1,6 +1,4 @@
 div.cart(layout-align="center center" layout="column")
-  md-button.md-raised(ng-if='vm.data.length', ng-click='vm.clearCart()') Очистить корзину
-
 
   div(ng-if='!vm.data.length' flex='')
     div(style='height: {{windowHeight - (windowHeight / 2) -56 }}px;' flex='')
@@ -12,42 +10,74 @@ div.cart(layout-align="center center" layout="column")
 
 
   md-table-container.table-container-class(ng-if='vm.data.length')
-    table(md-table='')
-      thead(md-head='')
-        tr(md-row='')
-          th(md-column='')
+    table(md-table)
+      thead(md-head)
+        tr(md-row)
+          th(md-column)
             span.th-left-align Фото
-          th(md-column='')
+          th(md-column)
             span Наименование
-          th(md-column='')
+          th(md-column)
             span.th-left-align Количество
-          th(md-column='')
+          th(md-column)
+            span.th-left-align Цена без скидки
+          th(md-column)
+            span.th-left-align Скидка
+          th(md-column)
+            span.th-left-align Цена со скидкой
+          th(md-column)
+            span.th-left-align Стоимость
+          th(md-column)
             span Удалить
-      tbody(md-body='')
-        tr.animate-show(
-          vr-animate-remove
-          ar-watch='item.count'
-          on-animate-end="vm.itemRemove(item)"
-          animate-class='animate-remove'
-          md-row='',
-          md-on-select='logItem',
-          ng-repeat='item in vm.data track by item.id'
+      tbody(md-body)
+        tr(
+        vr-animate-remove
+        ar-watch='item.count'
+        on-animate-end="vm.itemRemove(item)"
+        md-row
+        md-on-select='logItem'
+        ng-repeat='item in vm.data track by item.id'
         )
-          td.pointer-style(md-cell='' ng-click='vm.itemClick(item)' ui-sref='item({ id: item.article.id })')
+          td.pointer-style(md-cell  ng-click='vm.itemClick(item)' ui-sref='item({ id: item.article.id })')
             img.image-thumbnail(
-              ng-src='{{item.article.images[0].thumbnailSrc}}'
-              ng-if='item.article.images.length'
+            ng-src='{{item.article.images[0].thumbnailSrc}}'
+            ng-if='item.article.images.length'
             )
             img.image-thumbnail(
-              ng-src='http://bit.ly/1Yu4VIb'
-              ng-if='!item.article.images.length'
+            ng-src='http://bit.ly/1Yu4VIb'
+            ng-if='!item.article.images.length'
             )
-          td(md-cell='') {{item.article.name}}
-          td(md-cell='')
+          td(md-cell) {{item.article.name}}
+          td(md-cell)
             div.number-picker
               md-button.md-icon-button(ng-click='vm.minusOne(item)') -
               input.custom-input(aria-label="Количество" ng-model="item.count" type="number" ng-change="vm.saveItem(item)" min='1' step='1')
               md-button.md-icon-button(ng-click='vm.plusOne(item)') +
-          td(md-cell='')
+          td(md-cell) {{ item.article.highPrice | number: 2 }} ₽
+          td(md-cell) {{ (1 - item.article.discountedPrice(vm.cartTotal) / item.article.highPrice) * 100 | number: 1}}%
+          td(md-cell) {{ item.article.discountedPrice(vm.cartTotal) | number: 2}} ₽
+          td(md-cell) {{ item.cost(vm.cartTotal) | number: 2}} ₽
+          td(md-cell )
             md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
               i.material-icons.clear-icon-size clear
+
+  div(style='border-top: 1px rgba(0, 0, 0, 0.12) solid; position: fixed; bottom: 0; width: 100%' ng-show='vm.data.length' layout='row' layout-align='center center')
+    md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
+    ng-if='vm.data.length'
+    ng-click='vm.clearCart()'
+    )
+      i.material-icons delete
+    span(flex)
+    .md-margin(layout='row' layout-align='center center')
+      div(layout='column')
+        p.no-margin
+          span Итого:
+          = ' '
+          span.bold {{vm.cartTotal | number: 2}} ₽
+        p.no-margin Общая скидка:&nbsp
+          span.bold {{ (((vm.cartSubTotal / vm.cartTotal) -1))*100 | number: 1 }}%
+      md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab
+        i.material-icons chevron_right
+
+
+
