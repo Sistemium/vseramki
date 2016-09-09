@@ -14,7 +14,7 @@
       templateUrl: 'app/domain/baguette/baguetteEdit.html',
       controller: 'BaguetteEditController',
       controllerAs: 'vm'
-    },{
+    }, {
       name: 'create',
       url: '/create',
       templateUrl: 'app/domain/baguette/baguetteCreate.html',
@@ -32,6 +32,10 @@
 
         defaultChild: 'table',
 
+        data: {
+          needRoles: 'admin'
+        },
+        
         children: [
           {
             name: 'tiles',
@@ -40,7 +44,7 @@
             controller: 'BaguettesController',
             controllerAs: 'vm',
             children: angular.copy(children)
-          },{
+          }, {
             name: 'table',
             url: '/table',
             templateUrl: 'app/domain/baguette/baguetteTable.html',
