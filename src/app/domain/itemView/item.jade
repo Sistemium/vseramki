@@ -17,17 +17,18 @@
       layout-align="center center"
       )
         img.main-photo.md-whiteframe-1dp.md-padding(ng-src='{{vm.images[0].smallSrc}}')
-      ng-gallery.left-container2(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
 
       md-button.md-raised.md-margin.action-button(
       ng-click='vm.addToCart(vm.article)'
-      ng-show='!vm.article.inCart && (vm.isLoggedIn && !vm.isAdmin)'
+      ng-show='!vm.article.inCart && (!vm.isAdmin)'
       )
         | {{'Добавить в корзину'}}
 
+      ng-gallery.left-container2(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
+
       md-button.md-raised.md-margin.action-button(
       ng-click='vm.showImageDialog($event, vm.article.id)'
-      ng-show='vm.isLoggedIn && vm.isAdmin'
+      ng-show='vm.isAdmin'
       )
         | {{'Загрузить фото '}}
 
@@ -64,7 +65,7 @@
                 p {{vm.article.packageRel}}
 
       .order-prop-width.md-whiteframe-1dp.item-info-margin(
-      ng-show='vm.article.inCart && (vm.isLoggedIn && !vm.isAdmin)'
+      ng-show='vm.article.inCart && (!vm.isAdmin)'
       )
         h1.header-h1 Заказ
         md-table-container
@@ -79,10 +80,10 @@
             tr(md-row)
 
               td(md-cell)
-                p Цена со скидкой 10%:
+                p Цена со скидкой {{ 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice | number: 1 }}%:
 
               td(md-cell)
-                p {{(vm.article.lowPrice | number: 2) || 'Не указана' }}
+                p {{(vm.article.discountedPrice(vm.cartTotal) | number: 2) || 'Не указана' }}
             tr(md-row  ng-if='vm.article.inCart')
 
               td(md-cell)
@@ -110,17 +111,17 @@
               td(md-cell)
                 p Сумма:
               td(md-cell)
-                p {{vm.article.lowPrice * vm.article.inCart.count || 0}} руб.
+                p {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} руб.
     div(flex-offset='5' flex-offset-xs='0')
 
-    .edit-buttons(layout='row' ng-show='vm.isLoggedIn && vm.isAdmin')
+    .edit-buttons(layout='row' ng-show='vm.isAdmin')
       md-button.md-fab.md-mini.md-icon-button.pink-button(ng-click='vm.editFrame(vm.article.id)')
         i.material-icons edit
       md-button.md-fab.md-mini.md-icon-button.pink-button(ng-click='vm.deleteFrame(vm.article.id)')
         i.material-icons delete
 
 
-  //.overall-info(ng-show='vm.isLoggedIn && vm.isAdmin')
+  //.overall-info(ng-show='vm.isAdmin')
   //  div.md-padding.custom-h3(ng-if='vm.articleImages.length')
   //    h2 Для текущей рамки загружено {{vm.articleImages.length}} фото
   //    md-grid-list(
