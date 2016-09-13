@@ -27,7 +27,6 @@
           .theme(theme)
           .parent(sidenavElem)
       );
-
     }
 
     return {
