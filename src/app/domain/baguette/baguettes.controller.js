@@ -7,7 +7,7 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper) {
+  function BaguettesController(Schema, Baguette, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper) {
 
     var vm = this;
 
@@ -94,19 +94,28 @@
       },
 
 
-      deleteBaguette: function (item) {
+      deleteBaguette: function (item, $event) {
 
-        if (item.length) {
-          _(item).forEach(function (item) {
-            Baguette.destroy(item);
-          });
-          ToastHelper.showToast('Багет удален', true);
+        var promise = AlertHelper.showConfirm($event);
+
+
+        promise.then(function (answer) {
+          if (answer) {
+            if (item.length) {
+              _(item).forEach(function (item) {
+                Baguette.destroy(item);
+              });
+              ToastHelper.showToast('Багет удален', true);
+              vm.selected = [];
+            }
+            else {
+              Baguette.destroy(item);
+              ToastHelper.showToast('Багет удален', true);
+            }
+          }
+        }).catch(function () {
           vm.selected = [];
-        }
-        else {
-          Baguette.destroy(item);
-          ToastHelper.showToast('Багет удален', true);
-        }
+        });
 
       },
 
