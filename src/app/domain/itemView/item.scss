@@ -21,12 +21,11 @@ cite {
 
 .header-h1 {
   background-color: #ff4081;
-  border-bottom: 5px solid #ee6e99;
   padding-left: 12px;
   margin-bottom: 0;
   margin-top: 0;
   color: white;
-  height: 35px;
+  height: 40px;
   border-radius: 5px 5px 0 0;
   line-height: 38px;
 }
@@ -98,13 +97,12 @@ md-backdrop.md-opaque {
 
   .left-nav-photo {
     min-width: 300px;
-    margin-right: 10px;
   }
 
-  .edit-buttons {
-    right: 27px;
-    bottom: 10px;
+  .admin-buttons {
     position: fixed;
+    right: 5px;
+    bottom: 5px
   }
 
   .action-button {
@@ -118,6 +116,7 @@ md-backdrop.md-opaque {
   .item-info-margin {
     border-radius: 5px;
     margin-top: 10px;
+    margin-bottom: 10px;
   }
 
 }
