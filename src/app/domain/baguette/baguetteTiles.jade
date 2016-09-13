@@ -1,8 +1,8 @@
 div.baguettes(layout='row')
 
   div.scrolling-contents(
-    ng-if='!vm.isRoot'
-    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
+  ng-if='!vm.isRoot'
+  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
   )
 
     md-list.custom-list(hide-xs)
@@ -10,21 +10,21 @@ div.baguettes(layout='row')
       md-list-item.md-item-header.md-whiteframe-z1(layout='row')
         h3 Всего багетов: {{vm.baguettes.length}}
         span(flex)
-        md-button.pink-button(ng-click='vm.backToList()') Вернуться к списку
+        md-button.admin-button(ng-click='vm.backToList()') Вернуться к списку
 
       md-virtual-repeat-container(style='height: {{windowHeight - 143 }}px')
         div.md-item-text.md-whiteframe-z1(
-          md-virtual-repeat='bag in vm.baguettes'
-          ng-class="{'active-baguette ': vm.currId == bag.id }"
-          ng-click='vm.changeBaguette(bag)'
+        md-virtual-repeat='bag in vm.baguettes'
+        ng-class="{'active-baguette ': vm.currId == bag.id }"
+        ng-click='vm.changeBaguette(bag)'
         )
           | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
 
   .ui-view(flex ng-if='!vm.isRoot')
 
   md-content#scroll-main(
-   flex
-   style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRoot ? "100%" : "0"}}'
+  flex
+  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRoot ? "100%" : "0"}}'
   )
 
     md-toolbar().md-table-toolbar.md-default
@@ -34,21 +34,21 @@ div.baguettes(layout='row')
           h2(style='width: 160px') Плитка багетов
           .toolbar-class
             i.material-icons.icon-button.icon-button-disabled(
-              ng-click="vm.changeView('baguettes.table')"
-              ng-class="{'icons-button-active': vm.currentState == '/table'}"
+            ng-click="vm.changeView('baguettes.table')"
+            ng-class="{'icons-button-active': vm.currentState == '/table'}"
             ) view_headline
 
             span.forbid-marking(style='cursor:default') |
 
             i.material-icons.icon-button.icon-button-disabled(
-              ng-click="vm.changeView('baguettes.tiles')"
-              ng-class="{'icons-button-active': vm.currentState == '/tiles'}"
+            ng-click="vm.changeView('baguettes.tiles')"
+            ng-class="{'icons-button-active': vm.currentState == '/tiles'}"
             ) view_comfy
 
         span(ng-if='!vm.useMobile' flex)
 
-        md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
-          ng-click='vm.goToCreateBaguette()'
+        md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
+        ng-click='vm.goToCreateBaguette()'
         )
           i.material-icons add circle
 
@@ -59,17 +59,17 @@ div.baguettes(layout='row')
             md-card(layout='column' layout-align='center center')
 
               img.md-card-image.image-size(
-                ng-src='{{bag.images[0].thumbnailSrc}}'
-                ng-if='bag.images.length'
-                ng-click='vm.showImageDialog($event, bag.id)'
-                alt='Baguette {{$index}}'
+              ng-src='{{bag.images[0].thumbnailSrc}}'
+              ng-if='bag.images.length'
+              ng-click='vm.showImageDialog($event, bag.id)'
+              alt='Baguette {{$index}}'
               )
 
               img.md-card-image.image-size(
-                ng-src='http://bit.ly/1Yu4VIb'
-                ng-if='!bag.images.length'
-                ng-click='vm.showImageDialog($event, bag.id)'
-                alt='Baguette {{$index}}'
+              ng-src='http://bit.ly/1Yu4VIb'
+              ng-if='!bag.images.length'
+              ng-click='vm.showImageDialog($event, bag.id)'
+              alt='Baguette {{$index}}'
               )
 
               md-card-content(align='center')
@@ -86,6 +86,6 @@ div.baguettes(layout='row')
                   span.bold Ширина:&nbsp
                   span {{bag.borderWidth}} мм.
 
-              md-card-actions.pink-button(layout='row', layout-align='center center')
+              md-card-actions.admin-button(layout='row', layout-align='center center')
                 md-button(ng-click='vm.editBaguette(bag)') Редактировать
-                md-button(ng-click='vm.deleteBaguette(bag)') Удалить
+                md-button(ng-click='vm.deleteBaguette(bag, $event)') Удалить
