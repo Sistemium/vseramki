@@ -12,20 +12,16 @@
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
-
-
     var vm = this;
     var groupSize = 3;
 
     vm.isAdmin = AuthHelper.isAdmin();
-
 
     Cart.findAll();
     Cart.bindAll({}, $scope, 'vm.cart');
 
     Baguette.findAll().then(function (data) {
       vm.baguette = data;
-
     });
 
     ArticleImage.findAll({limit: 1000})
@@ -87,22 +83,18 @@
             return key;
           }
         );
-
       }
 
       vm.colours = Colour.getAll(getVisibleBy('colourId'));
       vm.materials = Material.getAll(getVisibleBy('materialId'));
       vm.brands = Brand.getAll(getVisibleBy('brandId'));
       vm.frameSizes = FrameSize.getAll(getVisibleBy('frameSizeId'));
-
     }
 
 
     function resetFilters() {
-
       vm.articleFilter = {};
       vm.currentFilter = {};
-
     }
 
     function delCurrFilter(a) {
@@ -136,13 +128,13 @@
       currentFilter: {},
       filterLength: false,
 
-      plusOne: plusOne,
-      minusOne: minusOne,
-      onCartChange: onCartChange,
-      onBlur: onBlur,
-      filterOptionClick: filterOptionClick,
-      resetFilters: resetFilters,
-      delCurrFilter: delCurrFilter,
+      plusOne,
+      minusOne,
+      onCartChange,
+      onBlur,
+      filterOptionClick,
+      resetFilters,
+      delCurrFilter,
       addToCart: Cart.addToCart,
 
       goToCreateFrame: function () {
@@ -150,7 +142,7 @@
       },
 
       changeFrame: function (frame) {
-        $state.go($state.current.name, {id: frame.id});
+        $state.go('catalogue.item', {id: frame.id});
       }
 
     });
@@ -208,6 +200,7 @@
     $scope.$watch('vm.articleFilter', filterArticles);
 
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+      vm.disableAddFrame = toState.url === '/add';
       vm.isRootState = /^catalogue$/.test(toState.name);
       vm.currId = toParams.id;
     });
