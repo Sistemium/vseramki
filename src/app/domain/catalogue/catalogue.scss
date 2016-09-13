@@ -5,6 +5,11 @@ md-content.articles {
     margin-left: 0;
   }
 
+  .gallery {
+    margin-left: 12px;
+    margin-bottom: 5px;
+  }
+
   .md-sidenav-right {
     margin-right: 6px;
     width: 345px;
@@ -51,8 +56,9 @@ md-content.articles {
     height: 61.33px
   }
 
-  .active-frame{
-    background: #f395b5;
+  .active-frame {
+    background: #ff4081;
+    color: white;
   }
 
 }
@@ -89,6 +95,11 @@ p.md-title {
   font-family: 'Material Icons';
   text-transform: none;
   font-style: normal;
+  cursor: default;
+}
+
+button .custom-material-icons {
+  cursor: inherit;
 }
 
 .icon-button-catalogue {
