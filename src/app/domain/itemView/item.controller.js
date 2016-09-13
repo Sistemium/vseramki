@@ -16,7 +16,8 @@
                           $state,
                           ToastHelper,
                           ImageHelper,
-                          AuthHelper) {
+                          AuthHelper,
+                          AlertHelper) {
 
     var Colour = Schema.model('Colour');
     var Material = Schema.model('Material');
@@ -25,7 +26,7 @@
 
     var vm = this;
 
-    function recalcTotals () {
+    function recalcTotals() {
       vm.cartSubTotal = Cart.orderSubTotal();
       vm.cartTotal = Cart.orderTotal();
     }
@@ -33,7 +34,6 @@
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
 
     vm.isAdmin = AuthHelper.isAdmin();
-
 
     var stateFilter = {
       articleId: $stateParams.id
@@ -150,15 +150,23 @@
         $state.go('catalogue.item.edit', {id: frameId});
       },
 
-      deleteFrame: function (frameId) {
-        Article.destroy(frameId).then(function (frameId) {
-          if (frameId) {
-            ToastHelper.showToast('Рамка удалена', true);
-            $state.go('catalogue')
+      deleteFrame: function (frameId, $event) {
+
+        var promise = AlertHelper.showConfirm($event);
+
+        promise.then(function (response) {
+          if (response) {
+            Article.destroy(frameId).then(function (frameId) {
+              if (frameId) {
+                ToastHelper.showToast('Рамка удалена', true);
+                $state.go('catalogue')
+              }
+            }).catch(function () {
+              ToastHelper.showToast('Ошибка. Рамка не удалена', false);
+            });
           }
-        }).catch(function () {
-          ToastHelper.showToast('Ошибка. Рамка не удалена', false);
         });
+
       }
 
     }, stateFilter);
