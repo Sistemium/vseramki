@@ -10,7 +10,7 @@ div(layout='row')
       md-list-item.md-item-header.md-whiteframe-z1(layout='row')
         h3 Всего багетов: {{vm.baguettes.length}}
         span(flex)
-        md-button.pink-button(ng-click='vm.backToList()' ng-hide='!vm.baguettes.length') Вернуться к списку
+        md-button.admin-button(ng-click='vm.backToList()' ng-hide='!vm.baguettes.length') Вернуться к списку
 
       md-virtual-repeat-container(style='height: {{windowHeight - 143 }}px')
         div.md-item-text.md-whiteframe-z1(
@@ -40,19 +40,19 @@ div(layout='row')
 
         span(flex)
 
-        md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
-        ng-click='vm.deleteBaguette(vm.selected)'
+        md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
+        ng-click='vm.deleteBaguette(vm.selected, $event)'
         ng-if='vm.selected.length'
         )
           i.material-icons delete
 
-        md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
+        md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
         ng-click='vm.resetCheckedBaguette()'
         ng-if='vm.selected.length'
         )
           i.material-icons redo
 
-        md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
+        md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
         ng-click='vm.goToCreateBaguette()'
         )
           i.material-icons add circle
