@@ -79,7 +79,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
             md-card-header
               a(href ui-sref='catalogue.item({id: article.id})')
                 img.image-thumbnail(ng-src='{{article.images[0].thumbnailSrc}}' ng-if='article.images.length')
-                img.image-thumbnail( src='http://bit.ly/1Yu4VIb' ng-if='!article.images.length')
+                img.image-thumbnail( src='/images/question_mark.png' ng-if='!article.images.length')
 
             md-card-title.md-margin
               md-card-title-text

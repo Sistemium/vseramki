@@ -77,7 +77,7 @@ div(layout='row')
           )
             td(md-cell ng-click='vm.showImageDialog($event, bag.id)')
               img.image-thumbnail-table(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
-              img.image-thumbnail-table(ng-src='http://bit.ly/1Yu4VIb' ng-if='!bag.images.length')
+              img.image-thumbnail-table(ng-src='/images/question_mark.png' ng-if='!bag.images.length')
             td(md-cell) {{bag.colour.name}}
             td(md-cell) {{bag.material.name}}
             td(md-cell) {{bag.brand.name}}
