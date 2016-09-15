@@ -82,7 +82,7 @@
                 p Цена от 50,000 ₽:
 
               td(md-cell)
-                p {{vm.article.discountedPrice(50000)}}
+                p {{vm.article.discountedPrice(50000) | number: 2 }}
 
             tr(md-row)
 
@@ -90,7 +90,7 @@
                 p Цена от 100,000 ₽:
 
               td(md-cell)
-                p {{vm.article.discountedPrice(100000)}}
+                p {{vm.article.discountedPrice(100000) | number: 2 }}
 
             tr(md-row  ng-if='vm.article.inCart')
 
