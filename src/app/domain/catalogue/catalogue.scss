@@ -61,6 +61,15 @@ md-content.articles {
     color: white;
   }
 
+  .icon-button-catalogue {
+    height: 20px;
+    min-width: 0;
+    line-height: 24px;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 20px;
+  }
+
 }
 
 .center {
@@ -100,15 +109,6 @@ p.md-title {
 
 button .custom-material-icons {
   cursor: inherit;
-}
-
-.icon-button-catalogue {
-  height: 20px;
-  min-width: 0;
-  line-height: 24px;
-  padding: 0 !important;
-  margin: 0 !important;
-  width: 20px;
 }
 
 .div-order-info-num-picker {
