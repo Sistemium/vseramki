@@ -27,13 +27,13 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
 
     span(flex='5' ng-if='!vm.breakpoint')
 
-    md-button.md-fab.md-icon-button.md-mini(ng-if='vm.user.name' ng-click='vm.goToUserInfo()' ng-class="{auth: vm.breakpoint}")
+    md-button.md-fab.md-icon-button.md-mini(ng-if='vm.user.name && !vm.breakpoint' ng-click='vm.goToUserInfo()')
       i.material-icons lock_outline
 
-    md-button.md-fab.md-mini.md-icon-button(ng-if='!vm.user.name' ng-click='vm.login()' ng-class="{auth: vm.breakpoint}")
+    md-button.md-fab.md-mini.md-icon-button(ng-if='!vm.user.name && !vm.breakpoint' ng-click='vm.login()')
       i.material-icons lock_open
 
-    div.with-badge(flex='none' ng-if='!vm.breakpoint')
+    div.with-badge(flex='none' ng-class="{auth: vm.breakpoint}")
       md-button.md-fab.md-mini.md-icon-button(ui-sref='cart')
         i.material-icons shopping_cart
       span.badge(ng-show='vm.cart.length') {{ vm.cart.length }}
