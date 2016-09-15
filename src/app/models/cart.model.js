@@ -10,6 +10,7 @@
   function Cart(Schema) {
 
     var totalThreshold = 100000;
+    var minThreshold = 10000;
 
     var model = Schema.register({
 
@@ -24,11 +25,15 @@
       },
 
       methods: {
-        cost: function(total) {
+        cost: function (total) {
           total = total < totalThreshold ? total : totalThreshold;
           total = total >= 0 ? total : 0;
 
-          return  Math.round(100.0 * this.count * this.article.discountedPrice(total))/100.0;
+          if ((total >= 0) && (total <= minThreshold)) {
+            total = 0;
+          }
+
+          return Math.round(100.0 * this.count * this.article.discountedPrice(total)) / 100.0;
         }
       },
 
@@ -36,7 +41,7 @@
 
       orderSubTotal: function (items) {
         items = items || model.getAll();
-        return _.sumBy(items, item => Math.round(100.0 * item.article.highPrice * item.count)/100.0);
+        return _.sumBy(items, item => Math.round(100.0 * item.article.highPrice * item.count) / 100.0);
       },
 
       orderTotal: function (items) {
