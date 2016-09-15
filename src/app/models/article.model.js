@@ -55,7 +55,7 @@
         discountedPrice: function (total) {
           total = total < totalThreshold ? total : totalThreshold;
 
-          if ((total >= 0) && (total <= minThreshold)) {
+          if ((total <= 0) && (total <= minThreshold)) {
             total = 0;
           }
 

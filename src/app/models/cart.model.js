@@ -27,9 +27,8 @@
       methods: {
         cost: function (total) {
           total = total < totalThreshold ? total : totalThreshold;
-          total = total >= 0 ? total : 0;
 
-          if ((total >= 0) && (total <= minThreshold)) {
+          if ((total <= 0) || (total <= minThreshold)) {
             total = 0;
           }
 
