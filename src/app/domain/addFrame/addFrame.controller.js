@@ -98,7 +98,7 @@
               vm.unique = false;
             } else {
               vm.dupMessage = '';
-              vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel;
+              vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.frame.highPrice;
               vm.unique = true;
             }
           });
@@ -140,7 +140,7 @@
 
     $scope.$watch('vm.frame', function () {
 
-      vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.unique;
+      vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.unique && vm.frame.highPrice;
 
       if (vm.selectedBaguette) {
         vm.refreshName();
