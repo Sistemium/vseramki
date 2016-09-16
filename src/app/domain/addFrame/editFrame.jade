@@ -23,7 +23,9 @@ div.addFrame(layout='row' style='height:{{ windowHeight - 160 }}px' flex)
           label Рыночная цена (руб.)
             =' '
             span.required-field-asterisk *
-          input(step='1' type='number' ng-model='vm.frame.highPrice' min='1'  name='highPrice' input-clear='black')
+          input(step='1' type='number' ng-model='vm.frame.highPrice' min='1'  name='highPrice' input-clear='black' required)
+          div(ng-messages="frameAttrsForm.highPrice.$error")
+            div(ng-message="required") Поле не может быть пустым
 
         md-input-container.input-margin
           label Оптовая цена (руб.)
