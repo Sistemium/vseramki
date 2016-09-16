@@ -57,6 +57,10 @@
 
 }
 
+.required-field-asterisk {
+  color: red;
+}
+
 .custom-warning {
   font-size: 12px;
   line-height: 14px;
@@ -150,3 +154,4 @@
   -webkit-animation-name: slideOutUp;
   animation-name: slideOutUp;
 }
+
