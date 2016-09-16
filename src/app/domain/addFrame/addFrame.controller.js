@@ -40,7 +40,7 @@
       if (!vm.id) {
         return true;
       } else {
-        vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.unique;
+        vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.unique && vm.frame.highPrice;
         return vm.id && Article.hasChanges(vm.id);
       }
     }
