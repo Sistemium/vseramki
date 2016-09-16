@@ -4,7 +4,9 @@
 
     form(name="widthForm")
       md-input-container
-        label Ширина багета (мм)
+        label Ширина багета (мм.)
+          =' '
+          span.required-field-asterisk *
         input(
         required type='number' step='1' min='1'
         ng-model='vm.baguette.borderWidth'
