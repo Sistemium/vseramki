@@ -2,6 +2,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
   .md-toolbar-tools
     img.top-logo(src='images/top-logo.jpg' ui-sref='home')
     span(flex)
+
     md-button.tool-button(
     ng-repeat='btn in vm.navs track by btn.sref'
     ui-sref='{{btn.sref}}'
@@ -9,9 +10,10 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     ng-if='!vm.breakpoint'
     ) {{ btn.label }}
 
-    md-fab-speed-dial.md-scale.margin-fab-cust(
+    md-fab-speed-dial.md-scale(
     md-direction='down'
     ng-if='vm.breakpoint'
+    ng-class="{auth: vm.breakpoint}"
     )
       md-fab-trigger
         md-button.md-fab.md-mini.md-icon-button.md-primary(aria-label='menu')
@@ -33,7 +35,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     md-button.md-fab.md-mini.md-icon-button(ng-if='!vm.user.name && !vm.breakpoint' ng-click='vm.login()')
       i.material-icons lock_open
 
-    div.with-badge(flex='none' ng-class="{auth: vm.breakpoint}")
+    div.with-badge(flex='none')
       md-button.md-fab.md-mini.md-icon-button(ui-sref='cart')
         i.material-icons shopping_cart
       span.badge(ng-show='vm.cart.length') {{ vm.cart.length }}

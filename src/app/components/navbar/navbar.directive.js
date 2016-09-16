@@ -31,7 +31,7 @@
             var isAdmin = AuthHelper.isAdmin();
 
             if (isAdmin) {
-              vm.navs.push ({
+              vm.navs.push({
                 sref: 'baguettes',
                 label: 'Багет'
               })
@@ -73,7 +73,18 @@
         },
 
         function (value) {
+
           vm.breakpoint = value;
+
+          if (vm.breakpoint && vm.navs.length < 3) {
+            vm.navs.push({
+              sref: 'login',
+              label: 'Логин'
+            })
+          } else if (!vm.breakpoint && vm.navs.length > 2) {
+            vm.navs.pop();
+          }
+
         }
       );
 
