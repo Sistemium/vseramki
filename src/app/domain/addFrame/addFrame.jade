@@ -43,7 +43,7 @@ div.addFrame(layout='row' style='height:{{ windowHeight - 70 }}px')
           input(step='any' type='number' ng-model='vm.frame.lowPrice' min='1' name='lowPrice' input-clear='black' check-price="{{vm.frame.highPrice}}")
           div.custom-animation(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
             span.custom-warning Оптовая цена больше рыночной
-            
+
         md-input-container.input-margin
           label Штук в коробке
             =' '
