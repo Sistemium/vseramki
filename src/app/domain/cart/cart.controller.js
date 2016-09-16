@@ -7,7 +7,7 @@
     .controller('CartController', CartController)
   ;
 
-  function CartController(Cart, Article, $scope, ArticleImage) {
+  function CartController(Cart, Article, $scope, ArticleImage, $state) {
 
     var vm = this;
     var stateParam = [];
@@ -30,6 +30,10 @@
 
     function clearCart() {
       Cart.destroyAll();
+    }
+
+    function itemClick(item) {
+      $state.go('catalogue.item', {id: item.articleId});
     }
 
     function clearItem(item) {
@@ -56,13 +60,13 @@
       saveItem();
     }
 
-
     angular.extend(vm, {
       clearCart,
       clearItem,
       saveItem,
       plusOne,
-      minusOne
+      minusOne,
+      itemClick
     });
 
   }
