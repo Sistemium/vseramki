@@ -20,7 +20,7 @@
 
       md-button.md-raised.md-margin.action-button.pink-button(
       ng-click='vm.addToCart(vm.article)'
-      ng-show='!vm.article.inCart'
+      ng-show='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
       )
         | {{'Добавить в корзину'}}
 
