@@ -55,6 +55,12 @@
         discountedPrice: function (total) {
           total = total < totalThreshold ? total : totalThreshold;
 
+          // if lowPrice in not specified
+
+          if (this.lowPrice == null) {
+            this.lowPrice = this.highPrice;
+          }
+
           if ((total <= 0) && (total <= minThreshold)) {
             total = 0;
           }
