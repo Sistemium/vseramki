@@ -21,6 +21,8 @@ div.addFrame(layout='row' style='height:{{ windowHeight - 160 }}px' flex)
 
         md-input-container.input-margin
           label Рыночная цена (руб.)
+            =' '
+            span.required-field-asterisk *
           input(step='1' type='number' ng-model='vm.frame.highPrice' min='1'  name='highPrice' input-clear='black')
 
         md-input-container.input-margin
@@ -40,6 +42,8 @@ div.addFrame(layout='row' style='height:{{ windowHeight - 160 }}px' flex)
 
         md-input-container.input-margin
           label Штук в коробке
+            =' '
+            span.required-field-asterisk *
           input(
           step='1'
           type='number'
@@ -59,7 +63,7 @@ div.addFrame(layout='row' style='height:{{ windowHeight - 160 }}px' flex)
         options='vm.frameSizes'
         not-addable='false'
         )
-        
+
 
     div(layout='row' ng-if='vm.hasChanges()')
       md-button.md-raised(
