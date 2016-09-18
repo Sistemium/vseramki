@@ -1,5 +1,6 @@
+'use strict';
+
 (function () {
-  'use strict';
 
   var basePath = window.localStorage.getItem('JSData.BasePath')
     || location.protocol === 'https:' && '/api/'
@@ -13,7 +14,7 @@
       });
     })
 
-    .factory('Schema', function(saSchema,$http) {
+    .factory('Schema', function (saSchema, $http) {
 
       return saSchema({
         getCount: function (params) {
@@ -34,7 +35,7 @@
 
     })
 
-    .run(function (DS,$window) {
+    .run(function (DS, $window) {
       var adapter = new $window.DSLocalStorageAdapter();
       DS.registerAdapter('localStorage', adapter);
     })

@@ -1,11 +1,12 @@
+'use strict';
+
 (function () {
-  'use strict';
 
   angular
     .module('models', [
       'sistemium'
     ])
-    .run(function(Article){
+    .run(function (Article) {
       Article.findAll({limit: 1000});
     });
 

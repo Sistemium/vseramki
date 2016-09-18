@@ -1,5 +1,6 @@
+'use strict';
+
 (function () {
-  'use strict';
 
   angular
     .module('vseramki')
@@ -35,7 +36,7 @@
         data: {
           needRoles: 'admin'
         },
-        
+
         children: [
           {
             name: 'tiles',

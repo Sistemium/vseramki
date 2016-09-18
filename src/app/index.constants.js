@@ -1,7 +1,7 @@
 'use strict';
 /* global moment:false */
+
 (function() {
-  'use strict';
 
   angular
     .module('vseramki')
