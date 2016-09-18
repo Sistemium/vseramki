@@ -1,6 +1,7 @@
+'use strict';
+
 (function () {
 
-  'use strict';
   angular.module('vseramki')
     .component('oauthButtons', {
 
@@ -10,20 +11,22 @@
         buttonsConfig: '='
       },
 
-      controller: function ($window, saaAppConfig) {
+      controller: oauthButtonsController
+    });
 
-        var vm = this;
+  function oauthButtonsController ($window, saaAppConfig) {
 
-        _.assign(vm, {
+    var vm = this;
 
-          loginOauth: function (url) {
-            var href = saaAppConfig.authUrl + '/auth/' + url;
-            href += '?redirect_uri=' + saaAppConfig.redirect_uri + '&orgAppId=' + saaAppConfig.orgAppId;
-            $window.location.href = href;
-          }
+    _.assign(vm, {
 
-        });
+      loginOauth: function (url) {
+        var href = saaAppConfig.authUrl + '/auth/' + url;
+        href += '?redirect_uri=' + saaAppConfig.redirect_uri + '&orgAppId=' + saaAppConfig.orgAppId;
+        $window.location.href = href;
       }
-    })
+
+    });
+  }
 
 })();
