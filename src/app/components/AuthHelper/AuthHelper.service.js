@@ -43,8 +43,6 @@
         return currentUser;
       }
 
-      return $q.reject();
-
     }
 
     return {
