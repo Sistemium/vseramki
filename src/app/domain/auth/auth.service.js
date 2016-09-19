@@ -3,7 +3,7 @@
 (function () {
 
   angular.module('vseramki')
-    .factory('Auth', Auth);
+    .service('Auth', Auth);
 
   function Auth (saAuth, saaAppConfig) {
 
