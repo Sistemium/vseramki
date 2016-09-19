@@ -26,6 +26,16 @@
         "fonts/fontawesome-webfont.ttf",
         "fonts/fontawesome-webfont.svg"
       ]
+    },
+    "material-design-icons": {
+      "main": [
+        "iconfont/material-icons.css",
+        "iconfont/MaterialIcons-Regular.eot",
+        "iconfont/MaterialIcons-Regular.woff",
+        "iconfont/MaterialIcons-Regular.woff2",
+        "iconfont/MaterialIcons-Regular.ttf",
+        "iconfont/MaterialIcons-Regular.svg"
+      ]
     }
   },
   "devDependencies": {
