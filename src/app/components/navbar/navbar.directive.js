@@ -2,8 +2,7 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
+  angular.module('vseramki')
     .directive('acmeNavbar', acmeNavbar);
 
   function acmeNavbar() {
@@ -20,6 +19,7 @@
 
   }
 
+  /** @ngInject */
   function NavbarController(Cart, $scope, $mdMedia, Auth, $window, $state, AuthHelper) {
     Cart.bindAll({}, $scope, 'vm.cart');
     Cart.findAll();
