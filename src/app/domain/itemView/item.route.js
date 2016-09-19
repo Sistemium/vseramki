@@ -1,11 +1,10 @@
+'use strict';
+
 (function () {
-  'use strict';
 
   angular
     .module('vseramki')
-    .config(routerConfig)
-  ;
-
+    .config(routerConfig);
 
   function routerConfig(stateHelperProvider) {
     stateHelperProvider
@@ -16,7 +15,7 @@
         templateUrl: 'app/domain/itemView/item.html',
         controllerAs: 'vm',
 
-        children:[
+        children: [
           {
             name: 'image',
             url: '/image/:imageId',

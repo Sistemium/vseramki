@@ -1,5 +1,6 @@
-(function() {
-  'use strict';
+'use strict';
+
+(function () {
 
   angular
     .module('vseramki')

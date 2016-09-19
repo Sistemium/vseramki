@@ -1,8 +1,8 @@
-(function () {
-  'use strict';
+'use strict';
 
-  angular
-    .module('vseramki')
+(function () {
+
+  angular.module('vseramki')
     .directive('acmeNavbar', acmeNavbar);
 
   function acmeNavbar() {
@@ -17,78 +17,80 @@
 
     return directive;
 
-    function NavbarController(Cart, $scope, $mdMedia, Auth, $window, $state, AuthHelper) {
-      Cart.bindAll({}, $scope, 'vm.cart');
-      Cart.findAll();
+  }
 
-      var vm = this;
+  /** @ngInject */
+  function NavbarController(Cart, $scope, $mdMedia, Auth, $window, $state, AuthHelper) {
+    Cart.bindAll({}, $scope, 'vm.cart');
+    Cart.findAll();
 
-      function setUser() {
-        Auth.getCurrentUser(null)
-          .then(function (user) {
-            vm.user = user;
+    var vm = this;
 
-            var isAdmin = AuthHelper.isAdmin();
+    function setUser() {
+      Auth.getCurrentUser(null)
+        .then(function (user) {
+          vm.user = user;
 
-            if (isAdmin) {
-              vm.navs.push({
-                sref: 'baguettes',
-                label: 'Багет'
-              })
-            }
+          var isAdmin = AuthHelper.isAdmin();
 
-          });
-      }
-
-      $scope.$on('logged-in', setUser);
-      $scope.$on('logged-off', function () {
-        $window.location.href = '';
-      });
-
-      _.assign(vm, {
-
-        goToUserInfo: function () {
-          $state.go('userInfo');
-        },
-
-        login: function () {
-          $state.go('login');
-        },
-
-        navs: [
-          {
-            sref: 'home',
-            label: 'Главная'
-          }, {
-            sref: 'catalogue',
-            label: 'Рамки'
-          }
-        ]
-
-      });
-
-      $scope.$watch(
-        function () {
-          return $mdMedia('max-width: 800px');
-        },
-
-        function (value) {
-
-          vm.breakpoint = value;
-
-          if (vm.breakpoint && vm.navs.length < 3) {
+          if (isAdmin) {
             vm.navs.push({
-              sref: 'login',
-              label: 'Логин'
+              sref: 'baguettes',
+              label: 'Багет'
             })
-          } else if (!vm.breakpoint && vm.navs.length > 2) {
-            vm.navs.pop();
           }
 
-        }
-      );
-
+        });
     }
+
+    $scope.$on('logged-in', setUser);
+    $scope.$on('logged-off', function () {
+      $window.location.href = '';
+    });
+
+    _.assign(vm, {
+
+      goToUserInfo: function () {
+        $state.go('userInfo');
+      },
+
+      login: function () {
+        $state.go('login');
+      },
+
+      navs: [
+        {
+          sref: 'home',
+          label: 'Главная'
+        }, {
+          sref: 'catalogue',
+          label: 'Рамки'
+        }
+      ]
+
+    });
+
+    $scope.$watch(
+      function () {
+        return $mdMedia('max-width: 800px');
+      },
+
+      function (value) {
+
+        vm.breakpoint = value;
+
+        if (vm.breakpoint && vm.navs.length < 3) {
+          vm.navs.push({
+            sref: 'login',
+            label: 'Логин'
+          })
+        } else if (!vm.breakpoint && vm.navs.length > 2) {
+          vm.navs.pop();
+        }
+
+      }
+    );
+
   }
 
 })();
