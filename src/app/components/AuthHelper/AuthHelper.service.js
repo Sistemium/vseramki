@@ -9,8 +9,6 @@
 
     function isAdmin() {
 
-      console.error('currentUser:', currentUser);
-
       if (!currentUser) {
         return false;
       } else {
@@ -35,7 +33,7 @@
 
             _.each(user.orgAccounts, orgAccount => {
               _.each(orgAccount.orgAccountRoles, orgAccountRole => {
-                currentUserRoles[_.get(orgAccountRole,'role.code')] = true;
+                currentUserRoles[_.lowerCase(_.get(orgAccountRole,'role.code'))] = true;
               });
             });
 
