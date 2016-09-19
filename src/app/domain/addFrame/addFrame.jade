@@ -44,6 +44,7 @@ div.addFrame(layout='row' style='height:{{ windowHeight - 70 }}px')
           div.custom-animation(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
             span.custom-warning Оптовая цена больше рыночной
 
+        | {{frameAttrsForm.lowPrice.$error.checkPrice}}
         md-input-container.input-margin
           label Штук в коробке
             =' '
@@ -71,9 +72,13 @@ div.addFrame(layout='row' style='height:{{ windowHeight - 70 }}px')
           input-clear='black'
           )
 
+        input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
 
     md-divider(flex style='width:100%' ng-if='vm.dupMessage.length')
       .alert-div.md-margin.md-whiteframe-1dp(flex)
         span {{vm.dupMessage}}
 
-    md-button.md-raised(ng-click='vm.saveFrame()' ng-if='vm.paramsCheck && !frameAttrsForm.lowPrice.$error.checkPrice') Сохранить рамку
+    md-button.md-raised(
+    ng-click='vm.saveFrame()'
+    ng-hide='frameAttrsForm.$invalid'
+    ) Сохранить рамку

@@ -11,6 +11,7 @@
 
     var vm = this;
     var FrameSize = Schema.model('FrameSize');
+    var unique = true;
 
     if ($state.params.id) {
       var reverted = false;
@@ -24,7 +25,6 @@
         });
       });
 
-      vm.unique = true;
     }
 
     Baguette.findAll();
@@ -36,19 +36,22 @@
     FrameSize.findAll();
     FrameSize.bindAll({}, $scope, 'vm.frameSizes');
 
+    function checkParams () {
+      vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && unique && vm.frame.highPrice;
+    }
 
     function hasChanges() {
       if (!vm.id) {
         return true;
       } else {
-        vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.unique && vm.frame.highPrice;
+        checkParams();
         return vm.id && Article.hasChanges(vm.id);
       }
     }
 
     function cancelChanges() {
       if (hasChanges()) {
-        reverted = true;
+        unique = reverted = true;
         return Article.revert(vm.frame);
       }
     }
@@ -78,11 +81,11 @@
 
       },
 
-      deleteParams: function () {
+      clearForm: function () {
         vm.selectedBaguette = '';
         vm.frame = Article.createInstance();
         vm.dupMessage = '';
-        vm.paramsCheck = false;
+        checkParams();
       },
 
       checkAttrs: function () {
@@ -94,14 +97,15 @@
           Article.findAll(params).then(function (data) {
 
             if (data.length) {
-              vm.paramsCheck = false;
               ToastHelper.showToast('Такая рамка уже существует', false, vm);
-              vm.unique = false;
+              unique = false;
             } else {
               vm.dupMessage = '';
-              vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.frame.highPrice;
-              vm.unique = true;
+              unique = true;
             }
+
+            checkParams();
+
           });
         }
       },
@@ -111,7 +115,7 @@
         Article.create(vm.frame).then(function () {
           ToastHelper.showToast('Рамка сохранена', true);
           if (!vm.editState) {
-            vm.deleteParams();
+            vm.clearForm();
           }
 
         }).catch(function (obj) {
@@ -141,7 +145,7 @@
 
     $scope.$watch('vm.frame', function () {
 
-      vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && vm.unique && vm.frame.highPrice;
+      checkParams();
 
       if (vm.selectedBaguette) {
         vm.refreshName();
