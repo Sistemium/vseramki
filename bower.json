@@ -7,7 +7,6 @@
     "moment": "~2.10.6",
     "animate.css": "~3.4.0",
     "sistemium-angular": "^0.7.2",
-    "angular-vs-repeat": "^1.1.7",
     "js-data-localstorage": "~2.3.2",
     "angular-material-data-table": "~0.10.9",
     "lf-ng-md-file-input": "^1.4.6",
