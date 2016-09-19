@@ -5,13 +5,16 @@
   function AuthHelper(Auth, $q) {
 
     var currentUser;
+    var currentUserRoles;
 
     function isAdmin() {
+
+      console.error('currentUser:', currentUser);
 
       if (!currentUser) {
         return false;
       } else {
-        return currentUser.name === 'Denis Mosin';
+        return !!(currentUserRoles.admin || currentUserRoles.manager);
       }
 
     }
@@ -19,11 +22,30 @@
     function hasUser() {
 
       if (currentUser) {
+
         return $q.resolve(currentUser);
+
       } else if (Auth.getToken()) {
-        return Auth.getCurrentUser(_.noop)
-          .then(user => currentUser = user);
+
+        currentUser = Auth.getCurrentUser(_.noop)
+          .then(user => {
+
+            currentUser = user;
+            currentUserRoles = {};
+
+            _.each(user.orgAccounts, orgAccount => {
+              _.each(orgAccount.orgAccountRoles, orgAccountRole => {
+                currentUserRoles[_.get(orgAccountRole,'role.code')] = true;
+              });
+            });
+
+            return currentUser;
+          });
+
+        return currentUser;
       }
+
+      return $q.reject();
 
     }
 

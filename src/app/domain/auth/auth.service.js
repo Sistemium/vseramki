@@ -8,7 +8,8 @@
   function Auth (saAuth, saaAppConfig) {
 
     var config = {
-      authUrl: saaAppConfig.authUrl
+      authUrl: saaAppConfig.authUrl,
+      loadRoles: true
     };
 
     return saAuth(config);

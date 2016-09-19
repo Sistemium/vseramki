@@ -20,14 +20,14 @@
   }
 
   /** @ngInject */
-  function NavbarController(Cart, $scope, $mdMedia, Auth, $window, $state, AuthHelper) {
+  function NavbarController(Cart, $scope, $mdMedia, $window, $state, AuthHelper) {
     Cart.bindAll({}, $scope, 'vm.cart');
     Cart.findAll();
 
     var vm = this;
 
     function setUser() {
-      Auth.getCurrentUser(null)
+      AuthHelper.hasUser()
         .then(function (user) {
           vm.user = user;
 
