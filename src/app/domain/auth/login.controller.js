@@ -26,7 +26,7 @@
         class: 'mailru'
       },
       {
-        url: 'ok/vseramki',
+        url: 'odnoklassniki/vseramki',
         name: 'Одноклассники',
         class: 'odnoklassniki'
       },
