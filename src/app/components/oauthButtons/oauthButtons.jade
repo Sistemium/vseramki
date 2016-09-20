@@ -1,4 +1,4 @@
-md-content.oauth-buttons(layout='column' style='padding: 10px')
+md-content.oauth-buttons(layout='column')
 
   div.no-select.button-styles-for-div(
     ng-click='$ctrl.loginOauth(btn.url)'
@@ -6,6 +6,7 @@ md-content.oauth-buttons(layout='column' style='padding: 10px')
     class='{{btn.class}}'
     layout='row'
     layout-align='center center'
+    disabled='disabled'
   )
     i.fa(class='fa-{{btn.class}}')
     span.divider

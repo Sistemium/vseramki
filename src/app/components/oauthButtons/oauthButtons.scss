@@ -1,37 +1,50 @@
 $oab-facebook-official-color: #3b5998;
-$oab-odnoklassniki-color: #f4731c;
+$oab-odnoklassniki-color: #ee8208;
 $oab-mobile-color: #d87a68;
 $oab-vk-color: #587ea3;
-
-.facebook-official {
-  color: #fff;
-  background-color: $oab-facebook-official-color;
-}
-
-.odnoklassniki {
-  color: #fff;
-  background-color: $oab-odnoklassniki-color;
-}
-
-.mobile {
-  color: #fff;
-  background-color: $oab-mobile-color;
-}
-
-i.fa-vk, .fa-odnoklassniki, .fa-facebook-official {
-  font-size: 25px;
-}
-
-i.fa-mobile {
-  font-size: 35px;
-}
-
-.vk {
-  color: #fff;
-  background-color: $oab-vk-color;
-}
+$oab-mailru-color: rgb(24,64,128);
+$oab-mailru-fa-color: #ee8208;
 
 .oauth-buttons {
+
+  .facebook-official {
+    color: #fff;
+    background-color: $oab-facebook-official-color;
+  }
+
+  .odnoklassniki {
+    color: #fff;
+    background-color: $oab-odnoklassniki-color;
+  }
+
+  .mobile {
+    color: #fff;
+    background-color: $oab-mobile-color;
+  }
+
+  .mailru {
+    color: #fff;
+    i {
+      color: $oab-mailru-fa-color;
+      font-weight: bold;
+    }
+    background-color: $oab-mailru-color;
+  }
+
+  i.fa-mobile {
+    font-size: 35px;
+  }
+
+  i.fa-mailru {
+    &:before {
+      content: "\f1fa";
+    }
+  }
+
+  .vk {
+    color: #fff;
+    background-color: $oab-vk-color;
+  }
 
   .divider {
     border-left: 1px solid white;
@@ -43,20 +56,12 @@ i.fa-mobile {
     border-color: lighten(silver, 90);
   }
 
-  .facebook-official .divider {
-    border-color: lighten(#f0f0f0, 10);
-  }
-  .mobile .divider {
-    border-color: lighten(#f0f0f0, 10);
-  }
-  .vk .divider {
-    border-color: lighten(#f0f0f0, 10);
-  }
-  .odnoklassniki .divider {
+  .divider {
     border-color: lighten(#f0f0f0, 10);
   }
 
   i.fa {
+    font-size: 25px;
     min-width: 30px;
     text-align: center;
   }
@@ -75,6 +80,13 @@ md-content.oauth-buttons {
   width: 100%;
   height: 85%;
   position: fixed;
+  md-card-header {
+    padding-top: 21px;
+  }
+  md-card-content {
+    padding: 0 26px 26px 26px;
+  }
+
 }
 
 .button-styles-for-div {
