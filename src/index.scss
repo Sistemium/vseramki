@@ -7,10 +7,13 @@ $fa-font-path: '../bower_components/font-awesome/fonts';
 // bower:scss
 // endbower
 
-
 /**
  *  Do not remove the comment below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically
  */
 // injector
 // endinjector
+
+.height-fix {
+  height: 100%
+}
