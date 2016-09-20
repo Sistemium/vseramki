@@ -11,6 +11,7 @@
   function runBlock($log, $rootScope, $state, AuthHelper) {
 
     var loggedIn;
+    var loggingIn;
 
     var trt = $rootScope.$on('$stateChangeStart', function (event, to, toParams) {
 
@@ -24,7 +25,7 @@
           $state.go('home');
         }
       }
-      
+
       if (loggedIn) {
         return checkRoles();
       }
@@ -38,11 +39,19 @@
       event.preventDefault();
 
       // TODO: render a view with a spinner while http checking token
-      user
-        .then(()=> {
-          loggedIn = true;
-          $state.go(to, toParams);
-        });
+
+      if (!loggingIn) {
+        loggingIn = user
+          .then(()=> {
+            loggedIn = true;
+            loggingIn=false;
+            if (to.name === 'home') {
+              $state.go('home');
+            } else {
+              $state.go(to, toParams);
+            }
+          });
+      }
 
     });
 

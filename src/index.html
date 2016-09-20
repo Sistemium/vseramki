@@ -27,7 +27,12 @@
 
       <md-content class='height-fix'>
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
-        <section class="root viewport" ui-view></section>
+        <div class="root viewport" ui-view>
+          <div layout="column" layout-align="center center">
+            <h1>Загрузка</h1>
+            <md-progress-circular md-diameter="300" md-mode="indeterminate"></md-progress-circular>
+          </div>
+        </div>
       </md-content>
 
     </section>
