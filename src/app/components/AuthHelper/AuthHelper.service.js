@@ -12,6 +12,7 @@
       if (!currentUser) {
         return false;
       } else {
+
         return !!(currentUserRoles.admin || currentUserRoles.manager);
       }
 
@@ -33,7 +34,7 @@
 
             _.each(user.orgAccounts, orgAccount => {
               _.each(orgAccount.orgAccountRoles, orgAccountRole => {
-                currentUserRoles[_.lowerCase(_.get(orgAccountRole,'role.code'))] = true;
+                currentUserRoles[_.lowerCase(_.get(orgAccountRole, 'role.code'))] = true;
               });
             });
 

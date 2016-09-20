@@ -14,33 +14,63 @@
       controller: NavbarController,
       controllerAs: 'vm'
     };
-
     return directive;
-
   }
 
   /** @ngInject */
   function NavbarController(Cart, $scope, $mdMedia, $window, $state, AuthHelper) {
+
     Cart.bindAll({}, $scope, 'vm.cart');
     Cart.findAll();
 
     var vm = this;
 
+    setButtons();
+
     function setUser() {
       AuthHelper.hasUser()
         .then(function (user) {
-          vm.user = user;
+          var isAdmin;
 
-          var isAdmin = AuthHelper.isAdmin();
-
-          if (isAdmin) {
-            vm.navs.push({
-              sref: 'baguettes',
-              label: 'Багет'
-            })
+          if (user) {
+            vm.loggedIn = true;
+            isAdmin = AuthHelper.isAdmin();
+            setButtons(isAdmin, vm.loggedIn);
           }
 
         });
+    }
+
+    function setButtons(isAdmin, isLoggedIn) {
+
+      if (isAdmin && isLoggedIn) {
+        vm.navs = [
+          {
+            sref: 'home',
+            label: 'Главная'
+          },
+          {
+            sref: 'catalogue',
+            label: 'Рамки'
+          },
+          {
+            sref: 'baguettes',
+            label: 'Багет'
+          }
+
+        ]
+      } else {
+        vm.navs = [
+          {
+            sref: 'home',
+            label: 'Главная'
+          },
+          {
+            sref: 'catalogue',
+            label: 'Рамки'
+          }
+        ]
+      }
     }
 
     $scope.$on('logged-in', setUser);
@@ -50,23 +80,9 @@
 
     _.assign(vm, {
 
-      goToUserInfo: function () {
-        $state.go('userInfo');
-      },
-
-      login: function () {
-        $state.go('login');
-      },
-
-      navs: [
-        {
-          sref: 'home',
-          label: 'Главная'
-        }, {
-          sref: 'catalogue',
-          label: 'Рамки'
-        }
-      ]
+      changeState: function () {
+        vm.loggedIn ? $state.go('userInfo') : $state.go('login');
+      }
 
     });
 
@@ -76,18 +92,7 @@
       },
 
       function (value) {
-
         vm.breakpoint = value;
-
-        if (vm.breakpoint && vm.navs.length < 3) {
-          vm.navs.push({
-            sref: 'login',
-            label: 'Логин'
-          })
-        } else if (!vm.breakpoint && vm.navs.length > 2) {
-          vm.navs.pop();
-        }
-
       }
     );
 
