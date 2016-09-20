@@ -69,7 +69,7 @@ div(layout='row')
             md-row
             ng-repeat='bag in vm.baguettes ' +
             '| orderBy: filterBy ' +
-            '|limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+            '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
             ' track by bag.id'
             md-select='bag'
             md-select-id='id'
