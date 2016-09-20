@@ -12,22 +12,14 @@ div.cart(layout-align="center center" layout="column")
     table(md-table)
       thead(md-head)
         tr(md-row)
-          th(md-column)
-            span.th-left-align Фото
-          th(md-column)
-            span Наименование
-          th(md-column)
-            span.th-left-align Количество
-          th(md-column)
-            span.th-left-align Цена без скидки
-          th(md-column)
-            span.th-left-align Скидка
-          th(md-column)
-            span.th-left-align Цена со скидкой
-          th(md-column)
-            span.th-left-align Стоимость
-          th(md-column)
-            span Удалить
+          th(md-column) Фото
+          th(md-column) Наименование
+          th(md-column) Количество
+          th(md-column) Цена без скидки
+          th(md-column) Скидка
+          th(md-column) Цена со скидкой
+          th(md-column) Стоимость
+          th(md-column) Удалить
       tbody(md-body)
         tr(
         vr-animate-remove
@@ -56,7 +48,7 @@ div.cart(layout-align="center center" layout="column")
           td(md-cell) {{ (1 - item.article.discountedPrice(vm.cartTotal) / item.article.highPrice) * 100 | number: 1}}%
           td(md-cell) {{ item.article.discountedPrice(vm.cartTotal) | number: 2}} ₽
           td(md-cell) {{ item.cost(vm.cartTotal) | number: 2}} ₽
-          td(md-cell )
+          td(md-cell)
             md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
               i.material-icons.clear-icon-size clear
 
