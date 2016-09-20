@@ -4,7 +4,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     span(flex)
 
     md-button.tool-button(
-    ng-repeat='btn in vm.navs track by btn.sref'
+    ng-repeat='btn in vm.buttons track by btn.sref'
     ui-sref='{{btn.sref}}'
     ui-sref-active='md-primary'
     ng-if='!vm.breakpoint'
