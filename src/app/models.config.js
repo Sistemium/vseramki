@@ -4,7 +4,7 @@
 
   var basePath = window.localStorage.getItem('JSData.BasePath')
     || location.protocol === 'https:' && '/api/'
-    || 'https://api.sistemium.com/v4d/vr/';
+    || 'https://api.sistemium.com/v4d/vr2/';
 
   angular
     .module('vseramki')
