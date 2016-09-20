@@ -2,98 +2,101 @@
 
 (function () {
 
-    angular.module('vseramki')
-      .directive('acmeNavbar', acmeNavbar);
+  angular.module('vseramki')
+    .directive('acmeNavbar', acmeNavbar);
 
-    function acmeNavbar() {
+  function acmeNavbar() {
 
-      var directive = {
-        restrict: 'E',
-        replace: true,
-        templateUrl: 'app/components/navbar/navbar.html',
-        controller: NavbarController,
-        controllerAs: 'vm'
-      };
-      return directive;
+    var directive = {
+      restrict: 'E',
+      replace: true,
+      templateUrl: 'app/components/navbar/navbar.html',
+      controller: NavbarController,
+      controllerAs: 'vm'
+    };
+    return directive;
+  }
+
+  /** @ngInject */
+  function NavbarController(Cart, $scope, $mdMedia, $window, $state, AuthHelper) {
+
+    Cart.bindAll({}, $scope, 'vm.cart');
+    Cart.findAll();
+
+    var vm = this;
+
+    setButtons();
+
+    function setUser(q) {
+
+      if (!q || vm.settingUser) {
+        return;
+      }
+
+      vm.settingUser = true;
+
+      return q.then(function (user) {
+        vm.loggedIn = !!user;
+        vm.settingUser = false;
+        setButtons(AuthHelper.isAdmin(), vm.loggedIn);
+      });
+
     }
 
-    /** @ngInject */
-    function NavbarController(Cart, $scope, $mdMedia, $window, $state, AuthHelper) {
+    function setButtons(isAdmin, isLoggedIn) {
 
-      Cart.bindAll({}, $scope, 'vm.cart');
-      Cart.findAll();
-
-      var vm = this;
-
-      setButtons();
-
-      function setUser() {
-        AuthHelper.hasUser()
-          .then(function (user) {
-            var isAdmin;
-
-            if (user) {
-              vm.loggedIn = true;
-              isAdmin = AuthHelper.isAdmin();
-              setButtons(isAdmin, vm.loggedIn);
-            }
-
-          });
-      }
-
-      function setButtons(isAdmin, isLoggedIn) {
-
-        vm.navs = [
-          {
-            sref: 'home',
-            label: 'Главная'
-          },
-          {
-            sref: 'catalogue',
-            label: 'Рамки'
-          }
-        ];
-
-        if (isAdmin) {
-          vm.navs.push({
-            sref: 'baguettes',
-            label: 'Багет'
-          });
-        }
-
-        vm.navs.push({
-          sref: 'login',
-          fabOnly: true,
-          label: isLoggedIn ? 'Профиль' : 'Вход'
-        });
-
-        vm.buttons = _.filter(vm.navs, nav => !nav.fabOnly);
-
-      }
-
-      $scope.$on('logged-in', setUser);
-      $scope.$on('logged-off', function () {
-        $window.location.href = '';
-      });
-
-      _.assign(vm, {
-
-        changeState: function () {
-          vm.loggedIn ? $state.go('userInfo') : $state.go('login');
-        }
-
-      });
-
-      $scope.$watch(
-        function () {
-          return $mdMedia('max-width: 800px');
+      vm.navs = [
+        {
+          sref: 'home',
+          label: 'Главная'
         },
-
-        function (value) {
-          vm.breakpoint = value;
+        {
+          sref: 'catalogue',
+          label: 'Рамки'
         }
-      );
+      ];
+
+      if (isAdmin) {
+        vm.navs.push({
+          sref: 'baguettes',
+          label: 'Багет'
+        });
+      }
+
+      vm.navs.push({
+        sref: isLoggedIn ? 'profile' : 'login',
+        fabOnly: true,
+        label: isLoggedIn ? 'Профиль' : 'Вход'
+      });
+
+      vm.buttons = _.filter(vm.navs, nav => !nav.fabOnly);
 
     }
 
-  })();
+    setUser(AuthHelper.hasUser()) || $scope.$on('logging-in', (e,q) => setUser(q));
+
+    $scope.$on('logged-off', function () {
+      $window.location.href = '';
+    });
+
+    _.assign(vm, {
+
+      loginBtnClick: function () {
+        vm.loggedIn ? $state.go('profile') : $state.go('login');
+      }
+
+    });
+
+    $scope.$watch(
+      function () {
+        return $mdMedia('max-width: 800px');
+      },
+
+      function (value) {
+        vm.breakpoint = value;
+      }
+    );
+
+  }
+
+})();

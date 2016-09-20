@@ -29,9 +29,13 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
 
     span(flex='5' ng-if='!vm.breakpoint')
 
-    md-button.md-fab.md-icon-button.md-mini(ng-if='!vm.breakpoint' ng-click='vm.changeState()' aria-label='login-button')
-      i.material-icons(ng-if='vm.loggedIn') lock_open
-      i.material-icons(ng-if='!vm.loggedIn') lock_outline
+    md-button.md-fab.md-icon-button.md-mini(
+    ng-if='!vm.breakpoint'
+    ng-click='vm.loginBtnClick()'
+    aria-label='login-button'
+    ng-disabled='!!vm.settingUser'
+    )
+      i.material-icons {{ vm.loggedIn ? 'lock_open' : 'lock_outline' }}
 
     div.with-badge(flex='none')
       md-button.md-fab.md-mini.md-icon-button(ui-sref='cart')
