@@ -11,8 +11,8 @@
   function routerConfig(stateHelperProvider) {
     stateHelperProvider
       .state({
-        name: 'userInfo',
-        url: '/userInfo',
+        name: 'profile',
+        url: '/profile',
         templateUrl: 'app/domain/userInfo/userInfo.html',
         controller: 'UserInfoController',
         controllerAs: 'vm'
