@@ -18,8 +18,8 @@
     Cart.findAll().then(function (carts) {
       _.each(carts, function (cart) {
         stateParam.push({articleId: cart['articleId']});
-        Article.find(cart.articleId);
-
+        Article.find(cart.articleId)
+          .catch(e => Cart.destroy(cart));
       });
     });
 
