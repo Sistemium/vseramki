@@ -27,8 +27,8 @@
       ng-gallery.left-container2.gallery(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
 
     div(layout='column' layout-align='top center' style='margin:0 5px')
-      .order-prop-width.md-whiteframe-1dp.item-info
-        h1.header-h1 Свойства
+      .property-list.md-whiteframe-1dp
+        h3.header Свойства
         md-table-container
           table(md-table)
             tr(md-row flex='space-around')
@@ -57,8 +57,8 @@
               td(md-cell)
                 p {{vm.article.packageRel}}
 
-      .order-prop-width.md-whiteframe-1dp.item-info-margin
-        h1.header-h1 Заказ
+      .property-list.md-whiteframe-1dp.margin-top-bottom
+        h3.header Заказ
         md-table-container
           table(md-table)
             tr(md-row)
@@ -128,29 +128,3 @@
         i.material-icons delete
       md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.showImageDialog($event, vm.article.id)')
         i.material-icons add_a_photo
-
-//.overall-info(ng-show='vm.isAdmin')
-  //  div.md-padding.custom-h3(ng-if='vm.articleImages.length')
-  //    h2 Для текущей рамки загружено {{vm.articleImages.length}} фото
-  //    md-grid-list(
-  //    md-cols='1',
-  //    md-cols-sm='2',
-  //    md-cols-md='3',
-  //    md-cols-gt-md='6',
-  //    md-row-height-gt-md='1:1',
-  //    md-row-height='4:3',
-  //    md-gutter='2px',
-  //    md-gutter-gt-sm='1px'
-  //    )
-  //
-  //      md-grid-tile.md-padding(
-  //      ng-repeat='img in vm.articleImages track by img.id',
-  //      md-rowspan='1',
-  //      md-colspan='1',
-  //      md-colspan-sm='1',
-  //      md-colspan-xs='1'
-  //      ui-sref='.image({imageId: img.id})'
-  //      )
-  //        .photo-wrapper(ng-class="{'clicked': img.id == vm.clickedImage.id}", layout="column", layout-align="center center")
-  //          img.md-padding(ng-src='{{img.thumbnailSrc}}' )
-  //          md-button.md-raised(ng-click="vm.deletePhoto(img)") Удалить фото

@@ -19,17 +19,6 @@ cite {
   font-size: 12px;
 }
 
-.header-h1 {
-  background-color: #ff4081;
-  padding-left: 12px;
-  margin-bottom: 0;
-  margin-top: 0;
-  color: white;
-  height: 40px;
-  border-radius: 5px 5px 0 0;
-  line-height: 38px;
-}
-
 .add-to-cart {
   width: 70%;
 }
@@ -91,11 +80,6 @@ md-backdrop.md-opaque {
     width: 210px !important
   }
 
-  .order-prop-width {
-    min-width: 380px;
-    max-width: 380px;
-  }
-
   .left-nav-photo {
     min-width: 300px;
   }
@@ -108,16 +92,6 @@ md-backdrop.md-opaque {
 
   .action-button {
     width: 300px;
-  }
-
-  .item-info {
-    border-radius: 5px;
-  }
-
-  .item-info-margin {
-    border-radius: 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
   }
 
 }
