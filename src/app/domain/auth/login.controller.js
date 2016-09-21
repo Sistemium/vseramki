@@ -21,6 +21,11 @@
         class: 'facebook-official'
       },
       {
+        url: 'google/vseramki',
+        name: 'Google',
+        class: 'google'
+      },
+      {
         url: 'mailru/vseramki',
         name: 'Mail.ru',
         class: 'mailru'

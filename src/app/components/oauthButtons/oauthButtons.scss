@@ -4,6 +4,7 @@ $oab-mobile-color: #d87a68;
 $oab-vk-color: #587ea3;
 $oab-mailru-color: rgb(24,64,128);
 $oab-mailru-fa-color: #ee8208;
+$oab-google-bg-color: #4285f4;
 
 .oauth-buttons {
 
@@ -20,6 +21,11 @@ $oab-mailru-fa-color: #ee8208;
   .mobile {
     color: #fff;
     background-color: $oab-mobile-color;
+  }
+
+  .google {
+    color: #fff;
+    background-color: $oab-google-bg-color;
   }
 
   .mailru {
