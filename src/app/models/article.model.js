@@ -57,19 +57,14 @@
 
       methods: {
         discountedPrice: function (total) {
-          total = total < totalThreshold ? total : totalThreshold;
 
-          // if lowPrice in not specified
+          var useTotal = total < totalThreshold ? total : totalThreshold;
 
-          if (this.lowPrice == null) {
-            this.lowPrice = this.highPrice;
+          if (!this.lowPrice || useTotal <= minThreshold) {
+            return this.highPrice;
           }
 
-          if ((total <= 0) && (total <= minThreshold)) {
-            total = 0;
-          }
-
-          return Math.floor(100.0 * (this.highPrice - (this.highPrice - this.lowPrice) * Math.pow(total / totalThreshold, 2))) / 100.0;
+          return Math.floor(100.0 * (this.highPrice - (this.highPrice - this.lowPrice) * Math.pow(useTotal / totalThreshold, 2))) / 100.0;
 
         }
       }
