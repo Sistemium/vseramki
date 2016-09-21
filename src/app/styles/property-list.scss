@@ -2,7 +2,7 @@
 
 .property-list {
 
-  min-width: 380px;
+  min-width: 300px;
   max-width: 380px;
   border-radius: 5px;
 
@@ -15,6 +15,35 @@
     height: 40px;
     border-radius: 5px 5px 0 0;
     line-height: 38px;
+  }
+
+  .property {
+
+    border-top: solid 1px silver;
+    display: flex;
+
+    & > * {
+      margin: 15px 0;
+      font-size: 14px;
+    }
+
+    .property-label {
+      flex: 3;
+      padding-right: 15px;
+      text-align: right;
+      color: gray;
+    }
+
+    .property-value {
+      flex: 4;
+      margin: auto;
+    }
+
+  }
+
+  .property-value-order {
+    flex: 4;
+    margin: 0 !important;
   }
 
 }
