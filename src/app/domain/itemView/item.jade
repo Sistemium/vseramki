@@ -53,7 +53,7 @@
             .property
               .property-label Без скидки:
               .property-value {{(vm.article.highPrice | number: 2) || 'Не указана' }}
-            .property
+            .property(ng-if='vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice < 1')
               .property-label Со скидкой ({{ 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice | number: 1 }}%):
               .property-value {{(vm.article.discountedPrice(vm.cartTotal) | number: 2) || 'Не указана' }}
             .property
