@@ -108,32 +108,6 @@
 
       }
 
-      //addAttr: ModalHelper.showModal(
-      //  function (answer, attr, model) {
-      //    if (answer) {
-      //      var foundModel = (Schema.model(model));
-      //      foundModel.findAll({name: attr}, {bypassCache: true}).then(function (item) {
-      //        if (item.length) {
-      //          ToastHelper.showToast('Такой атрибут уже сущетвуетss', false);
-      //        } else {
-      //          var formatedAttr = attr.slice(0, 1).toUpperCase() + attr.slice(1).toLowerCase();
-      //
-      //          foundModel.create({name: formatedAttr}).then(function (a) {
-      //            vm.showToast('Атрибут ' + a.name + ' сохраненs', true);
-      //
-      //            var resetFiled = 'attrsSearch' + model;
-      //            vm[resetFiled].name = '';
-      //
-      //            var markAdded = model.toLowerCase() + 'Id';
-      //            vm.baguette[markAdded] = a.id;
-      //          });
-      //        }
-      //      });
-      //
-      //    }
-      //  }
-      //)
-
     });
 
     function checkForDuplicates() {
