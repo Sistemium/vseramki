@@ -11,17 +11,22 @@ md-dialog(aria-label='Add photo' ng-cloak)
         div(layout="column")
           form.custom-form(name='pictureUpload' layout='column')
             lf-ng-md-file-input(
-              name='files',
-              lf-files='vm.files',
-              lf-required='true',
-              lf-maxcount='5',
-              lf-filesize='5MB',
-              lf-totalsize='25MB',
-              lf-mimetype='image/*',
-              accept="image/*",
-              multiple='',
-              drag='',
-              preview=''
+            name='files',
+            lf-files='vm.files',
+            lf-required='true',
+            lf-maxcount='5',
+            lf-filesize='5MB',
+            lf-totalsize='25MB',
+            lf-mimetype='image/*',
+            accept="image/*",
+            lf-browse-label = 'Обзор',
+            lf-drag-and-drop-label = 'Перетащите файл сюда...',
+            lf-remove-label ='Удалить',
+            lf-placeholder="Выберите файл",
+            lf-caption="{{vm.files.length > 1 ?  vm.files.length + ' файла выбрано' : '1 файл выбран'}} ",
+            multiple='',
+            drag='',
+            preview=''
             )
         div(layout='column' layout-align='center center')
           md-button.md-raised.button-upload(ng-click='vm.uploadFiles()' ng-if='vm.files.length') Загрузить картинки
