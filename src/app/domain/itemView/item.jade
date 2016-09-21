@@ -26,100 +26,61 @@
 
       ng-gallery.left-container2.gallery(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
 
-    div(layout='column' layout-align='top center' style='margin:0 5px')
+    div(layout='column' layout-align='top center')
       .property-list.md-whiteframe-1dp
         h3.header Свойства
-        md-table-container
-          table(md-table)
-            tr(md-row flex='space-around')
-              td(md-cell)
-                p Размер:
-              td.td-fixed-size(md-cell)
-                | {{vm.size.name}}
-            tr(md-row)
-              td.td-width(md-cell)
-                p Материал:
-              td(md-cell)
-                p {{vm.material.name}}
-            tr(md-row)
-              td(md-cell)
-                p Цвет:
-              td(md-cell)
-                p {{vm.colour.name}}
-            tr(md-row)
-              td(md-cell)
-                p Вес:
-              td(md-cell)
-                p {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
-            tr(md-row)
-              td(md-cell)
-                p Штук в коробке:
-              td(md-cell)
-                p {{vm.article.packageRel}}
+        .property-list-container
+          .property
+            .property-label Размер:
+            .property-value {{vm.size.name}}
+          .property
+            .property-label Материал:
+            .property-value {{vm.material.name}}
+          .property
+            .property-label Цвет:
+            .property-value {{vm.colour.name}}
+          .property
+            .property-label Вес:
+            .property-value {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
+          .property
+            .property-label Штук в коробке:
+            .property-value {{vm.article.packageRel}}
 
       .property-list.md-whiteframe-1dp.margin-top-bottom
-        h3.header Заказ
-        md-table-container
-          table(md-table)
-            tr(md-row)
-
-              td.td-width(md-cell)
-                p Цена без скидки:
-
-              td(md-cell)
-                p {{(vm.article.highPrice | number: 2) || 'Не указана' }}
-            tr(md-row)
-
-              td(md-cell)
-                p Цена со скидкой ({{ 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice | number: 1 }}%):
-
-              td(md-cell)
-                p {{(vm.article.discountedPrice(vm.cartTotal) | number: 2) || 'Не указана' }}
-
-            tr(md-row)
-
-              td.td-width(md-cell)
-                p Цена от 50,000 ₽:
-
-              td(md-cell)
-                p {{vm.article.discountedPrice(50000) | number: 2 }}
-
-            tr(md-row)
-
-              td.td-width(md-cell)
-                p Цена от 100,000 ₽:
-
-              td(md-cell)
-                p {{vm.article.discountedPrice(100000) | number: 2 }}
-
-            tr(md-row  ng-if='vm.article.inCart')
-
-              td(md-cell)
-                p Заказано:
-
-              span(flex)
-
-              td(md-cell)
-                div.action-buttons(layout='row' layout-align="start center")
-                  div.div-order-info-num-picker
-                    md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
-                    md-input-container
-                      input(
-                      aria-label="Количество"
-                      ng-model='vm.article.inCart.count'
-                      type="number"
-                      ng-blur="vm.onBlur(vm.article)"
-                      ng-change="vm.onCartChange(vm.article)"
-                      required
-                      min='1'
-                      step='1'
-                      )
-                    md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
-            tr(md-row ng-if='vm.article.inCart')
-              td(md-cell)
-                p Сумма:
-              td(md-cell)
-                p {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} ₽
+        .property-list.md-whiteframe-1dp
+          h3.header Цена
+          .property-list-container
+            .property
+              .property-label Без скидки:
+              .property-value {{(vm.article.highPrice | number: 2) || 'Не указана' }}
+            .property
+              .property-label Со скидкой ({{ 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice | number: 1 }}%):
+              .property-value {{(vm.article.discountedPrice(vm.cartTotal) | number: 2) || 'Не указана' }}
+            .property
+              .property-label От 50,000 ₽:
+              .property-value {{vm.article.discountedPrice(50000) | number: 2 }}
+            .property
+              .property-label От 100,000 ₽:
+              .property-value {{vm.article.discountedPrice(100000) | number: 2 }}
+            .property(ng-if='vm.article.inCart')
+              .property-label Заказано:
+              .property-value-order
+                md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
+                md-input-container
+                  input(
+                  aria-label="Количество"
+                  ng-model='vm.article.inCart.count'
+                  type="number"
+                  ng-blur="vm.onBlur(vm.article)"
+                  ng-change="vm.onCartChange(vm.article)"
+                  required
+                  min='1'
+                  step='1'
+                  )
+                md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
+            .property(ng-if='vm.article.inCart')
+              .property-label Сумма:
+              .property-value {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} ₽
 
     .admin-buttons(layout='column' ng-show='vm.isAdmin')
       md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.editFrame(vm.article.id)')
