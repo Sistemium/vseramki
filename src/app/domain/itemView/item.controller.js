@@ -127,6 +127,7 @@
     }
 
     angular.extend(vm, {
+
       uploading: true,
       imageClick,
       deletePhoto,
@@ -137,6 +138,10 @@
       addToCart: Cart.addToCart,
       article: '',
       isRootState: true,
+
+      minThreshold: Article.minThreshold(),
+      middleThreshold: Math.round(Article.maxThreshold()/2),
+      maxThreshold: Article.maxThreshold(),
 
       showImageDialog: ImageHelper.mdDialogHelper(
         function (imsImg, id) {

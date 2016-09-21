@@ -54,14 +54,17 @@
               .property-label Без скидки:
               .property-value {{(vm.article.highPrice | number: 2) || 'Не указана' }}
             .property(ng-if='vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice < 1')
-              .property-label Со скидкой ({{ 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice | number: 1 }}%):
+              .property-label Скидка {{ 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice | number: 1 }}%:
               .property-value {{(vm.article.discountedPrice(vm.cartTotal) | number: 2) || 'Не указана' }}
             .property
-              .property-label От 50,000 ₽:
-              .property-value {{vm.article.discountedPrice(50000) | number: 2 }}
+              .property-label От {{ vm.minThreshold | number: 0 }} ₽:
+              .property-value {{vm.article.discountedPrice(vm.minThreshold) | number: 2 }}
             .property
-              .property-label От 100,000 ₽:
-              .property-value {{vm.article.discountedPrice(100000) | number: 2 }}
+              .property-label От {{ vm.middleThreshold | number: 0 }} ₽:
+              .property-value {{vm.article.discountedPrice(vm.middleThreshold) | number: 2 }}
+            .property
+              .property-label От {{ vm.maxThreshold | number: 0 }} ₽:
+              .property-value {{vm.article.discountedPrice(vm.maxThreshold) | number: 2 }}
             .property(ng-if='vm.article.inCart')
               .property-label Заказано:
               .property-value-order

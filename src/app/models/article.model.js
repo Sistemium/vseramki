@@ -15,6 +15,10 @@
     return Schema.register({
 
       name: 'Article',
+
+      maxThreshold: () => totalThreshold,
+      minThreshold: () => minThreshold,
+
       relations: {
         hasOne: {
           Cart: {
