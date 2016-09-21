@@ -12,7 +12,6 @@
       if (!currentUser) {
         return false;
       } else {
-
         return !!(currentUserRoles.admin || currentUserRoles.manager);
       }
 
@@ -48,7 +47,8 @@
 
     return {
       isAdmin,
-      hasUser
+      hasUser,
+      userRoles: () => currentUserRoles
     }
 
   }

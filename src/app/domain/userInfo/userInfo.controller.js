@@ -7,14 +7,15 @@
     .controller('UserInfoController', UserInfoController)
   ;
 
-  function UserInfoController(Auth) {
+  function UserInfoController(AuthHelper, Auth) {
 
     var vm = this;
 
     function setUser() {
-      Auth.getCurrentUser(null)
+      AuthHelper.hasUser()
         .then(function (user) {
           vm.user = user;
+          vm.roles = AuthHelper.userRoles();
         });
     }
 
