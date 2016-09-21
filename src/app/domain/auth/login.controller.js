@@ -32,7 +32,7 @@
       },
       {
         url: 'vk/vseramki',
-        name: 'Вконтакте',
+        name: 'ВКонтакте',
         class: 'vk'
       }
     ];
