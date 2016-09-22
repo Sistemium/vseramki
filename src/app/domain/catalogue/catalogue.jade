@@ -50,14 +50,12 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
     md-divider(ng-if='!vm.isRootState' style='padding: 2px')
 
-    md-divider(flex ng-if='vm.isRootState')
-
     .no-padding(
     layout='column'
     resize='articlesList'
     style='height: {{articlesList.windowHeight - articlesList.offsetTop - 10}}px;'
     )
-      md-virtual-repeat-container(ng-show='!vm.isRootState' style='flex: 1')
+      md-virtual-repeat-container(flex ng-if='!vm.isRootState')
         .md-whiteframe-1dp.items(
         md-virtual-repeat='frame in vm.articles'
         layout='row'
@@ -67,6 +65,8 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
         )
           span {{frame.name}}
 
+      md-divider(flex ng-if='vm.isRootState')
+
       md-button.admin-button.no-padding(
       ng-click="vm.goToCreateFrame()"
       ng-show='vm.isAdmin && !vm.disableAddFrame'
@@ -75,10 +75,10 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
   .ui-view(flex ng-if='!vm.isRootState')
 
   md-content#scroll-main(
-  flex resize
-  style='height: {{ windowHeight - offsetTop }}px; max-width: {{ vm.isRootState ? "100%" : "0"}};'
+  flex resize='frames'
+  style='max-width: {{ vm.isRootState ? "100%" : "0"}};'
   )
-    md-virtual-repeat-container(style='height: {{windowHeight - 65}}px')
+    md-virtual-repeat-container(style='height: {{ frames.windowHeight - frames.offsetTop }}px;')
       .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
         .repeated-group-item(ng-repeat='article in row' flex)
           md-card(layout='column' layout-align='center center')
