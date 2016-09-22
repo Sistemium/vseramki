@@ -42,11 +42,10 @@
 
     function hasChanges() {
       if (!vm.id) {
-        return true;
-      } else {
-        checkParams();
-        return vm.id && Article.hasChanges(vm.id);
+        return;
       }
+      checkParams();
+      return Article.hasChanges(vm.id);
     }
 
     function cancelChanges() {
