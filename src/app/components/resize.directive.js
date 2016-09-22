@@ -2,7 +2,7 @@
 
 (function () {
 
-  function resize($window, $uibPosition) {
+  function resize($window, $uibPosition, $timeout) {
 
     return (scope, element, attrs) => {
 
@@ -11,18 +11,32 @@
       function getWindowDimensions() {
         return {
           windowHeight: $window.innerHeight,
-          windowWidth: $window.innerWidth,
-          offsetTop: $uibPosition.offset(element).top
+          windowWidth: $window.innerWidth
         };
       }
 
-      scope.$watch(getWindowDimensions, newValue => {
+      function setValues (newValue) {
+        var offset = $uibPosition.offset(element);
         _.assign(property, newValue);
-        scope.uibPosition = $uibPosition.offsetParent(element);
-      }, true);
+        property.offsetTop = offset ? offset.top : 0;
+      }
 
-      angular.element($window).bind('resize', () => scope.$apply());
+      var un = scope.$watch(getWindowDimensions, setValues, true);
 
+      function apply () {
+        scope.$apply();
+      }
+
+      angular.element($window)
+        .bind('resize', apply);
+
+      scope.$on('$destroy', ()=>{
+        un();
+        angular.element($window)
+          .unbind('resize', apply);
+      })
+
+      $timeout(setValues);
     }
 
   }
