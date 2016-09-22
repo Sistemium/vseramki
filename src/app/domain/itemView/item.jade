@@ -29,7 +29,7 @@
         .property-list.md-whiteframe-1dp
           h3.header Заказ
           .property-list-container
-            .property(ng-if='vm.article.inCart')
+            .property
               .property-label Количество:
               .property-value.no-margin(layout-align='start center' layout='row')
                 md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
@@ -45,9 +45,12 @@
                   step='1'
                   )
                 md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
-            .property(ng-if='vm.article.inCart')
-              .property-label Стоимость:
-              .property-value {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} ₽
+            .property
+              .property-label Сумма:
+              .property-value {{ vm.article.inCart.cost(vm.cartTotal) | number: 2 }} ₽
+            .property
+              .property-label Общая сумма:
+              .property-value {{ vm.cartTotal | number: 2 }} ₽
 
       ng-gallery.left-container2.gallery(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
 
