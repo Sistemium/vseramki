@@ -2,29 +2,27 @@
 
 (function () {
 
-  function resize($window) {
+  function resize($window, $uibPosition) {
 
-    return function (scope) {
-      var w = $window;
-      scope.getWindowDimensions = function () {
+    return (scope, element) => {
+
+      function getWindowDimensions () {
         return {
-          'h': w.innerHeight,
-          'w': w.innerWidth
+          windowHeight: $window.innerHeight,
+          windowWidth: $window.innerWidth,
+          offsetTop: $uibPosition.offset(element).top
         };
-      };
-      scope.$watch(scope.getWindowDimensions, function (newValue) {
-        scope.windowHeight = newValue.h;
-        scope.windowWidth = newValue.w;
-      }, true);
+      }
 
-      angular.element($window).bind('resize', function () {
-        scope.$apply();
-      });
+      scope.$watch(getWindowDimensions, newValue => _.assign(scope,newValue), true);
+
+      angular.element($window).bind('resize', () => scope.$apply());
+
     }
 
   }
 
-  angular.module('sistemium')
+  angular.module('ui.bootstrap.position')
     .directive('resize', resize);
 
 })();

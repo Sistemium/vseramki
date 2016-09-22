@@ -12,7 +12,8 @@
       'ngFileUpload',
       'ngMessages',
       'sistemiumAngularAuth',
-      'models'
+      'models',
+      'ui.bootstrap.position'
     ]);
 
 })();

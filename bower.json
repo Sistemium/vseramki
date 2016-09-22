@@ -13,9 +13,15 @@
     "ng-file-upload": "^12.0.4",
     "sistemium-angular-auth": "^0.1.10",
     "components-font-awesome": "^4.6.3",
-    "material-design-icons": "^3.0.1"
+    "material-design-icons": "^3.0.1",
+    "angular-ui-bootstrap": "^2.1.3"
   },
   "overrides": {
+    "angular-ui-bootstrap": {
+      "main": [
+        "src/position/position.js"
+      ]
+    },
     "components-font-awesome": {
       "main": [
         "css/font-awesome.css",
