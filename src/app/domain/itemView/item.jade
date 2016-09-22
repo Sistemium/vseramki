@@ -23,7 +23,7 @@
       ng-click='vm.addToCart(vm.article)'
       ng-show='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
       )
-        | {{'Добавить в корзину'}}
+        | {{'Добавить к заказу'}}
 
       div.order-block(ng-if='vm.article.inCart')
         .property-list.md-whiteframe-1dp
