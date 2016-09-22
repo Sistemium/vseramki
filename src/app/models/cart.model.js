@@ -26,13 +26,13 @@
 
       methods: {
         cost: function (total) {
-          total = total < totalThreshold ? total : totalThreshold;
+          var useTotal = total < totalThreshold ? total : totalThreshold;
 
-          if ((total <= 0) || (total <= minThreshold)) {
-            total = 0;
+          if (useTotal <= minThreshold) {
+            useTotal = 0;
           }
 
-          return Math.round(100.0 * this.count * this.article.discountedPrice(total)) / 100.0;
+          return Math.round(100.0 * this.count * this.article.discountedPrice(useTotal)) / 100.0;
         }
       },
 
@@ -40,14 +40,14 @@
 
       orderSubTotal: function (items) {
         items = items || model.getAll();
-        return _.sumBy(items, item => Math.round(100.0 * item.article.highPrice * item.count) / 100.0);
+        return _.sumBy(items, item => item.count > 0 ? Math.round(100.0 * item.article.highPrice * item.count) / 100.0 : 0);
       },
 
       orderTotal: function (items) {
         items = items || model.getAll();
         var subTotal = model.orderSubTotal(items);
 
-        return _.sumBy(items, item => item.cost(subTotal));
+        return _.sumBy(items, item => item.count ? item.cost(subTotal) : 0);
       },
 
       addToCart: function (article) {
