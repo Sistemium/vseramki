@@ -126,39 +126,45 @@
 
     function setPrices() {
 
-      var discount = 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice;
+      var discount = 100 - 100 * vm.article.discountedPrice(vm.cartSubTotal)/vm.article.highPrice;
 
       vm.prices = [
         {
           label: 'Скидка',
           from: numberFilter(discount, 1) + '%',
-          value: vm.article.discountedPrice(vm.cartTotal),
+          value: vm.article.discountedPrice(vm.cartSubTotal),
           hide: discount ? 'show' : 'hide',
-          ord: vm.cartTotal
+          ord: vm.cartTotal,
+          animate: 'change-up',
+          id: 1
         },
         {
           label: 'До',
           from: numberFilter(vm.minThreshold,0),
           value: vm.article.highPrice,
-          ord: vm.minThreshold
+          ord: vm.minThreshold,
+          id: 2
         },
         {
           label: 'От',
           from: numberFilter(vm.middleThreshold1,0),
           value: vm.article.discountedPrice(vm.middleThreshold1),
-          ord: vm.middleThreshold1
+          ord: vm.middleThreshold1,
+          id: 3
         },
         {
           label: 'От',
           from: numberFilter(vm.middleThreshold2,0),
           value: vm.article.discountedPrice(vm.middleThreshold2),
-          ord: vm.middleThreshold2
+          ord: vm.middleThreshold2,
+          id: 4
         },
         {
           label: 'От',
           from: numberFilter(vm.maxThreshold,0),
           value: vm.article.discountedPrice(vm.maxThreshold),
-          ord: vm.maxThreshold
+          ord: vm.maxThreshold,
+          id: 5
         }
       ];
 
