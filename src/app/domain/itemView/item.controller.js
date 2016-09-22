@@ -22,6 +22,7 @@
     function recalcTotals() {
       vm.cartSubTotal = Cart.orderSubTotal();
       vm.cartTotal = Cart.orderTotal();
+      setPrices();
     }
 
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
@@ -60,7 +61,6 @@
     }
 
     function onCartChange(cart) {
-      setPrices();
       Cart.save(cart);
     }
 
@@ -131,27 +131,32 @@
           label: 'Скидка',
           from: numberFilter(discount, 1) + '%',
           value: vm.article.discountedPrice(vm.cartTotal),
-          hide: discount ? 'show' : 'hide'
+          hide: discount ? 'show' : 'hide',
+          ord: vm.cartTotal
         },
         {
           label: 'До',
           from: numberFilter(vm.minThreshold,0),
-          value: vm.article.highPrice
+          value: vm.article.highPrice,
+          ord: vm.minThreshold
         },
         {
           label: 'От',
           from: numberFilter(vm.middleThreshold1,0),
-          value: vm.article.discountedPrice(vm.middleThreshold1)
+          value: vm.article.discountedPrice(vm.middleThreshold1),
+          ord: vm.middleThreshold1
         },
         {
           label: 'От',
           from: numberFilter(vm.middleThreshold2,0),
-          value: vm.article.discountedPrice(vm.middleThreshold2)
+          value: vm.article.discountedPrice(vm.middleThreshold2),
+          ord: vm.middleThreshold2
         },
         {
           label: 'От',
           from: numberFilter(vm.maxThreshold,0),
-          value: vm.article.discountedPrice(vm.maxThreshold)
+          value: vm.article.discountedPrice(vm.maxThreshold),
+          ord: vm.maxThreshold
         }
       ];
 
