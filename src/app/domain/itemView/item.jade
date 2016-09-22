@@ -48,7 +48,7 @@
             .property
               .property-label Сумма:
               .property-value {{ vm.article.inCart.cost(vm.cartSubTotal) || 0 | number: 2 }} ₽
-            .property
+            .property(ng-if='vm.cartItems > 1')
               .property-label Общая сумма:
               .property-value {{ vm.cartTotal | number: 2 }} ₽
 

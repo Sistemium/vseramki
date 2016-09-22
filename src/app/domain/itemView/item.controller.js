@@ -22,6 +22,7 @@
     function recalcTotals() {
       vm.cartSubTotal = Cart.orderSubTotal();
       vm.cartTotal = Cart.orderTotal();
+      vm.cartItems = Cart.getAll().length;
       if (vm.article) {
         setPrices();
       }
