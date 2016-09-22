@@ -47,7 +47,7 @@
                 md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
             .property
               .property-label Сумма:
-              .property-value {{ vm.article.inCart.cost(vm.cartTotal) | number: 2 }} ₽
+              .property-value {{ vm.article.inCart.cost(vm.cartTotal) || 0 | number: 2 }} ₽
             .property
               .property-label Общая сумма:
               .property-value {{ vm.cartTotal | number: 2 }} ₽
