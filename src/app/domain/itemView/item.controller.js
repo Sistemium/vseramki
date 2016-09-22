@@ -22,7 +22,9 @@
     function recalcTotals() {
       vm.cartSubTotal = Cart.orderSubTotal();
       vm.cartTotal = Cart.orderTotal();
-      setPrices();
+      if (vm.article) {
+        setPrices();
+      }
     }
 
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
