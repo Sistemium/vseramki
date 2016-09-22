@@ -7,19 +7,10 @@
     .controller('ItemController', ItemController)
   ;
 
-  function ItemController($stateParams,
-                          $filter,
-                          Article,
-                          Cart,
-                          Schema,
-                          ArticleImage,
-                          $scope,
-                          $state,
-                          ToastHelper,
-                          ImageHelper,
-                          AuthHelper,
-                          AlertHelper) {
+  function ItemController($filter, Schema, ArticleImage, $scope, $state, ToastHelper, ImageHelper, AuthHelper, AlertHelper) {
 
+    var Article = Schema.model('Article');
+    var Cart = Schema.model('Cart');
     var Colour = Schema.model('Colour');
     var Material = Schema.model('Material');
     var FrameSize = Schema.model('FrameSize');
@@ -38,7 +29,7 @@
     vm.isAdmin = AuthHelper.isAdmin();
 
     var stateFilter = {
-      articleId: $stateParams.id
+      articleId: $state.params.id
     };
 
     function minusOne(item) {
@@ -78,7 +69,7 @@
         vm.allArt = data;
       });
 
-    Article.find($stateParams.id).then(function (article) {
+    Article.find($state.params.id).then(function (article) {
       vm.article = article;
 
       if (vm.article) {
@@ -163,7 +154,7 @@
           value: vm.article.discountedPrice(vm.maxThreshold)
         }
       ];
-      
+
     }
 
     angular.extend(vm, {
