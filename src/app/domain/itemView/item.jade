@@ -8,7 +8,7 @@
 
     span(flex)
 
-    .left-nav-photo(
+    .left-nav-photo.space-children-em(
     layout='column'
     layout-align='top center'
     ng-if='vm.isRootState'
@@ -19,9 +19,9 @@
       )
         img.main-photo.md-whiteframe-1dp.md-padding(ng-src='{{vm.images[0].smallSrc}}')
 
-      md-button.md-raised.md-margin.action-button.pink-button(
+      md-button.md-raised.action-button.pink-button(
       ng-click='vm.addToCart(vm.article)'
-      ng-show='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
+      ng-if='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
       )
         | {{'Добавить к заказу'}}
 
@@ -56,7 +56,7 @@
 
     span(flex)
 
-    div(layout='column' layout-align='top center')
+    .space-children-em(layout='column' layout-align='top center')
       .property-list.md-whiteframe-1dp
         h3.header Характеристики
         .property-list-container

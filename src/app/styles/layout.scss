@@ -15,3 +15,7 @@
 .header small {
   text-transform: lowercase;
 }
+
+.layout-column.space-children-em > * {
+  margin: 0 0 1em 0;
+}
