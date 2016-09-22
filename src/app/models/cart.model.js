@@ -38,6 +38,13 @@
 
       defaultAdapter: 'localStorage',
 
+      recalcTotals: function (vm) {
+        vm.cartSubTotal = model.orderSubTotal();
+        vm.cartTotal = model.orderTotal();
+        vm.cartItems = model.getAll().length;
+        vm.cartHasDiscount = (vm.cartSubTotal > vm.cartTotal);
+      },
+
       orderSubTotal: function (items) {
         items = items || model.getAll();
         return _.sumBy(items, item => item.count > 0 ? Math.round(100.0 * item.article.highPrice * item.count) / 100.0 : 0);
