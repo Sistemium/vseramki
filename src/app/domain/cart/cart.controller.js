@@ -7,20 +7,28 @@
     .controller('CartController', CartController)
   ;
 
-  function CartController(Cart, Article, $scope, ArticleImage, $state) {
+  function CartController(Cart, Article, $scope, ArticleImage, $state, Baguette, Schema) {
 
     var vm = this;
     var stateParam = [];
+    var BaguetteImage = Schema.model('BaguetteImage');
 
     Cart.bindAll({}, $scope, 'vm.data', refreshPrice);
 
+    Baguette.findAll();
+    BaguetteImage.findAll();
     ArticleImage.findAll();
+
     Cart.findAll().then(function (carts) {
+
       _.each(carts, function (cart) {
+
         stateParam.push({articleId: cart['articleId']});
+
         Article.find(cart.articleId)
           .catch(() => Cart.destroy(cart));
       });
+
     });
 
     function refreshPrice() {
