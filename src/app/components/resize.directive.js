@@ -4,9 +4,11 @@
 
   function resize($window, $uibPosition) {
 
-    return (scope, element) => {
+    return (scope, element, attrs) => {
 
-      function getWindowDimensions () {
+      var property = attrs.resize ? (scope[attrs.resize] = {}) : scope;
+
+      function getWindowDimensions() {
         return {
           windowHeight: $window.innerHeight,
           windowWidth: $window.innerWidth,
@@ -14,7 +16,10 @@
         };
       }
 
-      scope.$watch(getWindowDimensions, newValue => _.assign(scope,newValue), true);
+      scope.$watch(getWindowDimensions, newValue => {
+        _.assign(property, newValue);
+        scope.uibPosition = $uibPosition.offsetParent(element);
+      }, true);
 
       angular.element($window).bind('resize', () => scope.$apply());
 
