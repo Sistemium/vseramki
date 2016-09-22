@@ -1,5 +1,5 @@
 .for-md-dialog.item-closed(style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px")
-  div(layout='row' layout-align='center center')
+  //div(layout='row' layout-align='center center')
     .name-head {{vm.article.name}}
 
   p {{vm.status}}
@@ -46,44 +46,43 @@
             .property-label Штук в коробке:
             .property-value {{vm.article.packageRel}}
 
-      .property-list.md-whiteframe-1dp.margin-top-bottom
-        .property-list.md-whiteframe-1dp
-          h3.header Цена
-          .property-list-container
-            .property
-              .property-label Без скидки:
-              .property-value {{(vm.article.highPrice | number: 2) || 'Не указана' }}
-            .property(ng-if='vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice < 1')
-              .property-label Скидка {{ 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice | number: 1 }}%:
-              .property-value {{(vm.article.discountedPrice(vm.cartTotal) | number: 2) || 'Не указана' }}
-            .property
-              .property-label От {{ vm.minThreshold | number: 0 }} ₽:
-              .property-value {{vm.article.discountedPrice(vm.minThreshold) | number: 2 }}
-            .property
-              .property-label От {{ vm.middleThreshold | number: 0 }} ₽:
-              .property-value {{vm.article.discountedPrice(vm.middleThreshold) | number: 2 }}
-            .property
-              .property-label От {{ vm.maxThreshold | number: 0 }} ₽:
-              .property-value {{vm.article.discountedPrice(vm.maxThreshold) | number: 2 }}
-            .property(ng-if='vm.article.inCart')
-              .property-label Заказано:
-              .property-value-order
-                md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
-                md-input-container
-                  input(
-                  aria-label="Количество"
-                  ng-model='vm.article.inCart.count'
-                  type="number"
-                  ng-blur="vm.onBlur(vm.article)"
-                  ng-change="vm.onCartChange(vm.article)"
-                  required
-                  min='1'
-                  step='1'
-                  )
-                md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
-            .property(ng-if='vm.article.inCart')
-              .property-label Сумма:
-              .property-value {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} ₽
+      .property-list.md-whiteframe-1dp
+        h3.header Цена
+        .property-list-container
+          .property
+            .property-label До {{ vm.minThreshold | number: 0 }} ₽:
+            .property-value {{(vm.article.highPrice | number: 2) || 'Не указана' }}
+          .property(ng-if='vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice < 1')
+            .property-label Скидка {{ 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice | number: 1 }}%:
+            .property-value {{(vm.article.discountedPrice(vm.cartTotal) | number: 2) || 'Не указана' }}
+          .property
+            .property-label От {{ vm.middleThreshold1 | number: 0 }} ₽:
+            .property-value {{vm.article.discountedPrice(vm.middleThreshold1) | number: 2 }}
+          .property
+            .property-label От {{ vm.middleThreshold2 | number: 0 }} ₽:
+            .property-value {{vm.article.discountedPrice(vm.middleThreshold2) | number: 2 }}
+          .property
+            .property-label От {{ vm.maxThreshold | number: 0 }} ₽:
+            .property-value {{vm.article.discountedPrice(vm.maxThreshold) | number: 2 }}
+          .property(ng-if='vm.article.inCart')
+            .property-label Заказано:
+            .property-value-order
+              md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
+              md-input-container
+                input(
+                aria-label="Количество"
+                ng-model='vm.article.inCart.count'
+                type="number"
+                ng-blur="vm.onBlur(vm.article)"
+                ng-change="vm.onCartChange(vm.article)"
+                required
+                min='1'
+                step='1'
+                )
+              md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
+          .property(ng-if='vm.article.inCart')
+            .property-label Сумма:
+            .property-value {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} ₽
 
     .admin-buttons(layout='column' ng-show='vm.isAdmin')
       md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.editFrame(vm.article.id)')

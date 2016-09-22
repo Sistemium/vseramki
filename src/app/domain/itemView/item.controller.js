@@ -140,7 +140,8 @@
       isRootState: true,
 
       minThreshold: Article.minThreshold(),
-      middleThreshold: Math.round(Article.maxThreshold()/2),
+      middleThreshold1: Math.round(Article.maxThreshold()/4),
+      middleThreshold2: Math.round(Article.maxThreshold()/2),
       maxThreshold: Article.maxThreshold(),
 
       showImageDialog: ImageHelper.mdDialogHelper(
