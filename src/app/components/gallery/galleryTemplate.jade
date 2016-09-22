@@ -5,7 +5,7 @@ div(class='{{ baseClass }}', layout='row', layout-align='center center')
 
 
 // On open image
-div.ng-overlay(ng-show='opened' layout='row' layout-align='center center')
+div.ng-overlay(ng-if='opened' layout='row' layout-align='center center')
 
   div.main-div-settings.min-settings(flex layout='row' layout-align='start center' hide-xs style='min-width: 80px !important')
     p(ng-click='prevImage()' style='margin: 0px').material-icons.custom-chevron chevron_left
@@ -31,9 +31,9 @@ div.ng-overlay(ng-show='opened' layout='row' layout-align='center center')
       ondragstart='return false;'
       draggable='false'
       ng-src='{{ img }}'
-      ng-show='!loading'
+      ng-if='!loading'
       )
-      md-progress-circular(md-mode="indeterminate" md-diameter='170' ng-show='loading')
+      md-progress-circular(md-mode="indeterminate" md-diameter='170' ng-if='loading')
 
     //Info div
     div.main-div-settings(flex='25' style='width: 100%' hide-xs)

@@ -107,7 +107,7 @@
 
           $timeout(function () {
             image.src = scope.images[i].smallSrc;
-          }, 500);
+          });
 
 
           return deferred.promise;
@@ -245,6 +245,11 @@
 
         var smartScroll = function (index) {
           $timeout(function () {
+
+            if (!$thumbwrapper[0]) {
+              return;
+            }
+
             var len = scope.images.length,
               width = scope.thumbs_width,
               item_scroll = parseInt(width / len, 10),
