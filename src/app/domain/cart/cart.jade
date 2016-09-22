@@ -1,7 +1,7 @@
 div.cart(layout-align="center center" layout="column")
 
   div(ng-if='!vm.data.length' flex='')
-    div(style='height: {{windowHeight - (windowHeight / 2) -56 }}px;' flex='')
+    div(style='height: {{windowHeight - (windowHeight / 2) - 56 }}px;' flex='')
     div.emptyCart.md-whiteframe-1dp
       div(style='text-align: center') Корзина пуста
       div
@@ -31,19 +31,19 @@ div.cart(layout-align="center center" layout="column")
         )
           td.pointer-style(md-cell ng-click='vm.itemClick(item)')
             img.image-thumbnail(
-            ng-src='{{item.article.images[0].thumbnailSrc}}'
-            ng-if='item.article.images.length'
+            ng-src='{{item.article.activePhoto()}}'
+            ng-if='item.article.activePhoto()'
             )
             img.image-thumbnail(
             ng-src='/images/question_mark.png'
-            ng-if='!item.article.images.length'
+            ng-if='!item.article.activePhoto()'
             )
           td(md-cell) {{item.article.name}}
           td(md-cell)
             div.number-picker
-              md-button.md-icon-button(ng-click='vm.minusOne(item)') -
+              md-button.icon-button-catalogue(ng-click='vm.minusOne(item)') -
               input.custom-input(aria-label="Количество" ng-model="item.count" type="number" ng-change="vm.saveItem(item)" min='1' step='1')
-              md-button.md-icon-button(ng-click='vm.plusOne(item)') +
+              md-button.icon-button-catalogue(ng-click='vm.plusOne(item)') +
           td(md-cell) {{ item.article.highPrice | number: 2 }} ₽
           td(md-cell) {{ (1 - item.article.discountedPrice(vm.cartTotal) / item.article.highPrice) * 100 | number: 1}}%
           td(md-cell) {{ item.article.discountedPrice(vm.cartTotal) | number: 2}} ₽
@@ -70,6 +70,4 @@ div.cart(layout-align="center center" layout="column")
           span.bold {{vm.cartSubTotal - vm.cartTotal | number:2}} ₽ ({{(((vm.cartSubTotal / vm.cartTotal) -1))*100 | number: 1 }}%)
       md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab
         i.material-icons chevron_right
-
-
 
