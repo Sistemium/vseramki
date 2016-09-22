@@ -75,7 +75,7 @@ div(layout='row')
             md-select-id='id'
             ng-click='vm.editBaguette(bag, $event)'
           )
-            td(md-cell ng-click='vm.showImageDialog($event, bag.id)')
+            td(md-cell)
               img.image-thumbnail-table(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
               img.image-thumbnail-table(ng-src='/images/question_mark.png' ng-if='!bag.images.length')
             td(md-cell) {{bag.colour.name}}
