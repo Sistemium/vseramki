@@ -5,13 +5,17 @@
   min-width: 300px;
   max-width: 380px;
   border-radius: 5px;
+  margin-bottom: 15px;
 
   .header {
-    background-color: $accent-background-color;
+    background-color: $toolbar-background-color;
+    //color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
     padding-left: 12px;
     margin-bottom: 0;
     margin-top: 0;
-    color: white;
     height: 40px;
     border-radius: 5px 5px 0 0;
     line-height: 38px;
@@ -28,14 +32,14 @@
     }
 
     .property-label {
-      flex: 3;
+      flex: 4;
       padding-right: 15px;
       text-align: right;
       color: gray;
     }
 
     .property-value {
-      flex: 4;
+      flex: 5;
       margin: auto;
     }
 
