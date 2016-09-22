@@ -8,6 +8,7 @@
   ;
 
   function ItemController($stateParams,
+                          $filter,
                           Article,
                           Cart,
                           Schema,
@@ -25,6 +26,7 @@
     var BaguetteImage = Schema.model('BaguetteImage');
 
     var vm = this;
+    var numberFilter = $filter('number');
 
     function recalcTotals() {
       vm.cartSubTotal = Cart.orderSubTotal();
@@ -48,7 +50,7 @@
       if (!cart.count) {
         Cart.destroy(cart);
       } else {
-        Cart.save(cart);
+        onCartChange(cart);
       }
 
     }
@@ -57,7 +59,7 @@
       var cart = item.inCart;
       cart.count = (cart.count || 0) + 1;
 
-      Cart.save(cart);
+      onCartChange(cart);
     }
 
     function onBlur(article) {
@@ -66,8 +68,9 @@
       }
     }
 
-    function onCartChange(article) {
-      Cart.save(article.inCart);
+    function onCartChange(cart) {
+      setPrices();
+      Cart.save(cart);
     }
 
     Article.findAll({limit: 100})
@@ -79,6 +82,8 @@
       vm.article = article;
 
       if (vm.article) {
+
+        setPrices();
 
         Colour.find(vm.article.colourId).then(function (colour) {
           vm.colour = colour;
@@ -124,6 +129,41 @@
 
     function deletePhoto(photo) {
       ArticleImage.destroy(photo);
+    }
+
+    function setPrices() {
+
+      var discount = 100 - 100 * vm.article.discountedPrice(vm.cartTotal)/vm.article.highPrice;
+
+      vm.prices = [
+        {
+          label: 'Скидка',
+          from: numberFilter(discount, 1) + '%',
+          value: vm.article.discountedPrice(vm.cartTotal),
+          hide: discount ? 'show' : 'hide'
+        },
+        {
+          label: 'До',
+          from: numberFilter(vm.minThreshold,0),
+          value: vm.article.highPrice
+        },
+        {
+          label: 'От',
+          from: numberFilter(vm.middleThreshold1,0),
+          value: vm.article.discountedPrice(vm.middleThreshold1)
+        },
+        {
+          label: 'От',
+          from: numberFilter(vm.middleThreshold2,0),
+          value: vm.article.discountedPrice(vm.middleThreshold2)
+        },
+        {
+          label: 'От',
+          from: numberFilter(vm.maxThreshold,0),
+          value: vm.article.discountedPrice(vm.maxThreshold)
+        }
+      ];
+      
     }
 
     angular.extend(vm, {
