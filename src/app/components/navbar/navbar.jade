@@ -1,6 +1,8 @@
 md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
-  .md-toolbar-tools
-    img.top-logo(src='images/top-logo.jpg' ui-sref='home')
+  .md-toolbar-tools(ng-class='{"no-padding": vm.breakpoint}')
+    img.top-logo(ng-src='images/top-logo.jpg' ui-sref='home' ng-if='!vm.breakpoint')
+    img.top-logo-mobile(ng-src='images/logo-230x150.png' ui-sref='home' ng-if='vm.breakpoint')
+
     span(flex)
 
     md-button.tool-button(
@@ -10,10 +12,9 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     ng-if='!vm.breakpoint'
     ) {{ btn.label }}
 
-    md-fab-speed-dial.md-scale(
+    md-fab-speed-dial.md-scale.fab-menu(
     md-direction='down'
     ng-if='vm.breakpoint'
-    ng-class="{auth: vm.breakpoint}"
     )
       md-fab-trigger
         md-button.md-fab.md-mini.md-icon-button.md-primary(aria-label='menu')
