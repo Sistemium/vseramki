@@ -74,6 +74,7 @@ md-backdrop.md-opaque {
 
   .left-nav-photo {
     min-width: 300px;
+    margin: 0 5px;
   }
 
   .admin-buttons {
@@ -84,6 +85,15 @@ md-backdrop.md-opaque {
 
   .action-button {
     width: 300px;
+  }
+
+  .item-count-input {
+    min-width: 30px;
+  }
+
+  .order-block {
+    min-width: 300px;
+    margin-top: 10px
   }
 
 }

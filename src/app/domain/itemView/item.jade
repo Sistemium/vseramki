@@ -10,7 +10,6 @@
     layout='column'
     layout-align='top center'
     ng-if='vm.isRootState'
-    style='margin: 0 5px'
     )
       a.left-container(
       layout="row"
@@ -23,6 +22,30 @@
       ng-show='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
       )
         | {{'Добавить в корзину'}}
+
+      div.order-block(ng-if='vm.article.inCart')
+        .property-list.md-whiteframe-1dp
+          h3.header Заказ
+          .property-list-container
+            .property(ng-if='vm.article.inCart')
+              .property-label Заказано:
+              .property-value-order(layout-align='start center' layout='row')
+                md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
+                md-input-container
+                  input.item-count-input(
+                  aria-label="Количество"
+                  ng-model='vm.article.inCart.count'
+                  type="number"
+                  ng-blur="vm.onBlur(vm.article)"
+                  ng-change="vm.onCartChange(vm.article.inCart)"
+                  required
+                  min='1'
+                  step='1'
+                  )
+                md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
+            .property(ng-if='vm.article.inCart')
+              .property-label Сумма:
+              .property-value {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} ₽
 
       ng-gallery.left-container2.gallery(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
 
@@ -52,25 +75,6 @@
           .property(ng-repeat='prc in vm.prices | filter:"!hide" | orderBy: "-value" track by prc.from')
             .property-label {{ prc.label }} {{ prc.from }}:
             .property-value {{ prc.value | number: 2 }} ₽
-          .property(ng-if='vm.article.inCart')
-            .property-label Заказано:
-            .property-value-order
-              md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
-              md-input-container
-                input(
-                aria-label="Количество"
-                ng-model='vm.article.inCart.count'
-                type="number"
-                ng-blur="vm.onBlur(vm.article)"
-                ng-change="vm.onCartChange(vm.article.inCart)"
-                required
-                min='1'
-                step='1'
-                )
-              md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
-          .property(ng-if='vm.article.inCart')
-            .property-label Сумма:
-            .property-value {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} ₽
 
     .admin-buttons(layout='column' ng-show='vm.isAdmin')
       md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.editFrame(vm.article.id)')
