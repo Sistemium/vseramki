@@ -69,8 +69,8 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
   .ui-view(flex ng-if='!vm.isRootState')
 
   md-content#scroll-main(
-  flex
-  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRootState ? "100%" : "0"}}'
+  flex resize
+  style='height: {{ windowHeight - offsetTop }}px; max-width: {{ vm.isRootState ? "100%" : "0"}};'
   )
     md-virtual-repeat-container(style='height: {{windowHeight - 65}}px')
       .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
