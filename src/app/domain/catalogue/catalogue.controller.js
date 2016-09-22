@@ -21,7 +21,12 @@
     vm.isAdmin = AuthHelper.isAdmin();
 
     Cart.findAll();
-    Cart.bindAll({}, $scope, 'vm.cart');
+
+    function recalcTotals() {
+      Cart.recalcTotals(vm);
+    }
+
+    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
 
     Baguette.findAll().then(function (data) {
       vm.baguette = data;

@@ -97,7 +97,9 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
                 .md-subhead.center {{ article.name }}
 
             .md-margin
-              .md-title.center {{ article.highPrice + ' ₽'}}
+              .md-title.center
+                span(ng-class='{"strike-through gray": vm.cartHasDiscount}') {{ article.highPrice }} ₽
+                span(ng-if='vm.cartHasDiscount') &nbsp; {{ article.discountedPrice(vm.cartSubTotal) }} ₽
             span(flex)
 
             md-card-content.fixed-height(ng-if='article.inCart')
