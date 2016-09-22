@@ -4,7 +4,9 @@
 
   p {{vm.status}}
 
-  .ui-view(layout='row' layout-align='center top' layout-xs='column' layout-sm='column' layout-md='column')
+  .ui-view(layout='row' layout-align='space-around top' layout-xs='column' layout-sm='column')
+
+    span(flex)
 
     .left-nav-photo(
     layout='column'
@@ -28,8 +30,8 @@
           h3.header Заказ
           .property-list-container
             .property(ng-if='vm.article.inCart')
-              .property-label Заказано:
-              .property-value-order(layout-align='start center' layout='row')
+              .property-label Количество:
+              .property-value.no-margin(layout-align='start center' layout='row')
                 md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
                 md-input-container
                   input.item-count-input(
@@ -44,14 +46,16 @@
                   )
                 md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
             .property(ng-if='vm.article.inCart')
-              .property-label Сумма:
+              .property-label Стоимость:
               .property-value {{ vm.article.discountedPrice(vm.cartTotal) * vm.article.inCart.count | number: 2 }} ₽
 
       ng-gallery.left-container2.gallery(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
 
+    span(flex)
+
     div(layout='column' layout-align='top center')
       .property-list.md-whiteframe-1dp
-        h3.header Свойства
+        h3.header Характеристики
         .property-list-container
           .property
             .property-label Размер:
@@ -75,6 +79,8 @@
           .property(ng-repeat='prc in vm.prices | filter:"!hide" | orderBy: "-value" track by prc.from')
             .property-label {{ prc.label }} {{ prc.from }}:
             .property-value {{ prc.value | number: 2 }} ₽
+
+    span(flex)
 
     .admin-buttons(layout='column' ng-show='vm.isAdmin')
       md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.editFrame(vm.article.id)')
