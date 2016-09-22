@@ -100,7 +100,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
               .md-title.center {{ article.highPrice + ' ₽'}}
             span(flex)
 
-            md-card-content.fixed-height(ng-show='article.inCart')
+            md-card-content.fixed-height(ng-if='article.inCart')
               .div-order-info(layout='row' layout-align="start center")
 
                 p.name-style Заказано:
@@ -123,7 +123,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
                   md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
 
-            md-card-actions(flex ng-show='!article.inCart')
+            md-card-actions(flex ng-if='!article.inCart')
               md-button.md-fab.md-mini.md-icon-button(
               aria-label="Добавить в корзину"
               ng-click="vm.addToCart(article)"
