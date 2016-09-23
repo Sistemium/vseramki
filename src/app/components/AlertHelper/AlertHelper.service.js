@@ -4,9 +4,10 @@
 
   function AlertHelper($mdDialog) {
 
-    function showConfirm(ev) {
+    function showConfirm(ev, question) {
+
       var confirm = $mdDialog.confirm()
-        .title('Подтвердить удаление элемента?')
+        .title(question || 'Подтвердить удаление элемента?')
         .textContent('')
         .ariaLabel('Confirm Modal')
         .targetEvent(ev)
