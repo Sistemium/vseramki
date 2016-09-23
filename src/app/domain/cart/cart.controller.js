@@ -7,7 +7,7 @@
     .controller('CartController', CartController)
   ;
 
-  function CartController(Cart, Article, $scope, ArticleImage, $state, Baguette, Schema) {
+  function CartController(Cart, Article, $scope, ArticleImage, $state, Baguette, Schema, AlertHelper) {
 
     var vm = this;
     var stateParam = [];
@@ -36,8 +36,9 @@
       vm.cartTotal = Cart.orderTotal();
     }
 
-    function clearCart() {
-      Cart.destroyAll();
+    function clearCart($event) {
+      AlertHelper.showConfirm($event, 'Отменить заказ?')
+        .then(response => response && Cart.destroyAll());
     }
 
     function itemClick(item) {

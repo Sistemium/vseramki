@@ -48,7 +48,7 @@ div.cart(layout-align="center center" layout="column")
   .footer(ng-show='vm.data.length' layout='row' layout-align='center center')
     md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
     ng-if='vm.data.length'
-    ng-click='vm.clearCart()'
+    ng-click='vm.clearCart($event)'
     )
       i.material-icons remove_shopping_cart
     span(flex)
