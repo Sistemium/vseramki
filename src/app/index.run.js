@@ -44,7 +44,7 @@
         loggingIn = user
           .then(()=> {
             loggedIn = true;
-            loggingIn=false;
+            loggingIn = false;
             if (to.name === 'home') {
               $state.go('home');
             } else {
