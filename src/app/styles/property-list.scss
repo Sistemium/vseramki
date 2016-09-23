@@ -44,4 +44,13 @@
 
   }
 
+  &.flex-5-4 .property {
+    .property-label {
+      flex: 5;
+    }
+    .property-value {
+      flex: 4;
+    }
+  }
+
 }
