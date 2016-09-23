@@ -1,7 +1,7 @@
 md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
   .md-toolbar-tools(ng-class='{"no-padding": vm.breakpoint}')
-    img.top-logo(ng-src='images/top-logo.jpg' ui-sref='home' ng-if='!vm.breakpoint')
-    img.top-logo-mobile(ng-src='images/logo-230x150.png' ui-sref='home' ng-if='vm.breakpoint')
+    a(ui-sref='home')
+      img.top-logo(ng-src='{{windowWidth < 300 ? "images/logo-230x150.png" : "images/top-logo.jpg"}}')
 
     span(flex)
 
