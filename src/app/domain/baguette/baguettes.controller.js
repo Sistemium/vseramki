@@ -132,7 +132,7 @@
       },
 
       goToCreateBaguette: function (parent) {
-        $state.go(`${parent||''}.create`);
+        $state.go(`${parent || ''}.create`);
       },
 
       backToList: function () {
@@ -166,6 +166,7 @@
     $scope.$watch('windowWidth', function (windowWidth) {
 
       windowWidth < 600 ? vm.useMobile = true : vm.useMobile = false;
+      windowWidth < 800 ? vm.addButtonBreakPoint = true : vm.addButtonBreakPoint = false;
 
     });
 
