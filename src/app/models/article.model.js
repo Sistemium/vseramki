@@ -58,14 +58,8 @@
       methods: {
 
         activePhoto: function () {
-
           var photo = _.get(this, 'images[0]') || _.get(this, 'baguette.images[0]');
-          if (photo) {
-            return photo.thumbnailSrc;
-          } else {
-            return false;
-          }
-
+          return photo ? photo.thumbnailSrc : '/images/question_mark.png';
         },
 
         discountedPrice: function (total) {
