@@ -1,7 +1,7 @@
-md-toolbar.md-table-toolbar.md-default(ng-if='vm.isRoot')
+md-toolbar.md-table-toolbar.md-default.toolbar-height(ng-if='vm.isRoot')
   .md-toolbar-tools.fixed-toolbar.toolbar-bottom-border
 
-    .view-mode-tool(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
+    .view-mode-tool(layout='row' layout-align='center center')
       h2.header {{ vm.currentState == 'tiles' ? 'Плитка' : 'Таблица' }} багетов
       .options
         i.material-icons.icon-button(
@@ -9,19 +9,21 @@ md-toolbar.md-table-toolbar.md-default(ng-if='vm.isRoot')
         ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
         ) view_headline
 
-        span.forbid-marking(style='cursor:default') |
+        span.forbid-marking.divider-cursor |
 
         i.material-icons.icon-button(
         ng-click="vm.changeView('baguettes.tiles')"
         ng-class="vm.currentState == 'tiles' ? 'icons-button-active' : 'icon-button-disabled'"
         ) view_comfy
 
-    span(ng-if='!vm.useMobile' flex)
+    span(flex)
 
-    md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
+    md-button.md-fab.md-mini.md-icon-button.admin-button(
     ng-click='vm.goToCreateBaguette()'
+    ng-class="{'margin-for-add-button' : !vm.addButtonBreakPoint}"
     )
-      i.material-icons add circle
+      i.material-icons add
+
 
 .baguettes(layout='row')
 
