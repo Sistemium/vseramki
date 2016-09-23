@@ -277,6 +277,14 @@ md-virtual-repeat-container {
     overflow: hidden;
   }
 
+  .header-margin {
+    margin: 10px !important;
+  }
+
+}
+
+.toolbar-bottom-border {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .image-thumbnail-table {
