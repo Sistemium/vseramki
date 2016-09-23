@@ -131,8 +131,8 @@
         $state.go($state.current.name, {id: bag.id});
       },
 
-      goToCreateBaguette: function () {
-        $state.go('.create');
+      goToCreateBaguette: function (parent) {
+        $state.go(`${parent||''}.create`);
       },
 
       backToList: function () {

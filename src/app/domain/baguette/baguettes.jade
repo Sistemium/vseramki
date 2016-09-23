@@ -48,4 +48,9 @@ md-toolbar.md-table-toolbar.md-default(ng-if='vm.isRoot')
         )
           | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
 
+      md-button.admin-button.no-padding(
+      ng-click="vm.goToCreateBaguette('^')"
+      ng-show='vm.isAdmin && !vm.disableAdd'
+      ) Добавить багет
+
   .ui-view(flex layout='row')
