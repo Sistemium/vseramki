@@ -1,9 +1,9 @@
 md-toolbar.md-table-toolbar.md-default(ng-if='vm.isRoot')
   .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
 
-    div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
-      h2(style='width: 160px') {{ vm.currentState == 'tiles' ? 'Плитка' : 'Таблица' }} багетов
-      .toolbar-class
+    .view-mode-tool(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
+      h2.header {{ vm.currentState == 'tiles' ? 'Плитка' : 'Таблица' }} багетов
+      .options
         i.material-icons.icon-button(
         ng-click="vm.changeView('baguettes.table')"
         ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
