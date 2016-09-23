@@ -29,7 +29,7 @@
 
         name: 'baguettes',
         url: '/baguettes',
-        templateUrl: '/app/domain/baguette/baguettes.html',
+        templateUrl: 'app/domain/baguette/baguettes.html',
 
         controller: 'BaguettesController',
         controllerAs: 'vm',
