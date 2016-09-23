@@ -60,7 +60,7 @@
     var defaultChildHelperSubscription = $rootScope.$on('$stateChangeSuccess', function (event, toState) {
 
       if (toState.defaultChild) {
-        var mode = localStorageService.get(toState.name+'.mode') || toState.defaultChild;
+        let mode = localStorageService.get(toState.name+'.mode') || toState.defaultChild;
         return $state.go('.' + mode);
       }
 
@@ -68,7 +68,7 @@
 
       if (parentDefaultChild) {
 
-        var mode = toState.name.match(/[^\.]*$/);
+        let mode = toState.name.match(/[^\.]*$/);
 
         if (mode) {
           localStorageService.set(toState.parent.name + '.mode', mode[0]);
