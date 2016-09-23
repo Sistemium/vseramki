@@ -15,19 +15,11 @@ style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
         .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
           md-card(layout='column' layout-align='center center')
 
-            img.md-card-image.image-size(
-            ng-src='{{bag.images[0].thumbnailSrc}}'
-            ng-if='bag.images.length'
-            ng-click='vm.showImageDialog($event, bag.id)'
-            alt='Baguette {{$index}}'
-            )
-
-            img.md-card-image.image-size(
-            ng-src='/images/question_mark.png'
-            ng-if='!bag.images.length'
-            ng-click='vm.showImageDialog($event, bag.id)'
-            alt='Baguette {{$index}}'
-            )
+            a(href ng-click='vm.editBaguette(bag)')
+              img.md-card-image.image-size(
+              ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}'
+              alt='Baguette {{$index}}'
+              )
 
             md-card-content(align='center')
               p
