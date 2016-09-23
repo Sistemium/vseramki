@@ -51,15 +51,7 @@ style="height: {{ baguetteEdit.windowHeight - baguetteEdit.offsetTop - 2}}px;"
 
   md-divider.md-margin
 
-  div(ng-if='vm.id' layout='column' layout-align='center center' style='overflow: scroll')
-    div(layout='row')
-      h2.md-margin.center-header Загруженные фото ({{vm.baguetteImages.length}})
-      md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab.pink-top(
-      ng-if='vm.baguetteImages.length'
-      ng-click='vm.showImageDialog($event, vm.id)'
-      )
-        i.material-icons add
-
-    md-button.admin-button(ng-if='!vm.baguetteImages.length' ng-click='vm.showImageDialog($event, vm.id)') Загрузить фото
-    div.gallery-wrapper(style='height: {{ windowHeight - (windowHeight / 1.45) }}px')
-      ng-gallery(images='vm.baguetteImages' thumbs-num='5')
+  div.space-children-em(ng-if='vm.id')
+    ng-gallery(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length')
+    .text-center
+      md-button.admin-button(ng-click='vm.showImageDialog($event, vm.id)') Добавить фото
