@@ -1,6 +1,6 @@
 .ui-view(flex)
 
-  md-table-container(ng-if='vm.baguettes.length')
+  md-table-container.table-cursor(ng-if='vm.baguettes.length')
     table(md-table md-row-select multiple ng-model='vm.selected')
       thead(md-head md-order='filterBy')
         th(md-column) Фото
