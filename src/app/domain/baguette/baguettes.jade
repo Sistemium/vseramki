@@ -29,16 +29,16 @@ md-toolbar.md-table-toolbar.md-default(ng-if='vm.isRoot')
   layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
   ng-if='!vm.isRoot'
   )
-
-    md-list.no-padding(
-    layout='column'
-    resize='baguettesList'
-    style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 10 }}px; max-width: {{ !vm.isRoot ? "100%" : "0"}}'
-    )
-
+    md-list.no-padding
       md-list-item.md-item-header(layout='column' layout-align='center center')
         h3.header-margin Всего багетов: {{vm.baguettes.length}}
         md-button.admin-button(ng-click='vm.backToList()') Вернуться к списку
+
+    .no-padding(
+    layout='column'
+    resize='baguettesList'
+    style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 10 }}px'
+    )
 
       md-virtual-repeat-container(flex)
         .md-item-text.md-whiteframe-z1(

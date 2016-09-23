@@ -7,7 +7,7 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper) {
+  function BaguettesController(Schema, Baguette, AuthHelper, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper) {
 
     var vm = this;
 
@@ -25,6 +25,7 @@
 
     var chunkSize;
 
+    vm.isAdmin = AuthHelper.isAdmin();
 
     function setChunks(nv) {
       chunkSize = nv;
