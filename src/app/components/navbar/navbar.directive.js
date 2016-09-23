@@ -47,7 +47,7 @@
 
     function showToast(user) {
       if (user) {
-        ToastHelper.showToast('Добро пожаловать, ' + user.name, true);
+        ToastHelper.showToast(`Добро пожаловать, ${user.name}!`, true);
       }
     }
 
@@ -82,7 +82,7 @@
     }
 
     setUser(AuthHelper.hasUser()) || $scope.$on('logging-in', (e, q) => {
-      setUser(q);
+      setUser(q.then(AuthHelper.hasUser));
     });
 
     $scope.$on('logged-off', function () {
