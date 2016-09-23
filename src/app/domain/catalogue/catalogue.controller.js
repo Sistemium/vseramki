@@ -183,25 +183,6 @@
       vm.rows = _.chunk(vm.articles, nv);
     }));
 
-
-    $scope.$watch('windowHeight', function (windowHeight) {
-
-      if (windowHeight > 710) {
-        vm.pages = 9;
-      } else if (windowHeight > 620) {
-        vm.pages = 7;
-      } else if (windowHeight > 530) {
-        vm.pages = 5;
-      } else if (windowHeight > 420) {
-        vm.pages = 3;
-      } else if (windowHeight > 380) {
-        vm.pages = 2;
-      } else {
-        vm.pages = 1;
-      }
-
-    });
-
     VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
       groupSize = nv;
       vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
