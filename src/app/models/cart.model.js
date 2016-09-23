@@ -47,7 +47,7 @@
 
       orderSubTotal: function (items) {
         items = items || model.getAll();
-        return _.sumBy(items, item => item.count > 0 ? Math.round(100.0 * item.article.highPrice * item.count) / 100.0 : 0);
+        return _.sumBy(items, item => item.article && item.count > 0 ? Math.round(100.0 * item.article.highPrice * item.count) / 100.0 : 0);
       },
 
       orderTotal: function (items) {
