@@ -35,10 +35,11 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     ng-click='vm.loginBtnClick()'
     aria-label='login-button'
     ng-disabled='!!vm.settingUser'
+    ui-sref-active='active'
     )
       i.material-icons {{ vm.loggedIn ? 'lock_open' : 'lock_outline' }}
 
     div.with-badge(flex='none')
-      md-button.md-fab.md-mini.md-icon-button(ui-sref='cart')
+      md-button.md-fab.md-mini.md-icon-button(ui-sref='cart' ui-sref-active='active')
         i.material-icons shopping_cart
       span.badge(ng-show='vm.cart.length') {{ vm.cart.length }}
