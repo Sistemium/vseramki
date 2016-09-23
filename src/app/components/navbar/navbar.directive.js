@@ -18,7 +18,7 @@
   }
 
   /** @ngInject */
-  function NavbarController(Cart, $scope, $mdMedia, $window, $state, AuthHelper) {
+  function NavbarController(Cart, $scope, $mdMedia, $window, $state, AuthHelper, ToastHelper) {
 
     Cart.bindAll({}, $scope, 'vm.cart');
     Cart.findAll();
@@ -28,6 +28,7 @@
     setButtons();
 
     function setUser(q) {
+
 
       if (!q || vm.settingUser) {
         return;
@@ -39,8 +40,15 @@
         vm.loggedIn = !!user;
         vm.settingUser = false;
         setButtons(AuthHelper.isAdmin(), vm.loggedIn);
+        showToast(user);
       });
 
+    }
+
+    function showToast(user) {
+      if (user) {
+        ToastHelper.showToast('Добро пожаловать, ' + user.name, true);
+      }
     }
 
     function setButtons(isAdmin, isLoggedIn) {
@@ -73,7 +81,9 @@
 
     }
 
-    setUser(AuthHelper.hasUser()) || $scope.$on('logging-in', (e,q) => setUser(q));
+    setUser(AuthHelper.hasUser()) || $scope.$on('logging-in', (e, q) => {
+      setUser(q);
+    });
 
     $scope.$on('logged-off', function () {
       $window.location.href = '';
