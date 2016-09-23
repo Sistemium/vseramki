@@ -4,8 +4,12 @@
   // TODO: fix layout in Safari
 }
 
-.space-children-em > ng-gallery > * {
-  margin: 1em 0 1em 0;
+.space-children-em > ng-gallery > .ng-gallery {
+  margin: 0 0 1em 0;
+}
+
+ng-gallery.margin-top-em > .ng-gallery {
+  margin-top: 1em;
 }
 
 img.ng-thumb {
