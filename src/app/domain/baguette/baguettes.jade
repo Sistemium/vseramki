@@ -1,5 +1,5 @@
 md-toolbar.md-table-toolbar.md-default(ng-if='vm.isRoot')
-  .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
+  .md-toolbar-tools.fixed-toolbar.toolbar-bottom-border
 
     .view-mode-tool(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
       h2.header {{ vm.currentState == 'tiles' ? 'Плитка' : 'Таблица' }} багетов
@@ -36,9 +36,8 @@ md-toolbar.md-table-toolbar.md-default(ng-if='vm.isRoot')
     style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 10 }}px; max-width: {{ !vm.isRoot ? "100%" : "0"}}'
     )
 
-      md-list-item.md-item-header(layout='row')
-        h3 Всего багетов: {{vm.baguettes.length}}
-        span(flex)
+      md-list-item.md-item-header(layout='column' layout-align='center center')
+        h3.header-margin Всего багетов: {{vm.baguettes.length}}
         md-button.admin-button(ng-click='vm.backToList()') Вернуться к списку
 
       md-virtual-repeat-container(flex)
