@@ -8,7 +8,7 @@ div > form > md-input-container {
   width: 200px;
   height: 200px;
   margin: 0 auto;
-  padding: 2px;
+  padding: 10px;
   object-fit: contain;
 }
 
@@ -255,9 +255,8 @@ md-virtual-repeat-container {
 .baguettes {
 
   .repeated-group {
-    height: 400px;
+    height: 378px;
     padding: 2px;
-    margin: 10px;
   }
 
   .repeated-group-item {
@@ -340,4 +339,16 @@ md-virtual-repeat-container {
 
 .table-cursor {
   cursor: pointer;
+}
+
+.toolbar-height {
+  min-height: 56px;
+}
+
+.divider-cursor {
+  cursor: default;
+}
+
+.margin-for-add-button {
+  margin-right: 4px !important;
 }
