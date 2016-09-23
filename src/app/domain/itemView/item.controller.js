@@ -133,7 +133,7 @@
           from: numberFilter(discount, 1) + '%',
           value: vm.article.discountedPrice(vm.cartSubTotal),
           hide: discount ? 'show' : 'hide',
-          ord: vm.cartTotal,
+          ord: vm.cartSubTotal,
           animate: 'change-up',
           id: 1
         },
