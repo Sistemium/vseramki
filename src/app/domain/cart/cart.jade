@@ -37,10 +37,10 @@ div.cart(layout-align="center center" layout="column")
               md-button.icon-button-catalogue(ng-click='vm.minusOne(item)') -
               input.custom-input(aria-label="Количество" ng-model="item.count" type="number" ng-change="vm.saveItem(item)" min='1' step='1')
               md-button.icon-button-catalogue(ng-click='vm.plusOne(item)') +
-          td(md-cell) {{ item.article.highPrice | number: 2 }} ₽
-          td(md-cell) {{ (1 - item.article.discountedPrice(vm.cartTotal) / item.article.highPrice) * 100 | number: 1}}%
-          td(md-cell) {{ item.article.discountedPrice(vm.cartTotal) | number: 2}} ₽
-          td(md-cell) {{ item.cost(vm.cartTotal) | number: 2}} ₽
+          td(md-cell) {{ item.article.highPrice | number: 2 }}&nbsp;₽
+          td(md-cell) {{ (1 - item.article.discountedPrice(vm.cartSubTotal) / item.article.highPrice) * 100 | number: 1}}%
+          td(md-cell) {{ item.article.discountedPrice(vm.cartSubTotal) | number: 2}}&nbsp;₽
+          td(md-cell) {{ item.cost(vm.cartSubTotal) | number: 2}}&nbsp;₽
           td(md-cell)
             md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
               i.material-icons.clear-icon-size clear
@@ -54,13 +54,14 @@ div.cart(layout-align="center center" layout="column")
     span(flex)
     .md-margin(layout='row' layout-align='center center')
       div(layout='column')
-        p.no-margin
-          span Итого:
+        p.no-margin.text-right
+          span Cкидка {{ (vm.cartSubTotal / vm.cartTotal - 1) * 100 | number: 1 }}%:
           = ' '
-          span.bold {{vm.cartTotal | number: 2}} ₽
-        p.no-margin Общая скидка:
+          span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
+        p.no-margin.text-right
+          span Итого к оплате:
           = ' '
-          span.bold {{vm.cartSubTotal - vm.cartTotal | number:2}} ₽ ({{(((vm.cartSubTotal / vm.cartTotal) -1))*100 | number: 1 }}%)
+          span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartTotal | number: 2}}&nbsp;₽
       md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab
         i.material-icons chevron_right
 
