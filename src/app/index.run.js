@@ -8,7 +8,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, $rootScope, $state, AuthHelper) {
+  function runBlock($log, $rootScope, $state, AuthHelper, localStorageService) {
 
     var loggedIn;
     var loggingIn;
@@ -60,7 +60,19 @@
     var defaultChildHelperSubscription = $rootScope.$on('$stateChangeSuccess', function (event, toState) {
 
       if (toState.defaultChild) {
-        $state.go('.' + toState.defaultChild);
+        var mode = localStorageService.get(toState.name+'.mode') || toState.defaultChild;
+        return $state.go('.' + mode);
+      }
+
+      var parentDefaultChild = _.get(toState,'parent.defaultChild');
+
+      if (parentDefaultChild) {
+
+        var mode = toState.name.match(/[^\.]*$/);
+
+        if (mode) {
+          localStorageService.set(toState.parent.name + '.mode', mode[0]);
+        }
       }
 
     });
