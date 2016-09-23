@@ -4,6 +4,10 @@
   // TODO: fix layout in Safari
 }
 
+.space-children-em > ng-gallery > * {
+  margin: 1em 0 1em 0;
+}
+
 img.ng-thumb {
   height: 50px;
   width: 50px;
