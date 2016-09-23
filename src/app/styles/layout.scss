@@ -16,8 +16,9 @@
   text-transform: lowercase;
 }
 
-.layout-column.space-children-em > * {
+.space-children-em > * {
   margin: 0 0 1em 0;
+
 }
 
 .layout-row.space-children-em > * {
@@ -34,4 +35,12 @@
 
 .height-100 {
   height: 100%;
+}
+
+.scroll-y {
+  overflow-y: scroll;
+}
+
+.text-center {
+  text-align: center;
 }
