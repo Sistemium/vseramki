@@ -1,91 +1,48 @@
-div.baguettes(layout='row')
+.ui-view(ng-if='!vm.isRoot' flex)
 
-  div.scrolling-contents(
-  ng-if='!vm.isRoot'
-  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
+md-content#scroll-main(
+flex
+style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
+)
+
+  .repeat-wrapper(
+  layout='row' layout-align='center center'
+  resize='baguettes'
+  style='height: {{ baguettes.windowHeight - baguettes.offsetTop - 2 }}px'
   )
+    md-virtual-repeat-container.height-100
+      .repeated-group(md-virtual-repeat='chunk in vm.chunked' layout='row' layout-align='center center')
+        .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
+          md-card(layout='column' layout-align='center center')
 
-    md-list.custom-list(hide-xs)
+            img.md-card-image.image-size(
+            ng-src='{{bag.images[0].thumbnailSrc}}'
+            ng-if='bag.images.length'
+            ng-click='vm.showImageDialog($event, bag.id)'
+            alt='Baguette {{$index}}'
+            )
 
-      md-list-item.md-item-header.md-whiteframe-z1(layout='row')
-        h3 Всего багетов: {{vm.baguettes.length}}
-        span(flex)
-        md-button.admin-button(ng-click='vm.backToList()') Вернуться к списку
+            img.md-card-image.image-size(
+            ng-src='/images/question_mark.png'
+            ng-if='!bag.images.length'
+            ng-click='vm.showImageDialog($event, bag.id)'
+            alt='Baguette {{$index}}'
+            )
 
-      md-virtual-repeat-container(style='height: {{windowHeight - 143 }}px')
-        div.md-item-text.md-whiteframe-z1(
-        md-virtual-repeat='bag in vm.baguettes'
-        ng-class="{'active-baguette ': vm.currId == bag.id }"
-        ng-click='vm.changeBaguette(bag)'
-        )
-          | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
+            md-card-content(align='center')
+              p
+                span.bold Цвет:&nbsp
+                span {{bag.colour.name}}
+              p
+                span.bold Материал:&nbsp
+                span {{bag.material.name}}
+              p
+                span.bold Бренд:&nbsp
+                span {{bag.brand.name}}
+              p
+                span.bold Ширина:&nbsp
+                span {{bag.borderWidth}} мм.
 
-  .ui-view(flex ng-if='!vm.isRoot')
-
-  md-content#scroll-main(
-  flex
-  style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; max-width: {{ vm.isRoot ? "100%" : "0"}}'
-  )
-
-    md-toolbar().md-table-toolbar.md-default
-      .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
-
-        div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
-          h2(style='width: 160px') Плитка багетов
-          .toolbar-class
-            i.material-icons.icon-button.icon-button-disabled(
-            ng-click="vm.changeView('baguettes.table')"
-            ng-class="{'icons-button-active': vm.currentState == '/table'}"
-            ) view_headline
-
-            span.forbid-marking(style='cursor:default') |
-
-            i.material-icons.icon-button.icon-button-disabled(
-            ng-click="vm.changeView('baguettes.tiles')"
-            ng-class="{'icons-button-active': vm.currentState == '/tiles'}"
-            ) view_comfy
-
-        span(ng-if='!vm.useMobile' flex)
-
-        md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
-        ng-click='vm.goToCreateBaguette()'
-        )
-          i.material-icons add circle
-
-    .repeat-wrapper(layout='row' layout-align='center center')
-      md-virtual-repeat-container(style='height: {{windowHeight - 130}}px')
-        .repeated-group(md-virtual-repeat='chunk in vm.chunked' layout='row' layout-align='center center')
-          .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
-            md-card(layout='column' layout-align='center center')
-
-              img.md-card-image.image-size(
-              ng-src='{{bag.images[0].thumbnailSrc}}'
-              ng-if='bag.images.length'
-              ng-click='vm.showImageDialog($event, bag.id)'
-              alt='Baguette {{$index}}'
-              )
-
-              img.md-card-image.image-size(
-              ng-src='/images/question_mark.png'
-              ng-if='!bag.images.length'
-              ng-click='vm.showImageDialog($event, bag.id)'
-              alt='Baguette {{$index}}'
-              )
-
-              md-card-content(align='center')
-                p
-                  span.bold Цвет:&nbsp
-                  span {{bag.colour.name}}
-                p
-                  span.bold Материал:&nbsp
-                  span {{bag.material.name}}
-                p
-                  span.bold Бренд:&nbsp
-                  span {{bag.brand.name}}
-                p
-                  span.bold Ширина:&nbsp
-                  span {{bag.borderWidth}} мм.
-
-              md-card-actions.admin-button(layout='row', layout-align='center center')
-                md-button(ng-click='vm.editBaguette(bag)') Редактировать
-                md-button(ng-click='vm.deleteBaguette(bag, $event)') Удалить
+            md-card-actions.admin-button(layout='row', layout-align='center center')
+              md-button(ng-click='vm.editBaguette(bag)') Редактировать
+              md-button(ng-click='vm.deleteBaguette(bag, $event)') Удалить

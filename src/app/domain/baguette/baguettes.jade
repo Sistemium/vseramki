@@ -1,0 +1,52 @@
+md-toolbar.md-table-toolbar.md-default(ng-if='vm.isRoot')
+  .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
+
+    div(layout='row' layout-align='center center' ng-class="{'styles-for-mobile-text': vm.useMobile}")
+      h2(style='width: 160px') {{ vm.currentState == 'tiles' ? 'Плитка' : 'Таблица' }} багетов
+      .toolbar-class
+        i.material-icons.icon-button(
+        ng-click="vm.changeView('baguettes.table')"
+        ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
+        ) view_headline
+
+        span.forbid-marking(style='cursor:default') |
+
+        i.material-icons.icon-button(
+        ng-click="vm.changeView('baguettes.tiles')"
+        ng-class="vm.currentState == 'tiles' ? 'icons-button-active' : 'icon-button-disabled'"
+        ) view_comfy
+
+    span(ng-if='!vm.useMobile' flex)
+
+    md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
+    ng-click='vm.goToCreateBaguette()'
+    )
+      i.material-icons add circle
+
+div.baguettes(layout='row')
+
+  md-sidenav.md-sidenav-right.md-whiteframe-1dp(
+  layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-sm')"
+  ng-if='!vm.isRoot'
+  )
+
+    md-list.no-padding(
+    layout='column'
+    resize='baguettesList'
+    style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 10 }}px; max-width: {{ !vm.isRoot ? "100%" : "0"}}'
+    )
+
+      md-list-item.md-item-header(layout='row')
+        h3 Всего багетов: {{vm.baguettes.length}}
+        span(flex)
+        md-button.admin-button(ng-click='vm.backToList()') Вернуться к списку
+
+      md-virtual-repeat-container(flex)
+        .md-item-text.md-whiteframe-z1(
+        md-virtual-repeat='bag in vm.baguettes'
+        ng-class="{'active-baguette ': vm.currId == bag.id }"
+        ng-click='vm.changeBaguette(bag)'
+        )
+          | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
+
+  .ui-view(flex layout='row')

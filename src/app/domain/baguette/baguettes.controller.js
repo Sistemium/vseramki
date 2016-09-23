@@ -16,8 +16,6 @@
     var Colour = Schema.model('Colour');
     var BaguetteImage = Schema.model('BaguetteImage');
 
-    vm.currentState = $state.current.url;
-
     $q.all([
       Colour.findAll(),
       Material.findAll(),
@@ -149,6 +147,7 @@
     var subscription = $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
 
       vm.isRoot = /(table|tiles)$/.test(toState.name);
+      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
 
       if (vm.isRoot || !unbindBaguettes) {
         rebind(baguetteFilter);

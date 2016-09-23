@@ -29,7 +29,10 @@
 
         name: 'baguettes',
         url: '/baguettes',
-        template: '<div class="ui-view"></div>',
+        templateUrl: '/app/domain/baguette/baguettes.html',
+
+        controller: 'BaguettesController',
+        controllerAs: 'vm',
 
         defaultChild: 'table',
 
@@ -42,15 +45,13 @@
             name: 'tiles',
             url: '/tiles',
             templateUrl: 'app/domain/baguette/baguetteTiles.html',
-            controller: 'BaguettesController',
-            controllerAs: 'vm',
             children: angular.copy(children)
           }, {
             name: 'table',
             url: '/table',
             templateUrl: 'app/domain/baguette/baguetteTable.html',
-            controller: 'BaguettesController',
-            controllerAs: 'vm',
+            // controller: 'BaguettesController',
+            // controllerAs: 'vm',
             children: angular.copy(children)
           }
         ]

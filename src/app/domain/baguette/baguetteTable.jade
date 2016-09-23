@@ -1,96 +1,40 @@
-div(layout='row')
+.ui-view(flex)
 
-  div.scrolling-contents(
-    ng-if='!vm.isRoot'
-    style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px;'
+  md-table-container(ng-if='vm.baguettes.length')
+    table(md-table md-row-select multiple ng-model='vm.selected')
+      thead(md-head md-order='filterBy')
+        th(md-column) Фото
+        th(md-column md-order-by='colour.name') Цвет
+        th(md-column md-order-by='material.name') Материал
+        th(md-column md-order-by='brand.name') Бренд
+        th(md-column md-order-by='borderWidth') Ширина (мм.)
+      tbody(md-body)
+        tr(
+          md-row
+          ng-repeat='bag in vm.baguettes ' +
+          '| orderBy: filterBy ' +
+          '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+          ' track by bag.id'
+          md-select='bag'
+          md-select-id='id'
+          ng-click='vm.editBaguette(bag, $event)'
+        )
+          td(md-cell)
+            img.image-thumbnail-table(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
+            img.image-thumbnail-table(ng-src='/images/question_mark.png' ng-if='!bag.images.length')
+          td(md-cell) {{bag.colour.name}}
+          td(md-cell) {{bag.material.name}}
+          td(md-cell) {{bag.brand.name}}
+          td(md-cell) {{bag.borderWidth}}
+
+
+  md-table-pagination.fixed-pagination(
+    md-limit='vm.pagination.query.limit',
+    md-label='{{vm.pagination.labels}}',
+    md-limit-options='vm.pagination.limitOptions',
+    md-page='vm.pagination.query.page',
+    md-total='{{vm.baguettes.length}}',
+    md-page-select='true && !vm.useMobile',
+    md-boundary-links='true && !vm.useMobile'
   )
-    //TODO After saving baguette refresh list of baguettes
-    md-list.custom-list(hide-xs)
-
-      md-list-item.md-item-header.md-whiteframe-z1(layout='row')
-        h3 Всего багетов: {{vm.baguettes.length}}
-        span(flex)
-        md-button.admin-button(ng-click='vm.backToList()' ng-hide='!vm.baguettes.length') Вернуться к списку
-
-      md-virtual-repeat-container(style='height: {{windowHeight - 143 }}px')
-        div.md-item-text.md-whiteframe-z1(
-          md-virtual-repeat='bag in vm.baguettes'
-          ng-class="{'active-baguette ': vm.currId == bag.id }"
-          ng-click='vm.changeBaguette(bag)'
-        )
-          | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
-
-  .ui-view(flex)
-    md-toolbar.md-table-toolbar.md-default
-      .md-toolbar-tools.md-whiteframe-1dp.fixed-toolbar
-        h2(style='width: 160px') Таблица багетов
-        div(style='display:inherit; margin-top: 3px')
-
-          i.material-icons.icon-button.icon-button-disabled(
-            ng-click="vm.changeView('baguettes.table')"
-            ng-class="{'icons-button-active': vm.currentState == '/table'}"
-          ) view_headline
-
-          span.forbid-marking(style='cursor:default') |
-
-          i.material-icons.icon-button.icon-button-disabled(
-            ng-click="vm.changeView('baguettes.tiles')"
-            ng-class="{'icons-button-active': vm.currentState == '/tiles'}"
-          ) view_comfy
-
-        span(flex)
-
-        md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
-        ng-click='vm.deleteBaguette(vm.selected, $event)'
-        ng-if='vm.selected.length'
-        )
-          i.material-icons delete
-
-        md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
-        ng-click='vm.resetCheckedBaguette()'
-        ng-if='vm.selected.length'
-        )
-          i.material-icons redo
-
-        md-button.md-fab.md-mini.md-icon-button.admin-button.pink-button-fab(
-        ng-click='vm.goToCreateBaguette()'
-        )
-          i.material-icons add circle
-    md-table-container(ng-if='vm.baguettes.length')
-      table(md-table md-row-select multiple ng-model='vm.selected')
-        thead(md-head md-order='filterBy')
-          th(md-column) Фото
-          th(md-column md-order-by='colour.name') Цвет
-          th(md-column md-order-by='material.name') Материал
-          th(md-column md-order-by='brand.name') Бренд
-          th(md-column md-order-by='borderWidth') Ширина (мм.)
-        tbody(md-body)
-          tr(
-            md-row
-            ng-repeat='bag in vm.baguettes ' +
-            '| orderBy: filterBy ' +
-            '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
-            ' track by bag.id'
-            md-select='bag'
-            md-select-id='id'
-            ng-click='vm.editBaguette(bag, $event)'
-          )
-            td(md-cell)
-              img.image-thumbnail-table(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
-              img.image-thumbnail-table(ng-src='/images/question_mark.png' ng-if='!bag.images.length')
-            td(md-cell) {{bag.colour.name}}
-            td(md-cell) {{bag.material.name}}
-            td(md-cell) {{bag.brand.name}}
-            td(md-cell) {{bag.borderWidth}}
-
-
-    md-table-pagination.fixed-pagination(
-      md-limit='vm.pagination.query.limit',
-      md-label='{{vm.pagination.labels}}',
-      md-limit-options='vm.pagination.limitOptions',
-      md-page='vm.pagination.query.page',
-      md-total='{{vm.baguettes.length}}',
-      md-page-select='true && !vm.useMobile',
-      md-boundary-links='true && !vm.useMobile'
-    )
 

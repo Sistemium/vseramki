@@ -1,14 +1,4 @@
-@media only screen and (max-width: 959px) and (min-width: 746px) and (orientation: landscape) {
-  md-grid-list {
-    top: 8px;
-  }
-}
-
-@media only screen and (max-width: 959px) and (min-width: 746px) and (orientation: landscape) {
-  md-table-container {
-    margin-top: 8px;
-  }
-}
+@import "../../styles/_vars";
 
 div > form > md-input-container {
   margin: 4px;
@@ -86,12 +76,12 @@ div > md-list > md-list-item.md-clickable:hover {
   cursor: default;
 }
 
-.scrolling-contents {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: scroll;
-  min-height: 400px;
-}
+//.scrolling-contents {
+//  display: inline-block;
+//  white-space: nowrap;
+//  overflow: scroll;
+//  //min-height: 400px;
+//}
 
 .fixed-elements {
   display: inline-block;
@@ -304,7 +294,7 @@ md-virtual-repeat-container {
 }
 
 .icons-button-active {
-  color: rgb(255, 64, 129) !important;
+  color: $primary-button-background-color !important;
 }
 
 .icon-button-disabled {
