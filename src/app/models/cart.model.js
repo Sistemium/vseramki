@@ -32,7 +32,7 @@
             useTotal = 0;
           }
 
-          return Math.round(100.0 * this.count * this.article.discountedPrice(useTotal)) / 100.0;
+          return this.article && this.count > 0 ? Math.round(100.0 * this.count * this.article.discountedPrice(useTotal)) / 100.0 : 0;
         }
       },
 
