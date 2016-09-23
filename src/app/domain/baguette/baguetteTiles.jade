@@ -23,16 +23,20 @@ style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
 
             md-card-content(align='center')
               p
-                span.bold Цвет:&nbsp
+                span.bold Цвет:
+                =' '
                 span {{bag.colour.name}}
               p
-                span.bold Материал:&nbsp
+                span.bold Материал:
+                =' '
                 span {{bag.material.name}}
               p
-                span.bold Бренд:&nbsp
+                span.bold Бренд:
+                =' '
                 span {{bag.brand.name}}
               p
-                span.bold Ширина:&nbsp
+                span.bold Ширина:
+                =' '
                 span {{bag.borderWidth}} мм.
 
             //md-card-actions.admin-button(layout='row', layout-align='center center')
