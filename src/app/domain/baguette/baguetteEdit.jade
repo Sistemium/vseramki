@@ -1,4 +1,8 @@
-.custom-margin
+.scroll-y(
+resize='baguetteEdit'
+style="height: {{ baguetteEdit.windowHeight - baguetteEdit.offsetTop - 2}}px;"
+)
+
   h2.md-margin.center-header(ng-if='vm.id') Редактирование багета
 
   div(layout-align='center center' layout='column')
