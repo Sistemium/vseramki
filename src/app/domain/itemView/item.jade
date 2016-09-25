@@ -32,7 +32,7 @@
             .property
               .property-label Количество:
               .property-value.no-margin(layout-align='start center' layout='row')
-                md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
+                md-button.micro-fab(ng-click='vm.minusOne(vm.article)') -
                 md-input-container
                   input.item-count-input(
                   aria-label="Количество"
@@ -44,7 +44,7 @@
                   min='1'
                   step='1'
                   )
-                md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
+                md-button.micro-fab(ng-click='vm.plusOne(vm.article)') +
             .property
               .property-label Общая сумма заказа:
               //.property-value {{ vm.article.inCart.cost(vm.cartSubTotal) || 0 | number: 2 }} ₽

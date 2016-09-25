@@ -102,7 +102,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
                 p.name-style Заказано:
 
                 div(layout='row' layout-align='center center')
-                  md-button.icon-button-catalogue(ng-click='vm.minusOne(article)') -
+                  md-button.micro-fab(ng-click='vm.minusOne(article)') -
 
                   md-input-container
                     input.custom-input(
@@ -117,7 +117,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
                     step='1'
                     )
 
-                  md-button.icon-button-catalogue(ng-click='vm.plusOne(article)') +
+                  md-button.micro-fab(ng-click='vm.plusOne(article)') +
 
             md-card-actions(flex ng-if='!article.inCart')
               md-button.md-fab.md-mini.md-icon-button(

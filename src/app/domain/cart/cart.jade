@@ -39,9 +39,9 @@
           td.clickable(md-cell ng-click='vm.itemClick(item)') {{item.article.name}}
           td(md-cell)
             div.number-picker
-              md-button.icon-button-catalogue(ng-click='vm.minusOne(item)') -
+              md-button.micro-fab(ng-click='vm.minusOne(item)') -
               input.custom-input(aria-label="Количество" ng-model="item.count" type="number" ng-change="vm.saveItem(item)" min='1' step='1')
-              md-button.icon-button-catalogue(ng-click='vm.plusOne(item)') +
+              md-button.micro-fab(ng-click='vm.plusOne(item)') +
           td(md-cell) {{ item.article.highPrice | number: 2 }}&nbsp;₽
           td(md-cell) {{ (1 - item.article.discountedPrice(vm.cartSubTotal) / item.article.highPrice) * 100 | number: 1}}%
           td(md-cell) {{ item.article.discountedPrice(vm.cartSubTotal) | number: 2}}&nbsp;₽

@@ -1,7 +1,7 @@
 @import "_vars.scss";
 
 .md-button.md-fab:not([disabled]):hover {
-  background-color: rgb(213, 0, 0) !important;
+  background-color: $fab-button-hover-background-color !important;
 }
 
 .with-badge {
@@ -80,7 +80,7 @@
   padding: 3px;
 }
 
-.icon-button-catalogue {
+.micro-fab {
   border-radius: 50%;
   width: 25px;
   min-width: 25px;
