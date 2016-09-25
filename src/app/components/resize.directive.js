@@ -9,16 +9,16 @@
       var property = attrs.resize ? (scope[attrs.resize] = {}) : scope;
 
       function getWindowDimensions() {
+        var offset = $uibPosition.offset(element);
         return {
           windowHeight: $window.innerHeight,
-          windowWidth: $window.innerWidth
+          windowWidth: $window.innerWidth,
+          offsetTop: offset ? offset.top : 0
         };
       }
 
       function setValues (newValue) {
-        var offset = $uibPosition.offset(element);
         _.assign(property, newValue);
-        property.offsetTop = offset ? offset.top : 0;
       }
 
       var un = scope.$watch(getWindowDimensions, setValues, true);
