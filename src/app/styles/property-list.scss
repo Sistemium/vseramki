@@ -20,25 +20,35 @@
     line-height: 38px;
   }
 
+  .property-list-container {
+    .property {
+      border-top: solid 1px silver;
+    }
+  }
+
+}
+
+.property-list, .property-list-container {
+
   .property {
 
-    border-top: solid 1px silver;
     display: flex;
 
     & > * {
-      margin: 15px 0;
+      margin: 10px 0;
       font-size: 14px;
     }
 
     .property-label {
-      flex: 4;
-      padding-right: 15px;
+      flex: 1;
+      display: inline-block;
+      margin-right: 10px;
       text-align: right;
       color: gray;
     }
 
     .property-value {
-      flex: 5;
+      flex: 1;
       margin: auto;
     }
 
@@ -50,6 +60,15 @@
     }
     .property-value {
       flex: 4;
+    }
+  }
+
+  &.flex-4-5 .property {
+    .property-label {
+      flex: 4;
+    }
+    .property-value {
+      flex: 5;
     }
   }
 

@@ -21,23 +21,20 @@ style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
               alt='Baguette {{$index}}'
               )
 
-            md-card-content(align='center')
-              p
-                span.gray Материал:
-                =' '
-                span {{bag.material.name}}
-              p
-                span.gray Бренд:
-                =' '
-                span {{bag.brand.name}}
-              p
-                span.gray Цвет:
-                =' '
-                span {{bag.colour.name}}
-              p
-                span.gray Ширина:
-                =' '
-                span {{bag.borderWidth}} мм.
+            md-card-content
+              .property-list-container
+                .property
+                  .property-label Материал:
+                  .property-value {{bag.material.name}}
+                .property
+                  .property-label Бренд:
+                  .property-value {{bag.brand.name}}
+                .property
+                  .property-label Цвет:
+                  .property-value {{bag.colour.name}}
+                .property
+                  .property-label Ширина:
+                  .property-value {{bag.borderWidth}} мм.
 
             //md-card-actions.admin-button(layout='row', layout-align='center center')
               md-button(ng-click='vm.editBaguette(bag)') Редактировать
