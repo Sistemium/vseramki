@@ -80,7 +80,7 @@
             .property-value {{vm.article.material.name}}
           .property
             .property-label Вес:
-            .property-value {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
+            .property-value(ng-class='{gray: !vm.article.pieceWeight}') {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
           .property
             .property-label Штук в коробке:
             .property-value {{vm.article.packageRel}}
