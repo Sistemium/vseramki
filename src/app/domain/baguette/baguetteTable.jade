@@ -20,8 +20,7 @@
           ng-click='vm.editBaguette(bag, $event)'
         )
           td(md-cell)
-            img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc}}' ng-if='bag.images.length')
-            img.thumbnail(ng-src='/images/question_mark.png' ng-if='!bag.images.length')
+            img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}')
           td(md-cell) {{bag.colour.name}}
           td(md-cell) {{bag.material.name}}
           td(md-cell) {{bag.brand.name}}
