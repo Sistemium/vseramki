@@ -1,9 +1,11 @@
 md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
   .md-toolbar-tools(ng-class='{"no-padding": vm.breakpoint}')
-    a(ui-sref='home')
+    a(ui-sref='home' style='padding-top: 4px;')
       img.top-logo(ng-src='{{windowWidth < 300 ? "images/logo-230x150.png" : "images/top-logo.jpg"}}')
 
-    span(flex)
+    .margin-left(flex)
+      small(ng-show='windowWidth > 850')
+        a(href='tel:+74957668887') +7(495)766-888-7
 
     md-button.tool-button(
     ng-repeat='btn in vm.buttons track by btn.sref'
