@@ -77,22 +77,9 @@
 
         setPrices();
 
-        Colour.find(vm.article.colourId).then(function (colour) {
-          vm.colour = colour;
-        });
-
-        Material.find(vm.article.materialId).then(function (material) {
-          vm.material = material;
-        });
-
-        FrameSize.find(vm.article.frameSizeId).then(function (size) {
-          vm.size = size;
-        });
-
         ArticleImage.findAll(stateFilter).then(function () {
 
           ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', function (a, b) {
-
             vm.articleImages = b;
             vm.images = _.union(vm.baguetteImages, vm.articleImages);
           });

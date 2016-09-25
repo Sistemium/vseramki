@@ -68,13 +68,16 @@
         .property-list-container
           .property
             .property-label Размер:
-            .property-value {{vm.size.name}}
+            .property-value {{vm.article.frameSize.name}}
           .property
-            .property-label Материал:
-            .property-value {{vm.material.name}}
+            .property-label Бренд:
+            .property-value {{vm.article.brand.name}}
           .property
             .property-label Цвет:
-            .property-value {{vm.colour.name}}
+            .property-value {{vm.article.colour.name}}
+          .property
+            .property-label Материал:
+            .property-value {{vm.article.material.name}}
           .property
             .property-label Вес:
             .property-value {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
