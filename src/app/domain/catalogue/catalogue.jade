@@ -84,7 +84,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
           md-card(layout='column' layout-align='center center')
             md-card-header
               a(href ui-sref='catalogue.item({id: article.id})')
-                img.image-thumbnail(ng-src='{{article.activePhoto()}}')
+                img.thumbnail(ng-src='{{article.activePhoto()}}')
             md-card-title.md-margin
               md-card-title-text
                 .md-subhead.center {{ article.name }}
