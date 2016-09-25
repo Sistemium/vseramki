@@ -31,10 +31,9 @@ md-toolbar.md-table-toolbar.md-default.toolbar-height(ng-if='vm.isRoot')
   layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-xs')"
   ng-if='!vm.isRoot'
   )
-    md-list.no-padding
-      md-list-item.md-item-header(layout='column' layout-align='center center')
-        h3.header-margin Всего багетов: {{vm.baguettes.length}}
-        md-button.admin-button(ng-click='vm.backToList()') Вернуться к списку
+
+    p.md-title(layout-margin)
+      md-button.md-raised.no-margin(ng-click='vm.backToList()') Показать список
 
     .no-padding(
     layout='column'
@@ -48,7 +47,7 @@ md-toolbar.md-table-toolbar.md-default.toolbar-height(ng-if='vm.isRoot')
         ng-class="{'active-baguette ': vm.currId == bag.id }"
         ng-click='vm.changeBaguette(bag)'
         )
-          | {{bag.material.name}} "{{bag.brand.name}}" {{bag.colour.name}}/{{bag.borderWidth}}мм.
+          span {{bag.name}}
 
       md-button.admin-button.no-padding(
       ng-click="vm.goToCreateBaguette('^')"
