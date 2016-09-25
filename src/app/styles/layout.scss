@@ -51,3 +51,18 @@
 .text-right {
   text-align: right;
 }
+
+.bold {
+  font-weight: bold;
+}
+
+fieldset {
+  padding: 0
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  background: white;
+  width: 100%;
+}

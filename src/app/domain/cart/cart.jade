@@ -50,7 +50,7 @@
             md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
               i.material-icons.clear-icon-size clear
 
-  .footer(ng-show='vm.data.length' layout='row' layout-align='center center')
+  .footer.fixed-bottom(ng-show='vm.data.length' layout='row' layout-align='center center')
     md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
     ng-if='vm.data.length'
     ng-click='vm.clearCart($event)'

@@ -26,9 +26,6 @@ figure {
   overflow: hidden;
 }
 
-fieldset {
-  padding: 0
-}
 
 .md-padding > md-table-container > table.md-table th.md-column {
   font-size: 16px;
@@ -118,9 +115,6 @@ md-list.custom-list {
   min-width: 400px;
 }
 
-.bold {
-  font-weight: bold;
-}
 
 .styles-for-mobile-button {
   position: fixed;
@@ -313,13 +307,6 @@ md-virtual-repeat-container {
     font-size: 12px;
   }
 
-}
-
-.fixed-pagination {
-  position: fixed;
-  bottom: 0;
-  background: white;
-  width: 100%;
 }
 
 .alert-div {
