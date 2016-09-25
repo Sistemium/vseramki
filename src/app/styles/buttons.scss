@@ -4,6 +4,15 @@
   background-color: $fab-button-hover-background-color !important;
 }
 
+button span.active {
+  font-weight: 900;
+  color: $primary-button-background-color;
+}
+
+button .label {
+  color: gray;
+}
+
 .with-badge {
 
   position: relative;

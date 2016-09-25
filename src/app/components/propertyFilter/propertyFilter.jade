@@ -9,10 +9,18 @@ md-menu(md-offset='20 0')
   aria-label='{{vm.propertyName}} menu'
   ng-click='$mdOpenMenu($event)'
   )
-    span {{vm.propertyLabel}}:
+    span.label {{vm.propertyLabel}}:
     = ' '
-    span(ng-if='vm.options.length > 1') {{ vm.currentOption.name || 'Любой'}} (из {{ vm.options.length }})
-    span(ng-if='vm.options.length === 1') только "{{ vm.options[0].name }}"
+    span.label(ng-if='vm.options.length > 1')
+      span.active {{vm.currentOption.name}}
+      span(ng-if='vm.currentOption.name') &nbsp;(из
+      span(ng-if='!vm.currentOption.name') Выбор из
+      = ' '
+      span {{ vm.options.length }}
+      span(ng-if='vm.currentOption.name') )
+    span(ng-if='vm.options.length === 1') только
+      = ' '
+      span.active "{{ vm.options[0].name }}"
   md-menu-content(width='2')
     md-menu-item(ng-repeat='o in vm.options | orderBy:"name" track by o.id')
       md-button(ng-click='vm.optionClick(o)')
