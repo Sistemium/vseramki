@@ -5,8 +5,12 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
   md-sidenav.md-sidenav-right.md-whiteframe-1dp(
   layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-sm')"
   )
-    p.md-title Фильтры
-    div(layout='column' layout-align='start start' style='height: 230px')
+    p.md-title
+      span.no-button(ng-if='!vm.filterLength') Фильтр
+      md-button.md-raised.no-margin(
+      aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
+      ) Сбросить фильтры
+    div.no-padding(layout='column' layout-align='start start')
 
       property-filter.custom-padding(
       property-name='frameSize'
@@ -43,10 +47,8 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
       set-option-fn='vm.filterOptionClick',
       clear-fn='vm.delCurrFilter'
       )
-      div(layout-align='center center' layout='column' style='width: 100%')
-        md-button.md-raised.custom-button(
-        aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
-        ) Сбросить фильтры
+      //div(layout-align='center center' layout='column' style='width: 100%')
+
 
     md-divider(ng-if='!vm.isRootState' style='padding: 2px')
 
