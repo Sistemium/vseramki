@@ -1,5 +1,15 @@
 @import "../../styles/_vars";
 
+.baguettes {
+
+  md-card img.thumbnail {
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+  }
+
+}
+
 div > form > md-input-container {
   margin: 4px;
 }
