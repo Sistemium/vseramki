@@ -16,7 +16,7 @@ style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
           md-card(layout='column' layout-align='center center')
 
             a(href ng-click='vm.editBaguette(bag)')
-              img.md-card-image.image-size(
+              img.thumbnail(
               ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}'
               alt='Baguette {{$index}}'
               )
