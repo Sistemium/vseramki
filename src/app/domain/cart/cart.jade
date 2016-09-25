@@ -1,8 +1,13 @@
-div.cart(layout-align="center center" layout="column")
+.cart
 
-  div(ng-if='!vm.data.length' flex='')
-    div(style='height: {{windowHeight - (windowHeight / 2) - 56 }}px;' flex='')
-    div.emptyCart.md-whiteframe-1dp
+  div(
+  ng-if='!vm.data.length'
+  layout='column'
+  layout-align='space-around center'
+  resize='emptyCart'
+  style='height: {{emptyCart.windowHeight - emptyCart.offsetTop}}px;'
+  )
+    .emptyCart.md-whiteframe-1dp(ng-if='!vm.data.length')
       div(style='text-align: center') Корзина пуста
       div
         md-button.md-raised.pink-button(ui-sref='catalogue')
