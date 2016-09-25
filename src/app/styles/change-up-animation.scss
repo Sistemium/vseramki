@@ -9,7 +9,12 @@ $change-up-duration: 1.5s;
   }
 }
 
-.change-up-add,.change-up-remove {
+.change-up-add {
+  transition: all $change-up-duration / 3;
+  -webkit-transition: all $change-up-duration / 3 ease-in-out;
+}
+
+.change-up-remove {
   transition: all $change-up-duration;
   -webkit-transition: all $change-up-duration ease-in-out;
 }
