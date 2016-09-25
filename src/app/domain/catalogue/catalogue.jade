@@ -50,12 +50,12 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
       //div(layout-align='center center' layout='column' style='width: 100%')
 
 
-    md-divider(ng-if='!vm.isRootState' style='margin-top: 8px')
+    md-divider(ng-hide='vm.isRootState' style='margin-top: 8px')
 
     .no-padding(
     layout='column'
     resize='articlesList'
-    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 10}}px;'
+    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 6}}px;'
     )
       md-virtual-repeat-container(flex ng-if='!vm.isRootState')
         .md-whiteframe-1dp.items(
@@ -67,7 +67,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
         )
           span {{frame.name}}
 
-      md-divider(flex ng-if='vm.isRootState')
+      .no-margin(flex ng-show='vm.isRootState')
 
       md-button.admin-button.no-padding(
       ng-click="vm.goToCreateFrame()"
