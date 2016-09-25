@@ -89,6 +89,10 @@
   margin: 0;
   line-height: 25px;
   min-height: 25px;
+
+  &:active, &:hover {
+    background-color: $fab-button-hover-background-color !important;
+  }
 }
 
 .md-fab.md-mini.md-icon-button.active {
