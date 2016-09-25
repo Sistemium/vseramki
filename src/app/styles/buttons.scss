@@ -10,7 +10,13 @@ button span.active {
 }
 
 button .label {
-  color: gray;
+  color: $gray;
+}
+
+.md-title .no-button {
+  display: inline-block;
+  min-height: 37px;
+  line-height: 1.8;
 }
 
 .with-badge {
