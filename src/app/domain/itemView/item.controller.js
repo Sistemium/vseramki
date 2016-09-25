@@ -40,7 +40,7 @@
 
       cart.count--;
 
-      if (!cart.count) {
+      if (cart.count <= 0) {
         Cart.destroy(cart);
       } else {
         onCartChange(cart);
@@ -194,6 +194,11 @@
               articleId: id
             }));
         }),
+
+      clearCart: function () {
+        vm.article.inCart.count = 0;
+        minusOne(vm.article);
+      },
 
       editFrame: function (frameId) {
         $state.go('catalogue.item.edit', {id: frameId});
