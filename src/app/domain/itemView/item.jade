@@ -23,13 +23,13 @@
         )
           | {{'Добавить к заказу'}}
 
-        div.order-block(ng-if='vm.article.inCart')
+        #order-block(ng-if='vm.article.inCart')
           .property-list.md-whiteframe-1dp.flex-5-4
             h3.header
               md-button.md-raised.md-mini.custom-filter-reset-button(
               ng-click='vm.clearCart()'
               )
-                i.custom-material-icons clear
+                i.material-icon clear
               span Заказ
             .property-list-container
               .property
