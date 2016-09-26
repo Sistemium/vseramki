@@ -53,6 +53,17 @@
       }
     }
 
+    function refreshName () {
+
+      var baguette = vm.frame.baguette;
+
+      vm.frame.name = !baguette ? null :
+        `Рамкa ${baguette.material.name} "${baguette.brand.name}" ${baguette.colour.name} ` +
+        `${_.get(vm.frame, 'frameSize.name') || ''}` +
+        `${_.get(vm.frame, 'packageRel') && '/' + _.get(vm.frame, 'packageRel') || ''}`
+      ;
+    }
+
     $scope.$on('$destroy', cancelChanges);
 
     angular.extend(vm, {
@@ -61,18 +72,6 @@
       saved: false,
       hasChanges,
       cancelChanges,
-
-      refreshName: function () {
-
-        var baguette = vm.frame.baguette;
-
-        vm.frame.name = !baguette ? null : 'Рамкa ' +
-          baguette.material.name + ' ' + '\"' + baguette.brand.name + '\"' + ' ' +
-          baguette.colour.name + ' ' +
-          (_.get(vm.frame, 'frameSize.name') || '') +
-          ( _.get(vm.frame, 'packageRel') ? '/' + _.get(vm.frame, 'packageRel') : '')
-        ;
-      },
 
       clearForm: function () {
         vm.frame = Article.createInstance();
@@ -137,6 +136,7 @@
 
     $scope.$watch('vm.frame', function () {
       checkParams();
+      refreshName();
     }, true);
 
   }

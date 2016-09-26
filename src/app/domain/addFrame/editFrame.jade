@@ -17,7 +17,6 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       model-name='Baguette'
       options='vm.baguettes'
       not-addable='true'
-      on-close='vm.refreshName()'
       )
 
       searchable-select(
@@ -26,7 +25,6 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       model-name='FrameSize'
       options='vm.frameSizes'
       not-addable='false'
-      on-close='vm.refreshName()'
       )
 
       md-input-container
