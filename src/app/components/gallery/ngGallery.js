@@ -52,7 +52,8 @@
         images: '=',
         thumbsNum: '@',
         hideOverflow: '=',
-        imageHovered: '='
+        imageHovered: '=',
+        isDeletable: '='
       },
 
       controller: [
@@ -71,7 +72,6 @@
       link: function (scope, element, attrs) {
 
         setScopeValues(scope, attrs);
-
 
         if (scope.thumbsNum >= 11) {
           scope.thumbsNum = 11;

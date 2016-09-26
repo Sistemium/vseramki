@@ -2,6 +2,14 @@
   width: 100%;
   height: 100%;
   // TODO: fix layout in Safari
+
+  .window-controls i {
+    color: white;
+    margin-top: 8px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
 }
 
 .space-children-em > ng-gallery > .ng-gallery {

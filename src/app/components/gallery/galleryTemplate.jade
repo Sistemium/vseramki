@@ -17,11 +17,11 @@ div.ng-overlay(ng-if='opened' layout='row' layout-align='center center')
 
   div.main-div-settings(flex='80' layout='column' layout-align='space-between center' flex-xs='100')
 
-    div.main-div-settings(flex='10' style='width: 100%' layout='row' show-xs hide)
+    .main-div-settings.window-controls(flex='10' style='width: 100%' layout='row' show-xs hide)
       p.md-margin(style='color: white;') {{index + 1}}/{{images.length}}
-      span(flex='')
-      i.material-icons(style='color: white; margin-top: 8px; margin-right: 5px; cursor: pointer' ng-click='showAlert()') delete
-      i.material-icons(style='color: white; margin-top: 8px; margin-right: 3px; cursor: pointer' ng-click='closeGallery()') close
+      span(flex)
+      i.material-icons(ng-click='showAlert()' ng-if='isDeletable') delete
+      i.material-icons(ng-click='closeGallery()') close
 
     // Photo div
     div.main-div-settings(
@@ -62,5 +62,5 @@ div.ng-overlay(ng-if='opened' layout='row' layout-align='center center')
   div.main-div-settings.min-settings(flex layout='row' layout-align='end center' hide-xs style='min-width: 80px !important')
 
     i.material-icons.close-icon(ng-click='closeGallery()') close
-    i.material-icons.delete-icon(ng-click='showAlert($index)') delete
+    i.material-icons.delete-icon(ng-if='isDeletable' ng-click='showAlert($index)') delete
     div(ng-click='nextImage()' style='margin: 0px').material-icons.custom-chevron chevron_right
