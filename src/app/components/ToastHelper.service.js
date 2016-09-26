@@ -13,10 +13,6 @@
         theme = 'success-toast';
       } else {
         theme = 'fail-toast';
-        vm.dupMessage = '';
-        $timeout(function () {
-          vm.dupMessage = resStr;
-        }, 2500);
       }
 
       $mdToast.show(
