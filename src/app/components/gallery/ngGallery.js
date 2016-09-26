@@ -51,7 +51,8 @@
       scope: {
         images: '=',
         thumbsNum: '@',
-        hideOverflow: '='
+        hideOverflow: '=',
+        imageHovered: '='
       },
 
       controller: [
@@ -153,6 +154,12 @@
           }
           showImage(scope.index);
         };
+
+        scope.setHovered = function (image) {
+          if (scope.imageHovered) {
+            scope.imageHovered = image
+          }
+        }
 
         scope.openGallery = function (i) {
 

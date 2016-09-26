@@ -1,7 +1,12 @@
 // Images thumbnail
 div(class='{{ baseClass }}', layout='row', layout-align='center center')
   div(ng-repeat='i in images')
-    img.thumb-image-fit-div(ng-src='{{ i.thumbnailSrc }}', class='{{ thumbClass }}', ng-click='openGallery($index)', alt='Image {{ $index + 1 }}')
+    a(href ng-click='openGallery($index)' ng-mouseover='setHovered(i)')
+      img.thumb-image-fit-div(
+      ng-src='{{ i.thumbnailSrc }}'
+      class='{{ thumbClass }}'
+      alt='Image {{ $index + 1 }}'
+      )
 
 
 // On open image
