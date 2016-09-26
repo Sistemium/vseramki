@@ -24,7 +24,12 @@
             img(ng-src='{{vm.currentImage.smallSrc}}')
             span(flex)
 
-          ng-gallery.left-container2.gallery(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
+          ng-gallery(
+          images='vm.images'
+          image-hovered='vm.currentImage'
+          thumbs-num='5'
+          layout='row' layout-align='center center'
+          )
 
         md-button.md-raised.action-button.pink-button(
         ng-click='vm.addToCart(vm.article)'
