@@ -83,14 +83,14 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 
       input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
 
-  .text-center(layout='row' ng-if='vm.hasChanges()')
-    md-button.md-raised(
-    ng-click='vm.cancelChanges()'
-    ) Отменить изменения
+    .text-center(layout='row' ng-if='vm.hasChanges()')
+      md-button.md-raised(
+      ng-click='vm.cancelChanges()'
+      ) Отменить изменения
 
-    md-button.md-raised(
-    ng-disabled='frameAttrsForm.$invalid' ng-click='vm.saveFrame()'
-    ) Сохранить изменения
+      md-button.md-raised(
+      ng-disabled='frameAttrsForm.$invalid' ng-click='vm.saveFrame()'
+      ) Сохранить
 
-  .alert.margin-top.md-whiteframe-1dp(ng-if='vm.dupMessage')
-    span {{vm.dupMessage}}
+    .alert.margin-top.md-whiteframe-1dp(ng-if='vm.dupMessage')
+      span {{vm.dupMessage}}
