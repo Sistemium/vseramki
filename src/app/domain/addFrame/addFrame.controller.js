@@ -20,9 +20,6 @@
 
       Article.find(vm.id).then(function (frame) {
         vm.frame = frame;
-        Baguette.find(vm.frame.baguetteId).then(function (data) {
-          vm.selectedBaguette = data;
-        });
       });
 
     }
@@ -51,7 +48,8 @@
     function cancelChanges() {
       if (hasChanges()) {
         unique = reverted = true;
-        return Article.revert(vm.frame);
+        vm.dupMessage = false;
+        return Article.revert(vm.id);
       }
     }
 
@@ -65,25 +63,20 @@
       cancelChanges,
 
       refreshName: function () {
-        vm.frame.name =
-          'Рамкa ' +
-          vm.selectedBaguette.material.name + ' ' + '\"' + vm.selectedBaguette.brand.name + '\"' + ' ' +
-          vm.selectedBaguette.colour.name + ' ' +
-          (_.get(vm.frame, 'frameSize.name') || '') + ( _.get(vm.frame, 'packageRel') ? '/' + _.get(vm.frame, 'packageRel') : '');
-      },
 
-      useClickedBaguette: function () {
-        Baguette.find(vm.frame.baguetteId).then(function (data) {
-          vm.selectedBaguette = data;
-          vm.refreshName();
-        });
+        var baguette = vm.frame.baguette;
 
+        vm.frame.name = !baguette ? null : 'Рамкa ' +
+          baguette.material.name + ' ' + '\"' + baguette.brand.name + '\"' + ' ' +
+          baguette.colour.name + ' ' +
+          (_.get(vm.frame, 'frameSize.name') || '') +
+          ( _.get(vm.frame, 'packageRel') ? '/' + _.get(vm.frame, 'packageRel') : '')
+        ;
       },
 
       clearForm: function () {
-        vm.selectedBaguette = '';
         vm.frame = Article.createInstance();
-        vm.dupMessage = '';
+        vm.dupMessage = false;
         checkParams();
       },
 
@@ -96,10 +89,10 @@
           Article.findAll(params).then(function (data) {
 
             if (data.length) {
-              ToastHelper.showToast('Такая рамка уже существует', false, vm);
+              vm.dupMessage = 'Такая рамка уже существует';
               unique = false;
             } else {
-              vm.dupMessage = '';
+              vm.dupMessage = false;
               unique = true;
             }
 
@@ -134,7 +127,7 @@
 
     $scope.$watchGroup(['vm.frame.frameSizeId', 'vm.frame.baguetteId'], function (nv, ov) {
 
-      if ((nv != ov) && hasChanges() && !reverted) {
+      if ((nv != ov) && (hasChanges() || !vm.id) && !reverted) {
         vm.checkAttrs();
       } else {
         reverted = false;
@@ -143,12 +136,7 @@
     });
 
     $scope.$watch('vm.frame', function () {
-
       checkParams();
-
-      if (vm.selectedBaguette) {
-        vm.refreshName();
-      }
     }, true);
 
   }
