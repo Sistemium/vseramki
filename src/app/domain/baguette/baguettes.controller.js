@@ -157,8 +157,10 @@
       if (/\.edit$/.test(toState.name)) {
         Baguette.find(toParams.id)
           .then(function (item) {
-            vm.currId = item.id;
+            vm.currentItem = item;
           });
+      } else {
+        vm.currentItem = false;
       }
 
     });
