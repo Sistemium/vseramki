@@ -2,7 +2,8 @@ section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
 
 md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
-  md-sidenav.md-sidenav-right.md-whiteframe-1dp(
+
+  md-sidenav.md-sidenav-right.md-whiteframe-1dp.margin-top-bottom(
   layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-sm')"
   )
     p.md-title.no-margin
@@ -10,7 +11,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
       md-button.md-raised.no-margin(
       aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
       ) Сбросить фильтры
-    div.no-padding(layout='column' layout-align='start start')
+    .no-padding(layout='column' layout-align='start start')
 
       property-filter.custom-padding(
       property-name='frameSize'
@@ -55,7 +56,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
     .no-padding(
     layout='column'
     resize='articlesList'
-    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 10}}px;'
+    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px;'
     )
       md-virtual-repeat-container(flex ng-if='!vm.isRootState')
         .md-whiteframe-1dp.item(
@@ -69,7 +70,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
       md-button.admin-button.no-padding(
       ng-click="vm.goToCreateFrame()"
-      ng-show='vm.isAdmin && !vm.disableAddFrame'
+      ng-if='vm.isAdmin && vm.isRootState'
       ) Добавить рамку
 
   .ui-view(flex ng-if='!vm.isRootState')

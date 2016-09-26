@@ -106,9 +106,11 @@
       span(flex)
 
       .fixed-bottom-right.admin-buttons(layout='column' ng-show='vm.isAdmin')
-        md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.editFrame(vm.article.id)')
+        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.editFrame()')
           i.material-icons edit
-        md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.deleteFrame(vm.article.id, $event)')
+        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.addFrame()')
+          i.material-icons add
+        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.deleteFrame($event)')
           i.material-icons delete
-        md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.showImageDialog($event, vm.article.id)')
+        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.showImageDialog($event)')
           i.material-icons add_a_photo

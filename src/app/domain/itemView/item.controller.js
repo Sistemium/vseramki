@@ -171,10 +171,10 @@
       maxThreshold: Article.maxThreshold(),
 
       showImageDialog: ImageHelper.mdDialogHelper(
-        function (imsImg, id) {
+        function (imsImg) {
           ArticleImage.create(
             angular.extend(imsImg, {
-              articleId: id
+              articleId: vm.article.id
             }));
         }),
 
@@ -183,11 +183,13 @@
         minusOne(vm.article);
       },
 
-      editFrame: function (frameId) {
-        $state.go('catalogue.item.edit', {id: frameId});
+      editFrame: function () {
+        $state.go('catalogue.item.edit', {id: vm.article.id});
       },
 
-      deleteFrame: function (frameId, $event) {
+      deleteFrame: function ($event) {
+
+        var frameId = vm.article.id;
 
         var promise = AlertHelper.showConfirm($event);
 
