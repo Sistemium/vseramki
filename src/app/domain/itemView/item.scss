@@ -1,22 +1,3 @@
-.border {
-  border: 1px solid black;
-}
-
-.name-head {
-  text-shadow: 0 0 7px rgba(159, 159, 159, 0.75);
-  color: #000000;
-  font-size: 30px;
-  margin: 20px;
-  padding-top: 10px;
-  text-align: center;
-}
-
-
-.left-container2 {
-  width: 300px;
-  margin-bottom: 7px;
-}
-
 .main-photo {
   max-width: 300px;
   max-height: 360px;
@@ -25,13 +6,6 @@
   object-fit: contain;
 }
 
-.borders {
-  border: 5px solid black;
-}
-
-.price {
-  margin-bottom: 20px;
-}
 
 md-backdrop {
   overflow: hidden;
@@ -45,33 +19,4 @@ md-backdrop {
 
 md-backdrop.md-opaque {
   opacity: .70;
-}
-
-.item-closed {
-  table.md-table td.md-cell, table.md-table th.md-column {
-    text-align: left;
-  }
-
-  md-input-container input {
-    width: 20px;
-    text-align: center;
-  }
-
-  .td-width {
-    width: 210px !important
-  }
-
-  .left-nav-photo {
-    min-width: 300px;
-  }
-
-  .action-button {
-    width: 300px;
-  }
-
-  .item-count-input {
-    min-width: 28px;
-  }
-
-
 }
