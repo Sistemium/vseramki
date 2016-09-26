@@ -62,20 +62,10 @@ table.md-table td.md-cell, table.md-table th.md-column {
   margin: 0;
 }
 
-.custom-margin {
-  margin: 0 4px;
-}
 
 div > md-list > md-list-item.md-clickable:hover {
   cursor: default;
 }
-
-//.scrolling-contents {
-//  display: inline-block;
-//  white-space: nowrap;
-//  overflow: scroll;
-//  //min-height: 400px;
-//}
 
 .fixed-elements {
   display: inline-block;
@@ -140,17 +130,8 @@ md-toolbar > .fixed-toolbar {
   height: 56px !important;
 }
 
-.center-header {
-  text-align: center;
-  padding-bottom: 10px;
-}
-
 .scrollable-list {
   overflow: scroll;
-}
-
-.h3-no-margin {
-  margin: 5px 0;
 }
 
 .gallery-wrapper {
@@ -159,9 +140,6 @@ md-toolbar > .fixed-toolbar {
   overflow: scroll;
 }
 
-.pink-top {
-  top: 5px;
-}
 
 .search:hover {
   color: #ff4081;
@@ -289,20 +267,6 @@ md-virtual-repeat-container {
   color: rgba(0, 0, 0, 0.12);
 }
 
-.component-container {
-
-  md-select {
-    width: 173px;
-    margin-top: 0;
-    margin-bottom: 15px;
-  }
-
-  .custom-label {
-    color: rgba(0, 0, 0, 0.54);
-    font-size: 12px;
-  }
-
-}
 
 div.alert {
   text-align: center;
