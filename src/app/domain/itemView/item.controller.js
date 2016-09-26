@@ -206,7 +206,9 @@
           }
         });
 
-      }
+      },
+
+      previewClick: () => $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
 
     }, stateFilter);
 

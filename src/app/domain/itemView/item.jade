@@ -21,12 +21,13 @@
           layout-align='space-between center'
           )
             span(flex)
-            img(ng-src='{{vm.currentImage.smallSrc}}')
+            img.preview(ng-src='{{vm.currentImage.smallSrc}}' ng-click='vm.previewClick()')
             span(flex)
 
           ng-gallery(
           images='vm.images'
           image-hovered='vm.currentImage'
+          is-deletable='vm.isAdmin'
           thumbs-num='5'
           layout='row' layout-align='center center'
           )
