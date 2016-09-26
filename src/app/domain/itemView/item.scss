@@ -13,8 +13,23 @@ md-backdrop.md-opaque {
 }
 
 
-.main-photo .ng-gallery {
-  margin-top: 10px;
+.main-photo {
+
+  max-width: 300px;
+  min-width: 300px;
+
+  min-height: 390px;
+  max-height: 390px;
+
+  img.preview {
+    max-width: 260px;
+    max-height: 320px;
+    cursor: zoom-in;
+  }
+
+  .ng-gallery {
+    margin-top: 10px;
+  }
 }
 
 .fixed-bottom-right.admin-buttons > * {
