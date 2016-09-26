@@ -6,16 +6,25 @@
 
       span(flex)
 
-      .left-nav-photo.space-children-em(
+      .space-children-em(
       layout='column'
       layout-align='top center'
       ng-if='vm.isRootState'
       )
-        a.left-container(
-        layout="row"
-        layout-align="center center"
+        .main-photo.md-whiteframe-1dp.md-padding(
+        layout='column'
+        layout-align='space-between center'
         )
-          img.main-photo.md-whiteframe-1dp.md-padding(ng-src='{{vm.images[0].smallSrc}}')
+          .text-center(
+          flex
+          layout='column'
+          layout-align='space-between center'
+          )
+            span(flex)
+            img(ng-src='{{vm.images[0].smallSrc}}')
+            span(flex)
+
+          ng-gallery.left-container2.gallery(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
 
         md-button.md-raised.action-button.pink-button(
         ng-click='vm.addToCart(vm.article)'
@@ -56,7 +65,6 @@
                 .property-label Итого со скидкой:
                 .property-value {{ vm.cartTotal | number: 2 }} ₽
 
-        ng-gallery.left-container2.gallery(images='vm.images' thumbs-num='5' layout='row' layout-align='center center')
 
       span(flex)
 
@@ -93,6 +101,7 @@
             )
               .property-label {{ prc.label }} {{ prc.from }}:
               .property-value {{ prc.value | number: 2 }} ₽
+
 
       span(flex)
 

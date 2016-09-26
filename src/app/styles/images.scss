@@ -14,3 +14,16 @@ md-card img.thumbnail {
   margin: 0 auto;
 }
 
+.main-photo {
+  max-width: 300px;
+  min-width: 300px;
+  min-height: 350px;
+  img {
+    max-width: 260px;
+    max-height: 320px;
+  }
+}
+
+img {
+  object-fit: contain;
+}
