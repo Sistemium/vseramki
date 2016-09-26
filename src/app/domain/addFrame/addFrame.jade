@@ -74,7 +74,7 @@ div.addFrame(layout='row' style='height:{{ windowHeight - 70 }}px')
         input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
 
     md-divider(flex style='width:100%' ng-if='vm.dupMessage.length')
-      .alert-div.md-margin.md-whiteframe-1dp(flex)
+      .alert.md-margin.md-whiteframe-1dp(flex)
         span {{vm.dupMessage}}
 
     md-button.md-raised(

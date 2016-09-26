@@ -304,11 +304,11 @@ md-virtual-repeat-container {
 
 }
 
-.alert-div {
+div.alert {
   text-align: center;
-  background-color: #d63030;
+  background-color: $alert-background-color;
   padding: 10px;
-  color: white;
+  color: $alert-color;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   border-radius: 2px;
   font-size: 15px;
