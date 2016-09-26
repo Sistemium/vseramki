@@ -49,6 +49,9 @@ style="height: {{ baguetteEdit.windowHeight - baguetteEdit.offsetTop - 2}}px;"
       ng-disabled='!vm.selectParamsChecker()' ng-click='vm.createBaguette()'
       ) Сохранить изменения
 
+    div.alert.margin-top-bottom.md-whiteframe-1dp(ng-if='vm.dupMessage.length' layout='row' layout-align='center center')
+      span {{vm.dupMessage}}
+
   md-divider.md-margin
 
   div.space-children-em(ng-if='vm.id')

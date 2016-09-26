@@ -65,6 +65,7 @@
 
       hasChanges: hasChanges,
       cancelChanges: cancelChanges,
+      quit: () => $state.go('^'),
 
       selectParamsChecker: selectParamsChecker,
 
@@ -117,7 +118,7 @@
         .then(function (data) {
 
           if (data.length) {
-            ToastHelper.showToast('Такой багет уже существует', false, vm);
+            vm.dupMessage = 'Такой багет уже существует';
             vm.unique = false;
           } else {
             vm.unique = true;

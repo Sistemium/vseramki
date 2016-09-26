@@ -3,6 +3,7 @@ resize='baguetteCreate'
 style="height: {{ baguetteCreate.windowHeight - baguetteCreate.offsetTop - 2}}px;"
 )
   h2.md-margin.center-header(ng-if='vm.isCreateState') Создание нового багета
+
   div(layout-align='center center' layout='column')
 
     form(name="widthForm")
@@ -45,10 +46,16 @@ style="height: {{ baguetteCreate.windowHeight - baguetteCreate.offsetTop - 2}}px
     on-close='vm.saveClickedOption()'
     )
 
-    md-button.md-raised.pink-button(
-    ng-if='vm.selectParamsChecker() && vm.isCreateState' ng-click='vm.createBaguette()'
-    ) Создать багет
+    div(layout='row')
 
-  md-divider.md-margin
-    div.alert-div.md-margin.md-whiteframe-1dp(ng-if='vm.dupMessage.length' layout='row' layout-align='center center')
+      md-button.md-raised(
+      ng-click='vm.quit()'
+      ) Отменить
+
+      md-button.md-raised(
+      ng-disabled='!vm.selectParamsChecker()'
+      ng-click='vm.createBaguette()'
+      ) Создать
+
+    div.alert.margin-top.md-whiteframe-1dp(ng-if='vm.dupMessage.length' layout='row' layout-align='center center')
       span {{vm.dupMessage}}
