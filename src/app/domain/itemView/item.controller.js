@@ -187,6 +187,8 @@
         $state.go('catalogue.item.edit', {id: vm.article.id});
       },
 
+      addFrame: () => $state.go('catalogue.add'),
+
       deleteFrame: function ($event) {
 
         var frameId = vm.article.id;
