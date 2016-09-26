@@ -42,9 +42,6 @@ md-backdrop {
   right: 0;
 }
 
-.for-md-dialog {
-  overflow: scroll;
-}
 
 md-backdrop.md-opaque {
   opacity: .70;
@@ -66,12 +63,6 @@ md-backdrop.md-opaque {
 
   .left-nav-photo {
     min-width: 300px;
-  }
-
-  .admin-buttons {
-    position: fixed;
-    right: 5px;
-    bottom: 5px
   }
 
   .action-button {

@@ -1,10 +1,9 @@
-.for-md-dialog.item-closed(style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px")
-  //div(layout='row' layout-align='center center')
-    .name-head {{vm.article.name}}
+.scroll-y(style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px")
 
-  p {{vm.status}}
-
-  .ui-view(layout='row' layout-align='space-around top' layout-xs='column' layout-sm='column')
+  .ui-view(
+  ng-class='{"margin-top": vm.isRootState}'
+  layout='row' layout-align='space-around top' layout-xs='column' layout-sm='column'
+  )
 
     span(flex)
 
@@ -36,18 +35,18 @@
           .property-list-container
             .property
               .property-label Количество:
-              .property-value.no-margin(layout-align='start center' layout='row')
+              .property-value.no-margin.plus-minus(layout-align='start center' layout='row')
                 md-button.micro-fab(ng-click='vm.minusOne(vm.article)') -
                 md-input-container
                   input.item-count-input(
-                  aria-label="Количество"
-                  ng-model='vm.article.inCart.count'
-                  type="number"
-                  ng-blur="vm.onBlur(vm.article)"
-                  ng-change="vm.onCartChange(vm.article.inCart)"
-                  required
-                  min='1'
-                  step='1'
+                    aria-label="Количество"
+                    ng-model='vm.article.inCart.count'
+                    type="number"
+                    ng-blur="vm.onBlur(vm.article)"
+                    ng-change="vm.onCartChange(vm.article.inCart)"
+                    required
+                    min='1'
+                    step='1'
                   )
                 md-button.micro-fab(ng-click='vm.plusOne(vm.article)') +
             .property
@@ -98,7 +97,7 @@
 
     span(flex)
 
-    .admin-buttons(layout='column' ng-show='vm.isAdmin')
+    .fixed-bottom-right.admin-buttons(layout='column' ng-show='vm.isAdmin')
       md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.editFrame(vm.article.id)')
         i.material-icons edit
       md-button.md-fab.md-mini.md-icon-button.admin-button.admin-button-margin(ng-click='vm.deleteFrame(vm.article.id, $event)')

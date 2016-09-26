@@ -194,7 +194,7 @@
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
       vm.disableAddFrame = toState.url === '/add';
       vm.isRootState = /^catalogue$/.test(toState.name);
-      vm.currId = toParams.id;
+      vm.currentItemId = toParams.id;
     });
 
   }

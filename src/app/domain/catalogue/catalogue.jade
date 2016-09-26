@@ -55,12 +55,12 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
     .no-padding(
     layout='column'
     resize='articlesList'
-    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 6}}px;'
+    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 10}}px;'
     )
       md-virtual-repeat-container(flex ng-if='!vm.isRootState')
         .md-whiteframe-1dp.item(
         md-virtual-repeat='frame in vm.articles'
-        ng-class="{'active' : vm.currId == frame.id }"
+        ng-class="{'active' : vm.currentItemId == frame.id }"
         ng-click='vm.changeFrame(frame)'
         )
           span {{frame.name}}
@@ -87,10 +87,10 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
                 img.thumbnail(ng-src='{{article.activePhoto()}}')
             md-card-title.md-margin
               md-card-title-text
-                .md-subhead.center {{ article.name }}
+                .md-subhead.text-center {{ article.name }}
 
             .md-margin
-              .md-title.center.text-nowrap
+              .md-title.text-center.text-nowrap
                 span(ng-class='{"strike-through gray": vm.cartHasDiscount}') {{ article.highPrice }} ₽
                 span(ng-if='vm.cartHasDiscount') &nbsp; {{ article.discountedPrice(vm.cartSubTotal) }} ₽
 
@@ -101,11 +101,11 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
                 p.name-style Заказано:
 
-                div(layout='row' layout-align='center center')
+                .plus-minus(layout='row' layout-align='center center')
                   md-button.micro-fab(ng-click='vm.minusOne(article)') -
 
                   md-input-container
-                    input.custom-input(
+                    input(
                     aria-label="Количество"
                     ng-model="article.inCart.count"
                     type="number"

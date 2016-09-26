@@ -15,6 +15,11 @@ form {
 
   }
 
+  > md-input-container {
+    margin: 8px 0;
+    //margin-bottom: 8px;
+  }
+
   md-input-container, searchable-select {
 
     width: 250px;

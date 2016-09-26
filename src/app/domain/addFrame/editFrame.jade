@@ -3,12 +3,11 @@ resize='editFrame'
 style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 )
   .width-100(layout='column' layout-align='top center')
-
     h2 Редактирование рамки
 
     form.wide(name="frameAttrsForm" layout='column' layout-align='top center')
 
-      md-input-container.input-margin
+      md-input-container
         label Название рамки
         input(type='text' ng-model='vm.frame.name' name='name')
 
@@ -30,7 +29,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       on-close='vm.refreshName()'
       )
 
-      md-input-container.input-margin
+      md-input-container
         label Рыночная цена (руб.)
           =' '
           span.required-field-asterisk *
@@ -38,7 +37,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
         div(ng-messages="frameAttrsForm.highPrice.$error")
           div(ng-message="required") Поле не может быть пустым
 
-      md-input-container.input-margin
+      md-input-container
         label Оптовая цена (руб.)
           =' '
           span.required-field-asterisk *
@@ -55,7 +54,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
         div.custom-animation(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
           span.custom-warning Оптовая цена больше рыночной
 
-      md-input-container.input-margin
+      md-input-container
         label Вес (кг.)
         input(
         step='0.1'
@@ -66,7 +65,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
         input-clear='black'
         )
 
-      md-input-container.input-margin
+      md-input-container
         label Штук в коробке
           =' '
           span.required-field-asterisk *
