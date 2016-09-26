@@ -2,9 +2,9 @@
 
 (function () {
 
-  function ToastHelper($mdToast, $window, $timeout) {
+  function ToastHelper($mdToast, $window) {
 
-    function showToast(resStr, status, vm) {
+    function showToast(resStr, status) {
 
       var theme;
       var sidenavElem = $window.document.getElementsByClassName('toolbar-fixed-top');

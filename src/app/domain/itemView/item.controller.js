@@ -11,9 +11,9 @@
 
     var Article = Schema.model('Article');
     var Cart = Schema.model('Cart');
-    var Colour = Schema.model('Colour');
-    var Material = Schema.model('Material');
-    var FrameSize = Schema.model('FrameSize');
+    // var Colour = Schema.model('Colour');
+    // var Material = Schema.model('Material');
+    // var FrameSize = Schema.model('FrameSize');
     var BaguetteImage = Schema.model('BaguetteImage');
 
     var vm = this;
