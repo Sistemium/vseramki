@@ -1,5 +1,5 @@
-.component-container(layout='column')
-  span.custom-label {{ vm.label }}
+.searchable-select(layout='column')
+  span.label {{ vm.label }}
   md-select(ng-model='vm.model' md-on-close="vm.onCloseFn()" aria-label='vm.label')
     md-select-header(layout='row' layout-align='center center')
       md-input-container(flex)
