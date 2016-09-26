@@ -65,10 +65,16 @@
       Cart.save(cart);
     }
 
+    function mergeImages() {
+      vm.images = _.union(vm.baguetteImages, vm.articleImages);
+      vm.currentImage = _.first(vm.images);
+    }
+
     Article.findAll({limit: 100})
       .then(function (data) {
         vm.allArt = data;
       });
+
 
     Article.find($state.params.id).then(function (article) {
       vm.article = article;
@@ -77,25 +83,15 @@
 
         setPrices();
 
-        ArticleImage.findAll(stateFilter).then(function () {
+        var baguetteImageFilter = {
+          baguetteId: vm.article.baguetteId
+        };
 
-          ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', function (a, b) {
-            vm.articleImages = b;
-            vm.images = _.union(vm.baguetteImages, vm.articleImages);
-          });
+        ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', mergeImages);
+        BaguetteImage.bindAll(baguetteImageFilter, $scope, 'vm.baguetteImages', mergeImages);
 
-          var baguetteImageFilter = {
-            baguetteId: vm.article.baguetteId
-          };
-
-          BaguetteImage.findAll(baguetteImageFilter).then(function () {
-            BaguetteImage.bindAll(baguetteImageFilter, $scope, 'vm.baguetteImages', function (a, b) {
-              vm.baguetteImages = b;
-              vm.images = _.union(vm.baguetteImages, vm.articleImages);
-            });
-          });
-
-        });
+        ArticleImage.findAll(stateFilter);
+        BaguetteImage.findAll(baguetteImageFilter);
 
       }
 
