@@ -123,6 +123,16 @@ button .label {
   }
 }
 
+button.micro-square {
+  border-radius: 0 !important;
+  min-height: 10px !important;
+  min-width: 10px !important;
+  line-height: 30px !important;
+  width: 25px !important;
+  height: 25px !important;
+}
+
+
 .md-fab.md-mini.md-icon-button.active {
   color: yellow;
 }

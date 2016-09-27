@@ -1,11 +1,12 @@
-md-button.md-fab.md-mini.custom-filter-reset-button(
+md-button.md-fab.md-mini.micro-square(
 ng-click='vm.clearFilter()' ng-if='vm.currentOption'
+style='margin-left: 4px; margin-right: 0;'
 )
   i.material-icons.mini clear
 
 md-menu(md-offset='20 0')
 
-  md-button.choose-filter-button(
+  md-button.no-margin(
   aria-label='{{vm.propertyName}} menu'
   ng-click='$mdOpenMenu($event)'
   )
