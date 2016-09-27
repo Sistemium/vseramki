@@ -82,20 +82,8 @@ md-content.oauth-buttons {
   background-color: #f3f4f6;
 }
 
-.login-div-center {
-  width: 100%;
-  height: 85%;
-  position: fixed;
-  md-card-header {
-    padding-top: 21px;
-  }
-  md-card-content {
-    padding: 0 26px 26px 26px;
-  }
 
-}
-
-.button-styles-for-div {
+.oauth-button {
   margin: 5px;
   padding: 0 10px;
   cursor: pointer !important;
@@ -105,3 +93,4 @@ md-content.oauth-buttons {
 .bold-style {
   font-weight: 500;
 }
+
