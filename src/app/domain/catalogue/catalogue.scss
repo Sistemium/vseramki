@@ -24,7 +24,7 @@ md-content.articles {
 
   .md-sidenav-right {
     margin-right: $margin-default-half;
-    width: 345px;
+    max-width: 345px;
   }
 
   .repeated-group {
