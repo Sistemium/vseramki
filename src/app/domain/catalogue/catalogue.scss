@@ -2,6 +2,17 @@
 
 md-content.articles {
 
+  #sidenav-left {
+    > * {
+      margin: 0 -$margin-default-half;
+    }
+    .article-list {
+      font-size: 14px;
+    }
+
+    margin-left: $margin-default;
+  }
+
   #scroll-main {
     padding-left: 0;
     margin-left: 0;
@@ -32,6 +43,7 @@ md-content.articles {
   .item {
     padding: $margin-default-half;
     margin: $margin-default-half;
+    //border-radius: 5px;
     cursor: pointer;
   }
 

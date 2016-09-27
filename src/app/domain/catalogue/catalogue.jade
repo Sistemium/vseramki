@@ -3,8 +3,8 @@ section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
 
 md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
-  md-sidenav.md-sidenav-right.md-whiteframe-1dp.margin-top-bottom(
-  layout-padding md-component-id="right-nav" md-is-locked-open="$mdMedia('gt-sm')"
+  md-sidenav#sidenav-left.md-sidenav-right.md-whiteframe-1dp.margin-top-bottom(
+  layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-sm')"
   )
     p.md-title.no-margin
       span.no-button(ng-if='!vm.filterLength') Фильтр
@@ -53,7 +53,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
     md-divider(ng-hide='vm.isRootState' style='margin-top: 8px')
 
-    .no-padding(
+    .no-padding.article-list(
     layout='column'
     resize='articlesList'
     style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px;'
