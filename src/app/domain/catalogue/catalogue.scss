@@ -29,7 +29,6 @@ md-content.articles {
 
   .md-sidenav-left {
     margin-right: $margin-default-half;
-    max-width: 345px;
   }
 
   .repeated-group {
@@ -62,10 +61,6 @@ md-content.articles {
 
 }
 
-.first-div {
-  margin-top: 10px;
-}
-
 .custom-filter-reset-button {
   border-radius: 0 !important;
   min-height: 10px !important;
@@ -80,12 +75,6 @@ md-content.articles {
 .choose-filter-button {
   margin: 0 !important;
 }
-
-.name-style {
-  font-size: 14px;
-  margin-right: 3px;
-}
-
 
 .custom-button {
   line-height: 24px !important;
