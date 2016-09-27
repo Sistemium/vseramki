@@ -52,7 +52,7 @@
         images: '=',
         thumbsNum: '@',
         hideOverflow: '=',
-        imageHovered: '=',
+        imageHoveredFn: '&',
         isDeletable: '='
       },
 
@@ -156,8 +156,8 @@
         };
 
         scope.setHovered = function (image) {
-          if (scope.imageHovered) {
-            scope.imageHovered = image
+          if (_.isFunction(scope.imageHoveredFn())) {
+            scope.imageHoveredFn()(image);
           }
         }
 
