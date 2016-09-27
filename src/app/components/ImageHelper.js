@@ -2,10 +2,12 @@
 
 (function () {
 
+  const MIN_LOADING = 400;
+
   angular.module('vseramki')
     .service('ImageHelper', ImageHelper);
 
-  function ImageHelper($mdMedia, $window, $mdDialog, $rootScope) {
+  function ImageHelper($mdMedia, $window, $mdDialog, $rootScope, $q, $timeout) {
 
     var body2 = $window.document.getElementsByClassName('for-md-dialog');
     var customFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
@@ -17,6 +19,33 @@
     });
 
     $rootScope.$on('$destroy', un);
+
+    function loadImage(src) {
+      return $q((resolve, reject) => {
+
+        var image = new Image();
+        var startedAt = new Date();
+
+        image.onload = function () {
+          if (this.complete === false || this.naturalWidth === 0) {
+            reject();
+          }
+
+          var since = startedAt - new Date() + MIN_LOADING;
+          $timeout(since > 0 ? since : 0)
+            .then(()=>resolve(image));
+        };
+
+        image.onerror = function () {
+          reject();
+        };
+
+        $timeout(function () {
+          image.src = src;
+        });
+
+      });
+    }
 
     function imsResponseHelper(data) {
 
@@ -39,29 +68,31 @@
 
     }
 
-    return {
+    function mdDialogHelper(responder) {
+      return function showDialog(ev, id) {
 
-      mdDialogHelper: function (responder) {
-        return function showDialog(ev, id) {
-
-          $mdDialog.show({
-              controller: 'AddPhotoDialogController as vm',
-              templateUrl: 'app/domain/itemView/addPhotoDialog.html',
-              parent: body2,
-              targetEvent: ev,
-              clickOutsideToClose: false,
-              fullscreen: !!customFullScreen
-            })
-            .then(function (photos) {
-              _.each(photos, function (photo) {
-                responder(imsResponseHelper(photo), id);
-              });
+        $mdDialog.show({
+          controller: 'AddPhotoDialogController as vm',
+          templateUrl: 'app/domain/itemView/addPhotoDialog.html',
+          parent: body2,
+          targetEvent: ev,
+          clickOutsideToClose: false,
+          fullscreen: !!customFullScreen
+        })
+          .then(function (photos) {
+            _.each(photos, function (photo) {
+              responder(imsResponseHelper(photo), id);
             });
+          });
 
-        }
       }
-
     }
+
+    return {
+      mdDialogHelper,
+      loadImage
+    };
+
   }
 
 })();
