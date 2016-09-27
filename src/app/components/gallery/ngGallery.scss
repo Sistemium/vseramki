@@ -186,10 +186,11 @@ img.ng-thumb {
   -ms-interpolation-mode: bicubic;
 }
 
-.my-img {
+img.fullsize {
   height: auto;
   overflow: auto;
   width: auto;
+  cursor: zoom-out;
 }
 
 .custom-close-button {

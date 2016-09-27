@@ -32,8 +32,9 @@ div.ng-overlay(ng-if='opened' layout='row' layout-align='center center')
     md-swipe-right='prevImage()'
     md-swipe-up='closeGallery()'
     )
-      img.my-img.image-fit-div(
+      img.fullsize.image-fit-div(
       ondragstart='return false;'
+      ng-click='closeGallery()'
       draggable='false'
       ng-src='{{ img }}'
       ng-if='!loading'
