@@ -6,14 +6,15 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
   md-sidenav#sidenav-left.md-sidenav-left.md-whiteframe-1dp.margin-top-bottom(
   layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-sm')"
   )
-    p.md-title.no-margin
+    p.md-title
       span.no-button(ng-if='!vm.filterLength') Фильтр
       md-button.md-raised.no-margin(
       aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
       ) Сбросить фильтры
+
     .no-padding(layout='column' layout-align='start start')
 
-      property-filter.custom-padding(
+      property-filter(
       property-name='frameSize'
       property-label='Размер'
       options='vm.frameSizes'
@@ -22,7 +23,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
       clear-fn='vm.delCurrFilter'
       )
 
-      property-filter.custom-padding(
+      property-filter(
       property-name='brand'
       property-label='Брэнд'
       options='vm.brands'
@@ -31,7 +32,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
       clear-fn='vm.delCurrFilter'
       )
 
-      property-filter.custom-padding(
+      property-filter(
       property-name='material'
       property-label='Материал'
       options='vm.materials'
@@ -40,7 +41,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
       clear-fn='vm.delCurrFilter'
       )
 
-      property-filter.custom-padding(
+      property-filter(
       property-name='colour'
       property-label='Цвет'
       options='vm.colours'

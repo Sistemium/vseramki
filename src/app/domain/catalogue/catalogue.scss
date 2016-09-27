@@ -11,6 +11,11 @@ md-content.articles {
     }
 
     margin-left: $margin-default;
+
+    p.md-title {
+      margin-bottom: $margin-default-half;
+    }
+
   }
 
   #scroll-main {
@@ -34,10 +39,6 @@ md-content.articles {
 
   .repeated-group-item {
     display: inline-block;
-  }
-
-  .custom-padding {
-    padding: 2px;
   }
 
   .item {
