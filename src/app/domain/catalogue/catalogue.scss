@@ -1,3 +1,5 @@
+@import "../../styles/_vars";
+
 md-content.articles {
 
   #scroll-main {
@@ -10,7 +12,7 @@ md-content.articles {
   }
 
   .md-sidenav-right {
-    margin-right: 6px;
+    margin-right: $margin-default-half;
     width: 345px;
   }
 
@@ -28,9 +30,8 @@ md-content.articles {
   }
 
   .item {
-    padding: 6px;
-    margin: 5px;
-    border-radius: 5px;
+    padding: $margin-default-half;
+    margin: $margin-default-half;
     cursor: pointer;
   }
 

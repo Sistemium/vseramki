@@ -1,22 +1,24 @@
+@import "_vars";
+
 .margin-top-bottom {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: $margin-default;
+  margin-bottom: $margin-default;
 }
 
 .margin-left {
-  margin-left: 1em;
+  margin-left: $margin-default;
 }
 
 .margin-top {
-  margin-top: 1em;
+  margin-top: $margin-default;
 }
 
 .margin-bottom {
-  margin-bottom: 1em;
+  margin-bottom: $margin-default;
 }
 
 .margin-top-em {
-  margin-top: 1em;
+  margin-top: $margin-default;
 }
 
 .no-padding {
@@ -32,12 +34,12 @@
 }
 
 .space-children-em > * {
-  margin: 0 0 1em 0;
+  margin: 0 0 $margin-default 0;
 
 }
 
 .layout-row.space-children-em > * {
-  margin: 0 1em 0 0;
+  margin: 0 $margin-default 0 0;
 }
 
 .strike-through {
@@ -81,6 +83,6 @@ fieldset {
 
 .fixed-bottom-right {
   position: fixed;
-  right: 5px;
-  bottom: 5px
+  right: $margin-default-half;
+  bottom: $margin-default-half;
 }
