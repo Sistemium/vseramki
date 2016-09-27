@@ -152,6 +152,22 @@
 
     }
 
+    function onThumbnailHover (newImg) {
+
+      var newId = _.get(newImg,'id');
+
+      if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage,'id')) {
+
+        vm.currentImageLoading = newId;
+
+        ImageHelper.loadImage(newImg.smallSrc)
+          .then(() => vm.currentImageLoading === newImg.id && (vm.currentImage = newImg))
+          .finally(() => vm.currentImageLoading === newImg.id && (vm.currentImageLoading = false));
+
+      }
+
+    }
+
     angular.extend(vm, {
 
       uploading: true,
@@ -161,6 +177,9 @@
       plusOne,
       onBlur,
       onCartChange,
+      onThumbnailHover,
+
+      currentImageHover: {},
       addToCart: Cart.addToCart,
       article: '',
       isRootState: true,

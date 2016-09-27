@@ -21,12 +21,21 @@
           layout-align='space-between center'
           )
             span(flex)
-            img.preview(ng-src='{{vm.currentImage.smallSrc}}' ng-click='vm.previewClick()')
+            md-progress-circular(
+            md-mode="indeterminate"
+            md-diameter='170'
+            ng-if='vm.currentImageLoading'
+            )
+            img.preview(
+            ng-if='!vm.currentImageLoading'
+            ng-src='{{vm.currentImage.smallSrc}}'
+            ng-click='vm.previewClick()'
+            )
             span(flex)
 
           ng-gallery(
           images='vm.images'
-          image-hovered='vm.currentImage'
+          image-hovered-fn='vm.onThumbnailHover'
           is-deletable='vm.isAdmin'
           thumbs-num='5'
           layout='row' layout-align='center center'
