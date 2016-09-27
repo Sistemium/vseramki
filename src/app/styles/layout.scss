@@ -74,6 +74,14 @@ fieldset {
   padding: 0
 }
 
+.md-title {
+  text-align: center;
+}
+
+md-dialog {
+  overflow: visible;
+}
+
 .fixed-bottom {
   position: fixed;
   bottom: 0;
@@ -85,4 +93,14 @@ fieldset {
   position: fixed;
   right: $margin-default-half;
   bottom: $margin-default-half;
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
 }

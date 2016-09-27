@@ -23,18 +23,6 @@ figure {
 }
 
 
-.md-padding > md-table-container > table.md-table th.md-column {
-  font-size: 16px;
-}
-
-tr {
-  height: 50px;
-}
-
-table.md-table td.md-cell, table.md-table th.md-column {
-  text-align: center;
-}
-
 .md-item-text {
   padding: 8px;
   background: #f3f4f6;
@@ -74,17 +62,6 @@ md-list-item > button {
   margin: 0;
 }
 
-.margin-custom {
-  margin-top: 40px;
-}
-
-.padding-custom {
-  padding: 0 50px;
-}
-
-.md-toolbar-tools > .md-button:last-child {
-  margin-right: 30px;
-}
 
 .fixed {
   position: fixed;
@@ -116,17 +93,6 @@ md-switch > div {
   left: 8px;
 }
 
-.fixed-toolbar {
-  position: fixed !important;
-  background: white;
-}
-
-md-toolbar > .fixed-toolbar {
-  min-width: 56px !important;
-  height: 56px !important;
-}
-
-
 .search:hover {
   color: #ff4081;
   cursor: pointer;
@@ -136,33 +102,12 @@ md-toolbar > .fixed-toolbar {
   margin-top: 7px;
 }
 
-.no-select {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: default;
 
-}
 
 md-input-container > .md-errors-spacer {
   display: none !important;
 }
 
-.md-title {
-  text-align: center;
-}
-
-.input-padding {
-  padding-top: 5px;
-  padding-left: 5px;
-}
-
-.min-width-choose-attr-div {
-  min-width: 300px
-}
 
 @media (max-width: 959px) {
   md-dialog.md-dialog-fullscreen {
@@ -170,41 +115,6 @@ md-input-container > .md-errors-spacer {
     min-width: 90%;
     border-radius: 0;
   }
-}
-
-md-dialog {
-  overflow: visible;
-}
-
-// styles for md-toast
-
-md-toast .md-toast-content {
-  font-size: 15px;
-  text-align: center;
-}
-
-md-toast.md-success-toast-theme {
-  .md-toast-content {
-    background-color: #0c7c02;
-  }
-}
-
-md-toast.md-fail-toast-theme {
-  .md-toast-content {
-    background-color: #d63030;
-  }
-}
-
-md-toast {
-  //position: fixed;
-  //top: 0;
-  padding: 4px;
-}
-
-// virtual repeat test styles
-
-md-virtual-repeat-container {
-  width: 100%;
 }
 
 .baguettes {
@@ -237,10 +147,6 @@ md-virtual-repeat-container {
 
 }
 
-.toolbar-bottom-border {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
 .icon-button {
   cursor: pointer;
 }
@@ -263,10 +169,6 @@ div.alert {
   border-radius: 2px;
   font-size: 15px;
   cursor: default;
-}
-
-.toolbar-height {
-  min-height: 56px;
 }
 
 .divider-cursor {
