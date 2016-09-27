@@ -5,7 +5,7 @@
   angular
     .module('vseramki')
     .service('FrameSize', FrameSize)
-    .run(function(FrameSize){
+    .run(function (FrameSize) {
       FrameSize.findAll();
     })
   ;

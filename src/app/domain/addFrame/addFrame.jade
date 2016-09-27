@@ -1,0 +1,110 @@
+.addFrame.no-margin.scroll-y(
+resize='addFrame'
+style="height: {{ addFrame.windowHeight - addFrame.offsetTop - 2}}px;"
+)
+  .width-100(layout='column' layout-align='top center')
+    h2 Создание новой рамки
+
+    form.wide(name="frameAttrsForm" layout='column' layout-align='top center')
+
+      searchable-select(
+      label='Багет'
+      model='vm.frame.baguetteId'
+      model-name='Baguette'
+      options='vm.baguettes'
+      not-addable='true'
+      )
+
+      searchable-select(
+      label='Размер'
+      model='vm.frame.frameSizeId'
+      model-name='FrameSize'
+      options='vm.frameSizes'
+      not-addable='false'
+      )
+
+      md-input-container.input-margin
+        label Название рамки
+        input(type='text' ng-model='vm.frame.name' name='name')
+
+      md-input-container.input-margin
+        label Рыночная цена (₽)
+          =' '
+          span.required-field-asterisk *
+        input(
+        name='highPrice'
+        ng-model='vm.frame.highPrice'
+        type='number'
+        step='any'
+        min='1'
+        input-clear='black'
+        required
+        autocomplete='off'
+        )
+        div(ng-messages="frameAttrsForm.highPrice.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+      md-input-container.input-margin
+        label Оптовая цена (₽)
+          =' '
+          span.required-field-asterisk *
+        input(
+        name='lowPrice'
+        ng-model='vm.frame.lowPrice'
+        type='number'
+        step='any'
+        min='1'
+        required
+        input-clear='black'
+        check-price="{{vm.frame.highPrice}}"
+        autocomplete='off'
+        )
+        div(ng-messages="frameAttrsForm.lowPrice.$error")
+          div(ng-message="required") Поле не может быть пустым
+        div.custom-animation(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
+          span.custom-warning Оптовая цена больше рыночной
+
+      md-input-container.input-margin
+        label Штук в коробке
+          =' '
+          span.required-field-asterisk *
+        input(
+        step='1'
+        type='number'
+        ng-model='vm.frame.packageRel'
+        min='1'
+        required
+        name='packageRel'
+        input-clear='black'
+        autocomplete='off'
+        )
+        div(ng-messages="frameAttrsForm.packageRel.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+      md-input-container
+        label Вес (кг.)
+        input(
+        step='0.1'
+        type='number'
+        ng-model='vm.frame.pieceWeight'
+        min='0.1'
+        name='pieceWeight'
+        autocomplete='off'
+        input-clear='black'
+        )
+
+      input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
+
+    .text-center.margin-top-bottom
+
+      md-button.md-raised(
+      ng-click='vm.saveFrame()'
+      ng-hide='frameAttrsForm.$invalid'
+      ) Сохранить рамку
+
+      .alert.md-whiteframe-1dp(ng-if='vm.dupMessage')
+        span {{vm.dupMessage}}
+
+
+
+

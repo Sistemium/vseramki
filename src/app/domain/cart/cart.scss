@@ -1,79 +1,35 @@
-.cartBody {
-  width: 100%;
-}
+.cart {
 
-.cartItem {
-  margin: 0 auto;
-  width: 98%;
-  margin: 3px;
-}
+  .footer {
+    border-top: 1px rgba(0, 0, 0, 0.12) solid;
+  }
 
-.root.viewport {
-  background-color: white;
-}
+  .cartBody {
+    width: 100%;
+  }
 
-.emptyCart {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  background-color: #cccccc;
-}
+  .cartItem {
+    width: 98%;
+    margin: 3px;
+  }
 
-.thumbnail {
-  width: 100px;
-  height: 100px;
-}
+  .emptyCart {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #f3f4f6;
+    margin: 3px;
+    padding: 20px;
+  }
 
-.table-container-class {
-  width: 100%;
-}
+  md-table-container {
+    width: 100%;
+    margin-bottom: 60px;
+  }
 
-.th-left-align {
-  margin-left: 20px;
-}
-
-.number-picker {
-  min-width: 150px;
-}
-
-.custom-input {
-  width: 30px !important;
-}
-
-input[type="number"] {
-  border: none;
-  border-bottom: solid 2px #c9c9c9;
-  -webkit-transition: border 0.3s;
-  -moz-transition: border 0.3s;
-  -o-transition: border 0.3s;
-  transition: border 0.3s;
-  text-align: center;
-  font-size: 13px;
-}
-
-input[type="number"]:focus, .style-4 input[type="number"].focus {
-  border-bottom: solid 2px #969696;
-}
-
-/* standard browser border on focus disabled */
-
-*:focus {
-  outline: none;
-}
-
-/* hiding input arrows */
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.clear-icon-size{
-  font-size: 16px;
-  line-height: 1.7;
-}
-
-.div-order-info{
+  .clear-icon-size {
+    font-size: 16px;
+    line-height: 1.7;
+  }
 
 }

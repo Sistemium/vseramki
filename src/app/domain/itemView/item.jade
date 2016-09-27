@@ -1,96 +1,131 @@
-div.name-head(flex=100) {{vm.article.name}}
-.md-whiteframe-1dp(layout-align="" layout="row" layout-sm='column' layout-xs='column')
-  div.photo(layout='column')
-    img.image-size(src='http://www.vseramki.ru/CommonFiles/Smiles/01_Products/0179/0179_00-0.jpg')
-    md-button.md-raised.add-to-cart(ng-click='vm.addToCart(vm.article)' ng-if='!vm.article.inCart')
-      | {{'Добавить в корзину'}}
+.scroll-y(style="height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px")
 
-  div.overall-info
+  .ui-view
 
-    div.order(ng-if='vm.article.inCart')
-      h1.header-h1 Заказ
-      md-table-container
-        table(md-table='')
-          tr(md-row colspan='2')
-            td
-              p.name-style Заказано:
-            td.td-fixed-size
-              div.action-buttons(layout='row' layout-align="start center")
-                div.div-order-info-num-picker
-                  md-button.icon-button-catalogue(ng-click='vm.minusOne(vm.article)') -
+    .margin-top(layout='row' layout-align='space-around top' layout-xs='column' layout-sm='column')
+
+      span(flex)
+
+      .space-children-em(
+      layout='column'
+      layout-align='top center'
+      ng-if='vm.isRootState'
+      )
+        .main-photo.md-whiteframe-1dp.md-padding(
+        layout='column'
+        layout-align='space-between center'
+        )
+          .text-center(
+          flex
+          layout='column'
+          layout-align='space-between center'
+          )
+            span(flex)
+            md-progress-circular(
+            md-mode="indeterminate"
+            md-diameter='170'
+            ng-if='vm.currentImageLoading'
+            )
+            img.preview(
+            ng-if='!vm.currentImageLoading'
+            ng-src='{{vm.currentImage.smallSrc}}'
+            ng-click='vm.previewClick()'
+            )
+            span(flex)
+
+          ng-gallery(
+          images='vm.images'
+          image-hovered-fn='vm.onThumbnailHover'
+          is-deletable='vm.isAdmin'
+          thumbs-num='5'
+          layout='row' layout-align='center center'
+          )
+
+        md-button.md-raised.action-button.pink-button(
+        ng-click='vm.addToCart(vm.article)'
+        ng-if='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
+        )
+          | {{'Добавить к заказу'}}
+
+        #order-block(ng-if='vm.article.inCart')
+          .property-list.md-whiteframe-1dp.flex-5-4
+            h3.header
+              md-button.md-raised.md-mini.micro-square(
+              ng-click='vm.clearCart()'
+              )
+                i.material-icons.mini clear
+              span Заказ
+            .property-list-container
+              .property
+                .property-label Количество:
+                .property-value.no-margin.plus-minus(layout-align='start center' layout='row')
+                  md-button.micro-fab(ng-click='vm.minusOne(vm.article)') -
                   md-input-container
-                    input.custom-input(
-                    aria-label="Количество"
-                    ng-model='vm.article.inCart.count'
-                    type="number"
-                    ng-blur="vm.onBlur(vm.article)"
-                    ng-change="vm.onCartChange(vm.article)"
-                    required
-                    min='1'
-                    step='1'
+                    input.item-count-input(
+                      aria-label="Количество"
+                      ng-model='vm.article.inCart.count'
+                      type="number"
+                      ng-blur="vm.onBlur(vm.article)"
+                      ng-change="vm.onCartChange(vm.article.inCart)"
+                      required
+                      min='1'
+                      step='1'
                     )
-                  md-button.icon-button-catalogue(ng-click='vm.plusOne(vm.article)') +
-          tr(md-row)
-            td(md-cell='')
-              p Сумма:
-            td(md-cell='')
-              p {{vm.price * vm.article.inCart.count || 0}} руб.
+                  md-button.micro-fab(ng-click='vm.plusOne(vm.article)') +
+              .property
+                .property-label Общая сумма заказа:
+                //.property-value {{ vm.article.inCart.cost(vm.cartSubTotal) || 0 | number: 2 }} ₽
+                .property-value {{ vm.cartSubTotal || 0 | number: 2 }} ₽
+              .property(ng-if='vm.cartSubTotal > vm.cartTotal')
+                .property-label Итого со скидкой:
+                .property-value {{ vm.cartTotal | number: 2 }} ₽
 
 
-    div.item-info
-      h1.header-h1 О товаре
-      md-table-container
-        table(md-table='')
-          tr(md-row)
-            td(md-cell='')
-              p Размер:
-            td.td-fixed-size(md-cell='')
-              |{{vm.size.name}}
-          tr(md-row)
-            td(md-cell='')
-              p Материал:
-            td(md-cell='')
-              p {{vm.material.name}}
-          tr(md-row)
-            td(md-cell='')
-              p Цвет:
-            td(md-cell='')
-              p {{vm.colour.name}}
-          tr(md-row)
-            td(md-cell='')
-              p Вес:
-            td(md-cell='')
-              p {{vm.article.pieceWeight}} кг
-          tr(md-row)
-            td(md-cell='')
-              p Штук в пачке:
-            td(md-cell='')
-              p {{vm.article.packageRel}}
+      span(flex)
 
-    div.price
-      h1.header-h1 Цена
-      md-table-container
-        table(md-table='')
-          tr(md-row flex='initial')
-            td(md-cell='')
-              p Цена за 1 шт.:
-            td.td-fixed-size(md-cell='')
-              p {{vm.price | number: 2}}
-          tr(md-row)
-            td(md-cell='')
-              p Цена со скидкой 10%:
-            td(md-cell='')
-              p {{244 | number: 2}}
-          tr(md-row)
-            td(md-cell='')
-              p Цена со скидкой 20%:
-            td(md-cell='')
-              p {{244 | number: 2}}
-          tr(md-row)
-            td(md-cell='' colspan='2')
-              cite * — при сумме заказа более 5000 р. скидка 10%, более 10000 р. — 20%
+      .space-children-em(layout='column' layout-align='top center')
+        .property-list.md-whiteframe-1dp.flex-4-5
+          h3.header Характеристики
+          .property-list-container
+            .property
+              .property-label Размер:
+              .property-value {{vm.article.frameSize.name}}
+            .property
+              .property-label Бренд:
+              .property-value {{vm.article.brand.name}}
+            .property
+              .property-label Цвет:
+              .property-value {{vm.article.colour.name}}
+            .property
+              .property-label Материал:
+              .property-value {{vm.article.material.name}}
+            .property
+              .property-label Вес:
+              .property-value(ng-class='{gray: !vm.article.pieceWeight}') {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
+            .property
+              .property-label Штук в коробке:
+              .property-value {{vm.article.packageRel}}
+
+        .property-list.md-whiteframe-1dp.flex-4-5
+          h3.header Цена
+            small.gray &nbsp; (от общей суммы заказа)
+          .property-list-container
+            .property(
+            ng-repeat='prc in vm.prices | filter:"!hide" | orderBy: "ord" track by prc.id'
+            sa-animate-on-change='prc.value' change-class="lite change-up"
+            )
+              .property-label {{ prc.label }} {{ prc.from }}:
+              .property-value {{ prc.value | number: 2 }} ₽
 
 
+      span(flex)
 
-
-
+      .fixed-bottom-right.admin-buttons(layout='column' ng-show='vm.isAdmin')
+        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.editFrame()')
+          i.material-icons edit
+        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.addFrame()')
+          i.material-icons add
+        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.deleteFrame($event)')
+          i.material-icons delete
+        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.showImageDialog($event)')
+          i.material-icons add_a_photo

@@ -1,0 +1,39 @@
+.ui-view(flex)
+
+  md-table-container(ng-if='vm.baguettes.length')
+    table(md-table md-row-select multiple ng-model='vm.selected')
+      thead(md-head md-order='filterBy')
+        th(md-column) Фото
+        th(md-column md-order-by='colour.name') Цвет
+        th(md-column md-order-by='material.name') Материал
+        th(md-column md-order-by='brand.name') Бренд
+        th(md-column md-order-by='borderWidth') Ширина (мм.)
+      tbody.clickable(md-body)
+        tr(
+          md-row
+          ng-repeat='bag in vm.baguettes ' +
+          '| orderBy: filterBy ' +
+          '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+          ' track by bag.id'
+          md-select='bag'
+          md-select-id='id'
+          ng-click='vm.editBaguette(bag, $event)'
+        )
+          td(md-cell)
+            img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}')
+          td(md-cell) {{bag.colour.name}}
+          td(md-cell) {{bag.material.name}}
+          td(md-cell) {{bag.brand.name}}
+          td(md-cell) {{bag.borderWidth}}
+
+
+  md-table-pagination.fixed-bottom(
+    md-limit='vm.pagination.query.limit',
+    md-label='{{vm.pagination.labels}}',
+    md-limit-options='vm.pagination.limitOptions',
+    md-page='vm.pagination.query.page',
+    md-total='{{vm.baguettes.length}}',
+    md-page-select='true && !vm.useMobile',
+    md-boundary-links='true && !vm.useMobile'
+  )
+

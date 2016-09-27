@@ -7,19 +7,42 @@
     .controller('CartController', CartController)
   ;
 
-  function CartController(Cart, Article, $scope) {
+  function CartController(Cart, Article, $scope, ArticleImage, $state, Baguette, Schema, AlertHelper) {
 
     var vm = this;
+    var stateParam = [];
+    var BaguetteImage = Schema.model('BaguetteImage');
 
-    Cart.bindAll({}, $scope, 'vm.data');
+    Cart.bindAll({}, $scope, 'vm.data', refreshPrice);
+
+    Baguette.findAll();
+    BaguetteImage.findAll();
+    ArticleImage.findAll();
+
     Cart.findAll().then(function (carts) {
+
       _.each(carts, function (cart) {
-        Article.find(cart.articleId);
+
+        stateParam.push({articleId: cart['articleId']});
+
+        Article.find(cart.articleId)
+          .catch(() => Cart.destroy(cart));
       });
+
     });
 
-    function clearCart() {
-      Cart.destroyAll();
+    function refreshPrice() {
+      vm.cartSubTotal = Cart.orderSubTotal();
+      vm.cartTotal = Cart.orderTotal();
+    }
+
+    function clearCart($event) {
+      AlertHelper.showConfirm($event, 'Отменить заказ?')
+        .then(response => response && Cart.destroyAll());
+    }
+
+    function itemClick(item) {
+      $state.go('catalogue.item', {id: item.articleId});
     }
 
     function clearItem(item) {
@@ -43,31 +66,17 @@
       if (item.count < 1) {
         item.count = 1;
       }
-
-      Cart.save(item);
-    }
-
-    function itemClick(item){
-      console.log(item);
-    }
-
-
-    /* on remove article add animation */
-
-    function itemRemove(item) {
-      console.log (item, 'item');
+      saveItem();
     }
 
     angular.extend(vm, {
-      clearCart: clearCart,
-      clearItem: clearItem,
-      saveItem: saveItem,
-      plusOne: plusOne,
-      minusOne: minusOne,
-      itemClick: itemClick,
-      itemRemove: itemRemove
+      clearCart,
+      clearItem,
+      saveItem,
+      plusOne,
+      minusOne,
+      itemClick
     });
-
 
   }
 

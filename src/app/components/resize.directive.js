@@ -2,29 +2,46 @@
 
 (function () {
 
-  function resize($window) {
+  function resize($window, $uibPosition, $timeout) {
 
-    return function (scope) {
-      var w = $window;
-      scope.getWindowDimensions = function () {
+    return (scope, element, attrs) => {
+
+      var property = attrs.resize ? (scope[attrs.resize] = {}) : scope;
+
+      function getWindowDimensions() {
+        var offset = $uibPosition.offset(element);
         return {
-          'h': w.innerHeight,
-          'w': w.innerWidth
+          windowHeight: $window.innerHeight,
+          windowWidth: $window.innerWidth,
+          offsetTop: offset ? offset.top : 0
         };
-      };
-      scope.$watch(scope.getWindowDimensions, function (newValue) {
-        scope.windowHeight = newValue.h;
-        scope.windowWidth = newValue.w;
-      }, true);
+      }
 
-      angular.element($window).bind('resize', function () {
+      function setValues (newValue) {
+        _.assign(property, newValue);
+      }
+
+      var un = scope.$watch(getWindowDimensions, setValues, true);
+
+      function apply () {
         scope.$apply();
-      });
+      }
+
+      angular.element($window)
+        .bind('resize', apply);
+
+      scope.$on('$destroy', ()=>{
+        un();
+        angular.element($window)
+          .unbind('resize', apply);
+      })
+
+      $timeout(setValues);
     }
 
   }
 
-  angular.module('sistemium')
+  angular.module('ui.bootstrap.position')
     .directive('resize', resize);
 
 })();

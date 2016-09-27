@@ -1,0 +1,20 @@
+img.thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+td img.thumbnail {
+  max-height: 45px;
+  margin: 7px 0;
+}
+
+
+md-card img.thumbnail {
+  margin: 0 auto;
+}
+
+
+img {
+  object-fit: contain;
+}

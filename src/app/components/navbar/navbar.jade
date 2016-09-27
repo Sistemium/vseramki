@@ -1,27 +1,47 @@
 md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
-  .md-toolbar-tools
-    img.top-logo(src='images/top-logo.jpg')
-    //md-button.hide-xs(ui-sref='home' flex-offset="5") vseramki.ru
-    span(flex)
-    md-fab-speed-dial.md-scale(
-      md-open='vm.isOpen'
-      md-direction='down'
-      hide-gt-xs
+  .md-toolbar-tools(ng-class='{"no-padding": vm.breakpoint}')
+    a(ui-sref='home' style='padding-top: 4px;')
+      img.top-logo(ng-src='{{windowWidth < 450 ? "images/logo-230x150.png" : "images/top-logo.jpg"}}')
+
+    .margin-left(flex)
+      small(ng-show='windowWidth > 850 || windowWidth < 800')
+        a(href='tel:+74957668887') +7(495)766-888-7
+
+    md-button.tool-button(
+    ng-repeat='btn in vm.buttons track by btn.sref'
+    ui-sref='{{btn.sref}}'
+    ui-sref-active='md-primary'
+    ng-if='!vm.breakpoint'
+    ) {{ btn.label }}
+
+    md-fab-speed-dial.md-scale.fab-menu(
+    md-direction='down'
+    ng-if='vm.breakpoint'
     )
       md-fab-trigger
         md-button.md-fab.md-mini.md-icon-button.md-primary(aria-label='menu')
           i.material-icons menu
       md-fab-actions
-        md-button.md-raised.md-mini.custom-fab(aria-label='home' ui-sref='home', ui-sref-active='md-primary')
-          p Главная
-        md-button.md-raised.md-mini.custom-fab(aria-label='catalogue' ui-sref='catalogue', ui-sref-active='md-primary')
-          p Каталог
-        md-button.md-raised.md-mini.custom-fab(aria-label='cart' ui-sref='cart', ui-sref-active='md-primary')
-          p Корзина
-    md-button.tool-button(ui-sref='home' ui-sref-active='md-primary' hide show-gt-xs) Главная
-    md-button.tool-button(ui-sref='catalogue' ui-sref-active='md-primary' hide show-gt-xs) Каталог
-    span(flex="5" flex-xs="0" hide show-gt-xs)
-    div.with-badge(flex="none" hide show-gt-xs)
-      md-button.md-fab.md-mini.md-icon-button(ui-sref='cart')
+        md-button.md-raised.md-mini.custom-fab(
+        ng-repeat='fab in vm.navs track by fab.sref'
+        aria-label='{{fab.sref}}'
+        ui-sref='{{fab.sref}}'
+        ui-sref-active='md-primary'
+        )
+          p {{ fab.label }}
+
+    span(flex='5' ng-if='!vm.breakpoint')
+
+    md-button.md-fab.md-icon-button.md-mini(
+    ng-if='!vm.breakpoint'
+    ng-click='vm.loginBtnClick()'
+    aria-label='login-button'
+    ng-disabled='!!vm.settingUser'
+    ui-sref-active='active'
+    )
+      i.material-icons {{ vm.loggedIn ? 'lock_open' : 'lock_outline' }}
+
+    div.with-badge(flex='none')
+      md-button.md-fab.md-mini.md-icon-button(ui-sref='cart' ui-sref-active='active')
         i.material-icons shopping_cart
       span.badge(ng-show='vm.cart.length') {{ vm.cart.length }}

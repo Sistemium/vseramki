@@ -5,7 +5,7 @@
   angular
     .module('vseramki')
     .service('Brand', Brand)
-    .run(function(Brand){
+    .run(function (Brand) {
       Brand.findAll();
     })
   ;
@@ -18,8 +18,8 @@
 
       relations: {
         hasMany: {
-          Article: {
-            localField: 'articles',
+          Baguette: {
+            localField: 'baguettes',
             foreignKey: 'brandId'
           }
         }

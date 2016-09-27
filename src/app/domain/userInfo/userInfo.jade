@@ -1,0 +1,5 @@
+div(layout='column' layout-align='center center')
+  h3 Добро пожаловать, {{vm.user.name}}
+  md-button.pink-button(ng-click='vm.logout()') Завершить работу
+
+  //pre {{ vm.roles | json }}

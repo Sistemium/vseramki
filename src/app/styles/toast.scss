@@ -1,0 +1,22 @@
+md-toast .md-toast-content {
+  font-size: 15px;
+  text-align: center;
+}
+
+md-toast.md-success-toast-theme {
+  .md-toast-content {
+    background-color: #0c7c02;
+  }
+}
+
+md-toast.md-fail-toast-theme {
+  .md-toast-content {
+    background-color: #d63030;
+  }
+}
+
+md-toast {
+  //position: fixed;
+  //top: 0;
+  padding: 4px;
+}

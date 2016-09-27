@@ -1,0 +1,37 @@
+form {
+
+  md-input-container {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  &.wide md-input-container, &.wide searchable-select, md-input-container.wide, searchable-select.wide {
+
+    width: 350px;
+
+    input, md-select {
+      width: 350px;
+    }
+
+  }
+
+  > md-input-container {
+    margin: 8px 0;
+    //margin-bottom: 8px;
+  }
+
+  md-input-container, searchable-select {
+
+    width: 250px;
+
+    input, md-select {
+      width: 250px;
+    }
+
+  }
+
+  .required-field-asterisk {
+    color: red;
+  }
+
+}

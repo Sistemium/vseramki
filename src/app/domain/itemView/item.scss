@@ -1,54 +1,37 @@
-.border {
-  border: 1px solid black;
+md-backdrop {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-.name-head {
-  text-shadow: 0px 0px 7px rgba(159, 159, 159, 0.75);
-  color: #000000;
-  font-size: 30px;
-  margin: 20px;
-  padding-top: 10px;
+
+md-backdrop.md-opaque {
+  opacity: .70;
 }
 
-.action-buttons {
-  height: 44px;
+
+.main-photo {
+
+  max-width: 300px;
+  min-width: 300px;
+
+  min-height: 420px;
+  max-height: 420px;
+
+  img.preview {
+    max-width: 260px;
+    max-height: 320px;
+    cursor: zoom-in;
+  }
+
+  .ng-gallery {
+    margin-top: 10px;
+  }
 }
 
-cite {
-  font-size: 12px;
+.fixed-bottom-right.admin-buttons > * {
+  margin-bottom: 10px;
 }
-
-.header-h1 {
-  background-color: #f3f4f6;
-  border-bottom: 5px solid #dbdbdb;
-  padding: 5px;
-  margin-bottom: 0px;
-}
-
-.photo {
-  margin-right: 20px;
-}
-
-.add-to-cart {
-  width: 70%;
-  margin: 0 auto;
-}
-
-td {
-  padding: 0 9px !important;
-}
-
-.image-size {
-  width: 361px;
-  height: 361px;
-  margin: 0 auto;
-}
-
-.td-fixed-size {
-  width: 30%;
-}
-
-.borders{
-  border: 5px solid black;
-}
-

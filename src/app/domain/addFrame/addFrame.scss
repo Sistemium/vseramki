@@ -1,0 +1,59 @@
+.hint {
+  /* Position the hint */
+  position: absolute;
+  left: 2px;
+  right: auto;
+  bottom: 7px;
+  /* Copy styles from ng-messages */
+  font-size: 12px;
+  line-height: 14px;
+  transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+}
+
+.md-item-text-header {
+  padding: 8px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  margin: 5px;
+}
+
+.header-no-bot-margin {
+  margin-bottom: 0;
+}
+
+.cust-divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.fixed-button-width {
+  width: 180px;
+}
+
+.md-item-text-frame {
+  padding: 8px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  cursor: default;
+  margin: 5px 2px;
+}
+
+.custom-warning {
+  font-size: 12px;
+  line-height: 14px;
+  overflow: hidden;
+  opacity: 1;
+  margin-top: 0;
+  padding-top: 5px;
+  color: rgb(221, 44, 0);
+}
+
+.custom-animation.ng-hide-remove {
+  -webkit-animation: 0.65s slideInDown ease;
+  animation: 0.65s slideInDown ease;
+}
+
+.custom-animation.ng-hide-add {
+  -webkit-animation: 0.65s slideOutUp ease;
+  animation: 0.65s slideOutUp ease;
+}
+

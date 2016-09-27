@@ -1,30 +1,28 @@
-(function() {
-  'use strict';
+'use strict';
+
+(function () {
 
   angular
     .module('vseramki')
     .controller('MainController', MainController);
 
-  /** @ngInject */
-  function MainController($timeout, toastr) {
+  function MainController(toastr, Auth, $state) {
+
     var vm = this;
+    var accessToken = $state.params ['access-token'];
 
-    vm.awesomeThings = [];
-    vm.classAnimation = '';
-    vm.creationDate = 1460382787159;
-    vm.showToastr = showToastr;
-
-    activate();
-
-    function activate() {
-      $timeout(function() {
-        vm.classAnimation = 'rubberBand';
-      }, 4000);
+    if (accessToken) {
+      Auth.login(accessToken, function (err) {
+        if (!err) {
+          $state.go('home', false, {inherit: false});
+        } else {
+          toastr.error('Ошибка авторизации');
+        }
+      });
     }
 
-    function showToastr() {
-      toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
-      vm.classAnimation = '';
-    }
+    _.assign(vm, {});
+
   }
+
 })();

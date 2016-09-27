@@ -1,0 +1,61 @@
+.scroll-y(
+resize='baguetteEdit'
+style="height: {{ baguetteEdit.windowHeight - baguetteEdit.offsetTop - 2}}px;"
+)
+
+  h2.text-center(ng-if='vm.id') Редактирование багета
+
+  div
+
+    form(name="widthForm" layout='column' layout-align='top center')
+
+      md-input-container(flex)
+        label Ширина багета (мм.)
+          =' '
+          span.required-field-asterisk *
+        input.teste(step='1' type='number' ng-model='vm.baguette.borderWidth' min='1' required name='baguetteWidth' flex)
+        div(ng-messages="widthForm.baguetteWidth.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+      searchable-select(
+      label='Материал'
+      model='vm.baguette.materialId'
+      model-name='Material'
+      options='vm.materials'
+      on-close='vm.saveClickedOption()'
+      )
+
+      searchable-select(
+      label='Цвет'
+      model='vm.baguette.colourId'
+      model-name='Colour'
+      options='vm.colours'
+      on-close='vm.saveClickedOption()'
+      )
+
+      searchable-select(
+      label='Бренд'
+      model='vm.baguette.brandId'
+      model-name='Brand'
+      options='vm.brands'
+      on-close='vm.saveClickedOption()'
+      )
+
+    div(layout='row' ng-if='vm.hasChanges()')
+      md-button.md-raised(
+      ng-click='vm.cancelChanges()'
+      ) Отменить изменения
+
+      md-button.md-raised(
+      ng-disabled='!vm.selectParamsChecker()' ng-click='vm.createBaguette()'
+      ) Сохранить изменения
+
+    div.alert.margin-top-bottom.md-whiteframe-1dp(ng-if='vm.dupMessage.length' layout='row' layout-align='center center')
+      span {{vm.dupMessage}}
+
+  md-divider.md-margin
+
+  div.space-children-em(ng-if='vm.id')
+    ng-gallery.margin-top-em(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length')
+    .text-center
+      md-button.admin-button(ng-click='vm.showImageDialog($event, vm.id)') Добавить фото

@@ -1,0 +1,78 @@
+@import "_vars";
+
+.property-list {
+
+  min-width: 300px;
+  max-width: 380px;
+  border-radius: 5px;
+
+  .header {
+    background-color: $toolbar-background-color;
+    //color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    padding-left: 12px;
+    margin-bottom: 0;
+    margin-top: 0;
+    height: 38px;
+    border-radius: 5px 5px 0 0;
+    line-height: 38px;
+    .md-button {
+      float: right;
+    }
+  }
+
+  .property-list-container {
+    .property {
+      border-top: solid 1px silver;
+    }
+  }
+
+}
+
+.property-list, .property-list-container {
+
+  .property {
+
+    display: flex;
+
+    & > * {
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    .property-label {
+      flex: 1;
+      display: inline-block;
+      margin-right: 10px;
+      text-align: right;
+      color: $gray;
+    }
+
+    .property-value {
+      flex: 1;
+      margin: auto;
+    }
+
+  }
+
+  &.flex-5-4 .property {
+    .property-label {
+      flex: 5;
+    }
+    .property-value {
+      flex: 4;
+    }
+  }
+
+  &.flex-4-5 .property {
+    .property-label {
+      flex: 4;
+    }
+    .property-value {
+      flex: 5;
+    }
+  }
+
+}

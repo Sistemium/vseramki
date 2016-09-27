@@ -1,0 +1,26 @@
+.searchable-select(layout='column')
+  span.label {{ vm.label }}
+  md-select(ng-model='vm.model' md-on-close="vm.onCloseFn()" aria-label='vm.label')
+    md-select-header(layout='row' layout-align='center center')
+      md-input-container(flex)
+        label Поиск {{ vm.label }}а
+        input(
+          elem-ready='vm.inputReady'
+          ng-model="vm.search.name"
+          type="text"
+          input-clear='black'
+          md-autofocus
+        )
+      div(ng-if='!vm.notAddable && vm.search.name')
+
+        md-button.button-cust-fab(
+          ng-class='vm.addingMode ? "green-button-fab" : "yellow-button-fab"'
+          ng-click="vm.addClick($event)"
+          md-autofocus
+        )
+          i.material-icons.md-fab add
+
+    md-option(ng-repeat="option in vm.options | filter:vm.search | orderBy:'name' as filteredItems track by option.id" ng-value="option.id")
+      | {{ option.name }}
+
+

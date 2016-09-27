@@ -3,10 +3,17 @@
 .top-logo {
   max-height: 36px;
   margin-left: 6px;
+  cursor: pointer;
 }
 
+.top-logo-mobile {
+  margin-left: 7px;
+  height: 56px;
+}
+
+
 md-toolbar.toolbar-fixed-top.white-background {
-  background-color: $body-background-color;
+  background-color: $toolbar-background-color;
   color: #202020;
 }
 
@@ -14,13 +21,13 @@ md-toolbar.toolbar-fixed-top.white-background {
 
   position: fixed;
   top: 0;
-  z-index: 1000;
+  z-index: 70;
 
   & + * {
     margin-top: 64px;
   }
 
-  padding-right: 10px;
+  padding-right: 5px;
 
 }
 
@@ -29,10 +36,9 @@ md-toolbar.toolbar-fixed-top.white-background {
   background-color: rgb(250, 250, 250);
   &.md-button.md-primary, &.md-button.md-primary:hover {
     color: rgba(255, 255, 255, 0.87);
-    background-color: rgb(63, 81, 181);
+    background-color: $primary-button-background-color;
   }
 }
-
 
 @media only screen and (min-width: 0) and (max-width: $layout-breakpoint-sm - 1) {
   .md-toolbar-tools {
@@ -55,21 +61,19 @@ md-toolbar.toolbar-fixed-top.white-background {
   width: 100px;
   border-radius: 3px;
   margin-right: 56px;
+  margin-top: 5px;
   & > p {
     line-height: 8px;
   }
-}
-
-md-fab-speed-dial {
-  position: fixed;
-  top: 8px;
-  right: -48px;
 }
 
 .md-fab-action-item {
   margin-top: 6px;
 }
 
-.custom {
-  border: 1px solid blue;
+.fab-menu {
+  position: fixed;
+  top: 8px;
+  right: 2px;
+  z-index: 100;
 }

@@ -1,82 +1,45 @@
+'use strict';
+
 (function () {
-  'use strict';
 
   angular
     .module('vseramki')
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, Schema) {
+  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper, AuthHelper) {
 
     var FrameSize = Schema.model('FrameSize');
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
+    var BaguetteImage = Schema.model('BaguetteImage');
 
     var vm = this;
     var groupSize = 3;
 
-    vm.pattern = '\\d+';
-
-    FrameSize.bindAll({}, $scope, 'vm.frameSizes');
-    Brand.bindAll({}, $scope, 'vm.brands');
-    Material.bindAll({}, $scope, 'vm.materials');
-
+    vm.isAdmin = AuthHelper.isAdmin();
 
     Cart.findAll();
-    Cart.bindAll({}, $scope, 'vm.cart');
 
-    //function setPage(direction) {
-    //
-    //  var page = vm.currentPage + direction;
-    //
-    //  //Article.ejectAll();
-    //
-    //  vm.busy = true;
-    //
-    //  return Article.findAll(angular.extend({
-    //      limit: vm.pageSize,
-    //      offset: page * vm.pageSize
-    //    }, vm.articleFilter || {}), {
-    //      bypassCache: true
-    //    })
-    //    .then(function (data) {
-    //
-    //      vm.articles = data;
-    //      vm.currentPage = page;
-    //
-    //      var rows = _.chunk(data, groupSize);
-    //
-    //      if (direction > 0 || !vm.rows.length) {
-    //        Array.prototype.push.apply (vm.rows, rows);
-    //      } else if (direction < 0) {
-    //        vm.rows = Array.prototype.push.apply (rows, vm.rows);
-    //      } else {
-    //        vm.rows = rows;
-    //      }
-    //
-    //    })
-    //    .finally(function () {
-    //      vm.busy = false;
-    //    });
-    //
-    //}
-
-    function nextPage() {
-      //if (vm.busy) {
-      //  return DEBUG('vb.busy')
-      //}
-      //DEBUG('nextPage', vm.currentPage);
-      //setPage(1);
+    function recalcTotals() {
+      Cart.recalcTotals(vm);
     }
 
-    function prevPage() {
-      //if (vm.busy) {
-      //  return DEBUG('vb.busy')
-      //}
-      //DEBUG('prevPage', vm.currentPage);
-      //setPage(-1);
-    }
+    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
+
+    Baguette.findAll().then(function (data) {
+      vm.baguette = data;
+    });
+
+    BaguetteImage.findAll().then(function (data) {
+      vm.baguetteImage = data;
+    });
+
+    ArticleImage.findAll({limit: 1000})
+      .then(function (data) {
+        vm.images = data;
+      });
 
     function plusOne(item) {
       var cart = item.inCart;
@@ -87,7 +50,6 @@
     function minusOne(item) {
 
       var cart = item.inCart;
-
       cart.count--;
 
       if (!cart.count) {
@@ -98,12 +60,10 @@
     }
 
     function onCartChange(article) {
-
       Cart.save(article.inCart);
     }
 
     function onBlur(article) {
-      console.log(article);
       if (!article.inCart.count) {
         Cart.destroy(article.inCart);
       }
@@ -115,13 +75,19 @@
 
       vm.articles = Article.filter(f);
       vm.rows = _.chunk(vm.articles, groupSize);
+      vm.filterLength = !!Object.keys(f).length;
 
-      function getVisibleBy (prop) {
+      function getVisibleBy(prop) {
 
-        var propFilter = _.pickBy(f, function(val,key){
+        var propFilter = _.pickBy(f, function (val, key) {
           return key !== prop;
         });
+
         var articles = Article.filter(propFilter);
+
+        if (!articles) {
+          articles = {a: 'fail'}
+        }
 
         return _.map(
           _.groupBy(articles, prop),
@@ -129,23 +95,31 @@
             return key;
           }
         );
-
       }
 
       vm.colours = Colour.getAll(getVisibleBy('colourId'));
-
+      vm.materials = Material.getAll(getVisibleBy('materialId'));
+      vm.brands = Brand.getAll(getVisibleBy('brandId'));
+      vm.frameSizes = FrameSize.getAll(getVisibleBy('frameSizeId'));
     }
 
 
     function resetFilters() {
       vm.articleFilter = {};
       vm.currentFilter = {};
-      vm.filterChosen = false;
     }
 
+    function delCurrFilter(a) {
+
+      _.unset(vm.currentFilter, a);
+      _.unset(vm.articleFilter, a + 'Id');
+
+      filterArticles(vm.articleFilter);
+
+    }
 
     function filterOptionClick(item, field) {
-      vm.filterChosen = true;
+
       var fieldName = field + 'Id';
 
       if (item) {
@@ -155,119 +129,73 @@
       }
 
       vm.currentFilter [field] = item;
-
       filterArticles();
 
     }
 
     angular.extend(vm, {
-
-      currentPage: 1,
-      pages: 9,
-      pageSize: 36,
       rows: [],
       rowsFlex: 33,
       articleFilter: {},
       currentFilter: {},
+      filterLength: false,
 
-      //setPage: function () {
-      //  DEBUG('setPage', vm.currentPage);
-      //  setPage(0);
-      //},
+      plusOne,
+      minusOne,
+      onCartChange,
+      onBlur,
+      filterOptionClick,
+      resetFilters,
+      delCurrFilter,
+      addToCart: Cart.addToCart,
 
+      goToCreateFrame: function () {
+        $state.go('catalogue.add');
+      },
 
-      nextPage: nextPage,
-      prevPage: prevPage,
-      plusOne: plusOne,
-      minusOne: minusOne,
-      onCartChange: onCartChange,
-      onBlur: onBlur,
-      filterOptionClick: filterOptionClick,
-      resetFilters: resetFilters,
-      addToCart: Cart.addToCart
-
+      changeFrame: function (frame) {
+        $state.go('catalogue.item', {id: frame.id});
+      }
 
     });
 
-    Article.findAll({limit: 1000})
+    Article.findAll({limit: 10})
       .then(function (data) {
-
         vm.articles = data;
-        vm.currentPage = 1;
-
         vm.rows = _.chunk(data, groupSize);
-
         vm.ready = true;
         vm.total = Math.ceil(data.length / vm.pageSize);
 
-      })
-    ;
+        $q.all([
+          Colour.findAll(),
+          Material.findAll(),
+          FrameSize.findAll(),
+          Brand.findAll()
+        ]).then(function () {
+          filterArticles();
+        });
 
-    Colour.findAll()
-      .then(function(data){
-        vm.colours = data;
-      })
-    ;
+      });
 
-    //Article.getCount().then(function (res) {
-    //  vm.ready = true;
-    //  vm.total = Math.ceil(res / vm.pageSize);
-    //});
+    Article.bindAll({}, $scope, 'vm.articles', () => VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
+      groupSize = nv;
+      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
+      vm.rows = _.chunk(vm.articles, nv);
+    }));
 
-    $scope.$watch ('windowHeight', function (windowHeight) {
-
-      if (windowHeight > 710) {
-        vm.pages = 9;
-      } else if (windowHeight > 620) {
-        vm.pages = 7;
-      } else if (windowHeight > 530) {
-        vm.pages = 5;
-      } else if (windowHeight > 420) {
-        vm.pages = 3;
-      } else if (windowHeight > 380) {
-        vm.pages = 2;
-      } else {
-        vm.pages = 1;
-      }
-
-    });
-
-    $scope.$watch ('windowWidth', function (windowWidth) {
-
-      if (windowWidth > 1150) {
-        groupSize = 4;
-        vm.rowsFlex = 20
-      } else if (windowWidth > 950) {
-        groupSize = 3;
-        vm.rowsFlex = 25
-      } else if (windowWidth > 730) {
-        groupSize = 2;
-        vm.rowsFlex = 33
-      } else if (windowWidth > 550) {
-        groupSize = 1;
-        vm.rowsFlex = 50
-      } else {
-        groupSize = 1;
-        vm.rowsFlex = 100
-      }
-
-      vm.groupSize = groupSize;
-
-    });
-
-    $scope.$watch ('vm.groupSize', function (nw, o) {
-
-      if (nw || 0 !== o || 0) {
-        vm.rows = _.chunk(vm.articles, groupSize)
-      }
-
+    VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
+      groupSize = nv;
+      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
+      vm.rows = _.chunk(vm.articles, nv);
     });
 
     $scope.$watch('vm.articleFilter', filterArticles);
 
-    //$scope.$on ('vsRepeatInnerCollectionUpdated', function (e,a,b,c,d) {
-    //  DEBUG (e.name, a,':', b, '-', c, ':', d);
-    //});
+    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+      vm.disableAddFrame = toState.url === '/add';
+      vm.isRootState = /^catalogue$/.test(toState.name);
+      vm.currentItemId = toParams.id;
+    });
 
   }
 

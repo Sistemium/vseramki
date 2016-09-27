@@ -1,0 +1,69 @@
+md-content.md-padding
+
+  section.busy(ng-if='!vm.ready' layout='row' layout-align='center center')
+    md-progress-circular(md-diameter='200' md-mode='indeterminate')
+
+  // Dropdown lists
+  .md-whiteframe-1dp.radius(layout='row', layout-align='center center' ng-if='vm.ready' layout-xs='column')
+
+    md-menu(md-offset='0 60')
+      md-button.md-raised.pink-button(aria-label='Группировка' ng-click='$mdOpenMenu($event)' )
+        label Группировка
+        span(ng-if='vm.groups') :
+        = ' '
+        span {{ vm.groups.label }}
+
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat='prop in vm.props track by prop.label')
+          md-button(ng-click='vm.setFilterCriterias(prop, $event, $index)' id='groups')
+            span(md-menu-align-target id='groups')
+              | {{ prop.label }}
+
+    md-menu(md-offset='0 60')
+      md-button.md-raised.pink-button(aria-label='Строки' ng-click='$mdOpenMenu($event)')
+        label Строки
+        span(ng-if='vm.rows') :
+        = ' '
+        span {{ vm.rows.label }}
+
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat='prop in vm.props track by prop.label')
+          md-button(ng-click='vm.setFilterCriterias(prop, $event, $index)' id='rows')
+            span(md-menu-align-target id='rows')
+              | {{ prop.label }}
+
+    md-menu(md-offset='0 60')
+      md-button.md-raised.pink-button(aria-label='Столбцы' ng-click='$mdOpenMenu($event)')
+        label Столбцы
+        span(ng-if='vm.columns') :
+        = ' '
+        span {{ vm.columns.label }}
+
+      md-menu-content(width='2')
+        md-menu-item(ng-repeat='prop in vm.props track by prop.label')
+          md-button(ng-click='vm.setFilterCriterias(prop, $event, $index)' id='columns')
+            span(md-menu-align-target id='columns')
+              | {{ prop.label }}
+
+    md-button.md-fab.md-mini.md-icon-button.pink-button-fab(ng-click='vm.deleteFilters()' ng-if='vm.groups && vm.rows && vm.columns')
+      i.material-icons clear
+
+
+  div(layout='column' ng-repeat='group in vm.groups.data track by group.id')
+    h3 {{ group.name }}
+    .md-whiteframe-1dp.radius.md-margin(ng-if='vm.rows')
+      div(layout-align='center center' layout='row')
+        //p(style='text-align: center; border-bottom: 1px solid black; display: inline-block;') {{vm.rows.label}}
+      div(layout='row' layout-align='center center' id='filterTable')
+        md-table-container(ng-if='vm.rows && vm.groups')
+          table( md-table)
+            thead(md-head)
+              th(md-column)
+              th(ng-repeat='column in vm.columnsByGroup(group) track by column.id' md-column) {{ column.name }}
+            tbody(md-body)
+              tr(ng-repeat='row in vm.rowsByGroup(group) track by row.id' md-row)
+                td(md-cell) {{ ::row.name }}
+                td(ng-repeat='column in vm.columnsByGroup(group) track by column.id' md-cell)
+                  | {{ ::vm.cellByGroupRowColumn (group, row, column) }}
+
+

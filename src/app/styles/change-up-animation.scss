@@ -1,0 +1,43 @@
+$change-up-color: yellow;
+$change-up-color-lite: rgb(255, 255, 128);
+$change-up-duration: 1.5s;
+
+.change-up {
+  background-color: $change-up-color;
+  &.lite {
+    background-color: $change-up-color-lite;
+  }
+}
+
+.change-up-add {
+  transition: all $change-up-duration / 3;
+  -webkit-transition: all $change-up-duration / 3 ease-in-out;
+}
+
+.change-up-remove {
+  transition: all $change-up-duration;
+  -webkit-transition: all $change-up-duration ease-in-out;
+}
+
+.change-up-add, .change-up-remove-active.lite {
+  background-color: inherit;
+}
+
+.change-up-add-active {
+  background-color: $change-up-color;
+  &.lite {
+    background-color: $change-up-color-lite;
+  }
+}
+
+.change-up-remove {
+  background-color: $change-up-color;
+  &.lite {
+    background-color: $change-up-color-lite;
+  }
+}
+
+.change-up-remove-active, .change-up-remove-active.lite {
+  background-color: inherit;
+}
+

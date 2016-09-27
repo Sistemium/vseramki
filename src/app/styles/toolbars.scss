@@ -1,0 +1,34 @@
+.view-mode-tool{
+
+  .header {
+    width: 160px;
+  }
+
+  .options {
+    display: flex;
+    margin-top: 3px;
+  }
+
+}
+
+.md-toolbar-tools > .md-button:last-child {
+  margin-right: 30px;
+}
+
+.fixed-toolbar {
+  position: fixed !important;
+  background: white;
+}
+
+md-toolbar > .fixed-toolbar {
+  min-width: 56px !important;
+  height: 56px !important;
+}
+
+.toolbar-bottom-border {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.toolbar-height {
+  min-height: 56px;
+}
