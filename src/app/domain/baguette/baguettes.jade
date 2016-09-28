@@ -9,7 +9,7 @@ md-toolbar.md-table-toolbar.md-default.toolbar-height(ng-if='vm.isRoot')
         ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
         ) view_headline
 
-        span.forbid-marking.divider-cursor |
+        .vertical-divider |
 
         i.material-icons.icon-button(
         ng-click="vm.changeView('baguettes.tiles')"

@@ -104,3 +104,10 @@ md-dialog {
   user-select: none;
   cursor: default;
 }
+
+.vertical-divider {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}

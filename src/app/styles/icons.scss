@@ -1,3 +1,18 @@
+@import "_vars";
+
 .material-icons.mini {
   font-size: 14px;
+}
+
+
+.icon-button {
+  cursor: pointer;
+}
+
+.icons-button-active {
+  color: $primary-button-background-color !important;
+}
+
+.icon-button-disabled {
+  color: rgba(0, 0, 0, 0.12);
 }

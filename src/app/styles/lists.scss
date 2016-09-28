@@ -9,3 +9,15 @@ md-virtual-repeat-container {
 
 }
 
+
+div > md-list > md-list-item.md-clickable:hover {
+  cursor: default;
+}
+
+md-list-item > button {
+  margin: 0;
+}
+
+md-list.custom-list {
+  min-width: 400px;
+}

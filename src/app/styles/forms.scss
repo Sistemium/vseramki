@@ -35,3 +35,19 @@ form {
   }
 
 }
+
+md-input-container > .md-errors-spacer {
+  display: none !important;
+}
+
+.search {
+
+  margin-top: 7px;
+
+  &:hover {
+    color: #ff4081;
+    cursor: pointer;
+  }
+
+}
+
