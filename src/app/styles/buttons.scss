@@ -108,6 +108,14 @@ button .label {
   padding: 3px;
 }
 
+.btn-primary {
+  color: white !important;
+  background-color: $fab-button-background-color !important;
+  &:active, &:hover {
+    background-color: $fab-button-hover-background-color !important;
+  }
+}
+
 .micro-fab {
   border-radius: 50%;
   width: 25px;
