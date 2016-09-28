@@ -44,6 +44,18 @@
           Material: {
             localField: 'material',
             localKey: 'materialId'
+          },
+          Screening: {
+            localField: 'screening',
+            localKey: 'screeningId'
+          },
+          BackMount: {
+            localField: 'backMount',
+            localKey: 'backMountId'
+          },
+          PassePartout: {
+            localField: 'passePartout',
+            localKey: 'passePartoutId'
           }
 
         },

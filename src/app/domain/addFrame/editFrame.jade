@@ -31,6 +31,20 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       not-addable='false'
       )
 
+      searchable-select(
+      label='Крепление задника'
+      model='vm.frame.backMountId'
+      model-name='BackMount'
+      options='vm.backMounts'
+      )
+
+      searchable-select(
+      label='Прозрачная вставка'
+      model='vm.frame.screeningId'
+      model-name='Screening'
+      options='vm.screenings'
+      )
+
       md-input-container
         label Штук в коробке
           =' '

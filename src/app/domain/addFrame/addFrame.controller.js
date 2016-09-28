@@ -11,6 +11,9 @@
 
     var vm = this;
     var FrameSize = Schema.model('FrameSize');
+    var BackMount = Schema.model('BackMount');
+    var Screening = Schema.model('Screening');
+
     var unique = true;
 
     if ($state.params.id) {
@@ -32,6 +35,12 @@
 
     FrameSize.findAll();
     FrameSize.bindAll({}, $scope, 'vm.frameSizes');
+
+    BackMount.findAll();
+    BackMount.bindAll({}, $scope, 'vm.backMounts');
+
+    Screening.findAll();
+    Screening.bindAll({}, $scope, 'vm.screenings');
 
     function checkParams () {
       vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && unique && vm.frame.highPrice;
