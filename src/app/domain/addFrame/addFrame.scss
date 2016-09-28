@@ -17,17 +17,6 @@
   margin: 5px;
 }
 
-.header-no-bot-margin {
-  margin-bottom: 0;
-}
-
-.cust-divider {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.fixed-button-width {
-  width: 180px;
-}
 
 .md-item-text-frame {
   padding: 8px;
@@ -46,14 +35,3 @@
   padding-top: 5px;
   color: rgb(221, 44, 0);
 }
-
-.custom-animation.ng-hide-remove {
-  -webkit-animation: 0.65s slideInDown ease;
-  animation: 0.65s slideInDown ease;
-}
-
-.custom-animation.ng-hide-add {
-  -webkit-animation: 0.65s slideOutUp ease;
-  animation: 0.65s slideOutUp ease;
-}
-

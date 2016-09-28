@@ -165,13 +165,6 @@
 
     });
 
-    $scope.$watch('windowWidth', function (windowWidth) {
-
-      windowWidth < 600 ? vm.useMobile = true : vm.useMobile = false;
-      windowWidth < 800 ? vm.addButtonBreakPoint = true : vm.addButtonBreakPoint = false;
-
-    });
-
     $scope.$on('$destroy', subscription);
 
     VSHelper.watchForGroupSize($scope, 50, 250, setChunks);

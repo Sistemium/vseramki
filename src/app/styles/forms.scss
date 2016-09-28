@@ -35,3 +35,29 @@ form {
   }
 
 }
+
+md-input-container > .md-errors-spacer {
+  display: none !important;
+}
+
+.search {
+
+  margin-top: 7px;
+
+  &:hover {
+    color: #ff4081;
+    cursor: pointer;
+  }
+
+}
+
+div.alert {
+  text-align: center;
+  background-color: $alert-background-color;
+  padding: 10px;
+  color: $alert-color;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 2px;
+  font-size: 15px;
+  cursor: default;
+}

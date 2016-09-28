@@ -1,14 +1,11 @@
-div.login-div-center(layout='column' layout-align='center center')
+.login(layout='column' layout-align='center center')
 
   error(error-text='vm.error' ng-if='vm.error')
 
-  div(layout='column')
-    md-card.card-back-color
-      md-card-header
-        md-card-header-text
-          .md-title
-            span Войти
-      md-card-content(layout='column' layout-aling='center center')
-        oauth-buttons(buttons-config='vm.buttons')
-
-
+  md-card.card-back-color
+    md-card-header
+      md-card-header-text
+        .md-title
+          span Войти
+    md-card-content(layout='column' layout-aling='center center')
+      oauth-buttons(buttons-config='vm.buttons')
