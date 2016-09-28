@@ -1,13 +1,16 @@
-.addFrame.no-margin.scroll-y(
+.addFrame.no-margin.scroll-y.text-center(
 resize='editFrame'
 style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 )
-  .width-100(layout='column' layout-align='top center')
-    h2 Редактирование рамки
+  h2 {{ vm.frame.name }}
 
-    form.wide(name="frameAttrsForm" layout='column' layout-align='top center')
+  form.wide(name="frameAttrsForm" layout='row' layout-align='space-between top' layout-sm='column')
 
-      md-input-container
+    .flex
+
+    div(layout='column' layout-align='top center')
+
+      //md-input-container
         label Название рамки
         input(type='text' ng-model='vm.frame.name' name='name')
 
@@ -26,6 +29,39 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       options='vm.frameSizes'
       not-addable='false'
       )
+
+      md-input-container
+        label Штук в коробке
+          =' '
+          span.required-field-asterisk *
+        input(
+        step='1'
+        type='number'
+        ng-model='vm.frame.packageRel'
+        min='1'
+        required
+        name='packageRel'
+        input-clear='black'
+        )
+        div(ng-messages="frameAttrsForm.packageRel.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+      md-input-container
+        label Вес (кг.)
+        input(
+        step='0.1'
+        type='number'
+        ng-model='vm.frame.pieceWeight'
+        min='0.1'
+        name='pieceWeight'
+        input-clear='black'
+        )
+
+      input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
+
+    .flex
+
+    div(layout='column' layout-align='top center')
 
       md-input-container
         label Рыночная цена (руб.)
@@ -52,43 +88,16 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
         div.custom-animation(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
           span.custom-warning Оптовая цена больше рыночной
 
-      md-input-container
-        label Вес (кг.)
-        input(
-        step='0.1'
-        type='number'
-        ng-model='vm.frame.pieceWeight'
-        min='0.1'
-        name='pieceWeight'
-        input-clear='black'
-        )
+    .flex
 
-      md-input-container
-        label Штук в коробке
-          =' '
-          span.required-field-asterisk *
-        input(
-        step='1'
-        type='number'
-        ng-model='vm.frame.packageRel'
-        min='1'
-        required
-        name='packageRel'
-        input-clear='black'
-        )
-        div(ng-messages="frameAttrsForm.packageRel.$error")
-          div(ng-message="required") Поле не может быть пустым
+  .text-center(layout='row' ng-if='vm.hasChanges()' layout-align='center center')
+    md-button.md-raised(
+    ng-click='vm.cancelChanges()'
+    ) Отменить изменения
 
-      input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
+    md-button.md-raised(
+    ng-disabled='frameAttrsForm.$invalid' ng-click='vm.saveFrame()'
+    ) Сохранить
 
-    .text-center(layout='row' ng-if='vm.hasChanges()')
-      md-button.md-raised(
-      ng-click='vm.cancelChanges()'
-      ) Отменить изменения
-
-      md-button.md-raised(
-      ng-disabled='frameAttrsForm.$invalid' ng-click='vm.saveFrame()'
-      ) Сохранить
-
-    .alert.margin-top.md-whiteframe-1dp(ng-if='vm.dupMessage')
-      span {{vm.dupMessage}}
+  .alert.margin-top.md-whiteframe-1dp(ng-if='vm.dupMessage')
+    span {{vm.dupMessage}}

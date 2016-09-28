@@ -58,9 +58,9 @@
       var baguette = vm.frame.baguette;
 
       vm.frame.name = !baguette ? null :
-        `Рамкa ${baguette.material.name} "${baguette.brand.name}" ${baguette.colour.name} ` +
-        `${_.get(vm.frame, 'frameSize.name') || ''}` +
-        `${_.get(vm.frame, 'packageRel') && '/' + _.get(vm.frame, 'packageRel') || ''}`
+        `"${baguette.brand.name}" ${_.get(vm.frame, 'frameSize.name') || ''} ${baguette.colour.name} `
+        //`${baguette.material.name}` +
+        //`${ || ''}`
       ;
     }
 
@@ -86,6 +86,8 @@
 
         if (params.baguetteId && params.frameSizeId) {
           Article.findAll(params).then(function (data) {
+
+            _.remove(data, {id: vm.id});
 
             if (data.length) {
               vm.dupMessage = 'Такая рамка уже существует';
