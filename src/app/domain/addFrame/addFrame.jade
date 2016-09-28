@@ -61,7 +61,7 @@ style="height: {{ addFrame.windowHeight - addFrame.offsetTop - 2}}px;"
         )
         div(ng-messages="frameAttrsForm.lowPrice.$error")
           div(ng-message="required") Поле не может быть пустым
-        div.custom-animation(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
+        div.animate-show-slide-up(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
           span.custom-warning Оптовая цена больше рыночной
 
       md-input-container.input-margin

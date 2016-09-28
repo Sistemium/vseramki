@@ -1,5 +1,17 @@
 // Custom SlideInDown animation
 
+.animate-show-slide-up {
+  &.ng-hide-remove {
+    -webkit-animation: 0.65s slideInDown ease;
+    animation: 0.65s slideInDown ease;
+  }
+  &.ng-hide-add {
+    -webkit-animation: 0.65s slideOutUp ease;
+    animation: 0.65s slideOutUp ease;
+  }
+}
+
+
 @-webkit-keyframes slideInDown {
   from {
     -webkit-transform: translate3d(0, -15%, 0);
