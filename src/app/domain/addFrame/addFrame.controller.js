@@ -122,6 +122,7 @@
         });
 
         $scope.frameAttrsForm.$setUntouched();
+        $scope.frameAttrsForm.$setPristine();
       }
 
     });

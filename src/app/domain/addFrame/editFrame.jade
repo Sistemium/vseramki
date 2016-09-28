@@ -2,10 +2,9 @@
 resize='editFrame'
 style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 )
+  h2.gray(ng-if='!vm.id') Новая рамка
   h2 {{ vm.frame.name }}
-
-  // TODO: make one jade for edit and add
-    
+  
   form.wide(name="frameAttrsForm" layout='column' layout-align='space-between top' layout-gt-sm='row')
 
     .flex
@@ -92,14 +91,15 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 
     .flex
 
-  .text-center(layout='row' ng-if='vm.hasChanges()' layout-align='center center')
+  .text-center(layout='row' ng-if='!vm.id && frameAttrsForm.$dirty || vm.hasChanges()' layout-align='center center')
     md-button.md-raised(
+    ng-if='vm.id'
     ng-click='vm.cancelChanges()'
     ) Отменить изменения
 
-    md-button.md-raised(
+    md-button.md-raised.btn-primary(
     ng-disabled='frameAttrsForm.$invalid' ng-click='vm.saveFrame()'
-    ) Сохранить
+    ) {{ frameAttrsForm.$invalid ? 'Форма некорректно заполнена' : 'Сохранить' }}
 
   .alert.margin-top.md-whiteframe-1dp(ng-if='vm.dupMessage')
     span {{vm.dupMessage}}
