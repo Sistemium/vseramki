@@ -1,3 +1,7 @@
+$input-wide-width: 300px;
+$input-normal-width: 250px;
+
+
 form {
 
   md-input-container {
@@ -7,10 +11,12 @@ form {
 
   &.wide md-input-container, &.wide searchable-select, md-input-container.wide, searchable-select.wide {
 
-    width: 350px;
+    width: $input-wide-width;
+    min-width: $input-wide-width - 50;
 
     input, md-select {
-      width: 350px;
+      width: $input-wide-width;
+      min-width: $input-wide-width - 50;
     }
 
   }
@@ -22,10 +28,10 @@ form {
 
   md-input-container, searchable-select {
 
-    width: 250px;
+    width: $input-normal-width;
 
     input, md-select {
-      width: 250px;
+      width: $input-normal-width;
     }
 
   }
@@ -60,4 +66,5 @@ div.alert {
   border-radius: 2px;
   font-size: 15px;
   cursor: default;
+  display: inline-block;
 }
