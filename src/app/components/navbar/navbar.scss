@@ -2,13 +2,13 @@
 
 .top-logo {
   max-height: 36px;
-  margin-left: 6px;
   cursor: pointer;
 }
 
-.top-logo-mobile {
-  margin-left: 7px;
-  height: 56px;
+@media (max-width: 449px) {
+  .top-logo {
+    height: 56px;
+  }
 }
 
 
@@ -26,8 +26,6 @@ md-toolbar.toolbar-fixed-top.white-background {
   & + * {
     margin-top: 64px;
   }
-
-  padding-right: 5px;
 
 }
 
