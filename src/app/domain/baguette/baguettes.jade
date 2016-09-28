@@ -1,57 +1,58 @@
-md-toolbar.md-table-toolbar.md-default.toolbar-height(ng-if='vm.isRoot')
-  .md-toolbar-tools.fixed-toolbar.toolbar-bottom-border
+.baguettes
+  md-toolbar(ng-if='vm.isRoot')
+    .md-toolbar-tools.fixed-toolbar.gray-bottom-border
 
-    .view-mode-tool(layout='row' layout-align='center center')
-      h2.header {{ vm.currentState == 'tiles' ? 'Плитка' : 'Таблица' }} багетов
-      .options
-        i.material-icons.icon-button(
-        ng-click="vm.changeView('baguettes.table')"
-        ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
-        ) view_headline
+      .view-mode-tool(layout='row' layout-align='center center')
+        h2.header {{ vm.currentState == 'tiles' ? 'Плитка' : 'Таблица' }} багетов
+        .options
+          i.material-icons.icon-button(
+          ng-click="vm.changeView('baguettes.table')"
+          ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
+          ) view_headline
 
-        .vertical-divider |
+          .vertical-divider |
 
-        i.material-icons.icon-button(
-        ng-click="vm.changeView('baguettes.tiles')"
-        ng-class="vm.currentState == 'tiles' ? 'icons-button-active' : 'icon-button-disabled'"
-        ) view_comfy
+          i.material-icons.icon-button(
+          ng-click="vm.changeView('baguettes.tiles')"
+          ng-class="vm.currentState == 'tiles' ? 'icons-button-active' : 'icon-button-disabled'"
+          ) view_comfy
 
-    span(flex)
+      span(flex)
 
-    md-button.md-fab.md-mini.md-icon-button.admin-button(
-    ng-click='vm.goToCreateBaguette()'
-    ng-class="{'margin-for-add-button' : !vm.addButtonBreakPoint}"
-    )
-      i.material-icons add
-
-
-.baguettes(layout='row')
-
-  md-sidenav.md-sidenav-left.md-whiteframe-1dp(
-  layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
-  ng-if='!vm.isRoot'
-  )
-
-    p.md-title(layout-margin)
-      md-button.md-raised.no-margin(ng-click='vm.backToList()') Показать список
-
-    .no-padding(
-    layout='column'
-    resize='baguettesList'
-    style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 10 }}px'
-    )
-
-      md-virtual-repeat-container(flex)
-        .md-item-text.md-whiteframe-z1.item(
-        md-virtual-repeat='bag in vm.baguettes'
-        ng-class="{'active ': vm.currentItem.id == bag.id }"
-        ng-click='vm.changeBaguette(bag)'
+      .buttons
+        md-button.md-fab.md-mini.md-icon-button.admin-button(
+        ng-click='vm.goToCreateBaguette()'
         )
-          span {{bag.name}}
+          i.material-icons add
 
-      md-button.admin-button.no-padding(
-      ng-click="vm.goToCreateBaguette('^')"
-      ng-show='vm.isAdmin && !vm.disableAdd'
-      ) Добавить багет
 
-  .ui-view(flex layout='row')
+  div(layout='row')
+
+    md-sidenav.md-sidenav-left.md-whiteframe-1dp(
+    layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
+    ng-if='!vm.isRoot'
+    )
+
+      p.md-title(layout-margin)
+        md-button.md-raised.no-margin(ng-click='vm.backToList()') Показать список
+
+      .no-padding(
+      layout='column'
+      resize='baguettesList'
+      style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 10 }}px'
+      )
+
+        md-virtual-repeat-container(flex)
+          .md-item-text.md-whiteframe-z1.item(
+          md-virtual-repeat='bag in vm.baguettes'
+          ng-class="{'active ': vm.currentItem.id == bag.id }"
+          ng-click='vm.changeBaguette(bag)'
+          )
+            span {{bag.name}}
+
+        md-button.admin-button.no-padding(
+        ng-click="vm.goToCreateBaguette('^')"
+        ng-show='vm.isAdmin && !vm.disableAdd'
+        ) Добавить багет
+
+    .ui-view(flex layout='row')
