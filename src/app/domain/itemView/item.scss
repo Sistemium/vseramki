@@ -1,37 +1,26 @@
-md-backdrop {
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
+.ui-view.article {
 
+  .main-photo {
 
-md-backdrop.md-opaque {
-  opacity: .70;
-}
+    max-width: 300px;
+    min-width: 300px;
 
+    min-height: 420px;
+    max-height: 420px;
 
-.main-photo {
+    img.preview {
+      max-width: 260px;
+      max-height: 320px;
+      cursor: zoom-in;
+    }
 
-  max-width: 300px;
-  min-width: 300px;
-
-  min-height: 420px;
-  max-height: 420px;
-
-  img.preview {
-    max-width: 260px;
-    max-height: 320px;
-    cursor: zoom-in;
+    .ng-gallery {
+      margin-top: 10px;
+    }
   }
 
-  .ng-gallery {
-    margin-top: 10px;
+  .fixed-bottom-right.admin-buttons > * {
+    margin-bottom: 10px;
   }
-}
 
-.fixed-bottom-right.admin-buttons > * {
-  margin-bottom: 10px;
 }
