@@ -14,7 +14,7 @@
         name: 'info',
         url: '/info',
         templateUrl: 'app/domain/companyInfo/info.html',
-        controller: 'InfoController',
+        controller: 'СontactsController',
         controllerAs: 'vm'
       });
   }
