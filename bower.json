@@ -14,7 +14,8 @@
     "sistemium-angular-auth": "^0.1.10",
     "components-font-awesome": "^4.6.3",
     "material-design-icons": "^3.0.1",
-    "angular-ui-bootstrap": "^2.1.3"
+    "angular-ui-bootstrap": "^2.1.3",
+    "ya-map": "angular-yandex-map#^1.0.9"
   },
   "overrides": {
     "angular-ui-bootstrap": {
@@ -40,6 +41,11 @@
         "iconfont/MaterialIcons-Regular.woff2",
         "iconfont/MaterialIcons-Regular.ttf",
         "iconfont/MaterialIcons-Regular.svg"
+      ]
+    },
+    "ya-map": {
+      "main": [
+        "example/2.1/ya-map-2.1.js"
       ]
     }
   },
