@@ -13,7 +13,7 @@
       .state({
         name: 'info',
         url: '/info',
-        templateUrl: 'app/domain/companyInfo/info.html',
+        templateUrl: 'app/domain/contacts/contacts.html',
         controller: 'СontactsController',
         controllerAs: 'vm'
       });
