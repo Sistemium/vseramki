@@ -82,6 +82,7 @@
       });
 
       vm.buttons = _.filter(vm.navs, nav => !nav.fabOnly);
+      vm.isAdmin = isAdmin;
 
     }
 
