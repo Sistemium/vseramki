@@ -1,8 +1,7 @@
-.searchable-select {
+searchable-select {
 
   md-select {
-    margin-top: 0;
-    margin-bottom: 15px;
+    margin: 0;
   }
 
   .label {
@@ -12,5 +11,7 @@
   }
 
   text-align: left;
+  padding: 2px;
+  margin-bottom: 16px;
 
 }
