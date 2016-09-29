@@ -61,6 +61,10 @@
         {
           sref: 'catalogue',
           label: 'Рамки'
+        },
+        {
+          sref: 'info',
+          label: 'Контакты'
         }
       ];
 
