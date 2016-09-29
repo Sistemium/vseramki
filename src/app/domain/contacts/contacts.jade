@@ -1,6 +1,33 @@
-.contacts.md-padding(layout='column' layout-align='space-around center' layout-gt-sm='row')
+.contacts.md-padding.space-children-em(
+layout='column' layout-align='start center'
+layout-gt-sm='row' layout-align-gt-sm='space-around start'
+)
 
-  div(layout='column' layout-align='space-around center')
+  .flex
+
+  .property-list.md-whiteframe-1dp.ya-map-container#location
+    h3.header Наш офис
+    .property-list-container
+      .property
+        .property-label Адрес:
+        .property-value г. Москва, ул. Перерва, д.52, стр.1
+      .property
+        .property-label Телефон:
+        .property-value
+          a(href='tel:+74957668887') +7 (495) 766-888-7
+    ya-map.ya-map(
+      ng-if='vm.map'
+      ya-center="{{vm.map.center}}"
+      ya-zoom="{{vm.map.zoom}}"
+      )
+        ya-geo-object(
+        ya-options="{preset:'islands#brownStretchyIcon'}"
+        ya-source="vm.map.marker"
+        )
+
+  .flex
+
+  div
 
     .property-list.md-whiteframe-1dp#requisites
       h3.header Реквизиты
@@ -9,42 +36,29 @@
           .property-label Название:
           .property-value ООО «Ювит»
         .property
+          .property-label Юр. адрес:
+          .property-value 117342, Россия, г. Москва, ул. Обручева, д.36 корп.1
+        .property
           .property-label ИНН:
           .property-value 7728825955
-
         .property
           .property-label ОГРН:
           .property-value 1127747178404
-
         .property
-          .property-label Юр. адрес:
-          .property-value 117342, Россия, г. Москва, ул. Обручева, д.36 корп.1
-
-        .property
-          .property-label Факт. адрес:
-          .property-value г. Москва, ул. Перерва, д.52, стр.1
-
+          .property-label БИК:
+          .property-value 044579647
         .property
           .property-label Р/с:
           .property-value 40702810800460005121
-
         .property
           .property-label Банк:
           .property-value ЗАО «ПРОБАНК» г. Москва
-
         .property
           .property-label К/с:
           .property-value 30101810900000000647
 
         .property
-          .property-label БИК:
-          .property-value 044579647
-
-        .property
           .property-label ОКПО:
           .property-value 16431742
 
-        .property
-          .property-label Телефон:
-          .property-value +7 (495) 766-888-7
-
+  .flex
