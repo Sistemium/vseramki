@@ -1,0 +1,52 @@
+md-content#scroll-main(
+flex resize='frames'
+style='max-width: {{ vm.isRootState ? "100%" : "0"}};'
+)
+  md-virtual-repeat-container(style='height: {{ frames.windowHeight - frames.offsetTop }}px;')
+    .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
+      .repeated-group-item(ng-repeat='article in row' flex)
+        md-card(layout='column' layout-align='space-between center')
+          md-card-header
+            a(href ui-sref='catalogue.item({id: article.id})')
+              img.thumbnail(ng-src='{{article.activePhoto()}}')
+          md-card-title.md-margin
+            md-card-title-text
+              .md-subhead.text-center {{ article.name }}
+
+          .md-margin
+            .md-title.text-center.text-nowrap
+              span(ng-class='{"strike-through gray": vm.cartHasDiscount}') {{ article.highPrice }} ₽
+              span(ng-if='vm.cartHasDiscount') &nbsp; {{ article.discountedPrice(vm.cartSubTotal) }} ₽
+
+          md-card-actions(flex ng-if='article.inCart')
+            .div-order-info.space-children-em(layout='row' layout-align="start center")
+
+              p Заказано:
+
+              .plus-minus(layout='row' layout-align='center center')
+                md-button.micro-fab(ng-click='vm.minusOne(article)') -
+
+                md-input-container
+                  input(
+                  aria-label="Количество"
+                  ng-model="article.inCart.count"
+                  type="number"
+                  ng-change="vm.onCartChange(article)"
+                  ng-blur="vm.onBlur(article)"
+                  ng-pattern="vm.pattern"
+                  required
+                  min='0'
+                  step='1'
+                  )
+
+                md-button.micro-fab(ng-click='vm.plusOne(article)') +
+
+          md-card-actions(flex ng-if='!article.inCart')
+            md-button.md-fab.md-mini.md-icon-button(
+            aria-label="Добавить в корзину"
+            ng-click="vm.addToCart(article)"
+            )
+              i.material-icons add_shopping_cart
+
+
+
