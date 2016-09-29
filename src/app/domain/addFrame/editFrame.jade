@@ -4,7 +4,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 )
   h2.gray(ng-if='!vm.id') Новая рамка
   h2 {{ vm.frame.name }}
-  
+
   form.wide(name="frameAttrsForm" layout='column' layout-align='space-between top' layout-gt-sm='row')
 
     .flex
@@ -28,11 +28,11 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       model='vm.frame.frameSizeId'
       model-name='FrameSize'
       options='vm.frameSizes'
-      not-addable='false'
       )
 
       searchable-select(
       label='Крепление задника'
+      label-of='крепления задника'
       model='vm.frame.backMountId'
       model-name='BackMount'
       options='vm.backMounts'
@@ -40,6 +40,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 
       searchable-select(
       label='Прозрачная вставка'
+      label-of='прозрачной вставки'
       model='vm.frame.screeningId'
       model-name='Screening'
       options='vm.screenings'

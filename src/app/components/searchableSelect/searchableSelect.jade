@@ -3,7 +3,7 @@
   md-select(ng-model='vm.model' md-on-close="vm.onCloseFn()" aria-label='vm.label')
     md-select-header(layout='row' layout-align='center center')
       md-input-container(flex)
-        label Поиск {{ vm.label }}а
+        label Поиск {{ vm.labelOf }}
         input(
           elem-ready='vm.inputReady'
           ng-model="vm.search.name"

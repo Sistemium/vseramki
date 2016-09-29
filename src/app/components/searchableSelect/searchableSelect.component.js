@@ -13,7 +13,8 @@
         options: '=',
         label: '@',
         onClose: '&',
-        notAddable: '='
+        notAddable: '=',
+        labelOf: '@'
       },
 
       controllerAs: 'vm',
@@ -22,10 +23,14 @@
 
     });
 
-  function searchableSelectController (Schema, $mdSelect, $mdToast, $window) {
+  function searchableSelectController(Schema, $mdSelect, $mdToast, $window) {
 
     var vm = this;
     var el = $window.document.getElementsByClassName('toolbar-fixed-top');
+
+    if (!vm.labelOf) {
+      vm.labelOf = `${_.lowerCase(vm.label)}а`;
+    }
 
     _.assign(vm, {
 
@@ -57,12 +62,13 @@
           } else {
             var formattedAttr = vm.search.name.slice(0, 1).toUpperCase() + vm.search.name.slice(1).toLowerCase();
 
-            foundModel.create({name: formattedAttr}).then(function (data) {
-              vm.showToast('Атрибут ' + vm.search.name + ' сохранен', true);
-              $mdSelect.hide();
-              vm.search = '';
-              vm.model = data.id;
-            });
+            foundModel.create({name: formattedAttr})
+              .then(function (data) {
+                vm.showToast(`Добавлен ${_.lowerCase(vm.label)} "${data.name}"`, true);
+                vm.model = data.id;
+                $mdSelect.hide();
+                vm.search = '';
+              });
           }
         });
       },
