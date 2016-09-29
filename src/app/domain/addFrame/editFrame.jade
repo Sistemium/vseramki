@@ -46,6 +46,10 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       options='vm.screenings'
       )
 
+    .flex
+
+    div(layout='column' layout-align='top center')
+
       md-input-container
         label Штук в коробке
           =' '
@@ -73,12 +77,6 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
         input-clear='black'
         )
 
-      input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
-
-    .flex
-
-    div(layout='column' layout-align='top center')
-
       md-input-container
         label Рыночная цена (руб.)
           =' '
@@ -103,6 +101,8 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
         )
         div.custom-animation(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
           span.custom-warning Оптовая цена больше рыночной
+
+      input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
 
     .flex
 
