@@ -1,0 +1,16 @@
+@import "_vars";
+
+md-sidenav {
+  max-width: 300px;
+
+  @media (max-width: $layout-breakpoint-tight) {
+
+    max-width: 280px;
+
+    &.md-whiteframe-1dp, .md-whiteframe-1dp {
+      box-shadow: none;
+      padding: 0;
+    }
+
+  }
+}
