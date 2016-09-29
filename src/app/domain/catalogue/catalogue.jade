@@ -25,7 +25,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
 
       property-filter(
       property-name='brand'
-      property-label='Брэнд'
+      property-label='Бренд'
       options='vm.brands'
       current-option='vm.currentFilter.brand'
       set-option-fn='vm.filterOptionClick',
@@ -85,7 +85,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
         .repeated-group-item(ng-repeat='article in row' flex)
           md-card.text-center(layout='column' layout-align='space-between center')
             .md-card-corner
-              label арт {{ article.code }}
+              label арт. {{ article.code }}
 
             md-card-header
               a(href ui-sref='catalogue.item({id: article.id})')

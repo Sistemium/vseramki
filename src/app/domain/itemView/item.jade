@@ -11,10 +11,13 @@
       layout-align='top center'
       ng-if='vm.isRootState'
       )
-        .main-photo.md-whiteframe-1dp.md-padding(
+        .main-photo.md-whiteframe-1dp(
         layout='column'
         layout-align='space-between center'
         )
+          .md-card-corner
+            label арт {{ vm.article.code }}
+
           .text-center(
           flex
           layout='column'
@@ -47,66 +50,73 @@
         )
           | {{'Добавить к заказу'}}
 
-        #order-block(ng-if='vm.article.inCart')
-          .property-list.md-whiteframe-1dp.flex-5-4
-            h3.header
-              md-button.md-raised.md-mini.micro-square(
-              ng-click='vm.clearCart()'
-              )
-                i.material-icons.mini clear
-              span Заказ
-            .property-list-container
-              .property
-                .property-label Количество:
-                .property-value.no-margin.plus-minus(layout-align='start center' layout='row')
-                  md-button.micro-fab(ng-click='vm.minusOne(vm.article)') -
-                  md-input-container
-                    input.item-count-input(
-                      aria-label="Количество"
-                      ng-model='vm.article.inCart.count'
-                      type="number"
-                      ng-blur="vm.onBlur(vm.article)"
-                      ng-change="vm.onCartChange(vm.article.inCart)"
-                      required
-                      min='1'
-                      step='1'
-                    )
-                  md-button.micro-fab(ng-click='vm.plusOne(vm.article)') +
-              .property
-                .property-label Общая сумма заказа:
-                //.property-value {{ vm.article.inCart.cost(vm.cartSubTotal) || 0 | number: 2 }} ₽
-                .property-value {{ vm.cartSubTotal || 0 | number: 2 }} ₽
-              .property(ng-if='vm.cartSubTotal > vm.cartTotal')
-                .property-label Итого со скидкой:
-                .property-value {{ vm.cartTotal | number: 2 }} ₽
+
+        .property-list.md-whiteframe-1dp.flex-5-4(ng-if='vm.article.inCart')
+          h3.header
+            md-button.md-raised.md-mini.micro-square(
+            ng-click='vm.clearCart()'
+            )
+              i.material-icons.mini clear
+            span Заказ
+          .property-list-container
+            .property
+              .property-label Количество:
+              .property-value.no-margin.plus-minus(layout-align='start center' layout='row')
+                md-button.micro-fab(ng-click='vm.minusOne(vm.article)') -
+                md-input-container
+                  input.item-count-input(
+                    aria-label="Количество"
+                    ng-model='vm.article.inCart.count'
+                    type="number"
+                    ng-blur="vm.onBlur(vm.article)"
+                    ng-change="vm.onCartChange(vm.article.inCart)"
+                    required
+                    min='1'
+                    step='1'
+                  )
+                md-button.micro-fab(ng-click='vm.plusOne(vm.article)') +
+            .property
+              .property-label Общая сумма заказа:
+              //.property-value {{ vm.article.inCart.cost(vm.cartSubTotal) || 0 | number: 2 }} ₽
+              .property-value {{ vm.cartSubTotal || 0 | number: 2 }} ₽
+            .property(ng-if='vm.cartSubTotal > vm.cartTotal')
+              .property-label Итого со скидкой:
+              .property-value {{ vm.cartTotal | number: 2 }} ₽
 
 
       span(flex)
 
       .space-children-em(layout='column' layout-align='top center')
-        .property-list.md-whiteframe-1dp.flex-4-5
+        .property-list.md-whiteframe-1dp
           h3.header Характеристики
           .property-list-container
-            .property
-              .property-label Размер:
-              .property-value {{vm.article.frameSize.name}}
             .property
               .property-label Бренд:
               .property-value {{vm.article.brand.name}}
             .property
+              .property-label Размер:
+              .property-value {{vm.article.frameSize.name}}
+            .property
               .property-label Цвет:
               .property-value {{vm.article.colour.name}}
             .property
-              .property-label Материал:
+              .property-label Материал багета:
               .property-value {{vm.article.material.name}}
+            //.property(ng-if='vm.article.screeningId')
+            //  .property-label Прозрачная вставка:
+            //  .property-value {{vm.article.screening.name}}
+            //.property(ng-if='vm.article.backMountId')
+            //  .property-label Крепление задника:
+            //  .property-value {{vm.article.backMount.name}}
             .property
               .property-label Вес:
-              .property-value(ng-class='{gray: !vm.article.pieceWeight}') {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
+              .property-value(ng-class='{gray: !vm.article.pieceWeight}')
+                | {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
             .property
               .property-label Штук в коробке:
               .property-value {{vm.article.packageRel}}
 
-        .property-list.md-whiteframe-1dp.flex-4-5
+        .property-list.md-whiteframe-1dp
           h3.header Цена
             small.gray &nbsp; (от общей суммы заказа)
           .property-list-container

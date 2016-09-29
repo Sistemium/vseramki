@@ -1,3 +1,5 @@
+@import "../../styles/_vars";
+
 .ui-view.article {
 
   .main-photo {
@@ -15,12 +17,14 @@
     }
 
     .ng-gallery {
-      margin-top: 10px;
+      margin-top: $margin-default;
     }
+
+    padding-bottom: 16px;
   }
 
   .fixed-bottom-right.admin-buttons > * {
-    margin-bottom: 10px;
+    margin-bottom: $margin-default;
   }
 
 }
