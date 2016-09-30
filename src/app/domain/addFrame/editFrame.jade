@@ -144,4 +144,4 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 
     md-button.md-raised.btn-primary(
     ng-disabled='frameAttrsForm.$invalid' ng-click='vm.save()'
-    ) {{ vm.dupMessage || (frameAttrsForm.$invalid ? 'Форма некорректно заполнена' : 'Сохранить') }}
+    ) {{ vm.dupMessage || (frameAttrsForm.$invalid ? 'Форма некорректно заполнена' : vm.saveLabel) }}

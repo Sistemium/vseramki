@@ -21,6 +21,8 @@
 
       frame: Article.createInstance(),
       saved: false,
+      articleFrameSizes: [],
+      saveLabel: 'Сохранить новую рамку',
 
       save,
       checkAttrs,
@@ -39,11 +41,9 @@
 
       Article.find(vm.id).then(function (frame) {
         vm.frame = frame;
-        vm.articleFrameSizes = vm.frame.articleFrameSizes;
       });
 
-    } else {
-      vm.articleFrameSizes = [];
+      vm.saveLabel = 'Сохранить';
     }
 
     Baguette.findAll();
@@ -80,21 +80,28 @@
     $scope.$watch('vm.frame', function () {
       checkParams();
       refreshName();
+      initArticleFrameSizes();
     }, true);
+
+    function initArticleFrameSizes() {
+      vm.articleFrameSizes = angular.copy(vm.frame.articleFrameSizes) || [];
+    }
 
     function checkParams() {
       vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && unique && vm.frame.highPrice;
     }
 
     function hasChanges() {
-      checkParams();
-      return Article.hasChanges(vm.id);
+      return !vm.id ? _.get($scope,'frameAttrsForm.$dirty') :
+        Article.hasChanges(vm.id) ||
+        _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
     }
 
     function cancelChanges() {
       if (hasChanges()) {
         unique = reverted = true;
         vm.dupMessage = false;
+        initArticleFrameSizes();
         return Article.revert(vm.id);
       }
     }
@@ -111,7 +118,8 @@
     }
 
     function articleFrameSizeDecrement(afs) {
-      if (-- afs.count < 1 && !afs.id) {
+      afs.count = afs.count - 1;
+      if (afs.count < 1 && !afs.id) {
         _.remove(vm.articleFrameSizes, afs);
       }
     }
@@ -126,7 +134,6 @@
           afs.count ++;
         } else {
           afs = ArticleFrameSize.createInstance({
-            // article: vm.frame,
             frameSizeId: vm.extraFrameSizeId,
             count: 1
           });
