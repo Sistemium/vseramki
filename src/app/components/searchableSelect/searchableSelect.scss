@@ -25,4 +25,8 @@ searchable-select {
     height: 15px;
   }
 
+  &.error .md-select-placeholder {
+    color: red;
+  }
+
 }
