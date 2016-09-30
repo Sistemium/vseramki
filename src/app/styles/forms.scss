@@ -9,7 +9,7 @@ form {
     padding-left: 0;
   }
 
-  &.wide md-input-container, &.wide searchable-select, md-input-container.wide, searchable-select.wide {
+  &.wide .form-controls > *, .form-controls > .wide, .form-controls.wide > * {
 
     width: $input-wide-width;
     min-width: $input-wide-width - 50;
@@ -26,7 +26,11 @@ form {
     //margin-bottom: 8px;
   }
 
-  md-input-container, searchable-select {
+  md-chips {
+    margin-bottom: 16px;
+  }
+
+  .form-controls > * {
 
     width: $input-normal-width;
 
