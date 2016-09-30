@@ -1,10 +1,9 @@
 (function () {
 
-  function AddPhotoDialogController($mdDialog, Upload, $q, $state, $scope) {
+  function AddPhotoDialogController($mdDialog, Upload, $q, $state, $scope, $timeout) {
 
     var vm = this;
     var folder;
-
 
     angular.extend(vm, {
 
@@ -15,20 +14,13 @@
 
     });
 
-
     if (/^cat/.test($state.current.name)) {
       folder = 'Article';
     } else if (/^bag/.test($state.current.name)) {
       folder = 'Baguette';
     } else {
-      folder = 'Unknown'
+      folder = 'Images'
     }
-
-    var un = $scope.$on('uploadProgress', function (e, progressPercent) {
-      vm.progressPercent = progressPercent;
-    });
-
-    $scope.$on('$destroy', un);
 
     function uploadFiles() {
 
@@ -43,10 +35,9 @@
         _.each(operations, function (operation) {
           total += operation.total;
           loaded += operation.loaded;
-          $scope.$broadcast('uploadProgress', Math.round(
-            100.0 * loaded / total
-          ));
         });
+
+        $timeout(() => vm.progressPercent = Math.round(100.0 * loaded / total));
 
       }
 
@@ -63,19 +54,17 @@
           promises.push($q(function (resolve, reject) {
 
             Upload.upload({
-                url: 'https://api.sistemium.com/ims/vr',
-                data: {
-                  file: file,
-                  folder: folder
-                }
-              })
+              url: 'https://api.sistemium.com/ims/vr',
+              data: {
+                file: file,
+                folder: folder
+              }
+            })
               .progress(function (progress) {
                 angular.extend(operation, _.pick(progress, ['loaded', 'total']));
                 setProgress();
               })
-              .then(function (resp) {
-                resolve(resp);
-              }, reject);
+              .then(resolve, reject);
 
           }));
 

@@ -73,7 +73,7 @@
 
         $mdDialog.show({
           controller: 'AddPhotoDialogController as vm',
-          templateUrl: 'app/domain/itemView/addPhotoDialog.html',
+          templateUrl: 'app/domain/addPhotoDialog/addPhotoDialog.html',
           parent: body2,
           targetEvent: ev,
           clickOutsideToClose: false,
