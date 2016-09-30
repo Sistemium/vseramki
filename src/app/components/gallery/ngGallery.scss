@@ -223,6 +223,10 @@ img.fullsize {
   object-fit: contain;
 }
 
+.left-right-chevron {
+  min-width: 80px !important;
+}
+
 .close-icon {
   position: fixed;
   top: 1px;
@@ -239,6 +243,32 @@ img.fullsize {
   font-size: 37px;
   cursor: pointer;
   color: white;
+}
+
+.thumbnail-style {
+  border: 1px solid white;
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.material-icons {
+  color: white;
+  cursor: pointer;
+}
+
+.elem-max-width {
+  width: 100%;
+}
+
+.photo-counter {
+  color: white;
+  margin: 0 2px 2px 2px;
+}
+
+.photo-counter-gt-sm {
+  color: white;
+  text-align: center;
+  font-weight: bold;
 }
 
 // Hovers
