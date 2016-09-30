@@ -1,13 +1,14 @@
+.ui-view
 md-content#scroll-main(
 flex resize='frames'
 style='max-width: {{ vm.isRootState ? "100%" : "0"}};'
 )
-  md-virtual-repeat-container(style='height: {{ frames.windowHeight - frames.offsetTop }}px;')
+  md-virtual-repeat-container(style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; overflow: scroll')
     .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
       .repeated-group-item(ng-repeat='article in row' flex)
         md-card(layout='column' layout-align='space-between center')
           md-card-header
-            a(href ui-sref='catalogue.item({id: article.id})')
+            a(href ng-click='vm.gotoItemView(article, $event)')
               img.thumbnail(ng-src='{{article.activePhoto()}}')
           md-card-title.md-margin
             md-card-title-text
