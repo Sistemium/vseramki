@@ -1,13 +1,23 @@
-.ng-gallery {
+$ng-gallery-icon-hover-color: #d8d8d8;
+
+.ng-gallery, ng-gallery {
+
   width: 100%;
   height: 100%;
   // TODO: fix layout in Safari
 
   .window-controls i {
-    color: white;
     margin-top: 8px;
     margin-right: 5px;
+  }
+
+  .material-icons {
+    color: white;
     cursor: pointer;
+  }
+
+  .material-icons:hover {
+    color: $ng-gallery-icon-hover-color;
   }
 
 }
@@ -43,129 +53,98 @@ img.ng-thumb {
 }
 
 .ng-gallery-content {
-  //position: fixed;
-  //top: 0;
-  //left: 0;
-  //width: 100%;
-  //height: 100%;
-  //z-index: 10000;
-}
 
-.ng-gallery-content > a.close-popup {
-  font-size: 42px;
-  float: right;
-  color: #fff;
-  text-decoration: none;
-  margin: 0 30px 0 0;
-  cursor: pointer;
-  position: absolute;
-  top: 20px;
-  right: 0;
-}
 
-.ng-gallery-content > a.nav-left, .ng-gallery-content > a.nav-right {
-  color: #fff;
-  text-decoration: none;
-  font-size: 60px;
-  cursor: pointer;
-  outline: none;
-}
-
-.ng-gallery-content > a.nav-left {
-  position: fixed;
-  left: 30px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.ng-gallery-content > a.nav-right {
-  position: fixed;
-  right: 30px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.ng-gallery-content > img {
-  height: auto;
-  max-height: calc(100% - 150px);
-  max-width: calc(100% - 200px);
-  position: relative;
-  display: block;
-  margin: 0 auto 0 auto;
-  top: 42%;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  cursor: pointer;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0.3;
+  > a.nav-left, .ng-gallery-content > a.nav-right {
+    color: #fff;
+    text-decoration: none;
+    font-size: 60px;
+    cursor: pointer;
+    outline: none;
   }
-  to {
+
+  > a.nav-left {
+    position: fixed;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  > a.nav-right {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  > img {
+    height: auto;
+    max-height: calc(100% - 150px);
+    max-width: calc(100% - 200px);
+    position: relative;
+    display: block;
+    margin: 0 auto 0 auto;
+    top: 42%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  > span.info-text {
+    color: #fff;
+    display: inline-block;
+    width: 100%;
+    height: 20px;
+    font-weight: bold;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+  }
+
+  > .ng-thumbnails-wrapper {
+    width: 400px;
+    height: 76px;
+    text-align: center;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: hidden;
+  }
+
+  > .ng-thumbnails-wrapper > .ng-thumbnails {
+    width: 4000px;
+    height: 76px;
+  }
+
+  > .ng-thumbnails-wrapper > .ng-thumbnails > div > img {
+    width: 70px;
+    height: 70px;
+    float: left;
+    margin-right: 8px;
+    cursor: pointer;
+    opacity: 0.6;
+  }
+
+  > .ng-thumbnails-wrapper > .ng-thumbnails > div > img:hover,
+  > .ng-thumbnails-wrapper > .ng-thumbnails > div > img.active {
+    /* transition: opacity 0.25s ease; deleted */
     opacity: 1;
   }
-}
 
-.ng-gallery-content > span.info-text {
-  color: #fff;
-  display: inline-block;
-  width: 100%;
-  height: 20px;
-  font-weight: bold;
-  text-align: center;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 100px;
-}
-
-.ng-gallery-content > .ng-thumbnails-wrapper {
-  width: 400px;
-  height: 76px;
-  text-align: center;
-  position: fixed;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  overflow-x: hidden;
-}
-
-.ng-gallery-content > .ng-thumbnails-wrapper > .ng-thumbnails {
-  width: 4000px;
-  height: 76px;
-}
-
-.ng-gallery-content > .ng-thumbnails-wrapper > .ng-thumbnails > div > img {
-  width: 70px;
-  height: 70px;
-  float: left;
-  margin-right: 8px;
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-.ng-gallery-content > .ng-thumbnails-wrapper > .ng-thumbnails > div > img:hover,
-.ng-gallery-content > .ng-thumbnails-wrapper > .ng-thumbnails > div > img.active {
-  /* transition: opacity 0.25s ease; deleted */
-  opacity: 1;
 }
 
 // Custom STYLES
-
-.custom-chevron {
-  color: white;
-  font-size: 80px;
-  cursor: pointer;
-}
 
 .main-div-settings {
   height: 100%;
@@ -225,15 +204,20 @@ img.fullsize {
 
 .left-right-chevron {
   min-width: 80px !important;
+
+  .material-icons {
+    color: white;
+    font-size: 80px;
+    cursor: pointer;
+  }
+
 }
 
 .close-icon {
   position: fixed;
   top: 1px;
-  color: white;
   right: 2px;
   font-size: 37px;
-  cursor: pointer;
 }
 
 .delete-icon {
@@ -241,19 +225,12 @@ img.fullsize {
   top: 1px;
   right: 37px;
   font-size: 37px;
-  cursor: pointer;
-  color: white;
 }
 
 .thumbnail-style {
   border: 1px solid white;
   padding: 2px;
   border-radius: 5px;
-}
-
-.material-icon-style {
-  color: white;
-  cursor: pointer;
 }
 
 .elem-max-width {
@@ -271,16 +248,13 @@ img.fullsize {
   font-weight: bold;
 }
 
-// Hovers
 
-.material-icons.custom-chevron:hover {
-  color: #d8d8d8;
-}
 
-.material-icons.close-icon:hover {
-  color: #d8d8d8;
-}
-
-.material-icons.delete-icon:hover {
-  color: #d8d8d8;
-}
+//@keyframes fadeIn {
+//  from {
+//    opacity: 0.3;
+//  }
+//  to {
+//    opacity: 1;
+//  }
+//}
