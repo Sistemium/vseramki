@@ -120,6 +120,9 @@
       clearForm: function () {
         vm.frame = Article.createInstance();
         vm.dupMessage = false;
+        unique = true;
+        $scope.frameAttrsForm.$setUntouched();
+        $scope.frameAttrsForm.$setPristine();
         checkParams();
       },
 
@@ -147,26 +150,15 @@
         }
       },
 
-      saveFrame: function () {
+      save: function () {
 
-        Article.create(vm.frame).then(function () {
-          ToastHelper.showToast('Рамка сохранена', true);
-          if (!vm.editState) {
-            vm.clearForm();
-          }
-
-        }).catch(function (obj) {
-
-          if (obj.status == '500') {
-            ToastHelper.showToast('Ошибка. Рамка не сохранена', false, vm);
-          } else {
-            ToastHelper.showToast('Ошибка. Обратитесь в тех. поддержку', false, vm);
-          }
-
-        });
-
-        $scope.frameAttrsForm.$setUntouched();
-        $scope.frameAttrsForm.$setPristine();
+        Article.create(vm.frame)
+          .then(function () {
+            ToastHelper.success('Рамка сохранена');
+            if (!vm.editState) {
+              vm.clearForm();
+            }
+          }).catch(() => ToastHelper.error('Ошибка. Рамка не сохранена'));
       }
 
     });
