@@ -32,7 +32,7 @@
     md-limit-options='vm.pagination.limitOptions',
     md-page='vm.pagination.query.page',
     md-total='{{vm.baguettes.length}}',
-    md-page-select='true && !vm.useMobile',
-    md-boundary-links='true && !vm.useMobile'
+    md-page-select='!vm.useMobile',
+    md-boundary-links='!vm.useMobile'
   )
 

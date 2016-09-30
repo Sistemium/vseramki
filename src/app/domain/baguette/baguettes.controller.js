@@ -7,7 +7,7 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, AuthHelper, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper) {
+  function BaguettesController(Schema, Baguette, AuthHelper, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper) {
 
     var vm = this;
 
@@ -65,19 +65,7 @@
     angular.extend(vm, {
 
       selected: [],
-
-      pagination: {
-        labels: {
-          page: 'Страница:',
-          rowsPerPage: 'Кол-во элементов: ',
-          of: 'из'
-        },
-        query: {
-          limit: 10,
-          page: 1
-        },
-        limitOptions: [10, 20, 40, 80]
-      },
+      pagination: TableHelper.pagination(),
 
       showImageDialog: ImageHelper.mdDialogHelper(
         function (imsImg, id) {
