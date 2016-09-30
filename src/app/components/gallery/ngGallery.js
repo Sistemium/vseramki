@@ -200,6 +200,8 @@
         };
 
         scope.showAlert = function () {
+          // TODO: really show alert
+          // TODO: model can be ArticleImage or BaguetteImage
           model.destroy(scope.images[scope.index]);
           scope.closeGallery();
         };
