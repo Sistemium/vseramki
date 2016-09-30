@@ -24,7 +24,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
       span.no-button(ng-if='!vm.filterLength') Фильтр
 
       md-button.md-raised.no-margin(
-        aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
+      aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
       ) Сбросить фильтры
 
     .no-padding(layout='column' layout-align='start start')
@@ -87,5 +87,9 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
       ng-if='vm.isAdmin && vm.isRootState'
       ) Добавить рамку
 
-  .ui-view.md-whiteframe-1dp.margin-top-bottom(flex)
+  .ui-view.md-whiteframe-1dp.margin-top-bottom(
+  flex
+  resize='ui'
+  style='height: {{ui.windowHeight - ui.offsetTop}}px'
+  )
 
