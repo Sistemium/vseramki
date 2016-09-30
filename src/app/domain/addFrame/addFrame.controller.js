@@ -39,9 +39,11 @@
       vm.id = $state.params.id;
       vm.editState = true;
 
-      Article.find(vm.id).then(function (frame) {
-        vm.frame = frame;
-      });
+      Article.find(vm.id)
+        .then(function (frame) {
+          vm.frame = frame;
+          initArticleFrameSizes();
+        });
 
       vm.saveLabel = 'Сохранить';
     }
@@ -80,25 +82,31 @@
     $scope.$watch('vm.frame', function () {
       checkParams();
       refreshName();
-      initArticleFrameSizes();
     }, true);
 
     function initArticleFrameSizes() {
-      vm.articleFrameSizes = angular.copy(vm.frame.articleFrameSizes) || [];
+      vm.articleFrameSizes = vm.frame.articleFrameSizes || [];
     }
 
     function checkParams() {
-      vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && unique && vm.frame.highPrice;
+      vm.paramsCheck = vm.frame.frameSizeId &&
+        vm.frame.name &&
+        vm.frame.packageRel &&
+        unique &&
+        vm.frame.highPrice &&
+        (!vm.frame.multiType || vm.articleFrameSizes.length)
+      ;
     }
 
     function hasChanges() {
+      checkParams();
       return !vm.id ? _.get($scope,'frameAttrsForm.$dirty') :
         Article.hasChanges(vm.id) ||
         _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
     }
 
     function cancelChanges() {
-      if (hasChanges()) {
+      if (vm.id && hasChanges()) {
         unique = reverted = true;
         vm.dupMessage = false;
         initArticleFrameSizes();
