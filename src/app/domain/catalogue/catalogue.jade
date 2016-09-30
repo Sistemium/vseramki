@@ -1,15 +1,30 @@
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
 
-md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
+md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
 
   md-sidenav#sidenav-left.md-sidenav-left.md-whiteframe-1dp.margin-top-bottom(
   layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
   )
+    div(layout='row' layout-align='center center' ng-if='vm.isRootState')
+      i.material-icons.icon-button(
+      ng-click="vm.changeView('catalogue.table')"
+      ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
+      ) view_headline
+
+      .vertical-divider |
+
+      i.material-icons.icon-button(
+      ng-click="vm.changeView('catalogue.tiles')"
+      ng-class="vm.currentState == 'tiles' ? 'icons-button-active' : 'icon-button-disabled'"
+      ) view_comfy
+
     p.md-title
+
       span.no-button(ng-if='!vm.filterLength') Фильтр
+
       md-button.md-raised.no-margin(
-      aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
+        aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
       ) Сбросить фильтры
 
     .no-padding(layout='column' layout-align='start start')
@@ -49,15 +64,13 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
       set-option-fn='vm.filterOptionClick',
       clear-fn='vm.delCurrFilter'
       )
-      //div(layout-align='center center' layout='column' style='width: 100%')
-
 
     md-divider(ng-hide='vm.isRootState' style='margin-top: 8px')
 
     .no-padding.article-list(
     layout='column'
     resize='articlesList'
-    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px;'
+    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px'
     )
       md-virtual-repeat-container(flex ng-if='!vm.isRootState')
         .md-whiteframe-1dp.item(
@@ -74,5 +87,5 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center")
       ng-if='vm.isAdmin && vm.isRootState'
       ) Добавить рамку
 
-  .ui-view(flex ng-if='!vm.isRootState')
+  .ui-view.md-whiteframe-1dp.margin-top-bottom(flex)
 
