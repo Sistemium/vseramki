@@ -52,18 +52,10 @@
 
         children: [
           {
-<<<<<<< HEAD
             name: 'tiles',
             url: '/tiles',
             templateUrl: 'app/domain/catalogue/catalogueTiles.html',
             children: angular.copy(children)
-=======
-            name: 'add',
-            url: '/add',
-            templateUrl: 'app/domain/addFrame/editFrame.html',
-            controller: 'AddFrameController',
-            controllerAs: 'vm'
->>>>>>> vr2
           },
           {
             name: 'table',
