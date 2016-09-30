@@ -105,7 +105,7 @@
 
     function setPrices() {
 
-      var discount = 100 - 100 * vm.article.discountedPrice(vm.cartSubTotal)/vm.article.highPrice;
+      var discount = 100 - 100 * vm.article.discountedPrice(vm.cartSubTotal) / vm.article.highPrice;
 
       vm.prices = [
         {
@@ -119,28 +119,28 @@
         },
         {
           label: 'До',
-          from: numberFilter(vm.minThreshold,0),
+          from: numberFilter(vm.minThreshold, 0),
           value: vm.article.highPrice,
           ord: vm.minThreshold,
           id: 2
         },
         {
           label: 'От',
-          from: numberFilter(vm.middleThreshold1,0),
+          from: numberFilter(vm.middleThreshold1, 0),
           value: vm.article.discountedPrice(vm.middleThreshold1),
           ord: vm.middleThreshold1,
           id: 3
         },
         {
           label: 'От',
-          from: numberFilter(vm.middleThreshold2,0),
+          from: numberFilter(vm.middleThreshold2, 0),
           value: vm.article.discountedPrice(vm.middleThreshold2),
           ord: vm.middleThreshold2,
           id: 4
         },
         {
           label: 'От',
-          from: numberFilter(vm.maxThreshold,0),
+          from: numberFilter(vm.maxThreshold, 0),
           value: vm.article.discountedPrice(vm.maxThreshold),
           ord: vm.maxThreshold,
           id: 5
@@ -149,11 +149,11 @@
 
     }
 
-    function onThumbnailHover (newImg) {
+    function onThumbnailHover(newImg) {
 
-      var newId = _.get(newImg,'id');
+      var newId = _.get(newImg, 'id');
 
-      if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage,'id')) {
+      if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage, 'id')) {
 
         vm.currentImageLoading = newId;
 
@@ -182,8 +182,8 @@
       isRootState: true,
 
       minThreshold: Article.minThreshold(),
-      middleThreshold1: Math.round(Article.maxThreshold()/4),
-      middleThreshold2: Math.round(Article.maxThreshold()/2),
+      middleThreshold1: Math.round(Article.maxThreshold() / 4),
+      middleThreshold2: Math.round(Article.maxThreshold() / 2),
       maxThreshold: Article.maxThreshold(),
 
       showImageDialog: ImageHelper.mdDialogHelper(
@@ -200,10 +200,13 @@
       },
 
       editFrame: function () {
-        $state.go('catalogue.item.edit', {id: vm.article.id});
+        $state.go($state.current.name + '.edit', {id: vm.article.id});
       },
 
-      addFrame: () => $state.go('catalogue.add'),
+      addFrame: () => {
+        $state.go('catalogue.' + $state.current.name.split('.')[1] + '.add');
+      },
+
 
       deleteFrame: function ($event) {
 
