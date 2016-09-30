@@ -99,12 +99,12 @@
 
         articleFrameSizesName: function (frameSizes) {
 
-          return _.filter(_.map(frameSizes || this.articleFrameSizes, afs => {
+          return _.sortBy(_.filter(_.map(frameSizes || this.articleFrameSizes, afs => {
             if (!afs.count) {
               return '';
             }
             return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
-          }), x => x)
+          })))
             .join(' + ');
 
         },
