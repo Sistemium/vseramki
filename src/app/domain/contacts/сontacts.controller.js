@@ -12,8 +12,8 @@
     var vm = this;
 
     const location = {
-      longitude: 37.7359293,
-      latitude: 55.6530419
+      longitude: 37.3973159,
+      latitude: 55.729908
     };
 
     angular.extend(vm, {
