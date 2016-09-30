@@ -6,12 +6,10 @@
 
     function showToast(resStr, status) {
 
-      var theme;
-      var sidenavElem = $window.document.getElementsByClassName('toolbar-fixed-top');
+      var parent = $window.document.getElementsByClassName('toolbar-fixed-top');
+      var theme = 'success-toast';
 
-      if (status) {
-        theme = 'success-toast';
-      } else {
+      if (!status) {
         theme = 'fail-toast';
       }
 
@@ -21,13 +19,16 @@
           .position('top right')
           .hideDelay(1500)
           .theme(theme)
-          .parent(sidenavElem)
+          .parent(parent)
       );
     }
 
     return {
-      showToast: showToast
+      showToast,
+      success: text => showToast(text, true),
+      error: text => showToast(text, false)
     };
+
   }
 
   angular.module('vseramki')
