@@ -1,7 +1,6 @@
 $input-wide-width: 300px;
 $input-normal-width: 250px;
 
-
 form {
 
   md-input-container {
@@ -30,14 +29,27 @@ form {
     margin-bottom: 16px;
   }
 
-  .form-controls > * {
+  .form-controls {
 
-    width: $input-normal-width;
-
-    input, md-select {
-      width: $input-normal-width;
+    md-radio-group {
+      padding: 2px;
     }
 
+    md-radio-group > label {
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 12px;
+      padding-left: 3px;
+    }
+
+    > * {
+
+      width: $input-normal-width;
+
+      input, md-select {
+        width: $input-normal-width;
+      }
+
+    }
   }
 
   .required-field-asterisk {
