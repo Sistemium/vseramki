@@ -131,7 +131,7 @@ button .label {
   }
 }
 
-button.micro-square {
+button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab {
   border-radius: 0;
   min-height: 10px;
   min-width: 10px;
