@@ -26,7 +26,7 @@
 
       multiTypes: [
         {id: 'passePartout', name: 'Мульти-паспарту'},
-        {id: 'multiFrame', name: 'Мульти-Багет'}
+        {id: 'multiFrame', name: 'Мульти-багет'}
       ],
 
       save,
@@ -115,6 +115,11 @@
       if (vm.id && hasChanges()) {
         unique = reverted = true;
         vm.dupMessage = false;
+        _.each(vm.frame.articleFrameSizes, afs => {
+          if (afs.id) {
+            ArticleFrameSize.revert(afs.id);
+          }
+        })
         initArticleFrameSizes();
         return Article.revert(vm.id);
       }
