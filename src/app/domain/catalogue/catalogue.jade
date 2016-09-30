@@ -73,7 +73,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
     style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px'
     )
       md-virtual-repeat-container(flex ng-if='!vm.isRootState')
-        .md-whiteframe-1dp.item(
+        .item(
         md-virtual-repeat='frame in vm.articles'
         ng-class="{'active' : vm.currentItemId == frame.id }"
         ng-click='vm.changeFrame(frame)'
