@@ -21,6 +21,6 @@ meta.defineEntity 'Article',
  + 'Screening,screeningId,nullable;BackMount,backMountId,nullable;PassePartout,passePartoutId,nullable'
 ;
 
-alter table vr2.Article add multiType TINY;
+alter table vr2.Article add multiType SHORT;
 
 alter table vr2.Article alter multiType check (multiType in ('passePartout', 'multiFrame'));
