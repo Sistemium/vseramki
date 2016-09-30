@@ -6,7 +6,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
   md-sidenav#sidenav-left.md-sidenav-left.md-whiteframe-1dp.margin-top-bottom(
   layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
   )
-    div(layout='row' layout-align='center center' ng-if='vm.isRootState')
+    .view-mode-tool(layout='row' layout-align='center center' ng-if='vm.isRootState')
       i.material-icons.icon-button(
       ng-click="vm.changeView('catalogue.table')"
       ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
