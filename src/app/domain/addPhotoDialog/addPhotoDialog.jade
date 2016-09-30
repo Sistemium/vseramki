@@ -28,8 +28,16 @@ md-dialog(aria-label='Add photo' ng-cloak)
             drag='',
             preview=''
             )
-        div(layout='column' layout-align='center center')
-          md-button.md-raised.button-upload(ng-click='vm.uploadFiles()' ng-if='vm.files.length') Загрузить картинки
-          md-progress-linear(value='{{vm.progressPercent}}' ng-if='vm.busy' md-mode='determinate')
-
+        div(layout='column' layout-align='center')
+          md-button.md-raised.button-upload(
+          ng-click='vm.uploadFiles()'
+          ng-if='vm.files.length'
+          aria-label='Start upload'
+          ng-disabled='vm.busy'
+          )
+            span(ng-if='!vm.busy') Загрузить картинки
+            span(ng-if='vm.busy && vm.progressPercent < 100') Идет загрузка
+            span(ng-if='vm.busy && vm.progressPercent >= 100') Завершение обработки
+          md-progress-linear(ng-if='vm.busy' value='{{vm.progressPercent}}' md-mode='determinate')
+          md-progress-linear(ng-if='vm.busy' md-mode="query" ng-show='vm.progressPercent >= 100')
 
