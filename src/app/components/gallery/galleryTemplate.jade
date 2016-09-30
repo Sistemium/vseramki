@@ -9,7 +9,7 @@
       )
 
 // On open image
-.ng-gallery-fullscreen(ng-if='opened' layout='row' layout-align='center center')
+.ng-gallery-fullscreen.no-select(ng-if='opened' layout='row' layout-align='center center')
 
   .left-right-chevron(flex layout='row' layout-align='start center' hide-xs)
     .material-icons(ng-click='prevImage()') chevron_left
