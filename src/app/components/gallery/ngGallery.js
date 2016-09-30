@@ -124,12 +124,10 @@
           scope.description = scope.images[i].id || '';
         };
 
-
         //var defineClass = function (width, height) {
         //  scope.useWide = false, scope.useTall = false;
         //  width >= height ? scope.useWide = true : scope.useTall = true;
         //};
-
 
         scope.changeImage = function (i) {
           scope.index = i;
@@ -159,7 +157,7 @@
           if (_.isFunction(scope.imageHoveredFn())) {
             scope.imageHoveredFn()(image);
           }
-        }
+        };
 
         scope.openGallery = function (i) {
 
@@ -199,6 +197,8 @@
 
         scope.deletePhoto = function (id, index) {
 
+          console.log(id, index);
+
           if (scope.images.length == 1) {
             model.destroy(id);
             scope.closeGallery();
@@ -214,7 +214,6 @@
           }
 
         };
-
 
         $body.bind('keydown', function (event) {
           if (!scope.opened) {

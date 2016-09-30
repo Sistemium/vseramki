@@ -12,15 +12,15 @@ div(class='{{ baseClass }}', layout='row', layout-align='center center')
 .ng-overlay(ng-if='opened' layout='row' layout-align='center center')
 
   .main-div-settings.min-settings.left-right-chevron(flex layout='row' layout-align='start center' hide-xs)
-    p.no-margin.material-icons.custom-chevron(ng-click='prevImage()') chevron_left
+    p.no-margin.material-icon-style.material-icons.material-icons.custom-chevron(ng-click='prevImage()') chevron_left
 
   .main-div-settings(flex='80' layout='column' layout-align='space-between center' flex-xs='100')
 
     .main-div-settings.window-controls.elem-max-width(flex='10' layout='row' show-xs hide)
       p.photo-counter {{index + 1}}/{{images.length}}
       span(flex)
-      i.material-icons(ng-click='showAlert()' ng-if='isDeletable') delete
-      i.material-icons(ng-click='closeGallery()') close
+      i.material-icon-style.material-icons(ng-click='showAlert()' ng-if='isDeletable') delete
+      i.material-icon-style.material-icons(ng-click='closeGallery()') close
 
     // Photo div
     .main-div-settings.elem-max-width(
@@ -59,6 +59,6 @@ div(class='{{ baseClass }}', layout='row', layout-align='center center')
 
   .main-div-settings.min-settings.left-right-chevron(flex layout='row' layout-align='end center' hide-xs)
 
-    i.material-icons.close-icon(ng-click='closeGallery()') close
-    i.material-icons.delete-icon(ng-if='isDeletable' ng-click='showAlert($index)') delete
-    .no-margin.material-icons.custom-chevron(ng-click='nextImage()') chevron_right
+    i.material-icon-style.material-icons.close-icon(ng-click='closeGallery()') close
+    i.material-icon-style.material-icons.delete-icon(ng-if='isDeletable' ng-click='showAlert($index)') delete
+    .no-margin.material-icon-style.material-icons.custom-chevron(ng-click='nextImage()') chevron_right
