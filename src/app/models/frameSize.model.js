@@ -21,6 +21,10 @@
           Article: {
             localField: 'articles',
             foreignKey: 'frameSizeId'
+          },
+          ArticleFrameSize: {
+            localField: 'articleFrameSizes',
+            foreignKey: 'frameSizeId'
           }
         }
       }
