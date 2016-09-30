@@ -25,7 +25,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       )
 
       searchable-select(
-      label='Размер'
+      label='Размер фото'
       model='vm.frame.frameSizeId'
       model-name='FrameSize'
       options='vm.frameSizes'
@@ -48,14 +48,14 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       )
 
       md-radio-group(ng-model='vm.frame.multiType')
-        label Прочие размеры:
+        label Прочие размеры
         md-radio-button(ng-value='null') Отсутствуют
         md-radio-button(value='passePartout') Паспарту
         md-radio-button(value='multiFrame') Мульти-рамка
 
       searchable-select.no-margin(
       ng-if='vm.frame.multiType'
-      label='Дополнительный размер'
+      label='Добавить размер'
       label-of='размера'
       model='vm.extraFrameSizeId'
       model-name='FrameSize'
@@ -134,7 +134,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
     .flex
 
   .text-center.margin-top-bottom(
-  ng-if='frameAttrsForm.$dirty || vm.hasChanges()'
+  ng-if='vm.hasChanges()'
   layout='row' layout-align='center center'
   )
     md-button.md-raised(
