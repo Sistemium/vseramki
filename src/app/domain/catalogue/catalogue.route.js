@@ -16,7 +16,7 @@
       {
         name: 'add',
         url: '/add',
-        templateUrl: 'app/domain/addFrame/addFrame.html',
+        templateUrl: 'app/domain/addFrame/editFrame.html',
         controller: 'AddFrameController',
         controllerAs: 'vm'
       },

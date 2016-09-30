@@ -45,7 +45,8 @@
       },
 
       changeFrame: function (frame) {
-        $state.go($state.current.name, {id: frame.id});
+        var newState = vm.currentState === 'add' ? '^.item' : $state.current.name;
+        $state.go(newState, {id: frame.id});
       },
 
       gotoItemView: function (article) {
