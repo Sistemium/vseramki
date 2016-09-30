@@ -55,6 +55,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       )
 
       searchable-select.no-margin(
+      ng-class='{error: !vm.articleFrameSizes.length}'
       ng-if='vm.frame.multiType'
       placeholder='Добавить размер'
       label-of='размера'
