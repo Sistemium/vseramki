@@ -1,25 +1,20 @@
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('AddPhotoDialogController', AddPhotoDialogController);
-
   function AddPhotoDialogController($mdDialog, Upload, $q, $state, $scope) {
 
     var vm = this;
     var folder;
 
-    vm.hide = function () {
-      $mdDialog.hide();
-    };
 
-    vm.cancel = function () {
-      $mdDialog.cancel();
-    };
+    angular.extend(vm, {
 
-    vm.answer = function (answer) {
-      $mdDialog.hide(answer);
-    };
+      uploadFiles,
+      hide: () => $mdDialog.hide(),
+      cancel: () => $mdDialog.cancel(),
+      answer: answer => $mdDialog.hide(answer)
+
+    });
+
 
     if (/^cat/.test($state.current.name)) {
       folder = 'Article';
@@ -90,7 +85,7 @@
 
       vm.busy = true;
 
-      $q.all(promises)
+      return $q.all(promises)
         .then(function (pictures) {
           $mdDialog.hide(pictures);
         })
@@ -100,10 +95,10 @@
 
     }
 
-    angular.extend(vm, {
-      uploadFiles: uploadFiles
-    });
-
   }
+
+  angular
+    .module('vseramki')
+    .controller('AddPhotoDialogController', AddPhotoDialogController);
 
 })();
