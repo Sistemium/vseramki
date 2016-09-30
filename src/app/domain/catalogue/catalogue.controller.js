@@ -139,6 +139,7 @@
       articleFilter: {},
       currentFilter: {},
       filterLength: false,
+      selected: [],
 
       plusOne,
       minusOne,
@@ -154,7 +155,15 @@
       },
 
       changeFrame: function (frame) {
-        $state.go('catalogue.item', {id: frame.id});
+        $state.go($state.current.name, {id: frame.id});
+      },
+
+      gotoItemView: function (article) {
+        $state.go($state.current.name + '.item', {id: article.id});
+      },
+
+      changeView: function (goTo) {
+        $state.go(goTo);
       }
 
     });
@@ -192,8 +201,9 @@
     $scope.$watch('vm.articleFilter', filterArticles);
 
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
       vm.disableAddFrame = toState.url === '/add';
-      vm.isRootState = /^catalogue$/.test(toState.name);
+      vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
       vm.currentItemId = toParams.id;
     });
 

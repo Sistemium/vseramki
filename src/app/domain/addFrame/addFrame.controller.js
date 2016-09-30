@@ -2,11 +2,6 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('AddFrameController', AddFrameController)
-  ;
-
   function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper, $q) {
 
     var vm = this;
@@ -17,7 +12,7 @@
 
     var unique = true;
 
-    angular.extend(vm, {
+    _.assign(vm, {
 
       frame: Article.createInstance(),
       saved: false,
@@ -119,7 +114,7 @@
           if (afs.id) {
             ArticleFrameSize.revert(afs.id);
           }
-        })
+        });
         initArticleFrameSizes();
         return Article.revert(vm.id);
       }
@@ -231,5 +226,10 @@
     }
 
   }
+
+  angular
+    .module('vseramki')
+    .controller('AddFrameController', AddFrameController)
+  ;
 
 }());

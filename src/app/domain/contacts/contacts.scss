@@ -1,0 +1,37 @@
+.contacts {
+
+  #requisites, #location {
+    .property-label {
+      flex: 2
+    }
+    .property-value {
+      flex: 5
+    }
+    min-width: 400px;
+    max-width: 400px;
+
+    @media (max-width: 450px) {
+      min-width: 300px;
+      max-width: 300px;
+      .ya-map {
+        min-height: 300px;
+        min-width: 300px;
+      }
+    }
+  }
+
+  .ya-map-container {
+
+    overflow: hidden;
+
+    min-height: 400px;
+
+    .ya-map {
+      margin: 0 auto;
+      display: block;
+      min-height: 400px;
+      min-width: 400px;
+    }
+  }
+
+}

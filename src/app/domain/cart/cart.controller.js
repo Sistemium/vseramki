@@ -42,7 +42,7 @@
     }
 
     function itemClick(item) {
-      $state.go('catalogue.item', {id: item.articleId});
+      $state.go('catalogue.table.item', {id: item.articleId});
     }
 
     function clearItem(item) {

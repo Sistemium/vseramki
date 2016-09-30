@@ -61,6 +61,10 @@
         {
           sref: 'catalogue',
           label: 'Рамки'
+        },
+        {
+          sref: 'info',
+          label: 'Контакты'
         }
       ];
 
@@ -78,6 +82,7 @@
       });
 
       vm.buttons = _.filter(vm.navs, nav => !nav.fabOnly);
+      vm.isAdmin = isAdmin;
 
     }
 

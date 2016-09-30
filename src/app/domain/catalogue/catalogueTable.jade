@@ -1,0 +1,42 @@
+.ui-view(style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; overflow: scroll')
+  md-table-container(ng-if='vm.articles.length')
+    table(md-table md-row-select multiple ng-model='vm.selected')
+      thead(md-head md-order='filterBy')
+        th(md-column) Фото
+        th(md-column md-order-by='brand.name') Бренд
+        th(md-column md-order-by='frameSize.name') Размер
+        th(md-column md-order-by='colour.name') Цвет
+        th(md-column md-order-by='material.name') Материал багета
+        th(md-column md-order-by='pieceWeight') Вес (кг.)
+        th(md-column md-order-by='packageRel') Штук в коробке
+        th(md-column md-order-by='highPrice') Цена (₽)
+
+      tbody.clickable(md-body)
+        tr(
+        md-row
+        ng-repeat='article in vm.articles |orderBy: filterBy track by article.id'
+        md-select='article'
+        md-select-id='id'
+        ng-click='vm.gotoItemView(article, $event)'
+        )
+          td(md-cell)
+            img.thumbnail(ng-src='{{article.activePhoto()}}')
+          td(md-cell) {{article.brand.name}}
+          td(md-cell) {{article.frameSize.name}}
+          td(md-cell) {{article.colour.name}}
+          td(md-cell) {{article.material.name}}
+          td(md-cell) {{article.pieceWeight || 'Не указан'}}
+          td(md-cell) {{article.packageRel}}
+          td(md-cell) {{article.highPrice}}
+
+
+  //md-table-pagination.fixed-bottom(
+  //md-limit='vm.pagination.query.limit',
+  //md-label='{{vm.pagination.labels}}',
+  //md-limit-options='vm.pagination.limitOptions',
+  //md-page='vm.pagination.query.page',
+  //md-total='{{vm.baguettes.length}}',
+  //md-page-select='true && !vm.useMobile',
+  //md-boundary-links='true && !vm.useMobile'
+  //)
+  //

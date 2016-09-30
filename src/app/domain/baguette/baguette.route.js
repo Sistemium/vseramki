@@ -30,10 +30,8 @@
         name: 'baguettes',
         url: '/baguettes',
         templateUrl: 'app/domain/baguette/baguettes.html',
-
         controller: 'BaguettesController',
         controllerAs: 'vm',
-
         defaultChild: 'table',
 
         data: {
@@ -50,8 +48,6 @@
             name: 'table',
             url: '/table',
             templateUrl: 'app/domain/baguette/baguetteTable.html',
-            // controller: 'BaguettesController',
-            // controllerAs: 'vm',
             children: angular.copy(children)
           }
         ]
