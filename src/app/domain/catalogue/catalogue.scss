@@ -58,7 +58,46 @@ md-content.articles {
     }
   }
 
+  table.md-table {
+
+    tr {
+      .md-cell, .md-column {
+        padding: 0 5px !important;
+
+      }
+      td.md-checkbox-cell, th.md-checkbox-column {
+        padding: 0 5px 0 15px !important;
+      }
+    }
+
+  }
+
+  @media (max-width: 945px) {
+    .md-table-pagination {
+      .page-select {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 820px) {
+    table.md-table {
+      .md-checkbox-cell, .md-checkbox-column {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 799px) {
+    .md-table-pagination {
+      .limit-select {
+        display: none;
+      }
+    }
+  }
+
 }
+
 
 
 

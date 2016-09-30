@@ -87,8 +87,4 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
       ng-if='vm.isAdmin && vm.isRootState'
       ) Добавить рамку
 
-  .ui-view.md-whiteframe-1dp.margin-top-bottom(
-  flex
-  resize='ui'
-  style='height: {{ui.windowHeight - ui.offsetTop}}px'
-  )
+  .ui-view(flex)

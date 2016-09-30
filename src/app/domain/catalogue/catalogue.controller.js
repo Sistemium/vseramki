@@ -7,7 +7,9 @@
     .controller('CatalogueController', CatalogueController)
   ;
 
-  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper, AuthHelper) {
+  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper, AuthHelper, TableHelper) {
+
+    var vm = this;
 
     var FrameSize = Schema.model('FrameSize');
     var Brand = Schema.model('Brand');
@@ -15,10 +17,46 @@
     var Colour = Schema.model('Colour');
     var BaguetteImage = Schema.model('BaguetteImage');
 
-    var vm = this;
     var groupSize = 3;
 
-    vm.isAdmin = AuthHelper.isAdmin();
+    angular.extend(vm, {
+
+      rows: [],
+      rowsFlex: 33,
+      articleFilter: {},
+      currentFilter: {},
+      filterLength: false,
+      selected: [],
+
+      pagination: TableHelper.pagination(),
+      isAdmin: AuthHelper.isAdmin(),
+
+      plusOne,
+      minusOne,
+      onCartChange,
+      onBlur,
+      filterOptionClick,
+      resetFilters,
+      delCurrFilter,
+      addToCart: Cart.addToCart,
+
+      goToCreateFrame: function () {
+        $state.go('catalogue.add');
+      },
+
+      changeFrame: function (frame) {
+        $state.go($state.current.name, {id: frame.id});
+      },
+
+      gotoItemView: function (article) {
+        $state.go($state.current.name + '.item', {id: article.id});
+      },
+
+      changeView: function (goTo) {
+        $state.go(goTo);
+      }
+
+    });
 
     Cart.findAll();
 
@@ -133,40 +171,7 @@
 
     }
 
-    angular.extend(vm, {
-      rows: [],
-      rowsFlex: 33,
-      articleFilter: {},
-      currentFilter: {},
-      filterLength: false,
-      selected: [],
 
-      plusOne,
-      minusOne,
-      onCartChange,
-      onBlur,
-      filterOptionClick,
-      resetFilters,
-      delCurrFilter,
-      addToCart: Cart.addToCart,
-
-      goToCreateFrame: function () {
-        $state.go('catalogue.add');
-      },
-
-      changeFrame: function (frame) {
-        $state.go($state.current.name, {id: frame.id});
-      },
-
-      gotoItemView: function (article) {
-        $state.go($state.current.name + '.item', {id: article.id});
-      },
-
-      changeView: function (goTo) {
-        $state.go(goTo);
-      }
-
-    });
 
     Article.findAll({limit: 10})
       .then(function (data) {
