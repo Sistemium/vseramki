@@ -94,8 +94,11 @@
               .property-label Бренд:
               .property-value {{vm.article.brand.name}}
             .property
-              .property-label Размер:
+              .property-label {{ vm.article.multiType ? 'Внешний размер' : 'Размер фото' }}:
               .property-value {{vm.article.frameSize.name}}
+            .property(ng-if='vm.article.multiType')
+              .property-label {{vm.article.multiTypeName()}}:
+              .property-value {{vm.article.articleFrameSizesName()}}
             .property
               .property-label Цвет:
               .property-value {{vm.article.colour.name}}

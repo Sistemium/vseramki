@@ -90,22 +90,34 @@
 
         },
 
-        stringName: function(frameSizes) {
+        multiTypeName: function () {
+          if (!this.multiType) {
+            return null;
+          }
+          return this.multiType === 'passePartout' ? 'С паcпарту' : 'Мульти-рамка';
+        },
+
+        articleFrameSizesName: function (frameSizes) {
+
+          return _.filter(_.map(frameSizes || this.articleFrameSizes, afs => {
+            if (!afs.count) {
+              return '';
+            }
+            return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
+          }), x => x)
+            .join(' + ');
+
+        },
+
+        stringName: function (frameSizes) {
 
           var baguette = this.baguette;
-          var frame = this;
 
-          var res =  !baguette ? null :
-            `"${baguette.brand.name}" ${_.get(frame, 'frameSize.name') || ''} ${baguette.colour.name}`;
+          var res = !baguette ? null :
+            `"${baguette.brand.name}" ${_.get(this, 'frameSize.name') || ''} ${baguette.colour.name}`;
 
-          if (frame.multiType) {
-            res += frame.multiType === 'passePartout' ? ' с паcпарту' : ' мульти-рамка';
-            res += ' (' + _.filter(_.map(frameSizes, afs => {
-              if (!afs.count) {
-                return '';
-              }
-              return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
-            }), x => x).join(' + ') + ')';
+          if (this.multiType) {
+            res += ` ${_.lowerCase(this.multiTypeName())} (${this.articleFrameSizesName(frameSizes)})`;
           }
 
           return res;
