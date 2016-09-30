@@ -2,12 +2,17 @@
 resize='editFrame'
 style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 )
-  .width-100(layout='column' layout-align='top center')
-    h2 Редактирование рамки
+  .text-center
+    h2.gray(ng-if='!vm.id') Новая рамка
+    h2 {{ vm.frame.name }}
 
-    form.wide(name="frameAttrsForm" layout='column' layout-align='top center')
+  form.wide(name="frameAttrsForm" layout='column' layout-align='space-between top' layout-gt-sm='row')
 
-      md-input-container
+    .flex
+
+    .form-controls(layout='column' layout-align='top center')
+
+      //md-input-container
         label Название рамки
         input(type='text' ng-model='vm.frame.name' name='name')
 
@@ -20,12 +25,86 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       )
 
       searchable-select(
-      label='Размер'
+      label='Размер фото'
       model='vm.frame.frameSizeId'
       model-name='FrameSize'
       options='vm.frameSizes'
-      not-addable='false'
       )
+
+      searchable-select(
+      label='Крепление задника'
+      label-of='крепления задника'
+      model='vm.frame.backMountId'
+      model-name='BackMount'
+      options='vm.backMounts'
+      )
+
+      searchable-select(
+      label='Прозрачная вставка'
+      label-of='прозрачной вставки'
+      model='vm.frame.screeningId'
+      model-name='Screening'
+      options='vm.screenings'
+      )
+
+      searchable-select(
+      label='Несколько размеров'
+      searchable='false'
+      model='vm.frame.multiType'
+      options='vm.multiTypes'
+      )
+
+      searchable-select.no-margin(
+      ng-class='{error: !vm.articleFrameSizes.length}'
+      ng-if='vm.frame.multiType'
+      placeholder='Добавить размер'
+      label-of='размера'
+      model='vm.extraFrameSizeId'
+      model-name='FrameSize'
+      options='vm.frameSizes'
+      )
+
+      md-chips.with-count(
+      ng-model="vm.articleFrameSizes"
+      ng-if='vm.frame.multiType'
+      readonly='true'
+      )
+        md-chip-template
+          span(ng-if='$chip.count>1') {{ $chip.count }} *&nbsp;
+          span(ng-class='{"strike-through gray": !$chip.count}') {{$chip.frameSize.name}}
+          md-button.micro-fab(ng-show='$chip.count>0' ng-click='vm.articleFrameSizeDecrement($chip)') -
+          md-button.micro-fab(ng-click='vm.articleFrameSizeIncrement($chip)') +
+
+    .flex
+
+    .form-controls(layout='column' layout-align='top center')
+
+      md-input-container
+        label Штук в коробке
+          =' '
+          span.required-field-asterisk *
+        input(
+        step='1'
+        type='number'
+        ng-model='vm.frame.packageRel'
+        min='1'
+        required
+        name='packageRel'
+        input-clear='black'
+        )
+        div(ng-messages="frameAttrsForm.packageRel.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+      md-input-container
+        label Вес (кг.)
+        input(
+        step='0.1'
+        type='number'
+        ng-model='vm.frame.pieceWeight'
+        min='0.1'
+        name='pieceWeight'
+        input-clear='black'
+        )
 
       md-input-container
         label Рыночная цена (руб.)
@@ -52,43 +131,19 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
         div.custom-animation(ng-show="frameAttrsForm.lowPrice.$error.checkPrice")
           span.custom-warning Оптовая цена больше рыночной
 
-      md-input-container
-        label Вес (кг.)
-        input(
-        step='0.1'
-        type='number'
-        ng-model='vm.frame.pieceWeight'
-        min='0.1'
-        name='pieceWeight'
-        input-clear='black'
-        )
-
-      md-input-container
-        label Штук в коробке
-          =' '
-          span.required-field-asterisk *
-        input(
-        step='1'
-        type='number'
-        ng-model='vm.frame.packageRel'
-        min='1'
-        required
-        name='packageRel'
-        input-clear='black'
-        )
-        div(ng-messages="frameAttrsForm.packageRel.$error")
-          div(ng-message="required") Поле не может быть пустым
-
       input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
 
-    .text-center(layout='row' ng-if='vm.hasChanges()')
-      md-button.md-raised(
-      ng-click='vm.cancelChanges()'
-      ) Отменить изменения
+    .flex
 
-      md-button.md-raised(
-      ng-disabled='frameAttrsForm.$invalid' ng-click='vm.saveFrame()'
-      ) Сохранить
+  .text-center.margin-top-bottom(
+  ng-if='vm.hasChanges()'
+  layout='row' layout-align='center center'
+  )
+    md-button.md-raised(
+    ng-if='vm.id'
+    ng-click='vm.cancelChanges()'
+    ) Отменить изменения
 
-    .alert.margin-top.md-whiteframe-1dp(ng-if='vm.dupMessage')
-      span {{vm.dupMessage}}
+    md-button.md-raised.btn-primary(
+    ng-disabled='frameAttrsForm.$invalid' ng-click='vm.save()'
+    ) {{ vm.dupMessage || (frameAttrsForm.$invalid ? 'Форма некорректно заполнена' : vm.saveLabel) }}

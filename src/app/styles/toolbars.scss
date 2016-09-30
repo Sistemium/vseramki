@@ -1,3 +1,5 @@
+@import "_vars";
+
 .view-mode-tool{
 
   .header {
@@ -21,7 +23,7 @@ md-toolbar > .fixed-toolbar {
   height: 56px !important;
 }
 
-@media (max-width: 799px) {
+@media (max-width: $layout-breakpoint-tight) {
   md-toolbar {
     .md-toolbar-tools {
       padding: 6px;

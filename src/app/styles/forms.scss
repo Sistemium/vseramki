@@ -1,3 +1,6 @@
+$input-wide-width: 300px;
+$input-normal-width: 250px;
+
 form {
 
   md-input-container {
@@ -5,12 +8,14 @@ form {
     padding-left: 0;
   }
 
-  &.wide md-input-container, &.wide searchable-select, md-input-container.wide, searchable-select.wide {
+  &.wide .form-controls > *, .form-controls > .wide, .form-controls.wide > * {
 
-    width: 350px;
+    width: $input-wide-width;
+    min-width: $input-wide-width - 50;
 
     input, md-select {
-      width: 350px;
+      width: $input-wide-width;
+      min-width: $input-wide-width - 50;
     }
 
   }
@@ -20,14 +25,31 @@ form {
     //margin-bottom: 8px;
   }
 
-  md-input-container, searchable-select {
+  md-chips {
+    margin-bottom: 16px;
+  }
 
-    width: 250px;
+  .form-controls {
 
-    input, md-select {
-      width: 250px;
+    md-radio-group {
+      padding: 2px;
     }
 
+    md-radio-group > label {
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 12px;
+      padding-left: 3px;
+    }
+
+    > * {
+
+      width: $input-normal-width;
+
+      input, md-select {
+        width: $input-normal-width;
+      }
+
+    }
   }
 
   .required-field-asterisk {
@@ -60,4 +82,5 @@ div.alert {
   border-radius: 2px;
   font-size: 15px;
   cursor: default;
+  display: inline-block;
 }

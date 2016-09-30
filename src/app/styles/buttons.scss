@@ -108,6 +108,14 @@ button .label {
   padding: 3px;
 }
 
+.btn-primary {
+  color: white !important;
+  background-color: $fab-button-background-color !important;
+  &:active, &:hover {
+    background-color: $fab-button-hover-background-color !important;
+  }
+}
+
 .micro-fab {
   border-radius: 50%;
   width: 25px;
@@ -123,13 +131,13 @@ button .label {
   }
 }
 
-button.micro-square {
-  border-radius: 0 !important;
-  min-height: 10px !important;
-  min-width: 10px !important;
-  line-height: 30px !important;
-  width: 25px !important;
-  height: 25px !important;
+button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab {
+  border-radius: 0;
+  min-height: 10px;
+  min-width: 10px;
+  line-height: 30px;
+  width: 25px;
+  height: 25px;
 }
 
 
