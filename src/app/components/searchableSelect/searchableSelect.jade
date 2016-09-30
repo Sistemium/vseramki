@@ -2,7 +2,7 @@
   span.label(ng-if='vm.label') {{ vm.label }}
   md-button.micro-square.md-mini.clear-button(ng-click="vm.model=null" ng-if='vm.model')
     i.material-icons.mini clear
-  md-select(ng-model='vm.model' md-on-close="vm.onCloseFn()" aria-label='vm.label' placeholder='{{::vm.placeholder}}')
+  md-select(ng-model='vm.model' md-on-close="vm.onCloseFn()" aria-label='vm.label' ng-attr-placeholder='{{::vm.placeholder}}')
     md-select-header(layout='row' layout-align='center center' ng-if='vm.isSearchable')
       md-input-container(flex)
         label Поиск {{ vm.labelOf }}
