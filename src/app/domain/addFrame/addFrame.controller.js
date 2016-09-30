@@ -25,8 +25,8 @@
       saveLabel: 'Сохранить новую рамку',
 
       multiTypes: [
-        {id: 'passePartout', name: 'Паспарту'},
-        {id: 'multiFrame', name: 'Багет'}
+        {id: 'passePartout', name: 'Мульти-паспарту'},
+        {id: 'multiFrame', name: 'Мульти-Багет'}
       ],
 
       save,
@@ -74,15 +74,15 @@
     }
 
     $scope.$watch('vm.extraFrameSizeId', addArticleFrameSize);
-    // $scope.$watchGroup(['vm.frame.frameSizeId', 'vm.frame.baguetteId'], function (nv, ov) {
-    //
-    //   if ((nv != ov) && hasChanges() && !reverted) {
-    //     vm.checkAttrs();
-    //   } else {
-    //     reverted = false;
-    //   }
-    //
-    // });
+    $scope.$watchGroup(['vm.frame.frameSizeId', 'vm.frame.baguetteId'], function (nv, ov) {
+
+      if ((nv != ov) && hasChanges() && !reverted) {
+        vm.checkAttrs();
+      } else {
+        reverted = false;
+      }
+
+    });
 
     $scope.$watch('vm.frame', function () {
       checkParams();
