@@ -1,5 +1,7 @@
 .searchable-select
   span.label {{ vm.label }}
+  md-button.micro-square.md-mini.clear-button(ng-click="vm.model=null" ng-if='vm.model')
+    i.material-icons.mini clear
   md-select(ng-model='vm.model' md-on-close="vm.onCloseFn()" aria-label='vm.label')
     md-select-header(layout='row' layout-align='center center')
       md-input-container(flex)
@@ -16,7 +18,6 @@
         md-button.button-cust-fab(
           ng-class='vm.addingMode ? "green-button-fab" : "yellow-button-fab"'
           ng-click="vm.addClick($event)"
-          md-autofocus
         )
           i.material-icons.md-fab add
 

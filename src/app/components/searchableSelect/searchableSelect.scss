@@ -1,3 +1,5 @@
+$searchable-select-label-color: rgba(0, 0, 0, 0.54);
+
 searchable-select {
 
   md-select {
@@ -5,7 +7,7 @@ searchable-select {
   }
 
   .label {
-    color: rgba(0, 0, 0, 0.54);
+    color: $searchable-select-label-color;
     font-size: 12px;
     padding-left: 3px;
   }
@@ -13,5 +15,14 @@ searchable-select {
   text-align: left;
   padding: 2px;
   margin-bottom: 16px;
+
+  button.clear-button {
+    color: $searchable-select-label-color;
+    bottom: -4px;
+    left: -2px;
+    margin: 0;
+    line-height: 15px;
+    height: 15px;
+  }
 
 }
