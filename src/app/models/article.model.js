@@ -88,6 +88,28 @@
 
           return Math.floor(100.0 * (this.highPrice - (this.highPrice - this.lowPrice) * Math.pow(useTotal / totalThreshold, 2))) / 100.0;
 
+        },
+
+        stringName: function(frameSizes) {
+
+          var baguette = this.baguette;
+          var frame = this;
+
+          var res =  !baguette ? null :
+            `"${baguette.brand.name}" ${_.get(frame, 'frameSize.name') || ''} ${baguette.colour.name}`;
+
+          if (frame.multiType) {
+            res += frame.multiType === 'passePartout' ? ' с паcпарту' : ' мульти-рамка';
+            res += ' (' + _.filter(_.map(frameSizes, afs => {
+              if (!afs.count) {
+                return '';
+              }
+              return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
+            }), x => x).join(' + ') + ')';
+          }
+
+          return res;
+
         }
       }
 

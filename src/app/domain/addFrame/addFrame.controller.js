@@ -35,6 +35,7 @@
       cancelChanges,
       addArticleFrameSize,
       articleFrameSizeDecrement,
+      articleFrameSizeIncrement,
       clearForm
 
     });
@@ -86,7 +87,7 @@
 
     $scope.$watch('vm.frame', function () {
       checkParams();
-      // refreshName();
+      refreshName();
     }, true);
 
     function initArticleFrameSizes() {
@@ -120,21 +121,23 @@
     }
 
     function refreshName() {
-
-      var baguette = vm.frame.baguette;
-
-      vm.frame.name = !baguette ? null :
-        `"${baguette.brand.name}" ${_.get(vm.frame, 'frameSize.name') || ''} ${baguette.colour.name} `
-      //`${baguette.material.name}` +
-      //`${ || ''}`
-      ;
+      if (!vm.frame.baguette) {
+        return;
+      }
+      vm.frame.name = vm.frame.stringName(vm.articleFrameSizes);
     }
 
     function articleFrameSizeDecrement(afs) {
-      afs.count = afs.count - 1;
+      afs.count--;
       if (afs.count < 1 && !afs.id) {
         _.remove(vm.articleFrameSizes, afs);
       }
+      refreshName();
+    }
+
+    function articleFrameSizeIncrement(afs) {
+      afs.count++;
+      refreshName();
     }
 
     function addArticleFrameSize() {
@@ -154,6 +157,7 @@
         }
 
         vm.extraFrameSizeId = null;
+        refreshName();
 
       }
     }
@@ -166,10 +170,12 @@
 
             if (!vm.frame.multiType) {
               return afs.id ? ArticleFrameSize.destroy(afs.id) : $q.resolve();
-            } else if (afs.count && (!afs.id || ArticleFrameSize.hasChanges(afs.id))) {
-              return ArticleFrameSize.create(_.assign(afs, {articleId: article.id}));
-            } else if (afs.id) {
+            } else if (afs.id && !afs.count) {
               return ArticleFrameSize.destroy(afs.id);
+            } else if (afs.count) {
+              return  (!afs.id || ArticleFrameSize.hasChanges(afs.id)) ?
+                ArticleFrameSize.create(_.assign(afs, {articleId: article.id})) :
+                $q.resolve(afs);
             }
 
             return $q.reject('Invalid articleFrameSizes');

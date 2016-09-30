@@ -73,7 +73,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
           span(ng-if='$chip.count>1') {{ $chip.count }} *&nbsp;
           span(ng-class='{"strike-through gray": !$chip.count}') {{$chip.frameSize.name}}
           md-button.micro-fab(ng-show='$chip.count>0' ng-click='vm.articleFrameSizeDecrement($chip)') -
-          md-button.micro-fab(ng-click='$chip.count = $chip.count + 1') +
+          md-button.micro-fab(ng-click='vm.articleFrameSizeIncrement($chip)') +
 
     .flex
 
