@@ -58,5 +58,5 @@
     .material-icons(ng-click='nextImage()') chevron_right
 
   .window-controls(hide-xs)
-    i.material-icons(ng-click='closeGallery()') close
     i.material-icons(ng-if='isDeletable' ng-click='showAlert($index)') delete
+    i.material-icons(ng-click='closeGallery()') close
