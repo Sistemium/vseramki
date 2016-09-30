@@ -7,7 +7,7 @@
     .controller('AddFrameController', AddFrameController)
   ;
 
-  function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper) {
+  function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper, $q) {
 
     var vm = this;
     var FrameSize = Schema.model('FrameSize');
@@ -16,6 +16,21 @@
     var ArticleFrameSize = Schema.model('ArticleFrameSize');
 
     var unique = true;
+
+    angular.extend(vm, {
+
+      frame: Article.createInstance(),
+      saved: false,
+
+      save,
+      checkAttrs,
+      hasChanges,
+      cancelChanges,
+      addArticleFrameSize,
+      articleFrameSizeDecrement,
+      clearForm
+
+    });
 
     if ($state.params.id) {
       var reverted = false;
@@ -46,14 +61,32 @@
     Screening.findAll();
     Screening.bindAll({}, $scope, 'vm.screenings');
 
+
+    if (vm.id) {
+      $scope.$on('$destroy', cancelChanges);
+    }
+
+    $scope.$watch('vm.extraFrameSizeId', addArticleFrameSize);
+    $scope.$watchGroup(['vm.frame.frameSizeId', 'vm.frame.baguetteId'], function (nv, ov) {
+
+      if ((nv != ov) && hasChanges() && !reverted) {
+        vm.checkAttrs();
+      } else {
+        reverted = false;
+      }
+
+    });
+
+    $scope.$watch('vm.frame', function () {
+      checkParams();
+      refreshName();
+    }, true);
+
     function checkParams() {
       vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && unique && vm.frame.highPrice;
     }
 
     function hasChanges() {
-      if (!vm.id) {
-        return;
-      }
       checkParams();
       return Article.hasChanges(vm.id);
     }
@@ -78,7 +111,7 @@
     }
 
     function articleFrameSizeDecrement(afs) {
-      if (-- afs.count < 1 && !afs.articleId) {
+      if (-- afs.count < 1 && !afs.id) {
         _.remove(vm.articleFrameSizes, afs);
       }
     }
@@ -105,78 +138,59 @@
       }
     }
 
-    $scope.$on('$destroy', cancelChanges);
-    $scope.$watch('vm.extraFrameSizeId', addArticleFrameSize);
+    function save () {
 
-    angular.extend(vm, {
-
-      frame: Article.createInstance(),
-      saved: false,
-      hasChanges,
-      cancelChanges,
-      addArticleFrameSize,
-      articleFrameSizeDecrement,
-
-      clearForm: function () {
-        vm.frame = Article.createInstance();
-        vm.dupMessage = false;
-        unique = true;
-        $scope.frameAttrsForm.$setUntouched();
-        $scope.frameAttrsForm.$setPristine();
-        checkParams();
-      },
-
-      checkAttrs: function () {
-        var params = {};
-
-        _.assign(params, {baguetteId: vm.frame.baguetteId}, {frameSizeId: vm.frame.frameSizeId});
-
-        if (params.baguetteId && params.frameSizeId) {
-          Article.findAll(params).then(function (data) {
-
-            _.remove(data, {id: vm.id});
-
-            if (data.length) {
-              vm.dupMessage = 'Такая рамка уже существует';
-              unique = false;
+      Article.create(vm.frame)
+        .then(article => {
+          return $q.all(_.map(vm.articleFrameSizes,afs => {
+            if (afs.count) {
+              return ArticleFrameSize.create(_.assign(afs, {articleId: article.id}));
             } else {
-              vm.dupMessage = false;
-              unique = true;
+              ArticleFrameSize.destroy(afs.id);
             }
+          }));
+        })
+        .then(function () {
+          ToastHelper.success('Рамка сохранена');
+          if (!vm.editState) {
+            vm.clearForm();
+          }
+        })
+        .catch(() => ToastHelper.error('Ошибка. Рамка не сохранена'));
+    }
 
-            checkParams();
+    function checkAttrs() {
+      var params = {};
 
-          });
-        }
-      },
+      _.assign(params, {baguetteId: vm.frame.baguetteId}, {frameSizeId: vm.frame.frameSizeId});
 
-      save: function () {
+      if (params.baguetteId && params.frameSizeId) {
+        Article.findAll(params).then(function (data) {
 
-        Article.create(vm.frame)
-          .then(function () {
-            ToastHelper.success('Рамка сохранена');
-            if (!vm.editState) {
-              vm.clearForm();
-            }
-          }).catch(() => ToastHelper.error('Ошибка. Рамка не сохранена'));
+          _.remove(data, {id: vm.id});
+
+          if (data.length) {
+            vm.dupMessage = 'Такая рамка уже существует';
+            unique = false;
+          } else {
+            vm.dupMessage = false;
+            unique = true;
+          }
+
+          checkParams();
+
+        });
       }
+    }
 
-    });
-
-    $scope.$watchGroup(['vm.frame.frameSizeId', 'vm.frame.baguetteId'], function (nv, ov) {
-
-      if ((nv != ov) && (hasChanges() || !vm.id) && !reverted) {
-        vm.checkAttrs();
-      } else {
-        reverted = false;
-      }
-
-    });
-
-    $scope.$watch('vm.frame', function () {
+    function clearForm () {
+      vm.frame = Article.createInstance();
+      vm.dupMessage = false;
+      unique = true;
+      $scope.frameAttrsForm.$setUntouched();
+      $scope.frameAttrsForm.$setPristine();
       checkParams();
-      refreshName();
-    }, true);
+    }
 
   }
 

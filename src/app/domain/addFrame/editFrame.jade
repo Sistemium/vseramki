@@ -47,14 +47,13 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       options='vm.screenings'
       )
 
-      p.width-100 Прочие размеры:
-
       md-radio-group(ng-model='vm.frame.multiType')
+        label Прочие размеры:
         md-radio-button(ng-value='null') Отсутствуют
         md-radio-button(value='passePartout') Паспарту
         md-radio-button(value='multiFrame') Мульти-рамка
 
-      searchable-select(
+      searchable-select.no-margin(
       ng-if='vm.frame.multiType'
       label='Дополнительный размер'
       label-of='размера'
@@ -135,7 +134,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
     .flex
 
   .text-center.margin-top-bottom(
-  ng-if='!vm.id && frameAttrsForm.$dirty || vm.hasChanges()'
+  ng-if='frameAttrsForm.$dirty || vm.hasChanges()'
   layout='row' layout-align='center center'
   )
     md-button.md-raised(
