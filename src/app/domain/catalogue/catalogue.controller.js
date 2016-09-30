@@ -155,7 +155,7 @@
       },
 
       changeFrame: function (frame) {
-        $state.go('catalogue.item', {id: frame.id});
+        $state.go($state.current.name, {id: frame.id});
       },
 
       gotoItemView: function (article) {
