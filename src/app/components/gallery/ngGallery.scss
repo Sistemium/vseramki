@@ -50,10 +50,30 @@ img.ng-thumb {
   height: 100%;
   background: rgba(0, 0, 0, 0.95);
   z-index: 9999;
+
+  > * {
+    height: 100%;
+  }
+
+  .left-right-chevron {
+
+    * {
+      margin: 0;
+    }
+
+    min-width: 50px !important;
+
+    .material-icons {
+      color: white;
+      font-size: 80px;
+      cursor: pointer;
+    }
+
+  }
+
 }
 
 .ng-gallery-content {
-
 
   > a.nav-left, .ng-gallery-content > a.nav-right {
     color: #fff;
@@ -146,14 +166,6 @@ img.ng-thumb {
 
 // Custom STYLES
 
-.main-div-settings {
-  height: 100%;
-}
-
-.min-settings {
-  min-width: 50px !important;
-}
-
 .fit-to-div {
   max-width: 95%;
   -ms-interpolation-mode: bicubic;
@@ -202,16 +214,6 @@ img.fullsize {
   object-fit: contain;
 }
 
-.left-right-chevron {
-  min-width: 80px !important;
-
-  .material-icons {
-    color: white;
-    font-size: 80px;
-    cursor: pointer;
-  }
-
-}
 
 .close-icon {
   position: fixed;
