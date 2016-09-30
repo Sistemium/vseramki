@@ -28,8 +28,9 @@
       filterLength: false,
       selected: [],
 
-      pagination: TableHelper.pagination(),
+      pagination: TableHelper.pagination($scope),
       isAdmin: AuthHelper.isAdmin(),
+      onPaginate: TableHelper.setPagination,
 
       plusOne,
       minusOne,
@@ -171,7 +172,6 @@
       filterArticles();
 
     }
-
 
 
     Article.findAll({limit: 10})

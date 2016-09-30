@@ -2,7 +2,7 @@
 
   #scroll-main(
   resize='catalogueTable'
-  ng-style='{height: (catalogueTable.windowHeight - catalogueTable.offsetTop - 60)+"px"}'
+  ng-style='{height: (catalogueTable.windowHeight - catalogueTable.offsetTop - 57)+"px"}'
   )
     md-table-container(ng-if='vm.articles.length')
       table(md-table md-row-select multiple ng-model='vm.selected')
@@ -42,4 +42,5 @@
   md-total='{{vm.articles.length}}',
   md-page-select='!vm.useMobile',
   md-boundary-links='!vm.useMobile'
+  md-on-paginate='vm.onPaginate'
   )

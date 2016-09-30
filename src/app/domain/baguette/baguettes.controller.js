@@ -66,6 +66,7 @@
 
       selected: [],
       pagination: TableHelper.pagination(),
+      onPaginate: TableHelper.setPagination,
 
       showImageDialog: ImageHelper.mdDialogHelper(
         function (imsImg, id) {
