@@ -6,7 +6,9 @@ layout-gt-sm='row' layout-align-gt-sm='space-around start'
   .flex
 
   .property-list.md-whiteframe-1dp.ya-map-container#location
+
     h3.header Наш офис
+
     .property-list-container
       .property
         .property-label Адрес:
@@ -15,13 +17,14 @@ layout-gt-sm='row' layout-align-gt-sm='space-around start'
         .property-label Телефон:
         .property-value
           a(href='tel:+74957668887') +7 (495) 766-888-7
+
     ya-map.ya-map(
       ng-if='vm.map'
       ya-center="{{vm.map.center}}"
       ya-zoom="{{vm.map.zoom}}"
       )
         ya-geo-object(
-        ya-options="{preset:'islands#brownStretchyIcon'}"
+        ya-options="{preset:'islands#nightStretchyIcon'}"
         ya-source="vm.map.marker"
         )
 
