@@ -1,15 +1,16 @@
-.addFrame.no-margin.scroll-y.text-center(
+.addFrame.no-margin.scroll-y(
 resize='editFrame'
 style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 )
-  h2.gray(ng-if='!vm.id') Новая рамка
-  h2 {{ vm.frame.name }}
+  .text-center
+    h2.gray(ng-if='!vm.id') Новая рамка
+    h2 {{ vm.frame.name }}
 
   form.wide(name="frameAttrsForm" layout='column' layout-align='space-between top' layout-gt-sm='row')
 
     .flex
 
-    div(layout='column' layout-align='top center')
+    .form-controls(layout='column' layout-align='top center')
 
       //md-input-container
         label Название рамки
@@ -46,9 +47,36 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
       options='vm.screenings'
       )
 
+      p.width-100 Прочие размеры:
+
+      md-radio-group(ng-model='vm.frame.multiType')
+        md-radio-button(ng-value='null') Отсутствуют
+        md-radio-button(value='passePartout') Паспарту
+        md-radio-button(value='multiFrame') Мульти-рамка
+
+      searchable-select(
+      ng-if='vm.frame.multiType'
+      label='Дополнительный размер'
+      label-of='размера'
+      model='vm.extraFrameSizeId'
+      model-name='FrameSize'
+      options='vm.frameSizes'
+      )
+
+      md-chips.with-count(
+      ng-model="vm.articleFrameSizes"
+      ng-if='vm.frame.multiType'
+      readonly='true'
+      )
+        md-chip-template
+          span(ng-if='$chip.count>1') {{ $chip.count }} *&nbsp;
+          span(ng-class='{"strike-through gray": !$chip.count}') {{$chip.frameSize.name}}
+          md-button.micro-fab(ng-show='$chip.count>0' ng-click='vm.articleFrameSizeDecrement($chip)') -
+          md-button.micro-fab(ng-click='$chip.count = $chip.count + 1') +
+
     .flex
 
-    div(layout='column' layout-align='top center')
+    .form-controls(layout='column' layout-align='top center')
 
       md-input-container
         label Штук в коробке
@@ -106,7 +134,10 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 
     .flex
 
-  .text-center(layout='row' ng-if='!vm.id && frameAttrsForm.$dirty || vm.hasChanges()' layout-align='center center')
+  .text-center.margin-top-bottom(
+  ng-if='!vm.id && frameAttrsForm.$dirty || vm.hasChanges()'
+  layout='row' layout-align='center center'
+  )
     md-button.md-raised(
     ng-if='vm.id'
     ng-click='vm.cancelChanges()'
@@ -114,7 +145,4 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
 
     md-button.md-raised.btn-primary(
     ng-disabled='frameAttrsForm.$invalid' ng-click='vm.saveFrame()'
-    ) {{ frameAttrsForm.$invalid ? 'Форма некорректно заполнена' : 'Сохранить' }}
-
-  .alert.margin-top.md-whiteframe-1dp(ng-if='vm.dupMessage')
-    span {{vm.dupMessage}}
+    ) {{ vm.dupMessage || (frameAttrsForm.$invalid ? 'Форма некорректно заполнена' : 'Сохранить') }}

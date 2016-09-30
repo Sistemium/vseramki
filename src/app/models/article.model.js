@@ -63,6 +63,10 @@
           ArticleImage: {
             localField: 'images',
             foreignKey: 'articleId'
+          },
+          ArticleFrameSize: {
+            localField: 'articleFrameSizes',
+            foreignKey: 'articleId'
           }
         }
       },

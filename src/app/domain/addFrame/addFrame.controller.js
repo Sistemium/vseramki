@@ -13,6 +13,7 @@
     var FrameSize = Schema.model('FrameSize');
     var BackMount = Schema.model('BackMount');
     var Screening = Schema.model('Screening');
+    var ArticleFrameSize = Schema.model('ArticleFrameSize');
 
     var unique = true;
 
@@ -23,8 +24,11 @@
 
       Article.find(vm.id).then(function (frame) {
         vm.frame = frame;
+        vm.articleFrameSizes = vm.frame.articleFrameSizes;
       });
 
+    } else {
+      vm.articleFrameSizes = [];
     }
 
     Baguette.findAll();
@@ -42,7 +46,7 @@
     Screening.findAll();
     Screening.bindAll({}, $scope, 'vm.screenings');
 
-    function checkParams () {
+    function checkParams() {
       vm.paramsCheck = vm.frame.frameSizeId && vm.frame.name && vm.frame.packageRel && unique && vm.frame.highPrice;
     }
 
@@ -62,18 +66,47 @@
       }
     }
 
-    function refreshName () {
+    function refreshName() {
 
       var baguette = vm.frame.baguette;
 
       vm.frame.name = !baguette ? null :
         `"${baguette.brand.name}" ${_.get(vm.frame, 'frameSize.name') || ''} ${baguette.colour.name} `
-        //`${baguette.material.name}` +
-        //`${ || ''}`
+      //`${baguette.material.name}` +
+      //`${ || ''}`
       ;
     }
 
+    function articleFrameSizeDecrement(afs) {
+      if (-- afs.count < 1 && !afs.articleId) {
+        _.remove(vm.articleFrameSizes, afs);
+      }
+    }
+
+    function addArticleFrameSize() {
+      if (vm.extraFrameSizeId) {
+
+        var efs = {frameSizeId: vm.extraFrameSizeId};
+        var afs = _.find(vm.articleFrameSizes, efs);
+
+        if (afs) {
+          afs.count ++;
+        } else {
+          afs = ArticleFrameSize.createInstance({
+            // article: vm.frame,
+            frameSizeId: vm.extraFrameSizeId,
+            count: 1
+          });
+          vm.articleFrameSizes.push(afs);
+        }
+
+        vm.extraFrameSizeId = null;
+
+      }
+    }
+
     $scope.$on('$destroy', cancelChanges);
+    $scope.$watch('vm.extraFrameSizeId', addArticleFrameSize);
 
     angular.extend(vm, {
 
@@ -81,6 +114,8 @@
       saved: false,
       hasChanges,
       cancelChanges,
+      addArticleFrameSize,
+      articleFrameSizeDecrement,
 
       clearForm: function () {
         vm.frame = Article.createInstance();
