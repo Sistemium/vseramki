@@ -1,9 +1,8 @@
-.ui-view
-md-content#scroll-main(
-flex resize='frames'
-style='max-width: {{ vm.isRootState ? "100%" : "0"}};'
+md-content.ui-view#scroll-main(
+resize='tiles'
+ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
 )
-  md-virtual-repeat-container(style='height: {{ windowHeight - (windowWidth >= 960 ? 64 : 56) }}px; overflow: scroll')
+  md-virtual-repeat-container.height-100
     .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
       .repeated-group-item(ng-repeat='article in row' flex)
         md-card(layout='column' layout-align='space-between center')
