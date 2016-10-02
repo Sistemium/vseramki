@@ -14,8 +14,8 @@
     var children = [
 
       {
-        name: 'add',
-        url: '/add',
+        name: 'create',
+        url: '/create',
         templateUrl: 'app/domain/addFrame/editFrame.html',
         controller: 'AddFrameController',
         controllerAs: 'vm'

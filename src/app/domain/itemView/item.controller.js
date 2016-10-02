@@ -204,7 +204,7 @@
       },
 
       addFrame: () => {
-        $state.go('catalogue.' + $state.current.name.split('.')[1] + '.add');
+        $state.go('catalogue.' + $state.current.name.split('.')[1] + '.create');
       },
 
 
