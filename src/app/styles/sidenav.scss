@@ -10,6 +10,7 @@ md-sidenav {
 
     &.md-whiteframe-1dp, .md-whiteframe-1dp {
       box-shadow: none;
+      border-right: solid 1px $gray-borders-color;
       padding: 0;
     }
 
