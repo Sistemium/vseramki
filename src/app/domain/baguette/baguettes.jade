@@ -1,30 +1,9 @@
 .baguettes
-  md-toolbar(ng-if='vm.isRoot')
-    .md-toolbar-tools.fixed-toolbar.gray-bottom-border
 
-      .view-mode-tool(layout='row' layout-align='center center')
-        h2.header {{ vm.currentState == 'tiles' ? 'Плитка' : 'Таблица' }} багетов
-        .options
-          i.material-icons.icon-button(
-          ng-click="vm.changeView('baguettes.table')"
-          ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
-          ) view_headline
-
-          .vertical-divider |
-
-          i.material-icons.icon-button(
-          ng-click="vm.changeView('baguettes.tiles')"
-          ng-class="vm.currentState == 'tiles' ? 'icons-button-active' : 'icon-button-disabled'"
-          ) view_comfy
-
-      span(flex)
-
-      .buttons
-        md-button.md-fab.md-mini.md-icon-button.admin-button(
-        ng-click='vm.goToCreateBaguette()'
-        )
-          i.material-icons add
-
+  state-bar(
+  root-state='baguettes'
+  title='{{ vm.currentState == "tiles" ? "Плитка" : "Таблица" }} багетов'
+  )
 
   div(layout='row')
 
