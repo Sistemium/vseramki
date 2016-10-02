@@ -10,11 +10,11 @@
     var vm = this;
 
     vm.buttons = [
-      // {
-      //   url: 'sms/vseramki',
-      //   name: 'Мобильный номер',
-      //   class: 'mobile'
-      // },
+      {
+        url: 'sms/vseramki',
+        name: 'Мобильный номер',
+        class: 'mobile'
+      },
       {
         url: 'facebook/vseramki',
         name: 'Facebook',
