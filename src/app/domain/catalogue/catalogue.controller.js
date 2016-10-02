@@ -160,7 +160,7 @@
       }
     }
 
-    function filterArticles(filter) {
+    function makeJsFilter(filter) {
 
       var f = filter || vm.articleFilter;
       var jsFilter = f ? {
@@ -172,6 +172,14 @@
           'likei': `%${vm.search}%`
         });
       }
+      return jsFilter;
+
+    }
+
+    function filterArticles(filter) {
+
+      var f = filter || vm.articleFilter;
+      var jsFilter = makeJsFilter(f);
 
       rebind(jsFilter);
 
@@ -180,9 +188,9 @@
 
       function getVisibleBy(prop) {
 
-        var propFilter = _.pickBy(f, function (val, key) {
+        var propFilter = makeJsFilter(_.pickBy(f, function (val, key) {
           return key !== prop;
-        });
+        }));
 
         var articles = Article.filter(propFilter);
 
