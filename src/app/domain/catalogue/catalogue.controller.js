@@ -36,7 +36,7 @@
       delCurrFilter,
       addToCart: Cart.addToCart,
 
-      changeView: to => $state.go(goTo),
+      changeView: to => $state.go(to),
       goToCreateFrame: () => $state.go('catalogue.add'),
       gotoItemView: (article) => $state.go($state.current.name + '.item', {id: article.id}),
 
@@ -71,9 +71,7 @@
       });
 
     Article.findAll({limit: 1000})
-      .then(function (data) {
-
-        vm.ready = true;
+      .then(() => {
 
         return $q.all([
           Colour.findAll(),
@@ -83,24 +81,19 @@
         ]);
 
       })
-      .then(() => filterArticles());
+      .then(() => {
+        vm.ready = true;
+        filterArticles();
+      });
 
-    var unbind;
-
-    function rebind(filter) {
-      if (unbind) {
-        unbind();
-      }
-      unbind = Article.bindAll(filter, $scope, 'vm.articles', () => setChunks(chunkSize));
-    }
-
-    VSHelper.watchForGroupSize($scope, 300, 270, setChunks);
 
     /*
 
     Listeners
 
      */
+
+    VSHelper.watchForGroupSize($scope, 300, 270, setChunks);
 
     $scope.$watch('vm.articleFilter', filterArticles);
 
@@ -109,6 +102,7 @@
       vm.disableAddFrame = toState.url === '/add';
       vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
       vm.currentItemId = toParams.id;
+      rebind();
     });
 
 
@@ -122,6 +116,13 @@
       chunkSize = nv;
       vm.rowsFlex = nv > 1 ? Math.round(100 / (chunkSize + 1)) : 100;
       vm.rows = _.chunk(vm.articles, nv);
+    }
+
+    function rebind(filter) {
+      if (vm.unbind) {
+        vm.unbind();
+      }
+      vm.unbind = Article.bindAll(filter, $scope, 'vm.articles', () => setChunks(chunkSize));
     }
 
     function recalcTotals() {
