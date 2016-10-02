@@ -12,7 +12,7 @@
     var Colour = Schema.model('Colour');
     var BaguetteImage = Schema.model('BaguetteImage');
 
-    var groupSize = 3;
+    var chunkSize = 3;
 
     angular.extend(vm, {
 
@@ -27,30 +27,22 @@
       isAdmin: AuthHelper.isAdmin(),
       onPaginate: TableHelper.setPagination,
 
+      onBlur,
       plusOne,
       minusOne,
       onCartChange,
-      onBlur,
       filterOptionClick,
       resetFilters,
       delCurrFilter,
       addToCart: Cart.addToCart,
 
-      goToCreateFrame: function () {
-        $state.go('catalogue.add');
-      },
+      changeView: to => $state.go(goTo),
+      goToCreateFrame: () => $state.go('catalogue.add'),
+      gotoItemView: (article) => $state.go($state.current.name + '.item', {id: article.id}),
 
       changeFrame: function (frame) {
         var newState = vm.currentState === 'create' ? '^.item' : $state.current.name;
         $state.go(newState, {id: frame.id});
-      },
-
-      gotoItemView: function (article) {
-        $state.go($state.current.name + '.item', {id: article.id});
-      },
-
-      changeView: function (goTo) {
-        $state.go(goTo);
       }
 
     });
@@ -78,36 +70,31 @@
         vm.images = data;
       });
 
-
-    Article.findAll({limit: 10})
+    Article.findAll({limit: 1000})
       .then(function (data) {
-        vm.articles = data;
-        vm.rows = _.chunk(data, groupSize);
-        vm.ready = true;
-        vm.total = Math.ceil(data.length / vm.pageSize);
 
-        $q.all([
+        vm.ready = true;
+
+        return $q.all([
           Colour.findAll(),
           Material.findAll(),
           FrameSize.findAll(),
           Brand.findAll()
-        ]).then(function () {
-          filterArticles();
-        });
+        ]);
 
-      });
+      })
+      .then(() => filterArticles());
 
-    Article.bindAll({}, $scope, 'vm.articles', () => VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
-      groupSize = nv;
-      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
-      vm.rows = _.chunk(vm.articles, nv);
-    }));
+    var unbind;
 
-    VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
-      groupSize = nv;
-      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
-      vm.rows = _.chunk(vm.articles, nv);
-    });
+    function rebind(filter) {
+      if (unbind) {
+        unbind();
+      }
+      unbind = Article.bindAll(filter, $scope, 'vm.articles', () => setChunks(chunkSize));
+    }
+
+    VSHelper.watchForGroupSize($scope, 300, 270, setChunks);
 
     /*
 
@@ -130,6 +117,12 @@
      Functions
 
      */
+
+    function setChunks(nv) {
+      chunkSize = nv;
+      vm.rowsFlex = nv > 1 ? Math.round(100 / (chunkSize + 1)) : 100;
+      vm.rows = _.chunk(vm.articles, nv);
+    }
 
     function recalcTotals() {
       Cart.recalcTotals(vm);
@@ -168,7 +161,7 @@
       var f = filter || vm.articleFilter;
 
       vm.articles = Article.filter(f);
-      vm.rows = _.chunk(vm.articles, groupSize);
+      vm.rows = _.chunk(vm.articles, chunkSize);
       vm.filterLength = !!Object.keys(f).length;
 
       function getVisibleBy(prop) {
