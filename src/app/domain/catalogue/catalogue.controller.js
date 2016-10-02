@@ -2,11 +2,6 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('CatalogueController', CatalogueController)
-  ;
-
   function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper, AuthHelper, TableHelper) {
 
     var vm = this;
@@ -60,11 +55,13 @@
 
     });
 
-    Cart.findAll();
+    /*
 
-    function recalcTotals() {
-      Cart.recalcTotals(vm);
-    }
+     Init
+
+     */
+
+    Cart.findAll();
 
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
 
@@ -80,6 +77,63 @@
       .then(function (data) {
         vm.images = data;
       });
+
+
+    Article.findAll({limit: 10})
+      .then(function (data) {
+        vm.articles = data;
+        vm.rows = _.chunk(data, groupSize);
+        vm.ready = true;
+        vm.total = Math.ceil(data.length / vm.pageSize);
+
+        $q.all([
+          Colour.findAll(),
+          Material.findAll(),
+          FrameSize.findAll(),
+          Brand.findAll()
+        ]).then(function () {
+          filterArticles();
+        });
+
+      });
+
+    Article.bindAll({}, $scope, 'vm.articles', () => VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
+      groupSize = nv;
+      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
+      vm.rows = _.chunk(vm.articles, nv);
+    }));
+
+    VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
+      groupSize = nv;
+      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
+      vm.rows = _.chunk(vm.articles, nv);
+    });
+
+    /*
+
+    Listeners
+
+     */
+
+    $scope.$watch('vm.articleFilter', filterArticles);
+
+    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
+      vm.disableAddFrame = toState.url === '/add';
+      vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
+      vm.currentItemId = toParams.id;
+    });
+
+
+    /*
+
+     Functions
+
+     */
+
+    function recalcTotals() {
+      Cart.recalcTotals(vm);
+    }
 
     function plusOne(item) {
       var cart = item.inCart;
@@ -173,46 +227,10 @@
 
     }
 
-
-    Article.findAll({limit: 10})
-      .then(function (data) {
-        vm.articles = data;
-        vm.rows = _.chunk(data, groupSize);
-        vm.ready = true;
-        vm.total = Math.ceil(data.length / vm.pageSize);
-
-        $q.all([
-          Colour.findAll(),
-          Material.findAll(),
-          FrameSize.findAll(),
-          Brand.findAll()
-        ]).then(function () {
-          filterArticles();
-        });
-
-      });
-
-    Article.bindAll({}, $scope, 'vm.articles', () => VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
-      groupSize = nv;
-      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
-      vm.rows = _.chunk(vm.articles, nv);
-    }));
-
-    VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
-      groupSize = nv;
-      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
-      vm.rows = _.chunk(vm.articles, nv);
-    });
-
-    $scope.$watch('vm.articleFilter', filterArticles);
-
-    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
-      vm.disableAddFrame = toState.url === '/add';
-      vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
-      vm.currentItemId = toParams.id;
-    });
-
   }
+
+  angular
+    .module('vseramki')
+    .controller('CatalogueController', CatalogueController);
 
 }());
