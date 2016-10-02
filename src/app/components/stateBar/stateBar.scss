@@ -1,0 +1,12 @@
+state-bar {
+
+  md-toolbar.state-bar {
+    background: white;
+    color: black;
+    .toolbar-tools {
+      position: fixed;
+      height: 56px;
+    }
+  }
+
+}
