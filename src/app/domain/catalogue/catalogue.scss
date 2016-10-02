@@ -6,7 +6,6 @@ md-content.articles {
     > * {
       margin: 0;
       @media (max-width: $layout-breakpoint-tight) {
-        margin: 0 -$margin-default-half 0;
       }
     }
     .article-list {

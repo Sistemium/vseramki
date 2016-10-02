@@ -15,14 +15,14 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
     h4.header(layout='row')
 
       md-input-container.no-padding(flex style='margin: 15px 0 0')
-        label
+        label(for='articleSearcher')
           i.material-icons search
-        input(type="search" ng-model="vm.search" placeholder='Нажмите для поиска')
+        input#articleSearcher(type="search" ng-model="vm.search" placeholder='Нажмите для поиска')
 
       md-button.md-raised.md-mini.micro-square(
       style='margin: 0 0 0 15px'
       ng-click='vm.resetFilters()'
-      ng-if='vm.filterLength'
+      ng-if='vm.filterLength || vm.search'
       aria-label='Reset filters'
       )
         i.material-icons.mini clear

@@ -97,12 +97,15 @@
 
     $scope.$watch('vm.articleFilter', filterArticles);
 
+    $scope.$watch('vm.search', () => {
+      filterArticles();
+    });
+
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
       vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
       vm.disableAddFrame = toState.url === '/add';
       vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
       vm.currentItemId = toParams.id;
-      rebind();
     });
 
 
@@ -160,8 +163,18 @@
     function filterArticles(filter) {
 
       var f = filter || vm.articleFilter;
+      var jsFilter = f ? {
+        where: _.mapValues (f, v => ({ '==': v}))
+      } : {};
 
-      vm.articles = Article.filter(f);
+      if (vm.search) {
+        _.set(jsFilter, 'where.name', {
+          'likei': `%${vm.search}%`
+        });
+      }
+
+      rebind(jsFilter);
+
       vm.rows = _.chunk(vm.articles, chunkSize);
       vm.filterLength = !!Object.keys(f).length;
 
@@ -194,6 +207,7 @@
 
     function resetFilters() {
       vm.articleFilter = {};
+      vm.search = '';
       vm.currentFilter = {};
     }
 
