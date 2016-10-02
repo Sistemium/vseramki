@@ -12,13 +12,20 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
   layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
   )
 
-    p.md-title
+    h4.header(layout='row')
 
-      span.no-button(ng-if='!vm.filterLength') Фильтр
+      md-input-container.no-padding(flex style='margin: 15px 0 0')
+        label
+          i.material-icons search
+        input(type="search" ng-model="vm.search" placeholder='Нажмите для поиска')
 
-      md-button.md-raised.no-margin(
-      aria-label='Reset filters' ng-click='vm.resetFilters()' ng-if='vm.filterLength'
-      ) Сбросить фильтры
+      md-button.md-raised.md-mini.micro-square(
+      style='margin: 0 0 0 15px'
+      ng-click='vm.resetFilters()'
+      ng-if='vm.filterLength'
+      aria-label='Reset filters'
+      )
+        i.material-icons.mini clear
 
     .no-padding(layout='column' layout-align='start start')
 
@@ -64,7 +71,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
     resize='articlesList'
     style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px'
     )
-      md-virtual-repeat-container.height-100(ng-if='!vm.isRootState')
+      md-virtual-repeat-container.height-100.clickable(ng-if='!vm.isRootState')
         .item(
         md-virtual-repeat='frame in vm.articles'
         ng-class="{'active' : vm.currentItemId == frame.id }"

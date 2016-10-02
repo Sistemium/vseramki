@@ -1,6 +1,7 @@
 @import "_vars";
 
 md-sidenav {
+
   max-width: 300px;
 
   @media (max-width: $layout-breakpoint-tight) {
@@ -13,4 +14,9 @@ md-sidenav {
     }
 
   }
+
+  .header {
+    margin: 5px 0;
+  }
+
 }
