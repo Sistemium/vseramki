@@ -20,7 +20,7 @@
 
           showIf: true,
           changeView: to => $state.go(`${vm.rootState}.${to}`),
-          addClick: () => $state.go(`${vm.rootState}.${vm.currentState}.create`),
+          addClick: () => $state.go(`${vm.rootState}.${vm.currentState}.create`)
 
         });
 
