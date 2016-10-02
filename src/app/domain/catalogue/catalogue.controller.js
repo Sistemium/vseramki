@@ -46,7 +46,7 @@
       },
 
       changeFrame: function (frame) {
-        var newState = vm.currentState === 'add' ? '^.item' : $state.current.name;
+        var newState = vm.currentState === 'create' ? '^.item' : $state.current.name;
         $state.go(newState, {id: frame.id});
       },
 
