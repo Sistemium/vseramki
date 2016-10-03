@@ -2,7 +2,7 @@ md-toolbar.state-bar(ng-if='vm.showIf')
   .md-toolbar-tools.fixed-toolbar.gray-bottom-border
 
     .view-mode-tool(layout='row' layout-align='center center')
-      h2.header.hide-xs {{ vm.title }}
+      h2.header {{ vm.title }}
       .options(ng-if='vm.modeOptions')
         i.material-icons.icon-button(
         ng-click="vm.changeView('table')"

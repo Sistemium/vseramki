@@ -6,6 +6,14 @@
     .cart-totals {
       font-size: 14px;
     }
+
+    .view-mode-tool {
+      .header {
+        @media (max-width: $layout-breakpoint-xs) {
+          display: none;
+        }
+      }
+    }
   }
 
   #sidenav-left {

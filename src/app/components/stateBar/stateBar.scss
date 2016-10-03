@@ -9,4 +9,17 @@ state-bar {
     }
   }
 
+  .view-mode-tool{
+
+    .header {
+      margin-left: 4px;
+    }
+
+    .options {
+      display: flex;
+      margin: 3px 0 0 10px;
+    }
+
+  }
+
 }

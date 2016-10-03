@@ -1,18 +1,5 @@
 @import "_vars";
 
-.view-mode-tool{
-
-  .header {
-    width: 160px;
-  }
-
-  .options {
-    display: flex;
-    margin-top: 3px;
-  }
-
-}
-
 @media (max-width: $layout-breakpoint-tight) {
   md-toolbar {
     .md-toolbar-tools {
