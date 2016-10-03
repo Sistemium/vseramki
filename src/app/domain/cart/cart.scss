@@ -40,9 +40,23 @@
 
 #order-info {
   .property-list-container .property {
+
     border-top: none;
+    font-size: 16px;
+
     .property-label {
       text-align: left;
     }
+    .property-value {
+      text-align: right;
+    }
   }
+}
+
+#checkout {
+
+  md-input-container {
+    margin-top: 0;
+  }
+
 }

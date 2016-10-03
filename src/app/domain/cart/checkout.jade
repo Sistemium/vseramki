@@ -2,7 +2,7 @@ state-bar(
 title='Оформление заказа'
 )
 
-md-content.md-padding.scroll-y.md-margin(
+md-content#checkout.md-padding.scroll-y.md-margin(
 layout='column' layout-align='start center'
 layout-gt-xs='row' layout-align-gt-xs='space-around start'
 )
@@ -13,11 +13,17 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
     h3 Сводка по заказу
     .property-list-container
       .property
+        .property-label Всего позиций:
+        .property-value {{ ::vm.cartItems | number:0 }}
+      .property
+        .property-label Общее количество:
+        .property-value {{ ::vm.cartTotalCount| number:0 }}&nbsp;шт.
+      .property
         .property-label Общая сумма:
         .property-value {{ ::vm.cartSubTotal | number:2 }}&nbsp;₽
       .property
         .property-label Скидка:
-        .property-value {{ vm.cartDiscount | number: 2 }}&nbsp;₽
+        .property-value {{ -vm.cartDiscount | number: 2 }}&nbsp;₽
       .property(ng-if='vm.cartSubTotal > vm.cartTotal')
         .property-label Итого со скидкой:
         .property-value {{ vm.cartTotal | number: 2 }}&nbsp;₽
@@ -54,7 +60,7 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
         name='shippingPerson'
         input-clear='black'
         )
-        div(ng-messages="checkoutForm.shippingContact.$error")
+        div(ng-messages="checkoutForm.shippingPerson.$error")
           div(ng-message="required") Поле не может быть пустым
       md-input-container
         label Телефон
@@ -85,7 +91,7 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
 
 
     .text-center
-      md-button.md-button.pink-button(
+      md-button.width-100.no-margin.md-button.pink-button(
       type='submit'
       ng-disabled='checkoutForm.$invalid'
       ) Завершить оформление
