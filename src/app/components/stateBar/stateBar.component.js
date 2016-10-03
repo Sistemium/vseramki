@@ -23,7 +23,7 @@
 
           isAdmin: AuthHelper.isAdmin(),
           showIf: true,
-          modeOptions: vm.modeOptions !== false,
+          modeOptions: vm.rootState && vm.modeOptions !== false,
           changeView: to => $state.go(`${vm.rootState}.${to}`),
           addClick: () => $state.go(`${vm.rootState}.${vm.currentState}.create`)
 
