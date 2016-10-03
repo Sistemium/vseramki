@@ -15,7 +15,14 @@
         url: '/cart',
         templateUrl: 'app/domain/cart/cart.html',
         controller: 'CartController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        children: [
+          {
+            name: 'checkout',
+            url: '/checkout',
+            templateUrl: 'app/domain/cart/checkout.html',
+          }
+        ]
       })
     ;
   }

@@ -1,17 +1,13 @@
-.cart
+.cart.ui-view
 
   state-bar(
   title='Заказ'
   )
     div(layout='row')
-      //md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
-      //ng-if='vm.data.length'
-      //ng-click='vm.clearCart($event)'
-      //)
-      //  i.material-icons remove_shopping_cart
-
-      //md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab
-        i.material-icons chevron_right
+      md-button.md-button.pink-button(
+      ng-if='vm.data.length'
+      ui-sref='.checkout'
+      ) Оформить заказ
 
   div(
   ng-if='!vm.data.length'

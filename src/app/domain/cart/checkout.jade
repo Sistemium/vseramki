@@ -1,0 +1,8 @@
+state-bar(
+title='Оформление заказа'
+)
+  div(layout='row')
+    md-button.md-button.pink-button(
+    ng-if='vm.data.length'
+    ui-sref='.checkout'
+    ) Завершить оформление
