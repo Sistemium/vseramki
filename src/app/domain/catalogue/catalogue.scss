@@ -53,6 +53,11 @@ md-content.articles {
     md-card-content {
       padding: 0;
     }
+
+    md-card-actions {
+      min-height: 40px !important;
+    }
+
   }
 
   table.md-table {

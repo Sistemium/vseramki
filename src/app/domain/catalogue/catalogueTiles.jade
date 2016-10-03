@@ -11,16 +11,19 @@ ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
           md-card-header
             a(href ng-click='vm.gotoItemView(article, $event)')
               img.thumbnail(ng-src='{{article.activePhoto()}}')
-          md-card-title.md-margin
+          h4.text-center.margin-top-bottom
+            div "{{ ::article.brand.name }}" {{ ::article.frameSize.name }} {{ ::article.colour.name }}
+            small.gray {{ ::article.multiTypeName() }}
+          //md-card-title.md-margin
             md-card-title-text
               .md-subhead.text-center {{ article.name }}
-
+          .flex
           .md-margin
             .md-title.text-center.text-nowrap
               span(ng-class='{"strike-through gray": vm.cartHasDiscount}') {{ article.highPrice }} ₽
               span(ng-if='vm.cartHasDiscount') &nbsp; {{ article.discountedPrice(vm.cartSubTotal) }} ₽
 
-          md-card-actions(flex ng-if='article.inCart')
+          md-card-actions(ng-if='article.inCart')
             .div-order-info.space-children-em(layout='row' layout-align="start center")
 
               p Заказано:
@@ -43,7 +46,7 @@ ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
 
                 md-button.micro-fab(ng-click='vm.plusOne(article)') +
 
-          md-card-actions(flex ng-if='!article.inCart')
+          md-card-actions(ng-if='!article.inCart')
             md-button.md-fab.md-mini.md-icon-button(
             aria-label="Добавить в корзину"
             ng-click="vm.addToCart(article)"
