@@ -12,12 +12,13 @@
       },
 
       /** @ngInject */
-      controller: function ($state, $scope) {
+      controller: function ($state, $scope, AuthHelper) {
 
         var vm = this;
 
         _.assign(vm, {
 
+          isAdmin: AuthHelper.isAdmin(),
           showIf: true,
           changeView: to => $state.go(`${vm.rootState}.${to}`),
           addClick: () => $state.go(`${vm.rootState}.${vm.currentState}.create`)
