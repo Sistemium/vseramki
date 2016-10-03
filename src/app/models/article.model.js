@@ -119,7 +119,7 @@
             `"${baguette.brand.name}" ${_.get(this, 'frameSize.name') || ''} ${baguette.colour.name}`;
 
           if (this.multiType) {
-            res += ` ${_.lowerCase(this.multiTypeName())} (${this.articleFrameSizesName(frameSizes)})`;
+            res += ` ${this.multiTypeName().toLowerCase()} (${this.articleFrameSizesName(frameSizes)})`;
           }
 
           return res;
