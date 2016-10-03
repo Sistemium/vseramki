@@ -19,5 +19,5 @@ md-toolbar.state-bar(ng-if='vm.showIf')
     span(flex)
 
     .buttons
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.addClick()' ng-if='vm.admin')
+      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.addClick()' ng-if='vm.isAdmin')
         i.material-icons add
