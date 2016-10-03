@@ -43,6 +43,7 @@
         vm.cartTotal = model.orderTotal();
         vm.cartItems = model.getAll().length;
         vm.cartHasDiscount = (vm.cartSubTotal > vm.cartTotal);
+        vm.cartDiscount = (1 - vm.cartTotal / vm.cartSubTotal) * 100;
       },
 
       orderSubTotal: function (items) {

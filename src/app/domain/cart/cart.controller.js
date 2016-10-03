@@ -32,8 +32,7 @@
     });
 
     function refreshPrice() {
-      vm.cartSubTotal = Cart.orderSubTotal();
-      vm.cartTotal = Cart.orderTotal();
+      Cart.recalcTotals(vm);
     }
 
     function clearCart($event) {
