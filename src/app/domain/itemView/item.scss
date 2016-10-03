@@ -20,6 +20,13 @@
         max-width: 350px;
       }
 
+      @media (max-width: 1024px) {
+        min-width: 300px;
+        max-width: 300px;
+      }
+
+
+
       img {
         //max-width: 260px;
         max-height: 320px;
@@ -31,6 +38,7 @@
     .ng-gallery {
       min-height: 50px;
       //margin-top: $margin-default;
+      max-width: 300px;
     }
 
     .property-list {
