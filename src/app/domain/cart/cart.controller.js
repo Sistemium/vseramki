@@ -63,7 +63,7 @@
       item.count--;
 
       if (item.count < 1) {
-        item.count = 1;
+        return Cart.destroy(item);
       }
       saveItem();
     }
