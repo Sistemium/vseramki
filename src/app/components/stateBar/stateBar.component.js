@@ -5,6 +5,8 @@
   angular.module('vseramki')
     .component('stateBar', {
 
+      transclude: true,
+
       bindings: {
         // showIf: '?='
         title: '@',
