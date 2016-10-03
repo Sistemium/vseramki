@@ -1,26 +1,27 @@
-.cart.ui-view
+state-bar(
+title='Заказ'
+)
+  div(layout='row')
+    md-button.md-button.pink-button.md-raised(
+    ng-if='vm.data.length'
+    ui-sref='checkout'
+    ) Оформить заказ
 
-  state-bar(
-  title='Заказ'
-  )
-    div(layout='row')
-      md-button.md-button.pink-button(
-      ng-if='vm.data.length'
-      ui-sref='checkout'
-      ) Оформить заказ
+.cart.scroll-y(resize='cart' ng-style='{height: (cart.windowHeight - cart.offsetTop - 60)+"px"}')
 
-  div(
+
+  .height-100(
   ng-if='!vm.data.length'
   layout='column'
-  layout-align='space-around center'
-  resize='emptyCart'
-  style='height: {{emptyCart.windowHeight - emptyCart.offsetTop}}px;'
+  layout-align='center center'
   )
+    //.flex
     .emptyCart.md-whiteframe-1dp(ng-if='!vm.data.length')
       div(style='text-align: center') Корзина пуста
       div
         md-button.md-raised.pink-button(ui-sref='catalogue')
           | Перейти в Каталог
+    //.flex
 
   md-table-container(ng-if='vm.data.length')
     table(md-table)
@@ -60,7 +61,7 @@
             md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
               i.material-icons.clear-icon-size clear
 
-  .footer.fixed-bottom(ng-show='vm.data.length' layout='row' layout-align='center center')
+  .footer.fixed-bottom(layout='row' layout-align='center center')
     md-button.md-button.md-fab.md-mini.md-icon-button.default-button(
     ng-if='vm.data.length'
     ng-click='vm.clearCart($event)'
