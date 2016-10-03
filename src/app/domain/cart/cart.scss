@@ -37,3 +37,12 @@
   }
 
 }
+
+#order-info {
+  .property-list-container .property {
+    border-top: none;
+    .property-label {
+      text-align: left;
+    }
+  }
+}

@@ -1,8 +1,94 @@
 state-bar(
 title='Оформление заказа'
 )
-  div(layout='row')
-    md-button.md-button.pink-button(
-    ng-if='vm.data.length'
-    ui-sref='.checkout'
-    ) Завершить оформление
+
+md-content.md-padding.scroll-y.md-margin(
+layout='column' layout-align='start center'
+layout-gt-xs='row' layout-align-gt-xs='space-around start'
+)
+
+  span(flex)
+
+  #order-info.property-list.flex-5-4
+    h3 Сводка по заказу
+    .property-list-container
+      .property
+        .property-label Общая сумма:
+        .property-value {{ ::vm.cartSubTotal | number:2 }}&nbsp;₽
+      .property
+        .property-label Скидка:
+        .property-value {{ vm.cartDiscount | number: 2 }}&nbsp;₽
+      .property(ng-if='vm.cartSubTotal > vm.cartTotal')
+        .property-label Итого со скидкой:
+        .property-value {{ vm.cartTotal | number: 2 }}&nbsp;₽
+
+  span(flex)
+
+  form.wide(name='checkoutForm')
+
+    h3 Контактные данные
+
+    .form-controls(layout='column' layout-align='start center')
+
+      md-input-container
+        label Адрес доставки
+          =' '
+          span.required-field-asterisk *
+        input(
+        type='text'
+        ng-model='vm.shippingAddress'
+        required
+        name='shippingAddress'
+        input-clear='black'
+        )
+        div(ng-messages="checkoutForm.shippingAddress.$error")
+          div(ng-message="required") Поле не может быть пустым
+      md-input-container
+        label Контактное лицо
+          =' '
+          span.required-field-asterisk *
+        input(
+        type='text'
+        ng-model='vm.shippingContact'
+        required
+        name='shippingPerson'
+        input-clear='black'
+        )
+        div(ng-messages="checkoutForm.shippingContact.$error")
+          div(ng-message="required") Поле не может быть пустым
+      md-input-container
+        label Телефон
+          =' '
+          span.required-field-asterisk *
+        input(
+        type='text'
+        ng-model='vm.shippingPhone'
+        required
+        name='shippingPhone'
+        input-clear='black'
+        )
+        div(ng-messages="checkoutForm.shippingPhone.$error")
+          div(ng-message="required") Поле не может быть пустым
+      md-input-container
+        label E-mail
+          =' '
+          span.required-field-asterisk *
+        input(
+        type='text'
+        ng-model='vm.shippingEmail'
+        required
+        name='shippingEmail'
+        input-clear='black'
+        )
+        div(ng-messages="checkoutForm.shippingEmail.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+
+    .text-center
+      md-button.md-button.pink-button(
+      type='submit'
+      ng-disabled='checkoutForm.$invalid'
+      ) Завершить оформление
+
+  span(flex)
+

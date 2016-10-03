@@ -15,14 +15,14 @@
         url: '/cart',
         templateUrl: 'app/domain/cart/cart.html',
         controller: 'CartController',
-        controllerAs: 'vm',
-        children: [
-          {
-            name: 'checkout',
-            url: '/checkout',
-            templateUrl: 'app/domain/cart/checkout.html',
-          }
-        ]
+        controllerAs: 'vm'
+      })
+      .state({
+        name: 'checkout',
+        url: '/checkout',
+        templateUrl: 'app/domain/cart/checkout.html',
+        controller: 'CartController',
+        controllerAs: 'vm'
       })
     ;
   }
