@@ -55,13 +55,16 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
         .property-list.margin-top
           .property-list-container.flex-5-4
             .property(ng-if='vm.article.multiType')
-              .property-label Прочие размеры:
+              .property-label Внутренние размеры:
               .property-value
                 p(ng-repeat='fs in vm.article.articleFrameSizes | orderBy:"fs.frameSize.name" track by fs.id')
                   | {{ fs.count }} * {{ fs.frameSize.name }}
             .property
               .property-label Материал багета:
               .property-value {{vm.article.material.name}}
+            .property
+              .property-label Ширина багета:
+              .property-value {{vm.article.baguette.borderWidth}} мм.
             .property(ng-if='vm.article.screeningId')
               .property-label Прозрачная вставка:
               .property-value {{vm.article.screening.name}}
