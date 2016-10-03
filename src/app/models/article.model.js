@@ -99,7 +99,9 @@
 
         articleFrameSizesName: function (frameSizes) {
 
-          return _.sortBy(_.filter(_.map(frameSizes || this.articleFrameSizes, afs => {
+          var fs = frameSizes || this.articleFrameSizes;
+
+          return _.sortBy(_.filter(_.map(fs, afs => {
             if (!afs.count) {
               return '';
             }
