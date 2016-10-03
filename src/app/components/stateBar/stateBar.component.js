@@ -8,7 +8,8 @@
       bindings: {
         // showIf: '?='
         title: '@',
-        rootState: '@'
+        rootState: '@',
+        modeOptions: '=?'
       },
 
       /** @ngInject */
@@ -20,6 +21,7 @@
 
           isAdmin: AuthHelper.isAdmin(),
           showIf: true,
+          modeOptions: vm.modeOptions !== false,
           changeView: to => $state.go(`${vm.rootState}.${to}`),
           addClick: () => $state.go(`${vm.rootState}.${vm.currentState}.create`)
 

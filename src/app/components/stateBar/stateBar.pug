@@ -3,7 +3,7 @@ md-toolbar.state-bar(ng-if='vm.showIf')
 
     .view-mode-tool(layout='row' layout-align='center center')
       h2.header {{ vm.title }}
-      .options
+      .options(ng-if='vm.modeOptions')
         i.material-icons.icon-button(
         ng-click="vm.changeView('table')"
         ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
