@@ -26,6 +26,9 @@
   md-table-container {
     width: 100%;
     margin-bottom: 60px;
+    td.name {
+      max-width: 200px;
+    }
   }
 
   .clear-icon-size {
