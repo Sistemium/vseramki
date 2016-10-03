@@ -5,7 +5,7 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
 
   .margin-top#viewport(layout='row' layout-align='space-around' layout-xs='column' layout-sm='column')
 
-    span(flex style='margin: 0 10px 0 0')
+    span(flex)
 
     .space-children-em(
     layout='column'
@@ -43,14 +43,11 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
 
         ng-gallery(
         images='vm.images'
-        image-hovered-fn='vm.onThumbnailHover'
+        thumbnail-click-fn='vm.onThumbnailClick'
         is-deletable='vm.isAdmin'
         thumbs-num='5'
         layout='row' layout-align='center center'
         )
-
-        //.property-list.md-whiteframe-1dp
-        //h3.header
 
         .property-list.margin-top
           .property-list-container.flex-5-4
@@ -105,7 +102,7 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
           ng-click='vm.clearCart()'
           )
             i.material-icons.mini clear
-          span Заказ
+          span Заказано
         .property-list-container
           .property
             .property-label Количество:
@@ -124,10 +121,10 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
                 )
               md-button.micro-fab(ng-click='vm.plusOne(vm.article)') +
           .property
-            .property-label Общая сумма заказа:
-            //.property-value {{ vm.article.inCart.cost(vm.cartSubTotal) || 0 | number: 2 }} ₽
-            .property-value {{ vm.cartSubTotal || 0 | number: 2 }} ₽
-          .property(ng-if='vm.cartSubTotal > vm.cartTotal')
+            .property-label На сумму:
+            .property-value {{ vm.article.inCart.cost(vm.cartSubTotal) || 0 | number: 2 }} ₽
+            //.property-value {{vm.article.discountedPrice(vm.cartSubTotal)  || 0 | number: 2}} ₽
+          //.property(ng-if='vm.cartSubTotal > vm.cartTotal')
             .property-label Итого со скидкой:
             .property-value {{ vm.cartTotal | number: 2 }} ₽
 
