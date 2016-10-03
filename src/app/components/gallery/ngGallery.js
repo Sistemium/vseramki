@@ -53,17 +53,33 @@
         thumbsNum: '@',
         hideOverflow: '=',
         imageHoveredFn: '&',
+        thumbnailClickFn: '&',
         isDeletable: '='
       },
 
       controller: [
         '$scope',
         function ($scope) {
+
+          var vm = this;
+
           $scope.$on('openGallery', function (e, args) {
             $scope.openGallery(args.index);
           });
+
+          vm.thumbnailClick = function (img, index) {
+
+            var fn = $scope.thumbnailClickFn() || $scope.openGallery;
+
+            if (_.isFunction(fn)) {
+              fn(index, img);
+            }
+
+          }
         }
       ],
+
+      controllerAs: 'vm',
 
       templateUrl: function (element, attrs) {
         return attrs.templateUrl || defaults.templateUrl;

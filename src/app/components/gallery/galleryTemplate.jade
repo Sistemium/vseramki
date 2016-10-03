@@ -1,7 +1,7 @@
 // Images thumbnail
 .thumbnails(class='{{ baseClass }}', layout='row', layout-align='center center')
   .thumbnail(ng-repeat='i in images')
-    a(href ng-click='openGallery($index)' ng-mouseover='setHovered(i)')
+    a(href ng-click='vm.thumbnailClick(i, $index)' ng-mouseover='setHovered(i)')
       img.thumb-image-fit-div(
       ng-src='{{ i.thumbnailSrc }}'
       ng-class='{{ thumbClass }}'
