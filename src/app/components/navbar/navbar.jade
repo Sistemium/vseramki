@@ -38,6 +38,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     aria-label='login-button'
     ng-disabled='!!vm.settingUser'
     ui-sref-active='active'
+    ng-class=" vm.loggedIn ? 'default-button' : 'important-button' "
     )
       i.material-icons {{ vm.loggedIn ? 'lock_open' : 'lock_outline' }}
 
