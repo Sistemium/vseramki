@@ -30,14 +30,14 @@
     table(md-table)
       thead(md-head)
         tr(md-row)
-          th(md-column) Фото
+          th.hide-xs(md-column) Фото
           th(md-column) Наименование
           th(md-column) Количество
-          th(md-column) Цена без скидки
-          th(md-column) Скидка
+          th.hide-xs.hide-sm(md-column) Цена без скидки
+          th.hide-xs.hide-sm(md-column) Скидка
           th(md-column) Цена со скидкой
-          th(md-column) Стоимость
-          th(md-column) Удалить
+          th.hide-xs(md-column) Стоимость
+          th.hide-xs(md-column) Удалить
       tbody(md-body)
         tr(
         vr-animate-remove
@@ -47,20 +47,20 @@
         md-on-select='logItem'
         ng-repeat='item in vm.data track by item.id'
         )
-          td.clickable(md-cell ng-click='vm.itemClick(item)')
+          td.hide-xs.clickable(md-cell ng-click='vm.itemClick(item)')
             img.thumbnail(ng-src='{{item.article.activePhoto()}}')
-          td.clickable(md-cell ng-click='vm.itemClick(item)') {{item.article.name}}
+          td.clickable.name(md-cell ng-click='vm.itemClick(item)') {{item.article.name}}
           td(md-cell)
-            .plus-minus(layout-align='start center' layout='row')
+            .plus-minus(layout-align='center center' layout='row')
               md-button.micro-fab(ng-click='vm.minusOne(item)') -
               md-input-container
                 input(aria-label="Количество" ng-model="item.count" type="number" ng-change="vm.saveItem(item)" min='1' step='1')
               md-button.micro-fab(ng-click='vm.plusOne(item)') +
-          td(md-cell) {{ item.article.highPrice | number: 2 }}&nbsp;₽
-          td(md-cell) {{ (1 - item.article.discountedPrice(vm.cartSubTotal) / item.article.highPrice) * 100 | number: 1}}%
+          td.hide-xs.hide-sm(md-cell) {{ item.article.highPrice | number: 2 }}&nbsp;₽
+          td.hide-xs.hide-sm(md-cell) {{ (1 - item.article.discountedPrice(vm.cartSubTotal) / item.article.highPrice) * 100 | number: 1}}%
           td(md-cell) {{ item.article.discountedPrice(vm.cartSubTotal) | number: 2}}&nbsp;₽
-          td(md-cell) {{ item.cost(vm.cartSubTotal) | number: 2}}&nbsp;₽
-          td(md-cell)
+          td.hide-xs(md-cell) {{ item.cost(vm.cartSubTotal) | number: 2}}&nbsp;₽
+          td.hide-xs(md-cell)
             md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
               i.material-icons.clear-icon-size clear
 
@@ -80,6 +80,3 @@
         span Cкидка {{ vm.cartDiscount | number: 1 }}%:
         = ' '
         span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
-    md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab
-      i.material-icons chevron_right
-
