@@ -1,7 +1,16 @@
-state-bar(
+state-bar.articles(
 root-state='catalogue'
 title='Каталог рамок'
 )
+  .cart-totals(layout='column')
+    p.no-margin.text-right
+      span.gray Заказ на сумму:
+      = ' '
+      span.bold(style='min-width: 90px; display: inline-block; text-align: right;') {{vm.cartTotal | number: 2}}&nbsp;₽
+    p.no-margin.text-right
+      span.gray Cкидка {{ vm.cartDiscount | number: 1 }}%:
+      = ' '
+      span.bold(style='min-width: 90px; display: inline-block; text-align: right;') {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
@@ -12,15 +21,15 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
   layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
   )
 
-    h4.header(layout='row')
+    .header(layout='row' layout-align='center center')
 
-      md-input-container.no-padding(flex style='margin: 15px 0 0')
+      md-input-container.no-margin(flex  layout='row')
+        i.material-icons.gray(style='margin-top: 5px; margin-right: 2px') search
         label(for='articleSearcher')
-          i.material-icons search
         input#articleSearcher(type="search" ng-model="vm.search")
 
       md-button.md-raised.md-mini.micro-square(
-      style='margin: 0 0 0 15px'
+      style='margin: 0 4px'
       ng-click='vm.resetFilters()'
       ng-if='vm.filterLength || vm.search'
       aria-label='Reset filters'
