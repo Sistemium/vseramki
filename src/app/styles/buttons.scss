@@ -35,7 +35,6 @@ button .label {
 
 }
 
-
 .with-badge {
 
   position: relative;
@@ -58,7 +57,17 @@ button .label {
 
 }
 
+.default-button {
+  background-color: gainsboro !important;
+  color: white !important;
+}
+
 .pink-button {
+  background-color: rgb(255, 64, 129) !important;
+  color: white !important;
+}
+
+.important-button {
   background-color: rgb(255, 64, 129) !important;
   color: white !important;
 }
@@ -139,7 +148,6 @@ button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab 
   width: 25px;
   height: 25px;
 }
-
 
 .md-fab.md-mini.md-icon-button.active {
   color: yellow;
