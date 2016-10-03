@@ -6,6 +6,8 @@ ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
     .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
       .repeated-group-item(ng-repeat='article in row' flex)
         md-card(layout='column' layout-align='space-between center')
+          .md-card-corner
+            label арт {{ article.code }}
           md-card-header
             a(href ng-click='vm.gotoItemView(article, $event)')
               img.thumbnail(ng-src='{{article.activePhoto()}}')
