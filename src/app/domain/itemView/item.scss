@@ -9,6 +9,17 @@
 
     .preview {
       min-height: 320px;
+
+      @media (min-width: 1150px) {
+        min-width: 400px;
+        max-width: 400px;
+      }
+
+      @media (max-width: 1149px) {
+        min-width: 350px;
+        max-width: 350px;
+      }
+
       img {
         //max-width: 260px;
         max-height: 320px;
