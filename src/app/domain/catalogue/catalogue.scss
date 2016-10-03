@@ -9,13 +9,16 @@
   }
 
   #sidenav-left {
+
     > * {
       margin: 0;
       @media (max-width: $layout-breakpoint-tight) {
       }
     }
+
     .article-list {
       font-size: 14px;
+      color: #404040;
     }
 
     margin-left: $margin-default;
@@ -34,9 +37,6 @@
 
   .repeated-group-item {
     max-width: 284px;
-  }
-
-  .md-sidenav-left {
   }
 
   .repeated-group {
