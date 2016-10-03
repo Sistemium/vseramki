@@ -2,11 +2,13 @@ state-bar.articles(
 root-state='catalogue'
 title='Каталог рамок'
 )
-  .cart-totals(layout='column')
+  .cart-totals(layout='column' sa-animate-on-change='vm.cartTotal' change-class="lite change-up")
     p.no-margin.text-right
       span.gray Заказ на сумму:
       = ' '
-      span.bold(style='min-width: 90px; display: inline-block; text-align: right;') {{vm.cartTotal | number: 2}}&nbsp;₽
+      span.bold(
+      style='min-width: 90px; display: inline-block; text-align: right;'
+      ) {{vm.cartTotal | number: 2}}&nbsp;₽
     p.no-margin.text-right
       span.gray Cкидка {{ vm.cartDiscount | number: 1 }}%:
       = ' '
