@@ -1,9 +1,7 @@
 .cart
 
   state-bar(
-  root-state='catalogue'
   title='Заказ'
-  mode-options='false'
   )
     div(layout='row')
       //md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
@@ -67,22 +65,21 @@
               i.material-icons.clear-icon-size clear
 
   .footer.fixed-bottom(ng-show='vm.data.length' layout='row' layout-align='center center')
-    md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
+    md-button.md-button.md-fab.md-mini.md-icon-button.default-button(
     ng-if='vm.data.length'
     ng-click='vm.clearCart($event)'
     )
       i.material-icons remove_shopping_cart
     span(flex)
-    .md-margin(layout='row' layout-align='center center')
-      div(layout='column')
-        p.no-margin.text-right
-          span Итого к оплате:
-          = ' '
-          span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartTotal | number: 2}}&nbsp;₽
-        p.no-margin.text-right
-          span Cкидка {{ vm.cartDiscount | number: 1 }}%:
-          = ' '
-          span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
-      md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab
-        i.material-icons chevron_right
+    div(layout='column')
+      p.no-margin.text-right
+        span Итого к оплате:
+        = ' '
+        span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartTotal | number: 2}}&nbsp;₽
+      p.no-margin.text-right
+        span Cкидка {{ vm.cartDiscount | number: 1 }}%:
+        = ' '
+        span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
+    md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab
+      i.material-icons chevron_right
 
