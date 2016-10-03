@@ -20,12 +20,25 @@
         max-width: 350px;
       }
 
-      @media (max-width: 1024px) {
+      @media (max-width: 1059px) {
         min-width: 300px;
         max-width: 300px;
       }
 
+      @media (max-width: 959px) {
+        min-width: 400px;
+        max-width: 400px;
+      }
 
+      @media (max-width: 769px) {
+        min-width: 350px;
+        max-width: 350px;
+      }
+
+      @media (max-width: 709px) {
+        min-width: 300px;
+        max-width: 300px;
+      }
 
       img {
         //max-width: 260px;
