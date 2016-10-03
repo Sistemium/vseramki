@@ -22,11 +22,11 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
         .property-label Общая сумма:
         .property-value {{ ::vm.cartSubTotal | number:2 }}&nbsp;₽
       .property
-        .property-label Скидка:
-        .property-value {{ -vm.cartDiscount | number: 2 }}&nbsp;₽
-      .property(ng-if='vm.cartSubTotal > vm.cartTotal')
+        .property-label Скидка {{vm.cartDiscount | number:1 }}%:
+        .property-value {{ vm.cartTotal - vm.cartSubTotal | number: 2 }}&nbsp;₽
+      .property
         .property-label Итого со скидкой:
-        .property-value {{ vm.cartTotal | number: 2 }}&nbsp;₽
+        .property-value.bold {{ vm.cartTotal | number: 2 }}&nbsp;₽
 
   span(flex)
 

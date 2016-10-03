@@ -10,7 +10,7 @@ title='Каталог рамок'
     p.no-margin.text-right
       span.gray Cкидка {{ vm.cartDiscount | number: 1 }}%:
       = ' '
-      span.bold(style='min-width: 90px; display: inline-block; text-align: right;') {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
+      span.bold(style='min-width: 90px; display: inline-block; text-align: right;') {{ vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
