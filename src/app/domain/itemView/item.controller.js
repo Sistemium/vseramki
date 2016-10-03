@@ -149,7 +149,7 @@
 
     }
 
-    function onThumbnailHover(newImg) {
+    function onThumbnailClick(i, newImg) {
 
       var newId = _.get(newImg, 'id');
 
@@ -174,7 +174,7 @@
       plusOne,
       onBlur,
       onCartChange,
-      onThumbnailHover,
+      onThumbnailClick,
 
       currentImageHover: {},
       addToCart: Cart.addToCart,
