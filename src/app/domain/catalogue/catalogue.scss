@@ -66,20 +66,6 @@
 
   }
 
-  table.md-table {
-
-    tr {
-      .md-cell, .md-column {
-        padding: 0 5px !important;
-
-      }
-      td.md-checkbox-cell, th.md-checkbox-column {
-        padding: 0 5px 0 15px !important;
-      }
-    }
-
-  }
-
   @media (max-width: 945px) {
     .md-table-pagination {
       .page-select {

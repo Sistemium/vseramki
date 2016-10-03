@@ -9,3 +9,18 @@ tr {
 table.md-table td.md-cell, table.md-table th.md-column {
   text-align: center;
 }
+
+
+table.md-table {
+
+  tr {
+    .md-cell, .md-column {
+      padding: 0 5px !important;
+
+    }
+    td.md-checkbox-cell, th.md-checkbox-column {
+      padding: 0 5px 0 15px !important;
+    }
+  }
+
+}
