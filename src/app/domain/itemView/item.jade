@@ -3,13 +3,13 @@ resize='catalogueItem'
 ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"}'
 )
 
-  .margin-top(layout='row' layout-align='space-around top' layout-xs='column' layout-sm='column')
+  .margin-top#viewport(layout='row' layout-align='space-around' layout-xs='column' layout-sm='column')
 
-    span(flex)
+    span(flex style='margin: 0 10px 0 0')
 
     .space-children-em(
     layout='column'
-    layout-align='top center'
+    layout-align='start center'
     ng-if='vm.isRootState'
     )
       .main-photo.md-whiteframe-1dp(
@@ -19,7 +19,7 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
         .md-card-corner
           label арт {{ vm.article.code }}
 
-        .text-center(
+        .text-center.preview(
         flex
         layout='column'
         layout-align='space-between center'
@@ -30,12 +30,16 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
           md-diameter='170'
           ng-if='vm.currentImageLoading'
           )
-          img.preview(
+          img(
           ng-if='!vm.currentImageLoading'
           ng-src='{{vm.currentImage.smallSrc}}'
           ng-click='vm.previewClick()'
           )
           span(flex)
+
+        h4.text-center.margin-top-bottom
+          div "{{ ::vm.article.brand.name }}" {{ ::vm.article.frameSize.name }} {{ ::vm.article.colour.name }}
+          small.gray {{ ::vm.article.multiTypeName() }}
 
         ng-gallery(
         images='vm.images'
@@ -45,13 +49,53 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
         layout='row' layout-align='center center'
         )
 
+        //.property-list.md-whiteframe-1dp
+        //h3.header
+
+        .property-list.margin-top
+          .property-list-container.flex-5-4
+            .property(ng-if='vm.article.multiType')
+              .property-label Прочие размеры:
+              .property-value
+                p(ng-repeat='fs in vm.article.articleFrameSizes | orderBy:"fs.frameSize.name" track by fs.id')
+                  | {{ fs.count }} * {{ fs.frameSize.name }}
+            .property
+              .property-label Материал багета:
+              .property-value {{vm.article.material.name}}
+            .property(ng-if='vm.article.screeningId')
+              .property-label Прозрачная вставка:
+              .property-value {{vm.article.screening.name}}
+            .property(ng-if='vm.article.backMountId')
+              .property-label Крепление задника:
+              .property-value {{vm.article.backMount.name}}
+            .property
+              .property-label Вес:
+              .property-value(ng-class='{gray: !vm.article.pieceWeight}')
+                | {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
+            .property
+              .property-label Штук в коробке:
+              .property-value {{vm.article.packageRel}}
+
+    span(flex)
+
+    .space-children-em(layout='column' layout-align='top center')
+
+      .property-list.md-whiteframe-1dp
+        h3.header Цена
+          small.gray &nbsp; (от общей суммы заказа)
+        .property-list-container
+          .property(
+          ng-repeat='prc in vm.prices | filter:"!hide" | orderBy: "ord" track by prc.id'
+          sa-animate-on-change='prc.value' change-class="lite change-up"
+          )
+            .property-label {{ prc.label }} {{ prc.from }}:
+            .property-value {{ prc.value | number: 2 }} ₽
+
       md-button.md-raised.action-button.pink-button(
       ng-click='vm.addToCart(vm.article)'
       ng-if='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
       )
         | {{'Добавить к заказу'}}
-
-
       .property-list.md-whiteframe-1dp.flex-5-4(ng-if='vm.article.inCart')
         h3.header
           md-button.md-raised.md-mini.micro-square(
@@ -66,14 +110,14 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
               md-button.micro-fab(ng-click='vm.minusOne(vm.article)') -
               md-input-container
                 input.item-count-input(
-                  aria-label="Количество"
-                  ng-model='vm.article.inCart.count'
-                  type="number"
-                  ng-blur="vm.onBlur(vm.article)"
-                  ng-change="vm.onCartChange(vm.article.inCart)"
-                  required
-                  min='1'
-                  step='1'
+                aria-label="Количество"
+                ng-model='vm.article.inCart.count'
+                type="number"
+                ng-blur="vm.onBlur(vm.article)"
+                ng-change="vm.onCartChange(vm.article.inCart)"
+                required
+                min='1'
+                step='1'
                 )
               md-button.micro-fab(ng-click='vm.plusOne(vm.article)') +
           .property
@@ -85,59 +129,14 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
             .property-value {{ vm.cartTotal | number: 2 }} ₽
 
 
-    span(flex)
-
-    .space-children-em(layout='column' layout-align='top center')
-      .property-list.md-whiteframe-1dp
-        h3.header Характеристики
-        .property-list-container
-          .property
-            .property-label Бренд:
-            .property-value {{vm.article.brand.name}}
-          .property
-            .property-label {{ vm.article.multiType ? 'Внешний размер' : 'Размер фото' }}:
-            .property-value {{vm.article.frameSize.name}}
-          .property(ng-if='vm.article.multiType')
-            .property-label {{vm.article.multiTypeName()}}:
-            .property-value {{vm.article.articleFrameSizesName()}}
-          .property
-            .property-label Цвет:
-            .property-value {{vm.article.colour.name}}
-          .property
-            .property-label Материал багета:
-            .property-value {{vm.article.material.name}}
-          .property(ng-if='vm.article.screeningId')
-            .property-label Прозрачная вставка:
-            .property-value {{vm.article.screening.name}}
-          .property(ng-if='vm.article.backMountId')
-            .property-label Крепление задника:
-            .property-value {{vm.article.backMount.name}}
-          .property
-            .property-label Вес:
-            .property-value(ng-class='{gray: !vm.article.pieceWeight}')
-              | {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
-          .property
-            .property-label Штук в коробке:
-            .property-value {{vm.article.packageRel}}
-
-      .property-list.md-whiteframe-1dp
-        h3.header Цена
-          small.gray &nbsp; (от общей суммы заказа)
-        .property-list-container
-          .property(
-          ng-repeat='prc in vm.prices | filter:"!hide" | orderBy: "ord" track by prc.id'
-          sa-animate-on-change='prc.value' change-class="lite change-up"
-          )
-            .property-label {{ prc.label }} {{ prc.from }}:
-            .property-value {{ prc.value | number: 2 }} ₽
 
 
     span(flex)
 
-    .fixed-bottom-right.admin-buttons(layout='column' ng-show='vm.isAdmin')
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.editFrame()')
-        i.material-icons edit
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.deleteFrame($event)')
-        i.material-icons delete
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.showImageDialog($event)')
-        i.material-icons add_a_photo
+  //.fixed-bottom-right.admin-buttons(layout='column' ng-show='vm.isAdmin')
+    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.editFrame()')
+      i.material-icons edit
+    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.deleteFrame($event)')
+      i.material-icons delete
+    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.showImageDialog($event)')
+      i.material-icons add_a_photo

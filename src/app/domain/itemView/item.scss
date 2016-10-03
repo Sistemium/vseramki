@@ -4,28 +4,38 @@
 
   .main-photo {
 
-    max-width: 300px;
+    //max-width: 300px;
     min-width: 300px;
 
-    min-height: 420px;
-    max-height: 420px;
-
-    img.preview {
-      max-width: 260px;
-      max-height: 320px;
-      cursor: zoom-in;
+    .preview {
+      min-height: 320px;
+      img {
+        //max-width: 260px;
+        max-height: 320px;
+        cursor: zoom-in;
+      }
     }
+//    max-height: 420px;
 
     .ng-gallery {
       min-height: 50px;
-      margin-top: $margin-default;
+      //margin-top: $margin-default;
     }
 
-    padding-bottom: 16px;
+    .property-list {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    //padding-bottom: 16px;
   }
 
   .fixed-bottom-right.admin-buttons > * {
     margin-bottom: $margin-default;
+  }
+
+  #viewport > * {
+    margin: 0 $margin-default;
   }
 
 }
