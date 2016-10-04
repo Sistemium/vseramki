@@ -11,7 +11,7 @@ ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
           md-card-header
             a(href ng-click='vm.gotoItemView(article, $event)')
               img.thumbnail(ng-src='{{article.activePhoto()}}')
-          h4.text-center.margin-top-bottom
+          h4.text-center.margin-top-bottom.title
             div "{{ ::article.brand.name }}" {{ ::article.frameSize.name }} {{ ::article.colour.name }}
             small.gray {{ ::article.multiTypeName() }}
           //md-card-title.md-margin
