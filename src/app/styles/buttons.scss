@@ -1,9 +1,5 @@
 @import "_vars.scss";
 
-.md-button.md-fab:not([disabled]):hover {
-  background-color: $fab-button-hover-background-color !important;
-}
-
 a.md-button.md-fab, .md-button.md-fab {
   background-color: $fab-button-background-color;
 }
@@ -54,7 +50,7 @@ button .label {
     font-size: 13px;
   }
 
-  .badge-small{
+  .badge-small {
     top: -5px;
     right: 0;
     border-radius: 8px;
@@ -83,6 +79,11 @@ button .label {
 
 .pink-button {
   background-color: $fab-button-background-color !important;
+  color: white !important;
+}
+
+.pink-button:hover {
+  background-color: $md-fab-hover !important;
   color: white !important;
 }
 
@@ -175,3 +176,34 @@ button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab 
 .clickable {
   cursor: pointer;
 }
+
+md-fab-actions {
+  .md-button.md-primary {
+    background-color: $vr-blue-color !important;
+  }
+
+  .md-button.md-primary:hover {
+    background-color: $md-fab-tool-hover !important;
+  }
+}
+
+// Fab hovers
+
+.md-button.md-fab:not([disabled]):hover {
+  background-color: $md-fab-hover !important;
+}
+
+.md-button.md-fab.tool-button:not([disabled]):hover {
+  background-color: $fab-button-hover-background-color !important;
+}
+
+.md-button.micro-fab:not([disabled]):hover {
+  background-color: $md-fab-hover !important;
+}
+
+.md-button.md-fab.default-button:not([disabled]):hover {
+  background-color: $default-button-hover !important;
+}
+
+// md-button hover
+
