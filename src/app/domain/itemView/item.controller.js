@@ -67,7 +67,7 @@
       vm.currentImage = _.first(vm.images);
     }
 
-    Article.findAll({limit: 100})
+    Article.findAll({limit: 1000})
       .then(function (data) {
         vm.allArt = data;
       });

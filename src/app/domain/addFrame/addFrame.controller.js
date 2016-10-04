@@ -52,7 +52,7 @@
     Baguette.findAll();
     Baguette.bindAll({}, $scope, 'vm.baguettes');
 
-    Article.findAll();
+    //Article.findAll();
     Article.bindAll({}, $scope, 'vm.frames');
 
     FrameSize.findAll();

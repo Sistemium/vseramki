@@ -82,6 +82,7 @@
 
       })
       .then(() => {
+        recalcTotals();
         vm.ready = true;
         filterArticles();
       });

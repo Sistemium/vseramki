@@ -18,6 +18,8 @@
     Baguette.findAll();
     BaguetteImage.findAll();
     ArticleImage.findAll();
+    Article.findAll({limit: 1000})
+      .then(refreshPrice);
 
     Cart.findAll().then(function (carts) {
 
