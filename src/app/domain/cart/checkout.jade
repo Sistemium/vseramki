@@ -37,32 +37,6 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
     .form-controls(layout='column' layout-align='start center')
 
       md-input-container
-        label Адрес доставки
-          =' '
-          span.required-field-asterisk *
-        input(
-        type='text'
-        ng-model='vm.shippingAddress'
-        required
-        name='shippingAddress'
-        input-clear='black'
-        )
-        div(ng-messages="checkoutForm.shippingAddress.$error")
-          div(ng-message="required") Поле не может быть пустым
-      md-input-container
-        label Контактное лицо
-          =' '
-          span.required-field-asterisk *
-        input(
-        type='text'
-        ng-model='vm.shippingContact'
-        required
-        name='shippingPerson'
-        input-clear='black'
-        )
-        div(ng-messages="checkoutForm.shippingPerson.$error")
-          div(ng-message="required") Поле не может быть пустым
-      md-input-container
         label Телефон
           =' '
           span.required-field-asterisk *
@@ -75,6 +49,7 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
         )
         div(ng-messages="checkoutForm.shippingPhone.$error")
           div(ng-message="required") Поле не может быть пустым
+
       md-input-container
         label E-mail
           =' '
@@ -88,6 +63,42 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
         )
         div(ng-messages="checkoutForm.shippingEmail.$error")
           div(ng-message="required") Поле не может быть пустым
+
+      md-input-container
+        label Контактное лицо
+          =' '
+          span.required-field-asterisk *
+        input(
+        type='text'
+        ng-model='vm.shippingContact'
+        required
+        name='shippingPerson'
+        input-clear='black'
+        )
+        div(ng-messages="checkoutForm.shippingPerson.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+      md-input-container
+        label Адрес доставки
+          =' '
+          span.required-field-asterisk *
+        input(
+        type='text'
+        ng-model='vm.shippingAddress'
+        required
+        name='shippingAddress'
+        input-clear='black'
+        )
+        div(ng-messages="checkoutForm.shippingAddress.$error")
+          div(ng-message="required") Поле не может быть пустым
+
+      md-input-container
+        label Комментарий
+        textarea(
+        md-maxlength="200" rows="7"
+        ng-model='vm.shippingComment'
+        name='shippingComment'
+        )
 
 
     .text-center
