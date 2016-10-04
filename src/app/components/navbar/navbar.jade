@@ -45,4 +45,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     div.with-badge(flex='none')
       md-button.md-fab.md-mini.md-icon-button(ui-sref='cart' ui-sref-active='active')
         i.material-icons shopping_cart
-      span.badge(ng-show='vm.cart.length') {{ vm.cart.length }}
+      span.badge(
+      ng-show='vm.cart.length'
+      ng-class="vm.cart.length > 9 ? 'badge-large' : 'badge-small' "
+      ) {{ vm.cart.length }}

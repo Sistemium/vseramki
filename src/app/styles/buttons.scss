@@ -45,18 +45,28 @@ button .label {
 
   .badge {
     position: absolute;
-    top: -5px;
-    right: 0;
     z-index: 100;
     background: $primary-button-background-color;
     color: white;
-    border-radius: 8px;
-    font-size: 13px;
-    min-width: 16px;
     text-align: center;
     vertical-align: middle;
-    padding-bottom: 1px;
     cursor: default;
+  }
+
+  .badge-small{
+    top: -5px;
+    right: 0;
+    border-radius: 8px;
+    min-width: 16px;
+    padding-bottom: 1px;
+  }
+
+  .badge-large {
+    top: -6px;
+    right: -2px;
+    border-radius: 10px;
+    min-width: 15px;
+    padding: 2px;
   }
 
 }
