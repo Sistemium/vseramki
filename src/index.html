@@ -27,7 +27,7 @@
 
       <md-content class='height-100'>
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
-        <div class="root viewport" ui-view>
+        <div class="root viewport" ui-view resize="root" ng-style="{height: (root.windowHeight - root.offsetTop) + 'px'}">
           <div layout="column" layout-align="center center">
             <h1>Загрузка</h1>
             <md-progress-circular md-diameter="300" md-mode="indeterminate"></md-progress-circular>
