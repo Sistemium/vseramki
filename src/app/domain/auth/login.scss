@@ -1,16 +1,9 @@
 .login {
-
-  error {
-    md-card {
-      width: 300px;
-      min-height: 125px;
-    }
-  }
-
   md-card {
     background-color: #f3f4f6;
     min-height: 470px;
     max-height: 470px;
     width: 300px;
+    border-radius: 10px;
   }
 }
