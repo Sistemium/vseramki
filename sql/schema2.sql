@@ -28,7 +28,11 @@ meta.defineEntity 'Material',
 ;
 
 meta.defineEntity 'FrameSize',
- 'name;width,length,,nullable;height,length,,nullable;isDeleted'
+ 'name;'+
+ 'width,length,,nullable;'+
+ 'height,length,,nullable;'+
+ 'isoCode,code,,nullable;'+
+ 'isDeleted'
 ;
 
 meta.defineEntity 'Brand',
@@ -56,12 +60,18 @@ meta.defineEntity 'Baguette',
  'Material,materialId;Brand,brandId;Colour,colourId'
 ;
 
+meta.defineEntity 'Manufacturer',
+ 'name;isDeleted'
+;
+
+
 meta.defineEntity 'Article',
  'name;code,code,,nullable;packageRel;pieceWeight,pieceWeight,,nullable;'
   + 'lowPrice,price,,nullable;highPrice,price,,nullable;'
   + 'isDeleted',
  'Baguette,baguetteId,nullable;FrameSize,frameSizeId;'
- + 'Screening,screeningId,nullable;BackMount,backMountId,nullable;PassePartout,passePartoutId,nullable'
+ + 'Screening,screeningId,nullable;BackMount,backMountId,nullable;PassePartout,passePartoutId,nullable;'
+ + 'Manufacturer,manufacturerId,nullable'
 ;
 
 meta.defineEntity 'ArticleImage',
@@ -105,6 +115,10 @@ meta.createTable 'BackMount',
 ;
 
 meta.createTable 'PassePartout',
+  @forceDrop = 1
+;
+
+meta.createTable 'Manufacturer',
   @forceDrop = 1
 ;
 
