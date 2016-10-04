@@ -8,6 +8,10 @@ md-card {
   md-card-content.catalogue-tile {
     width: 100%;
     cursor: pointer;
+
+    &:hover {
+      background-color: $md-card-hover;
+    }
   }
 
   md-card-actions md-card-icon-actions {
@@ -17,10 +21,6 @@ md-card {
   //&.vs-repeat-after-content, &.vs-repeat-before-content {
   //  padding: 0;
   //}
-
-  &:hover {
-    background-color: $md-card-hover;
-  }
 
 }
 
