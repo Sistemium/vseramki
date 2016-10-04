@@ -22,7 +22,7 @@
       )
 
         md-virtual-repeat-container(flex)
-          .md-item-text.md-whiteframe-z1.item(
+          .item(
           md-virtual-repeat='bag in vm.baguettes'
           ng-class="{'active ': vm.currentItem.id == bag.id }"
           ng-click='vm.changeBaguette(bag)'
