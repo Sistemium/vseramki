@@ -34,7 +34,7 @@
         un();
         angular.element($window)
           .unbind('resize', apply);
-      })
+      });
 
       $timeout(setValues);
     }
