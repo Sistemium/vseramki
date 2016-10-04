@@ -16,7 +16,7 @@
         controllerAs: 'main'
       });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('catalogue');
   }
 
 })();

@@ -19,6 +19,8 @@
           toastr.error('Ошибка авторизации');
         }
       });
+    } else {
+      $state.go('catalogue');
     }
 
     _.assign(vm, {});

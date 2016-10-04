@@ -54,13 +54,13 @@
     function setButtons(isAdmin, isLoggedIn) {
 
       vm.navs = [
-        {
-          sref: 'home',
-          label: 'Главная'
-        },
+        // {
+        //   sref: 'home',
+        //   label: 'Главная'
+        // },
         {
           sref: 'catalogue',
-          label: 'Рамки'
+          label: 'Каталог'
         },
         {
           sref: 'info',
