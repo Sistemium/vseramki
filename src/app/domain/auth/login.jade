@@ -1,24 +1,30 @@
-.login(
+.login.scroll-y(
 layout='column'
 layout-align='center center'
+resize='login'
+ng-style='{height: (login.windowHeight - login.offsetTop)+"px"}'
 )
 
-  error(error-text='vm.error' ng-if='vm.error')
+  //error(error-text='vm.error' ng-if='vm.error')
 
-  md-card
+  .height-100(
+  layout='column'
+  layout-align='center center'
+  )
+    md-card
 
-    md-card-header
-      md-card-header-text
-        .md-title
-          span Войти через
+      md-card-header
+        md-card-header-text
+          .md-title
+            span Войти через
 
-    md-card-content(layout='column' layout-aling='center center')
-      p Мобильный телефон:
-      oauth-buttons(buttons-config='vm.mobile')
+      md-card-content(layout='column' layout-aling='center center')
+        p Мобильный телефон:
+        oauth-buttons(buttons-config='vm.mobile')
 
-    md-divider
+      md-divider
 
-    md-card-content(layout='column' layout-aling='center center')
-      p Cоциальную сеть:
-      oauth-buttons(buttons-config='vm.buttons')
+      md-card-content(layout='column' layout-aling='center center')
+        p Cоциальную сеть:
+        oauth-buttons(buttons-config='vm.buttons')
 
