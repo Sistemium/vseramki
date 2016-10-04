@@ -5,6 +5,11 @@ md-card {
     margin-bottom: auto;
   }
 
+  md-card-content.catalogue-tile {
+    width: 100%;
+    cursor: pointer;
+  }
+
   md-card-actions md-card-icon-actions {
     margin-bottom: 10px;
   }
@@ -14,7 +19,7 @@ md-card {
   //}
 
   &:hover {
-    background-color: #f4ffff;
+    background-color: $md-card-hover;
   }
 
 }
@@ -28,7 +33,7 @@ md-card {
   > * {
     color: #808080;
     padding: 4px 6px;
-    border: solid 1px #E9E9E9;
+    border: solid 1px rgba(0,0,0,0.12);
     border-top: none;
     border-right: none;
   }
