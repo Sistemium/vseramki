@@ -17,6 +17,7 @@
       name: 'Baguette',
 
       relations: {
+
         hasOne: {
           Colour: {
             localField: 'colour',
@@ -29,8 +30,13 @@
           Material: {
             localField: 'material',
             localKey: 'materialId'
+          },
+          Surface: {
+            localField: 'surface',
+            localKey: 'surfaceId'
           }
         },
+
         hasMany: {
           Article: {
             localField: 'articles',
@@ -39,9 +45,13 @@
           BaguetteImage: {
             localField: 'images',
             foreignKey: 'baguetteId'
+          },
+          BaguetteColour: {
+            localField: 'colours',
+            foreignKey: 'baguetteId'
           }
-
         }
+        
       }
 
     });
