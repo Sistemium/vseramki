@@ -51,13 +51,18 @@ meta.defineEntity 'BackMount',
  'name;isDeleted'
 ;
 
-meta.defineEntity 'PassePartout',
+meta.defineEntity 'Surface',
  'name;isDeleted'
 ;
 
 meta.defineEntity 'Baguette',
- 'borderWidth;isDeleted',
- 'Material,materialId;Brand,brandId;Colour,colourId'
+ 'code;lastName,name;borderWidth;isDeleted',
+ 'Material,materialId;Brand,brandId,nullable;Colour,colourId,nullable;Surface,surfaceId,nullable'
+;
+
+meta.defineEntity 'BaguetteColour',
+ 'isDeleted',
+ 'Baguette,baguetteId;Colour,colourId'
 ;
 
 meta.defineEntity 'Manufacturer',
@@ -70,8 +75,7 @@ meta.defineEntity 'Article',
   + 'lowPrice,price,,nullable;highPrice,price,,nullable;'
   + 'isDeleted',
  'Baguette,baguetteId,nullable;FrameSize,frameSizeId;'
- + 'Screening,screeningId,nullable;BackMount,backMountId,nullable;PassePartout,passePartoutId,nullable;'
- + 'Manufacturer,manufacturerId,nullable'
+  + 'Screening,screeningId,nullable;BackMount,backMountId,nullable'
 ;
 
 meta.defineEntity 'ArticleImage',
@@ -98,7 +102,15 @@ meta.createTable 'Colour',
   @forceDrop = 1
 ;
 
+meta.createTable 'Surface',
+  @forceDrop = 1
+;
+
 meta.createTable 'Baguette',
+  @forceDrop = 1
+;
+
+meta.createTable 'BaguetteColour',
   @forceDrop = 1
 ;
 
