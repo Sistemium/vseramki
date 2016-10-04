@@ -42,7 +42,7 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
           span.required-field-asterisk *
         input(
         type='text'
-        ng-model='vm.shippingPhone'
+        ng-model='vm.checkout.phone'
         required
         name='shippingPhone'
         input-clear='black'
@@ -56,7 +56,7 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
           span.required-field-asterisk *
         input(
         type='text'
-        ng-model='vm.shippingEmail'
+        ng-model='vm.checkout.email'
         required
         name='shippingEmail'
         input-clear='black'
@@ -70,7 +70,7 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
           span.required-field-asterisk *
         input(
         type='text'
-        ng-model='vm.shippingContact'
+        ng-model='vm.checkout.contact'
         required
         name='shippingPerson'
         input-clear='black'
@@ -84,7 +84,7 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
           span.required-field-asterisk *
         input(
         type='text'
-        ng-model='vm.shippingAddress'
+        ng-model='vm.checkout.address'
         required
         name='shippingAddress'
         input-clear='black'
@@ -96,7 +96,7 @@ layout-gt-xs='row' layout-align-gt-xs='space-around start'
         label Комментарий
         textarea(
         md-maxlength="200" rows="7"
-        ng-model='vm.shippingComment'
+        ng-model='vm.checkout.comment'
         name='shippingComment'
         )
 
