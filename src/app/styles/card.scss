@@ -1,3 +1,5 @@
+@import "_vars";
+
 md-card {
   md-card-title {
     padding-top: 0;
@@ -10,7 +12,10 @@ md-card {
     cursor: pointer;
 
     &:hover {
-      background-color: $md-card-hover;
+      color: $primary-button-background-color;
+      .gray, .title, .title > * {
+        color: $primary-button-background-color;
+      }
     }
   }
 
