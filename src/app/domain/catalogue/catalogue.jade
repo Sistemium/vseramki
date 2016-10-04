@@ -4,15 +4,16 @@ title='Каталог'
 )
   .cart-totals(layout='column' sa-animate-on-change='vm.cartTotal' change-class="lite change-up")
     p.no-margin.text-right
-      span.gray Заказ на сумму:
+      span.gray Сумма заказа:
       = ' '
       span.bold(
       style='min-width: 90px; display: inline-block; text-align: right;'
-      ) {{vm.cartTotal | number: 2}}&nbsp;₽
-    p.no-margin.text-right
-      span.gray Cкидка {{ vm.cartDiscount | number: 1 }}%:
+      ) {{vm.cartSubTotal | number: 2}}&nbsp;₽
+    p.no-margin.text-right(ng-if='vm.cartDiscount')
+      span.gray К оплате со скидкой {{ vm.cartDiscount | number: 1 }}%:
       = ' '
-      span.bold(style='min-width: 90px; display: inline-block; text-align: right;') {{ vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
+      span.bold(style='min-width: 90px; display: inline-block; text-align: right;'
+      ) {{ vm.cartTotal | number:2}}&nbsp;₽
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
