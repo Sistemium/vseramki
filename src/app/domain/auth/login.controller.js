@@ -11,11 +11,6 @@
 
     vm.buttons = [
       {
-        url: 'sms/vseramki',
-        name: 'Мобильный номер',
-        class: 'mobile'
-      },
-      {
         url: 'facebook/vseramki',
         name: 'Facebook',
         class: 'facebook-official'
@@ -41,6 +36,14 @@
         class: 'vk'
       }
     ];
+
+    vm.mobile = [{
+
+      url: 'sms/vseramki',
+      name: 'Мобильный номер',
+      class: 'mobile'
+
+    }];
 
     vm.error = $stateParams.error;
 

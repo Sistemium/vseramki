@@ -1,11 +1,24 @@
-.login(layout='column' layout-align='center center')
+.login(
+layout='column'
+layout-align='center center'
+)
 
   error(error-text='vm.error' ng-if='vm.error')
 
-  md-card.card-back-color
+  md-card
+
     md-card-header
       md-card-header-text
         .md-title
-          span Войти через:
+          span Войти через
+
     md-card-content(layout='column' layout-aling='center center')
+      p Мобильный номер:
+      oauth-buttons(buttons-config='vm.mobile')
+
+    md-divider
+
+    md-card-content(layout='column' layout-aling='center center')
+      p Cоциальную сеть:
       oauth-buttons(buttons-config='vm.buttons')
+
