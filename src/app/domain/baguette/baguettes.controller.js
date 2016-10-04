@@ -64,6 +64,7 @@
 
     angular.extend(vm, {
 
+      rootState: 'baguettes',
       selected: [],
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,
@@ -121,7 +122,9 @@
       },
 
       goToCreateBaguette: function (parent) {
-        $state.go(`${parent || ''}.create`);
+        var re = new RegExp(`${vm.rootState}\.([^.]+)`);
+        var currentState = parent || _.last($state.current.name.match(re));
+        $state.go(`${vm.rootState}.${currentState}.create`);
       },
 
       backToList: function () {
