@@ -40,7 +40,7 @@
     vm.mobile = [{
 
       url: 'sms/vseramki',
-      name: 'Мобильный номер',
+      name: 'СМС-пароль',
       class: 'mobile'
 
     }];
