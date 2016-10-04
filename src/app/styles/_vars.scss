@@ -5,17 +5,24 @@ $layout-breakpoint-lg:     1920px !default;
 
 $layout-breakpoint-tight:  799px;
 
+$vr-blue-color: #00a3d9;
+$vr-red-color: rgb(214, 0, 28);
+$vr-yellow-color: rgb(247,236,10);
+
+$default-blue-color: rgb(63,81,181);
+
 $body-background-color: rgb(243,244,246);
 $toolbar-background-color: rgb(243,244,246);
 
-$primary-button-background-color: rgb(63,81,181);
+$primary-button-background-color: darken($vr-blue-color, 2%);
 
 $opacity-level: .70;
 
-$accent-background-color: #ff4081;
+//$accent-background-color: #ff4081;
+$accent-background-color: $vr-red-color;
 
 $fab-button-hover-background-color: rgb(213, 0, 0);
-$fab-button-background-color: rgb(255, 64, 129);
+$fab-button-background-color: lighten($accent-background-color, 20%);
 
 $gray: gray;
 
@@ -26,3 +33,4 @@ $margin-default: 10px;
 $margin-default-half:  5px;
 
 $gray-borders-color: rgba(0,0,0,0.12);
+

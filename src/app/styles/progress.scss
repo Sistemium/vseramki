@@ -1,0 +1,19 @@
+@import "_vars";
+
+md-progress-circular.md-default-theme,
+md-progress-circular {
+  .md-spinner-wrapper .md-inner {
+    .md-left * {
+      border-left-color: $primary-button-background-color;
+      border-top-color:  $primary-button-background-color;
+    }
+    .md-right * {
+      border-right-color: $primary-button-background-color;
+      border-top-color:  $primary-button-background-color;
+    }
+    .md-gap {
+      border-top-color: $primary-button-background-color;
+      border-bottom-color: $primary-button-background-color;
+    }
+  }
+}

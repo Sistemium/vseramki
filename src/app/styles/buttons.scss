@@ -4,6 +4,10 @@
   background-color: $fab-button-hover-background-color !important;
 }
 
+a.md-button.md-fab, .md-button.md-fab {
+  background-color: $fab-button-background-color;
+}
+
 button span.active {
   font-weight: 900;
   color: $primary-button-background-color;
@@ -63,12 +67,12 @@ button .label {
 }
 
 .pink-button {
-  background-color: rgb(255, 64, 129) !important;
+  background-color: $fab-button-background-color !important;
   color: white !important;
 }
 
 .important-button {
-  background-color: rgb(255, 64, 129) !important;
+  background-color: $fab-button-background-color !important;
   color: white !important;
 }
 
@@ -150,7 +154,7 @@ button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab 
 }
 
 .md-fab.md-mini.md-icon-button.active {
-  color: yellow;
+  //color: $vr-yellow-color;
 }
 
 .clickable {
