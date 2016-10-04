@@ -52,10 +52,6 @@
           BackMount: {
             localField: 'backMount',
             localKey: 'backMountId'
-          },
-          PassePartout: {
-            localField: 'passePartout',
-            localKey: 'passePartoutId'
           }
 
         },
