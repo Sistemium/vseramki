@@ -1,4 +1,8 @@
 md-content(layout-padding)
+
   section.jumbotron
     h1 Все рамки
+      p.lead Стеклянные, деревянные и пластиковые рамки для сертификатов, грамот на заказ
 
+  section.busy(ng-hide='vm.ready' layout="row" layout-align="center center")
+    md-progress-circular(md-diameter="200" md-mode="indeterminate")
