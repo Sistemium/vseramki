@@ -82,12 +82,11 @@ body {
   right: 0;
 }
 
-
 @media print {
   .toolbar-fixed-top {
 
     .md-toolbar-tools {
-      > div, .md-button {
+      > div {
         display: none;
       }
     }
