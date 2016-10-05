@@ -7,7 +7,7 @@ title='Заказ'
     ui-sref='checkout'
     ) Оформить заказ
 
-.cart.scroll-y(resize='cart' ng-style='{height: (cart.windowHeight - cart.offsetTop - 60)+"px"}')
+.cart.scroll-y(resize='cart' ng-style='{height: (cart.windowHeight - cart.offsetTop - 65)+"px"}')
 
 
   .height-100(
@@ -61,19 +61,21 @@ title='Заказ'
             md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
               i.material-icons.clear-icon-size clear
 
-  .footer.fixed-bottom(layout='row' layout-align='center center')
-    md-button.md-button.md-fab.md-mini.md-icon-button.default-button(
-    ng-if='vm.data.length'
-    ng-click='vm.clearCart($event)'
-    )
-      i.material-icons remove_shopping_cart
-    span(flex)
-    div(layout='column')
-      p.no-margin.text-right
-        span Итого к оплате:
-        = ' '
-        span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartTotal | number: 2}}&nbsp;₽
-      p.no-margin.text-right
-        span Cкидка {{ vm.cartDiscount | number: 1 }}%:
-        = ' '
-        span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
+.footer.cart(layout='row' layout-align='center center')
+  md-button.md-button.md-fab.md-mini.md-icon-button.default-button(
+  ng-if='vm.data.length'
+  ng-click='vm.clearCart($event)'
+  )
+    i.material-icons remove_shopping_cart
+  span(flex)
+  div(layout='column')
+    p.no-margin.text-right
+      span Итого к оплате:
+      = ' '
+      span.bold(style='min-width: 120px; display: inline-block; text-align: left;')
+        | {{vm.cartTotal | number: 2}}&nbsp;₽
+    p.no-margin.text-right
+      span Cкидка {{ vm.cartDiscount | number: 1 }}%:
+      = ' '
+      span.bold(style='min-width: 120px; display: inline-block; text-align: left;')
+        | {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
