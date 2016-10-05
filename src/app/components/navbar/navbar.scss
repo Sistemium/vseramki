@@ -77,9 +77,8 @@ body {
 }
 
 .fab-menu {
-  position: fixed;
+  position: absolute;
   top: 8px;
-  right: 2px;
-  z-index: 100;
+  right: 0;
 }
 
