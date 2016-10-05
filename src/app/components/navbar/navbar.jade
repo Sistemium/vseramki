@@ -3,7 +3,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     a(ui-sref='home' style='padding-top: 4px;')
       img.top-logo(ng-src='{{windowWidth < 450 ? "images/logo-230x150.png" : "images/top-logo.jpg"}}')
 
-    .margin-left(flex)
+    .margin-left.visible-print-inline(flex)
       small(ng-show='!vm.isAdmin && (windowWidth > 850 || windowWidth < 800)')
         a(href='tel:+74957668887') +7(495)766-888-7
 
