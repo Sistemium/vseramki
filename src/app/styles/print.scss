@@ -1,0 +1,15 @@
+@media print {
+
+  .hidden-print {
+    display: none;
+  }
+
+
+  .md-button {
+    display: none;
+  }
+
+  .scroll-y {
+    height: auto !important;
+  }
+}
