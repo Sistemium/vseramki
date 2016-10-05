@@ -58,4 +58,11 @@
     margin-top: 0;
   }
 
+  #orderTable md-table-container {
+    margin: 20px auto;
+    @media screen {
+      max-width: 600px;
+    }
+  }
+
 }
