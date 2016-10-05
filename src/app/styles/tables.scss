@@ -6,8 +6,27 @@ tr {
   height: 50px;
 }
 
-table.md-table td.md-cell, table.md-table th.md-column {
-  text-align: center;
+
+table.md-table {
+
+  th.md-column {
+    text-align: center;
+  }
+
+  td.md-cell {
+
+    text-align: center;
+
+    &.text-left{
+      text-align: left;
+    }
+
+    &.text-right{
+      text-align: right;
+    }
+
+  }
+
 }
 
 
