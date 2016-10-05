@@ -3,13 +3,13 @@ h3 Сводка по заказу
 .property-list-container
   .property
     .property-label Всего позиций:
-    .property-value {{ ::vm.cartItems | number:0 }}
+    .property-value {{ vm.cartItems | number:0 }}
   .property
     .property-label Общее количество:
-    .property-value {{ ::vm.cartTotalCount| number:0 }}&nbsp;шт.
+    .property-value {{ vm.cartTotalCount| number:0 }}&nbsp;шт.
   .property
     .property-label Общая сумма:
-    .property-value {{ ::vm.cartSubTotal | number:2 }}&nbsp;₽
+    .property-value {{ vm.cartSubTotal | number:2 }}&nbsp;₽
   .property
     .property-label Скидка {{vm.cartDiscount | number:1 }}%:
     .property-value {{ vm.cartTotal - vm.cartSubTotal | number: 2 }}&nbsp;₽
