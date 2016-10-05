@@ -65,6 +65,10 @@
         {
           sref: 'info',
           label: 'Контакты'
+        },
+        {
+          sref: 'delivery',
+          label: 'Доставка'
         }
       ];
 
