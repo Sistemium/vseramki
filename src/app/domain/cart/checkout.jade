@@ -2,110 +2,135 @@ state-bar(
 title='Оформление заказа'
 )
 
-md-content#checkout.md-padding.scroll-y.md-margin(
-layout='column' layout-align='start center'
-layout-gt-xs='row' layout-align-gt-xs='space-around start'
-)
+#checkout.scroll-y(resize='checkout' ng-style='{height: (checkout.windowHeight - checkout.offsetTop)+"px"}')
 
-  span(flex)
+  .order.width-100(
+  layout='column'
+  layout-align='start center'
+  layout-gt-xs='row'
+  layout-align-gt-xs='space-around start'
+  resize='order-detail' ng-style='{height: (order.windowHeight)+"px"}'
+  )
+    //h1 {{order.windowHeight}}
 
-  #order-info.property-list.flex-5-4
-    h3 Сводка по заказу
-    .property-list-container
-      .property
-        .property-label Всего позиций:
-        .property-value {{ ::vm.cartItems | number:0 }}
-      .property
-        .property-label Общее количество:
-        .property-value {{ ::vm.cartTotalCount| number:0 }}&nbsp;шт.
-      .property
-        .property-label Общая сумма:
-        .property-value {{ ::vm.cartSubTotal | number:2 }}&nbsp;₽
-      .property
-        .property-label Скидка {{vm.cartDiscount | number:1 }}%:
-        .property-value {{ vm.cartTotal - vm.cartSubTotal | number: 2 }}&nbsp;₽
-      .property
-        .property-label Итого со скидкой:
-        .property-value.bold {{ vm.cartTotal | number: 2 }}&nbsp;₽
+    #order-info.property-list.flex-5-4
+      h3 Сводка по заказу
+      .property-list-container
+        .property
+          .property-label Всего позиций:
+          .property-value {{ ::vm.cartItems | number:0 }}
+        .property
+          .property-label Общее количество:
+          .property-value {{ ::vm.cartTotalCount| number:0 }}&nbsp;шт.
+        .property
+          .property-label Общая сумма:
+          .property-value {{ ::vm.cartSubTotal | number:2 }}&nbsp;₽
+        .property
+          .property-label Скидка {{vm.cartDiscount | number:1 }}%:
+          .property-value {{ vm.cartTotal - vm.cartSubTotal | number: 2 }}&nbsp;₽
+        .property
+          .property-label Итого со скидкой:
+          .property-value.bold {{ vm.cartTotal | number: 2 }}&nbsp;₽
 
-  span(flex)
 
-  form.wide(name='checkoutForm')
+    form.wide(name='checkoutForm')
 
-    h3 Контактные данные
+      h3 Контактные данные
 
-    .form-controls(layout='column' layout-align='start center')
+      .form-controls(layout='column' layout-align='start center')
 
-      md-input-container
-        label Телефон
-          =' '
-          span.required-field-asterisk *
-        input(
-        type='text'
-        ng-model='vm.checkout.phone'
-        required
-        name='shippingPhone'
-        input-clear='black'
+        md-input-container
+          label Телефон
+            =' '
+            span.required-field-asterisk *
+          input(
+          type='text'
+          ng-model='vm.checkout.phone'
+          required
+          name='shippingPhone'
+          input-clear='black'
+          )
+          div(ng-messages="checkoutForm.shippingPhone.$error")
+            div(ng-message="required") Поле не может быть пустым
+
+        md-input-container
+          label E-mail
+            =' '
+            span.required-field-asterisk *
+          input(
+          type='text'
+          ng-model='vm.checkout.email'
+          required
+          name='shippingEmail'
+          input-clear='black'
+          )
+          div(ng-messages="checkoutForm.shippingEmail.$error")
+            div(ng-message="required") Поле не может быть пустым
+
+        md-input-container
+          label Контактное лицо
+            =' '
+            span.required-field-asterisk *
+          input(
+          type='text'
+          ng-model='vm.checkout.contact'
+          required
+          name='shippingPerson'
+          input-clear='black'
+          )
+          div(ng-messages="checkoutForm.shippingPerson.$error")
+            div(ng-message="required") Поле не может быть пустым
+
+        md-input-container
+          label Адрес доставки
+            =' '
+            span.required-field-asterisk *
+          input(
+          type='text'
+          ng-model='vm.checkout.address'
+          required
+          name='shippingAddress'
+          input-clear='black'
+          )
+          div(ng-messages="checkoutForm.shippingAddress.$error")
+            div(ng-message="required") Поле не может быть пустым
+
+        md-input-container
+          label Комментарий
+          textarea(
+          md-maxlength="200" rows="7"
+          ng-model='vm.checkout.comment'
+          name='shippingComment'
+          )
+
+      .text-center
+        md-button.width-100.no-margin.md-button.pink-button(
+        type='submit'
+        ng-disabled='checkoutForm.$invalid'
+        ) Завершить оформление
+
+  md-table-container.margin-top-bottom(ng-if='vm.data.length')
+    table(md-table)
+      thead(md-head)
+        tr(md-row)
+          th(md-column) Наименование
+          th(md-column) Количество
+          th.hide-xs.hide-sm(md-column) Цена без скидки
+          th.hide-xs(md-column) Цена со скидкой
+          th(md-column) Стоимость
+      tbody(md-body)
+        tr(
+        vr-animate-remove
+        ar-watch='item.count'
+        on-animate-end="vm.itemRemove(item)"
+        md-row
+        md-on-select='logItem'
+        ng-repeat='item in vm.data track by item.id'
         )
-        div(ng-messages="checkoutForm.shippingPhone.$error")
-          div(ng-message="required") Поле не может быть пустым
-
-      md-input-container
-        label E-mail
-          =' '
-          span.required-field-asterisk *
-        input(
-        type='text'
-        ng-model='vm.checkout.email'
-        required
-        name='shippingEmail'
-        input-clear='black'
-        )
-        div(ng-messages="checkoutForm.shippingEmail.$error")
-          div(ng-message="required") Поле не может быть пустым
-
-      md-input-container
-        label Контактное лицо
-          =' '
-          span.required-field-asterisk *
-        input(
-        type='text'
-        ng-model='vm.checkout.contact'
-        required
-        name='shippingPerson'
-        input-clear='black'
-        )
-        div(ng-messages="checkoutForm.shippingPerson.$error")
-          div(ng-message="required") Поле не может быть пустым
-
-      md-input-container
-        label Адрес доставки
-          =' '
-          span.required-field-asterisk *
-        input(
-        type='text'
-        ng-model='vm.checkout.address'
-        required
-        name='shippingAddress'
-        input-clear='black'
-        )
-        div(ng-messages="checkoutForm.shippingAddress.$error")
-          div(ng-message="required") Поле не может быть пустым
-
-      md-input-container
-        label Комментарий
-        textarea(
-        md-maxlength="200" rows="7"
-        ng-model='vm.checkout.comment'
-        name='shippingComment'
-        )
-
-
-    .text-center
-      md-button.width-100.no-margin.md-button.pink-button(
-      type='submit'
-      ng-disabled='checkoutForm.$invalid'
-      ) Завершить оформление
-
-  span(flex)
+          td.clickable.name(md-cell ng-click='vm.itemClick(item)') {{item.article.name}}
+          td(md-cell)
+            | {{item.count}}
+          td.hide-xs.hide-sm(md-cell) {{ item.article.highPrice | number: 2 }}&nbsp;₽
+          td.hide-xs(md-cell) {{ item.article.discountedPrice(vm.cartSubTotal) | number: 2}}&nbsp;₽
+          td(md-cell) {{ item.cost(vm.cartSubTotal) | number: 2}}&nbsp;₽
 
