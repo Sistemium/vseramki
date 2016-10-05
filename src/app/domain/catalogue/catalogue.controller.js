@@ -37,7 +37,17 @@
       addToCart: Cart.addToCart,
 
       changeView: to => $state.go(to),
-      goToCreateFrame: () => $state.go('catalogue.add'),
+      goToCreateFrame: () => {
+
+        var toGo = $state.current.name;
+
+        if (_.last(toGo.split('.')) === 'create') {
+          $state.go($state.current.name);
+        } else {
+          $state.go($state.current.name + '.create');
+        }
+
+      },
       gotoItemView: (article) => $state.go($state.current.name + '.item', {id: article.id}),
 
       changeFrame: function (frame) {
@@ -90,7 +100,7 @@
 
     /*
 
-    Listeners
+     Listeners
 
      */
 
@@ -165,7 +175,7 @@
 
       var f = filter || vm.articleFilter;
       var jsFilter = f ? {
-        where: _.mapValues (f, v => ({ '==': v}))
+        where: _.mapValues(f, v => ({'==': v}))
       } : {};
 
       if (vm.search) {
