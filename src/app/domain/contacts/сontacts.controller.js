@@ -16,7 +16,8 @@
       latitude: 55.729908
     };
 
-    angular.extend(vm, {
+    _.assign(vm, {
+
       map: {
         zoom: 12,
         center: MapsHelper.yLatLng(location),
@@ -25,8 +26,16 @@
           location: location,
           content: 'ООО «Ювит»'
         })
-      }
+      },
+
+      afterMapInit
+
     });
+
+    function afterMapInit () {
+      vm.map.ready = true;
+    }
+
 
   }
 

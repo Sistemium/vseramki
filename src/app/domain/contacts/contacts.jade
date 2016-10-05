@@ -21,14 +21,19 @@
             a(href='tel:+74957668887') +7 (495) 766-888-7
 
       ya-map.ya-map(
-        ng-if='vm.map'
+        ng-show='vm.map.ready'
         ya-center="{{vm.map.center}}"
         ya-zoom="{{vm.map.zoom}}"
+        ya-after-init='vm.afterMapInit($target)'
         )
           ya-geo-object(
           ya-options="{preset:'islands#nightStretchyIcon'}"
           ya-source="vm.map.marker"
           )
+
+      .text-center(ng-if='!vm.map.ready')
+        h3.gray Загрузка карты
+        md-progress-circular.margin-auto(md-diameter="300" md-mode="indeterminate")
 
     .flex
 
