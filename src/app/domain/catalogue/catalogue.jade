@@ -3,12 +3,16 @@ root-state='catalogue'
 title='Каталог'
 )
   .cart-totals(layout='column' sa-animate-on-change='vm.cartTotal' change-class="lite change-up")
-    p.no-margin.text-right
+    p.no-margin.text-right(ng-if='!vm.isAdmin')
       span.gray Сумма заказа:
       = ' '
       span.bold(
       style='min-width: 90px; display: inline-block; text-align: right;'
       ) {{vm.cartSubTotal | number: 2}}&nbsp;₽
+
+    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' ng-if='vm.isAdmin')
+      i.material-icons add
+
     p.no-margin.text-right(ng-if='vm.cartDiscount')
       span.gray К оплате со скидкой {{ vm.cartDiscount | number: 1 }}%:
       = ' '
