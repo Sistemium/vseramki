@@ -1,4 +1,4 @@
-form-edit(vm="vm" item="vm.frame" title="{{ vm.id || 'Новая рамка' }}")
+form-edit(vm="vm" item="vm.frame" title="{{ vm.id ? '' : 'Новая рамка' }}")
   form-fields.wide(layout='column' layout-align='space-between top' layout-gt-sm='row')
     .flex
 
