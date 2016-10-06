@@ -11,7 +11,7 @@ md-input-container
   name='packageRel'
   input-clear='black'
   )
-  div(ng-messages="attrsForm.packageRel.$error")
+  div(ng-messages="vm.attrsForm.packageRel.$error")
     div(ng-message="required") Поле не может быть пустым
 
 md-input-container
@@ -30,7 +30,7 @@ md-input-container
     =' '
     span.required-field-asterisk *
   input(step='1' type='number' ng-model='vm.frame.highPrice' min='1'  name='highPrice' input-clear='black' required)
-  div(ng-messages="attrsForm.highPrice.$error")
+  div(ng-messages="vm.attrsForm.highPrice.$error")
     div(ng-message="required") Поле не может быть пустым
 
 md-input-container
@@ -47,7 +47,7 @@ md-input-container
   input-clear='black'
   check-price="{{vm.frame.highPrice}}"
   )
-  div.custom-animation(ng-show="attrsForm.lowPrice.$error.checkPrice")
+  div.custom-animation(ng-show="vm.attrsForm.lowPrice.$error.checkPrice")
     span.custom-warning Оптовая цена больше рыночной
 
 input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')

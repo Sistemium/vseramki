@@ -101,7 +101,7 @@
 
     function hasChanges() {
       checkParams();
-      return !vm.id ? _.get($scope,'attrsForm.$dirty') :
+      return !vm.id ? _.get(vm,'attrsForm.$dirty') :
         Article.hasChanges(vm.id) ||
         _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
     }
@@ -220,8 +220,8 @@
       vm.dupMessage = false;
       unique = true;
       initArticleFrameSizes();
-      $scope.attrsForm.$setUntouched();
-      $scope.attrsForm.$setPristine();
+      _.result(vm,'attrsForm.$setUntouched');
+      _.result(vm,'attrsForm.$setPristine');
       checkParams();
     }
 
