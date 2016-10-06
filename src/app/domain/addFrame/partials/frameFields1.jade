@@ -1,0 +1,62 @@
+//md-input-container
+       label Название рамки
+       input(type='text' ng-model='vm.frame.name' name='name')
+
+searchable-select(
+label='Багет'
+model='vm.frame.baguetteId'
+model-name='Baguette'
+options='vm.baguettes'
+not-addable='true'
+)
+
+searchable-select(
+label='Размер фото'
+model='vm.frame.frameSizeId'
+model-name='FrameSize'
+options='vm.frameSizes'
+)
+
+searchable-select(
+label='Крепление задника'
+label-of='крепления задника'
+model='vm.frame.backMountId'
+model-name='BackMount'
+options='vm.backMounts'
+)
+
+searchable-select(
+label='Прозрачная вставка'
+label-of='прозрачной вставки'
+model='vm.frame.screeningId'
+model-name='Screening'
+options='vm.screenings'
+)
+
+searchable-select(
+label='Несколько размеров'
+searchable='false'
+model='vm.frame.multiType'
+options='vm.multiTypes'
+)
+
+searchable-select.no-margin(
+ng-class='{error: !vm.articleFrameSizes.length}'
+ng-if='vm.frame.multiType'
+placeholder='Добавить размер'
+label-of='размера'
+model='vm.extraFrameSizeId'
+model-name='FrameSize'
+options='vm.frameSizes'
+)
+
+md-chips.with-count(
+ng-model="vm.articleFrameSizes"
+ng-if='vm.frame.multiType'
+readonly='true'
+)
+  md-chip-template
+    span(ng-if='$chip.count>1') {{ $chip.count }} *&nbsp;
+    span(ng-class='{"strike-through gray": !$chip.count}') {{$chip.frameSize.name}}
+    md-button.micro-fab(ng-show='$chip.count>0' ng-click='vm.articleFrameSizeDecrement($chip)') -
+    md-button.micro-fab(ng-click='vm.articleFrameSizeIncrement($chip)') +
