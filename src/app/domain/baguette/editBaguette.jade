@@ -1,4 +1,13 @@
 form-edit(vm="vm" item="vm.baguette" title="{{ vm.id ? '' : 'Новый багет' }}")
-  form-fields.wide(layout='column' layout-align='center center')
 
+  form-fields.wide(layout='column' layout-align='center center')
     .form-controls(layout='column' layout-align='start center' ng-include="'app/domain/baguette/baguetteFields.html'")
+
+  form-footer(ng-if='vm.id')
+
+    md-divider.md-margin
+
+    .space-children-em
+      ng-gallery.margin-top-em(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length')
+      .text-center
+        md-button.admin-button(ng-click='vm.showImageDialog($event, vm.id)') Добавить фото
