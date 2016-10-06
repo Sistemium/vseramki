@@ -27,14 +27,16 @@
       isAdmin: AuthHelper.isAdmin(),
       onPaginate: TableHelper.setPagination,
 
-      onBlur,
       plusOne,
       minusOne,
+      addToCart: Cart.addToCart,
+      gotoItemView: onClickWithPrevent(gotoItemView),
+
+      onBlur,
       onCartChange,
       filterOptionClick,
       resetFilters,
       delCurrFilter,
-      addToCart: Cart.addToCart,
 
       changeView: to => $state.go(to),
       goToCreateFrame: () => {
@@ -48,7 +50,6 @@
         }
 
       },
-      gotoItemView: (article) => $state.go($state.current.name + '.item', {id: article.id}),
 
       changeFrame: function (frame) {
         var newState = vm.currentState === 'create' ? '^.item' : $state.current.name;
@@ -62,6 +63,7 @@
      Init
 
      */
+
 
     Cart.findAll();
 
@@ -125,6 +127,20 @@
      Functions
 
      */
+
+
+    function onClickWithPrevent(fn) {
+      return function (item, event) {
+        if (_.get(event, 'defaultPrevented')) {
+          return;
+        }
+        fn(item);
+      }
+    }
+
+    function gotoItemView(article) {
+      $state.go($state.current.name + '.item', {id: article.id});
+    }
 
     function setChunks(nv) {
       chunkSize = nv;
