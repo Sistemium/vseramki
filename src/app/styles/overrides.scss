@@ -15,3 +15,8 @@ md-backdrop {
 md-backdrop.md-opaque {
   opacity: .70;
 }
+
+
+.prevent-clicks {
+  cursor: default;
+}
