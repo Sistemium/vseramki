@@ -3,7 +3,7 @@ root-state='catalogue'
 title='Каталог'
 )
   .cart-totals(layout='column' sa-animate-on-change='vm.cartTotal' change-class="lite change-up" ng-if='!vm.isAdmin')
-    p.no-margin.text-right(ng-if='!vm.isAdmin')
+    p.no-margin.text-right
       span.gray Сумма заказа:
       = ' '
       span.bold(
@@ -26,73 +26,7 @@ md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
 
   md-sidenav#sidenav-left.md-sidenav-left.md-whiteframe-1dp.margin-top-bottom(
   layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
+  ng-include="'app/domain/catalogue/partials/sidenav.html'"
   )
-
-    .header(layout='row' layout-align='center center')
-
-      md-input-container.no-margin(flex  layout='row')
-        i.material-icons.gray(style='margin-top: 5px; margin-right: 2px') search
-        label(for='articleSearcher')
-        input#articleSearcher(type="search" ng-model="vm.search")
-
-      md-button.md-raised.md-mini.micro-square(
-      style='margin: 0 4px'
-      ng-click='vm.resetFilters()'
-      ng-if='vm.filterLength || vm.search'
-      aria-label='Reset filters'
-      )
-        i.material-icons.mini clear
-
-    .no-padding(layout='column' layout-align='start start')
-
-      property-filter(
-      property-name='frameSize'
-      property-label='Размер'
-      options='vm.frameSizes'
-      current-option='vm.currentFilter.frameSize'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
-      )
-
-      property-filter(
-      property-name='brand'
-      property-label='Бренд'
-      options='vm.brands'
-      current-option='vm.currentFilter.brand'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
-      )
-
-      property-filter(
-      property-name='material'
-      property-label='Материал'
-      options='vm.materials'
-      current-option='vm.currentFilter.material'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
-      )
-
-      property-filter(
-      property-name='colour'
-      property-label='Цвет'
-      options='vm.colours'
-      current-option='vm.currentFilter.colour'
-      set-option-fn='vm.filterOptionClick',
-      clear-fn='vm.delCurrFilter'
-      )
-
-    md-divider(ng-hide='vm.isRootState' style='margin-top: 8px')
-
-    .no-padding.article-list(
-    resize='articlesList'
-    style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px'
-    )
-      md-virtual-repeat-container.height-100.clickable(ng-if='!vm.isRootState')
-        .item(
-        md-virtual-repeat='frame in vm.articles'
-        ng-class="{'active' : vm.currentItemId == frame.id }"
-        ng-click='vm.changeFrame(frame)'
-        )
-          span {{frame.name}}
 
   .ui-view(flex)
