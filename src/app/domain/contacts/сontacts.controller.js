@@ -2,19 +2,14 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('СontactsController', СontactsController);
-
+  const location = {
+    longitude: 37.3973159,
+    latitude: 55.729908
+  };
 
   function СontactsController(MapsHelper) {
 
     var vm = this;
-
-    const location = {
-      longitude: 37.3973159,
-      latitude: 55.729908
-    };
 
     _.assign(vm, {
 
@@ -36,7 +31,10 @@
       vm.map.ready = true;
     }
 
-
   }
+
+  angular
+    .module('vseramki')
+    .controller('СontactsController', СontactsController);
 
 }());
