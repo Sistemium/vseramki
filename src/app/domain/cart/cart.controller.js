@@ -2,18 +2,28 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('CartController', CartController)
-  ;
-
   function CartController(Cart, Article, $scope, ArticleImage, $state, Baguette, Schema, AlertHelper) {
 
     var vm = this;
     var stateParam = [];
     var BaguetteImage = Schema.model('BaguetteImage');
 
-    Cart.bindAll({}, $scope, 'vm.data', refreshPrice);
+    _.assign(vm, {
+
+      clearCart,
+      clearItem,
+      saveItem,
+      plusOne,
+      minusOne,
+      itemClick
+
+    });
+
+    /*
+
+     Init
+
+     */
 
     Baguette.findAll();
     BaguetteImage.findAll();
@@ -32,6 +42,20 @@
       });
 
     });
+
+    /*
+
+     Listeners
+
+     */
+
+    Cart.bindAll({}, $scope, 'vm.data', refreshPrice);
+
+    /*
+
+    Functions
+
+     */
 
     function refreshPrice() {
       Cart.recalcTotals(vm);
@@ -70,15 +94,11 @@
       saveItem();
     }
 
-    angular.extend(vm, {
-      clearCart,
-      clearItem,
-      saveItem,
-      plusOne,
-      minusOne,
-      itemClick
-    });
-
   }
+
+  angular
+    .module('vseramki')
+    .controller('CartController', CartController);
+
 
 }());
