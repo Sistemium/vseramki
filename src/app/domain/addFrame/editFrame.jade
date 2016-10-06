@@ -6,7 +6,7 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
     h2.gray(ng-if='!vm.id') Новая рамка
     h2 {{ vm.frame.name }}
 
-  form.wide(name="frameAttrsForm" layout='column' layout-align='space-between top' layout-gt-sm='row')
+  form.wide(name="attrsForm" layout='column' layout-align='space-between top' layout-gt-sm='row')
 
     .flex
 
@@ -28,5 +28,5 @@ style="height: {{ editFrame.windowHeight - editFrame.offsetTop - 2}}px;"
     ) Отменить изменения
 
     md-button.md-raised.btn-primary(
-    ng-disabled='frameAttrsForm.$invalid' ng-click='vm.save()'
-    ) {{ vm.dupMessage || (frameAttrsForm.$invalid ? 'Форма некорректно заполнена' : vm.saveLabel) }}
+    ng-disabled='attrsForm.$invalid' ng-click='vm.save()'
+    ) {{ vm.dupMessage || (attrsForm.$invalid ? 'Форма некорректно заполнена' : vm.saveLabel) }}
