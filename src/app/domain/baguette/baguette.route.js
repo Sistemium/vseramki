@@ -12,13 +12,13 @@
     var children = [{
       name: 'edit',
       url: '/edit/:id',
-      templateUrl: 'app/domain/baguette/baguetteEdit.html',
+      templateUrl: 'app/domain/baguette/editBaguette.html',
       controller: 'BaguetteEditController',
       controllerAs: 'vm'
     }, {
       name: 'create',
       url: '/create',
-      templateUrl: 'app/domain/baguette/baguetteCreate.html',
+      templateUrl: 'app/domain/baguette/editBaguette.html',
       controller: 'BaguetteEditController',
       controllerAs: 'vm'
     }];
