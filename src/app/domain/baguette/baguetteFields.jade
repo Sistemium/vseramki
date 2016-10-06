@@ -1,0 +1,61 @@
+md-input-container
+  label Ширина багета (мм.)
+    =' '
+    span.required-field-asterisk *
+  input(
+  required type='number' step='1' min='1'
+  ng-model='vm.baguette.borderWidth'
+  name='baguetteWidth'
+  input-clear='black'
+  input-clear-value='null'
+  )
+  div(ng-messages="vm.attrsForm.baguetteWidth.$error")
+    div(ng-message="required") Поле не может быть пустым
+
+md-input-container
+  label Название
+    =' '
+    span.required-field-asterisk *
+  input(
+  required type='text'
+  ng-model='vm.baguette.lastName'
+  name='lastName'
+  input-clear='black'
+  input-clear-value='null'
+  )
+  div(ng-messages="vm.attrsForm.lastName.$error")
+    div(ng-message="required") Поле не может быть пустым
+
+searchable-select(
+label='Материал'
+model='vm.baguette.materialId'
+model-name='Material'
+options='vm.materials'
+on-close='vm.saveClickedOption()'
+)
+
+searchable-select(
+label='Фактура'
+model='vm.baguette.surfaceId'
+model-name='Surface'
+options='vm.surfaces'
+on-close='vm.saveClickedOption()'
+)
+
+searchable-select(
+label='Бренд'
+model='vm.baguette.brandId'
+model-name='Brand'
+options='vm.brands'
+on-close='vm.saveClickedOption()'
+)
+
+searchable-select(
+label='Цвет'
+model='vm.baguette.colourId'
+model-name='Colour'
+options='vm.colours'
+on-close='vm.saveClickedOption()'
+)
+
+input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
