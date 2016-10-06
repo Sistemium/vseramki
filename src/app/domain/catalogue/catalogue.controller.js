@@ -16,6 +16,7 @@
 
     angular.extend(vm, {
 
+      rootState: 'catalogue',
       rows: [],
       rowsFlex: 33,
       articleFilter: {},
@@ -39,17 +40,7 @@
       delCurrFilter,
 
       changeView: to => $state.go(to),
-      goToCreateFrame: () => {
-
-        var toGo = $state.current.name;
-
-        if (_.last(toGo.split('.')) === 'create') {
-          $state.go($state.current.name);
-        } else {
-          $state.go($state.current.name + '.create');
-        }
-
-      },
+      goToCreateFrame,
 
       changeFrame: function (frame) {
         var newState = vm.currentState === 'create' ? '^.item' : $state.current.name;
@@ -128,6 +119,13 @@
 
      */
 
+    function goToCreateFrame (parent) {
+
+      var re = new RegExp(`${vm.rootState}\.([^.]+)`);
+      var currentState = parent || _.last($state.current.name.match(re));
+      $state.go(`${vm.rootState}.${currentState}.create`);
+
+    }
 
     function onClickWithPrevent(fn) {
       return function (item, event) {
