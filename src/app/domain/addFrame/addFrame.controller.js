@@ -30,8 +30,7 @@
       cancelChanges,
       addArticleFrameSize,
       articleFrameSizeDecrement,
-      articleFrameSizeIncrement,
-      clearForm
+      articleFrameSizeIncrement
 
     });
 
