@@ -1,12 +1,18 @@
 $gray-section-margin: 10px;
+$gray-section-radius: 10px;
 
 .gray-section {
 
   max-width: 450px;
 
-  border-radius: 10px;
+  border-radius: $gray-section-radius;
   margin: $margin-default * 2 auto 0;
   padding-bottom: $gray-section-margin;
+
+  & > *:first-child {
+    border-top-left-radius: $gray-section-radius;
+    border-top-right-radius: $gray-section-radius;
+  }
 
   h2 + .text {
     text-align: justify;
