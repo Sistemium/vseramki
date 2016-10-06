@@ -6,7 +6,8 @@
     .component('formEdit', {
 
       transclude: {
-        fields: '?formFields'
+        fields: '?formFields',
+        footer: '?formFooter'
       },
 
       bindings: {

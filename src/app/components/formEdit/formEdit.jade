@@ -20,3 +20,5 @@ style="height: {{ edit.windowHeight - edit.offsetTop - 2}}px;"
     md-button.md-raised.pink-button(
     ng-disabled='vm.attrsForm.$invalid' ng-click='vm.save()'
     ) {{ vm.dupMessage || (vm.attrsForm.$invalid ? 'Форма некорректно заполнена' : vm.saveLabel) }}
+
+  ng-transclude(ng-transclude-slot='footer')
