@@ -160,6 +160,24 @@ button .label {
   }
 }
 
+.mini-fab {
+  border-radius: 50%;
+  width: 35px;
+  min-width: 35px;
+  background-color: #ff3d56;
+  color: white;
+  margin: 0;
+  line-height: 24px;
+  min-height: 35px;
+
+  i {
+    font-size: 20px;
+    line-height: 30px;
+    margin-left: 1px;
+    margin-top: 2px;
+  }
+}
+
 button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab {
   border-radius: 0;
   min-height: 10px;
@@ -197,7 +215,8 @@ md-fab-actions {
   background-color: $fab-button-hover-background-color !important;
 }
 
-.md-button.micro-fab:not([disabled]):hover {
+.md-button.micro-fab:not([disabled]):hover,
+.md-button.mini-fab:not([disabled]):hover {
   background-color: $md-fab-hover !important;
 }
 
@@ -205,5 +224,7 @@ md-fab-actions {
   background-color: $default-button-hover !important;
 }
 
-// md-button hover
+.md-button.md-fab.admin-button.md-mini:not([disabled]):hover {
+  background-color: $admin-button-fab-color !important;
+}
 
