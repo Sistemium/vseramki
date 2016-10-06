@@ -1,0 +1,4 @@
+form-edit(vm="vm" item="vm.baguette" title="{{ vm.id || 'Новый багет' }}")
+  form-fields.wide(layout='column' layout-align='center center')
+
+    .form-controls(layout='column' layout-align='start center' ng-include="'app/domain/baguette/baguetteFields.html'")
