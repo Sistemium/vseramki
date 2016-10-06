@@ -2,15 +2,21 @@
 
 (function () {
 
-  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper, AuthHelper, TableHelper) {
+  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper) {
 
     var vm = this;
 
-    var FrameSize = Schema.model('FrameSize');
-    var Brand = Schema.model('Brand');
-    var Material = Schema.model('Material');
-    var Colour = Schema.model('Colour');
-    var BaguetteImage = Schema.model('BaguetteImage');
+    var {
+      Article,
+      Baguette,
+      Cart,
+      ArticleImage,
+      FrameSize,
+      Brand,
+      Material,
+      Colour,
+      BaguetteImage
+    } = Schema.models();
 
     var chunkSize = 3;
 

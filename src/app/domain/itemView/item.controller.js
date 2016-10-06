@@ -2,13 +2,17 @@
 
 (function () {
 
-  function ItemController($filter, Schema, ArticleImage, $scope, $state, ToastHelper, ImageHelper, AuthHelper, AlertHelper) {
+  function ItemController($filter, $scope, $state, Schema, ToastHelper, ImageHelper, AuthHelper, AlertHelper) {
 
     var vm = this;
 
-    var Article = Schema.model('Article');
-    var Cart = Schema.model('Cart');
-    var BaguetteImage = Schema.model('BaguetteImage');
+    var {
+      Article,
+      ArticleImage,
+      Cart,
+      BaguetteImage
+    } = Schema.models();
+
     var numberFilter = $filter('number');
 
     var stateFilter = {
