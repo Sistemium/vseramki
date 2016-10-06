@@ -2,7 +2,7 @@ state-bar.articles(
 root-state='catalogue'
 title='Каталог'
 )
-  .cart-totals(layout='column' sa-animate-on-change='vm.cartTotal' change-class="lite change-up")
+  .cart-totals(layout='column' sa-animate-on-change='vm.cartTotal' change-class="lite change-up" ng-if='!vm.isAdmin')
     p.no-margin.text-right(ng-if='!vm.isAdmin')
       span.gray Сумма заказа:
       = ' '
@@ -10,14 +10,14 @@ title='Каталог'
       style='min-width: 90px; display: inline-block; text-align: right;'
       ) {{vm.cartSubTotal | number: 2}}&nbsp;₽
 
-    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' ng-if='vm.isAdmin')
-      i.material-icons add
-
     p.no-margin.text-right(ng-if='vm.cartDiscount')
       span.gray К оплате со скидкой {{ vm.cartDiscount | number: 1 }}%:
       = ' '
       span.bold(style='min-width: 90px; display: inline-block; text-align: right;'
       ) {{ vm.cartTotal | number:2}}&nbsp;₽
+
+  md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' ng-if='vm.isAdmin')
+    i.material-icons add
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
