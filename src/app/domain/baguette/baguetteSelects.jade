@@ -40,6 +40,7 @@ ng-model="vm.baguetteColours"
 readonly='true'
 )
   md-chip-template
-    span {{$chip.colour.name}}
-    md-button.micro-fab(ng-click='vm.deleteColour($chip)') -
+    span(ng-class='{"strike-through gray": $chip.toRemove}') {{$chip.colour.name}}
+    md-button.micro-fab(ng-click='vm.baguetteColourRemoveClick($chip)')
+      | {{ $chip.toRemove ? '+' : '–' }}
 

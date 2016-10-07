@@ -32,7 +32,7 @@
       hasChanges,
       cancelChanges,
       save,
-      deleteColour,
+      baguetteColourRemoveClick,
 
       quit: () => $state.go('^'),
 
@@ -125,11 +125,21 @@
           }));
         }
 
+        vm.extraBaguetteColourId = null;
+
       }
     }
 
-    function deleteColour(chip) {
-      console.log(chip);
+    function baguetteColourRemoveClick(chip) {
+      if (chip.id) {
+        if (chip.toRemove) {
+          BaguetteColour.revert(chip.id);
+        } else {
+          chip.toRemove = true;
+        }
+      } else {
+        _.remove(vm.baguetteColours, chip);
+      }
     }
 
     function cancelChanges() {
