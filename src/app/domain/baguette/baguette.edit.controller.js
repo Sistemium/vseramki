@@ -183,8 +183,12 @@
     function save() {
       Baguette.create(vm.baguette)
         .then(baguette => {
-          return $q.all(_.map(vm.baguetteColours, colour => {
-            return BaguetteColour.create(_.assign(colour, {baguetteId: baguette.id}));
+
+          return $q.all(_.map(vm.baguetteColours, item => {
+            if (item.toRemove) {
+              return item.id ? BaguetteColour.destroy(item) : $q.reject();
+            }
+            return BaguetteColour.create(_.assign(item, {baguetteId: baguette.id}));
           }));
         })
         .then(function () {
