@@ -2,9 +2,6 @@
 
 (function () {
 
-  angular.module('vseramki')
-    .directive('acmeNavbar', acmeNavbar);
-
   function acmeNavbar() {
 
     var directive = {
@@ -20,12 +17,31 @@
   /** @ngInject */
   function NavbarController(Cart, $scope, $window, $state, AuthHelper, ToastHelper) {
 
-    Cart.bindAll({}, $scope, 'vm.cart');
-    Cart.findAll();
-
     var vm = this;
 
+    _.assign(vm, {
+
+      loginBtnClick: () => vm.loggedIn ? $state.go('profile') : $state.go('login')
+
+    });
+
+    Cart.findAll();
+
+    setUser(AuthHelper.hasUser()) || $scope.$on('logging-in', (e, q) => {
+      setUser(q.then(AuthHelper.hasUser));
+    });
+
     setButtons();
+
+    Cart.bindAll({}, $scope, 'vm.cart');
+
+    $scope.$on('logged-off', function () {
+      $window.location.href = '';
+    });
+
+    /*
+    Functions
+     */
 
     function setUser(q) {
 
@@ -90,22 +106,10 @@
 
     }
 
-    setUser(AuthHelper.hasUser()) || $scope.$on('logging-in', (e, q) => {
-      setUser(q.then(AuthHelper.hasUser));
-    });
-
-    $scope.$on('logged-off', function () {
-      $window.location.href = '';
-    });
-
-    _.assign(vm, {
-
-      loginBtnClick: function () {
-        vm.loggedIn ? $state.go('profile') : $state.go('login');
-      }
-
-    });
-
   }
+
+  angular.module('vseramki')
+    .directive('acmeNavbar', acmeNavbar);
+
 
 })();
