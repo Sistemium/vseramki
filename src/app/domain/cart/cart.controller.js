@@ -2,11 +2,18 @@
 
 (function () {
 
-  function CartController(Cart, Article, $scope, ArticleImage, $state, Baguette, Schema, AlertHelper) {
+  function CartController($scope, $state, Schema, AlertHelper) {
 
     var vm = this;
     var stateParam = [];
-    var BaguetteImage = Schema.model('BaguetteImage');
+
+    var {
+      Article,
+      ArticleImage,
+      Baguette,
+      BaguetteImage,
+      Cart
+    } = Schema.models();
 
     _.assign(vm, {
 
