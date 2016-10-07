@@ -1,4 +1,11 @@
-.contacts.scroll-y(layout-fill)
+state-bar(
+title='Контакты'
+)
+
+.contacts.scroll-y(
+resize='contacts'
+ng-style='{height: (contacts.windowHeight - contacts.offsetTop)+"px"}'
+)
 
   .md-padding.space-children-em(
   layout='column' layout-align='start center'
