@@ -5,8 +5,8 @@ md-table-container
       tr(md-row)
         th(md-column) Наименование
         th(md-column) Количество
-        th(md-column) Цена
-        th(md-column) Стоимость
+        th(md-column md-numeric) Цена
+        th(md-column md-numeric) Стоимость
     tbody(md-body)
       tr(md-row ng-repeat='item in vm.data track by item.id')
         td.text-left(md-cell) {{ ::item.article.name}}
