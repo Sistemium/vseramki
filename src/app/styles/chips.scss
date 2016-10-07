@@ -1,3 +1,15 @@
-md-chips.with-count .md-chip {
-  padding: 0 4px 0 8px;
+md-chips{
+
+  &.removable, &.with-count {
+    .md-chip {
+      padding: 0 4px 0 8px;
+    }
+  }
+
+  md-chip-template {
+    .md-button.micro-fab {
+      background: none;
+    }
+  }
+  
 }
