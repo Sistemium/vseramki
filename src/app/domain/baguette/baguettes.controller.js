@@ -15,6 +15,7 @@
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
     var BaguetteImage = Schema.model('BaguetteImage');
+    //var Surface = Schema.model('Surface');
 
     $q.all([
       Colour.findAll(),
@@ -38,7 +39,6 @@
         setChunks(chunkSize);
       })
     ;
-
 
     var baguetteFilter = {
       orderBy: [
@@ -82,11 +82,9 @@
         $state.go('.edit', {id: item.id});
       },
 
-
       deleteBaguette: function (item, $event) {
 
         var promise = AlertHelper.showConfirm($event);
-
 
         promise.then(function (answer) {
           if (answer) {
@@ -118,7 +116,15 @@
       },
 
       changeBaguette: function (bag) {
-        $state.go($state.current.name, {id: bag.id});
+        var currView = _.get(localStorage, 'ls.baguettes.mode');
+
+        if (currView) {
+          currView = currView.replace(/"/g, "");
+        } else {
+          currView = 'table';
+        }
+
+        $state.go('baguettes.' + currView + '.edit', {id: bag.id});
       },
 
       goToCreateBaguette: function (parent) {
