@@ -167,22 +167,16 @@
           return $q.all(_.map(vm.baguetteColours, colour => {
             return BaguetteColour.create(_.assign(colour, {baguetteId: baguette.id}));
           }));
-
-        }).then(function () {
-          ToastHelper.showToast('Багет сохранен', true);
+        })
+        .then(function () {
+          ToastHelper.success('Багет сохранен');
           if (!vm.id) {
             vm.baguette = Baguette.createInstance();
           }
           clearForm();
         })
-        .catch(function (obj) {
-
-          if (obj.status == '500') {
-            ToastHelper.showToast('Ошибка. Багет не сохранен', false, vm);
-          } else {
-            ToastHelper.showToast('Ошибка. Обратитесь в тех. поддержку', false, vm);
-          }
-
+        .catch(function () {
+            ToastHelper.error('Ошибка. Багет не сохранен');
         });
     }
 
