@@ -159,7 +159,7 @@ button .label {
   min-height: 25px;
 
   &:active, &:hover {
-    background-color: $fab-button-hover-background-color !important;
+    background-color: $fab-button-hover-background-color;
   }
 }
 
@@ -211,7 +211,7 @@ md-fab-actions {
 
 // Fab hovers
 
-.md-button.md-fab, .md-button.md-fab.md-icon-button {
+.md-button.md-fab, .md-button.md-fab.md-icon-button, .mini-fab {
 
   &:not([disabled]):hover {
     background-color: $md-fab-hover;
