@@ -96,7 +96,7 @@
 
      */
 
-    function selectParamsChecker() {
+    function checkParams() {
       vm.paramsCheck = vm.unique &&
         vm.baguette &&
         vm.baguette.material &&
@@ -108,7 +108,7 @@
     }
 
     function hasChanges() {
-      selectParamsChecker();
+      checkParams();
       return !vm.id ?
         _.get(vm, 'attrsForm.$dirty') :
       Baguette.hasChanges(vm.id) ||
@@ -153,7 +153,7 @@
 
         Baguette.revert(vm.baguette);
         _.each(vm.baguette.colours, item => item.id && BaguetteColour.revert(item));
-        selectParamsChecker();
+        checkParams();
 
       }
     }
@@ -175,7 +175,7 @@
             vm.dupMessage = '';
           }
 
-          selectParamsChecker();
+          checkParams();
 
         });
     }
@@ -215,7 +215,7 @@
       vm.extraBaguetteColourId = false;
       _.result(vm, 'attrsForm.$setUntouched');
       _.result(vm, 'attrsForm.$setPristine');
-      selectParamsChecker();
+      checkParams();
       initBaguetteColours();
 
     }
