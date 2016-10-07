@@ -1,5 +1,7 @@
 @import "_vars.scss";
 
+$default-button-background-color: #f0f0f0;
+
 a.md-button.md-fab, .md-button.md-fab {
   background-color: $fab-button-background-color;
 }
@@ -68,28 +70,37 @@ button .label {
 
 }
 
-.default-button {
-  background-color: #fafafa !important;
-  color: black !important;
-}
 
-.md-button.default-button:not([disabled]):hover {
-  background-color: $default-button-hover !important;
-}
+.md-button, .md-button.md-raised {
 
-.pink-button {
-  background-color: $fab-button-background-color !important;
-  color: white !important;
-}
+  &.default-button:hover:not([disabled]) {
+    background-color: $default-button-hover;
+  }
 
-.pink-button:hover {
-  background-color: $md-fab-hover !important;
-  color: white !important;
-}
+  .default-button {
+    background-color: $default-button-background-color;
+    color: black;
+  }
 
-.important-button {
-  background-color: $fab-button-background-color !important;
-  color: white !important;
+  &.pink-button, &.important-button {
+    background-color: $fab-button-background-color;
+    color: white;
+  }
+
+  &.pink-button:hover:not([disabled]) {
+    background-color: $md-fab-hover;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+
+  &.micro-fab:not([disabled]):hover,
+  &.mini-fab:not([disabled]):hover {
+    background-color: $md-fab-hover;
+  }
+
+
 }
 
 .admin-button {
@@ -135,14 +146,6 @@ button .label {
   border-radius: 50%;
   line-height: 7px;
   padding: 3px;
-}
-
-.btn-primary {
-  color: white !important;
-  background-color: $fab-button-background-color !important;
-  &:active, &:hover {
-    background-color: $fab-button-hover-background-color !important;
-  }
 }
 
 .micro-fab {
@@ -197,34 +200,38 @@ button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab 
 
 md-fab-actions {
   .md-button.md-primary {
-    background-color: $vr-blue-color !important;
-  }
-
-  .md-button.md-primary:hover {
-    background-color: $md-fab-tool-hover !important;
+    &, &.md-raised {
+      background-color: $vr-blue-color;
+      &:hover:not([disabled]) {
+        background-color: $md-fab-tool-hover;
+      }
+    }
   }
 }
 
 // Fab hovers
 
-.md-button.md-fab:not([disabled]):hover {
-  background-color: $md-fab-hover !important;
-}
+.md-button.md-fab, .md-button.md-fab.md-icon-button {
 
-.md-button.md-fab.tool-button:not([disabled]):hover {
-  background-color: $fab-button-hover-background-color !important;
-}
+  &:not([disabled]):hover {
+    background-color: $md-fab-hover;
+  }
 
-.md-button.micro-fab:not([disabled]):hover,
-.md-button.mini-fab:not([disabled]):hover {
-  background-color: $md-fab-hover !important;
-}
+  &.tool-button:not([disabled]):hover {
+    background-color: $fab-button-hover-background-color;
+  }
 
-.md-button.md-fab.default-button:not([disabled]):hover {
-  background-color: $default-button-hover !important;
-}
+  &.default-button:not([disabled]):hover {
+    background-color: $default-button-hover;
+  }
 
-.md-button.md-fab.admin-button.md-mini:not([disabled]):hover {
-  background-color: $admin-button-fab-color !important;
-}
+  &.admin-button.md-mini:not([disabled]):hover {
+    background-color: $admin-button-fab-color;
+  }
 
+  &.default-button {
+    background-color: $default-button-background-color;
+    color: black;
+  }
+
+}
