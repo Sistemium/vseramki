@@ -54,16 +54,14 @@
     margin-left: 0;
   }
 
-  .repeated-group-item {
-    max-width: 284px;
-  }
-
   .repeated-group {
+    height: 355px;
     padding: 2px;
     margin: 2px;
   }
 
   .repeated-group-item {
+    max-width: 284px;
     display: inline-block;
   }
 
