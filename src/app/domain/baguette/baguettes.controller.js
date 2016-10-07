@@ -111,15 +111,11 @@
       },
 
       changeBaguette: function (bag) {
-        var currView = _.get(localStorage, 'ls.baguettes.mode');
+        var newState = $state.current.name;
 
-        if (currView) {
-          currView = currView.replace(/"/g, "");
-        } else {
-          currView = 'table';
-        }
+        newState = newState.replace(/\.edit$/,'')  + '.edit';
 
-        $state.go('baguettes.' + currView + '.edit', {id: bag.id});
+        $state.go(newState, {id: bag.id});
       },
 
       goToCreateBaguette: function (parent) {
@@ -141,7 +137,7 @@
     var subscription = $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
 
       vm.isRoot = /(table|tiles)$/.test(toState.name);
-      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
+      vm.currentState = _.last($state.current.name.match(/baguettes\.([^\.]+)/));
 
       if (vm.isRoot || !unbindBaguettes) {
         rebind(baguetteFilter);

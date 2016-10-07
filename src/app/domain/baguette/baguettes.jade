@@ -2,7 +2,7 @@
 
   state-bar(
   root-state='baguettes'
-  title='{{ vm.currentState == "tiles" ? "Плитка" : "Таблица" }} багетов'
+  title='Багет'
   )
     md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateBaguette()' ng-if='vm.isAdmin')
       i.material-icons add

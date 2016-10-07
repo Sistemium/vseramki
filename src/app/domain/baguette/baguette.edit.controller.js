@@ -160,6 +160,10 @@
 
     function checkForDuplicates() {
 
+      if (!vm.baguette) {
+        return;
+      }
+
       var filter = {};
 
       _.each(keys, key => filter[key] = vm.baguette[key] || null);
