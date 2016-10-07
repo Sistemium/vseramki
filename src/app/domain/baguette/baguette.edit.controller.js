@@ -2,11 +2,11 @@
 
 (function () {
 
+  const keys = ['brandId', 'colourId', 'materialId', 'surfaceId'];
+
   function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper, $q) {
 
     var vm = this;
-
-    var keys = ['brandId', 'colourId', 'materialId'];
 
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
@@ -32,7 +32,6 @@
       hasChanges,
       cancelChanges,
       save,
-      saveClickedOption,
       deleteColour,
 
       quit: () => $state.go('^'),
@@ -71,6 +70,10 @@
      */
 
 
+    $scope.$watch(() => {
+      return _.pick(vm.baguette, keys);
+    },checkForDuplicates, true);
+
     $scope.$watch('vm.extraBaguetteColourId', addBaguetteColour);
 
     Colour.bindAll(false, $scope, 'vm.colours');
@@ -93,13 +96,13 @@
 
     function selectParamsChecker() {
       vm.paramsCheck = vm.unique &&
-        vm.baguette && vm.baguette.colour &&
-        vm.baguette.material && vm.baguette.brand &&
+        vm.baguette &&
+        vm.baguette.material &&
         vm.baguette.borderWidth;
     }
 
     function initBaguetteColours() {
-      vm.baguetteColours = vm.baguette.colour || [];
+      vm.baguetteColours = vm.baguette.colours || [];
     }
 
     function hasChanges() {
@@ -135,9 +138,9 @@
       }
     }
 
-    function checkForDuplicates() {
+    function checkForDuplicates(baguette) {
 
-      var filter = _.pick(vm.baguette, keys);
+      var filter = _.pick(baguette, keys);
 
       Baguette.findAll(filter, {bypassCache: true})
         .then(function (data) {
@@ -176,18 +179,6 @@
           }
 
         });
-    }
-
-    function saveClickedOption() {
-
-      if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand && (hasChanges() || vm.isCreateState)) {
-        checkForDuplicates();
-      }
-
-      if (!vm.id) {
-        $scope.$emit('baguetteRefresh', _.pick(vm.baguette, keys));
-      }
-
     }
 
     function clearForm() {
