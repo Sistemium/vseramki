@@ -111,11 +111,11 @@
       selectParamsChecker();
       return !vm.id ?
         _.get(vm, 'attrsForm.$dirty') :
-        Baguette.hasChanges(vm.id) ||
-          _.find(
-            vm.baguetteColours,
-            item => !item.id || BaguetteColour.hasChanges(item)
-          );
+      Baguette.hasChanges(vm.id) ||
+      _.find(
+        vm.baguetteColours,
+        item => !item.id || BaguetteColour.hasChanges(item)
+      );
     }
 
     function addBaguetteColour() {
@@ -165,7 +165,7 @@
       Baguette.findAll(filter, {bypassCache: true, cacheResponse: false})
         .then(function (data) {
 
-          _.remove(data, {id: _.get(vm,'baguette.id')});
+          _.remove(data, {id: _.get(vm, 'baguette.id')});
 
           if (data.length) {
             vm.dupMessage = 'Такой багет уже существует';
@@ -195,7 +195,7 @@
           clearForm();
         })
         .catch(function () {
-            ToastHelper.error('Ошибка. Багет не сохранен');
+          ToastHelper.error('Ошибка. Багет не сохранен');
         });
     }
 
