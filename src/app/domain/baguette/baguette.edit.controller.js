@@ -140,12 +140,14 @@
       }
     }
 
-    function checkForDuplicates(baguette) {
+    function checkForDuplicates() {
 
-      var filter = _.pick(baguette, keys);
+      var filter = _.pick(vm.baguette, keys);
 
       Baguette.findAll(filter, {bypassCache: true})
         .then(function (data) {
+
+          _.remove(data, {id: _.get(vm,'baguette.id')});
 
           if (data.length) {
             vm.dupMessage = 'Такой багет уже существует';
@@ -154,7 +156,9 @@
             vm.unique = true;
             vm.dupMessage = '';
           }
+
           selectParamsChecker();
+
         });
     }
 
