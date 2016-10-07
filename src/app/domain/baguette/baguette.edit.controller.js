@@ -2,7 +2,7 @@
 
 (function () {
 
-  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper) {
+  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper, $q) {
 
     var vm = this;
 
@@ -12,6 +12,9 @@
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
     var BaguetteImage = Schema.model('BaguetteImage');
+    var BaguetteColour = Schema.model('BaguetteColour');
+    var Surface = Schema.model('Surface');
+
 
     _.assign(vm, {
 
@@ -22,6 +25,7 @@
       attrsSearchColour: {},
       attrsSearchBrand: {},
       selected: [],
+      baguetteColours: [],
       dupMessage: '',
       saveLabel: 'Сохранить новый багет',
 
@@ -29,6 +33,7 @@
       cancelChanges,
       save,
       saveClickedOption,
+      deleteColour,
 
       quit: () => $state.go('^'),
 
@@ -66,9 +71,12 @@
      */
 
 
+    $scope.$watch('vm.extraBaguetteColourId', addBaguetteColour);
+
     Colour.bindAll(false, $scope, 'vm.colours');
     Material.bindAll(false, $scope, 'vm.materials');
     Brand.bindAll(false, $scope, 'vm.brands');
+    Surface.bindAll(false, $scope, 'vm.surfaces');
 
     BaguetteImage.bindAll({
       baguetteId: vm.id
@@ -79,21 +87,45 @@
 
     /*
 
-    Functions
+     Functions
 
      */
 
     function selectParamsChecker() {
-      vm.paramsCheck =  vm.unique &&
+      vm.paramsCheck = vm.unique &&
         vm.baguette && vm.baguette.colour &&
-        vm.baguette.material &&
-        vm.baguette.brand &&
+        vm.baguette.material && vm.baguette.brand &&
         vm.baguette.borderWidth;
+    }
+
+    function initBaguetteColours() {
+      vm.baguetteColours = vm.baguette.colour || [];
     }
 
     function hasChanges() {
       selectParamsChecker();
-      return vm.id ? Baguette.hasChanges(vm.id) : _.get(vm,'attrsForm.$dirty');
+      return vm.id ? Baguette.hasChanges(vm.id) : _.get(vm, 'attrsForm.$dirty');
+    }
+
+    function addBaguetteColour() {
+      if (vm.extraBaguetteColourId) {
+
+        var colourId = {colourId: vm.extraBaguetteColourId};
+
+        var isDuplicate = _.find(vm.baguetteColours, colourId);
+
+        if (!isDuplicate) {
+          isDuplicate = BaguetteColour.createInstance({
+            colourId: vm.extraBaguetteColourId
+          });
+          vm.baguetteColours.push(isDuplicate);
+        }
+
+      }
+    }
+
+    function deleteColour(chip) {
+      console.log(chip);
     }
 
     function cancelChanges() {
@@ -106,6 +138,7 @@
     function checkForDuplicates() {
 
       var filter = _.pick(vm.baguette, keys);
+
       Baguette.findAll(filter, {bypassCache: true})
         .then(function (data) {
 
@@ -122,7 +155,12 @@
 
     function save() {
       Baguette.create(vm.baguette)
-        .then(function () {
+        .then(baguette => {
+          return $q.all(_.map(vm.baguetteColours, colour => {
+            return BaguetteColour.create(_.assign(colour, {baguetteId: baguette.id}));
+          }));
+
+        }).then(function () {
           ToastHelper.showToast('Багет сохранен', true);
           if (!vm.id) {
             vm.baguette = Baguette.createInstance();
@@ -152,19 +190,20 @@
 
     }
 
-    function clearForm () {
+    function clearForm() {
       if (!vm.id) {
         vm.baguette = Baguette.createInstance();
       }
       vm.dupMessage = false;
       vm.unique = true;
+      vm.extraBaguetteColourId = false;
       //initArticleFrameSizes();
-      _.result(vm,'attrsForm.$setUntouched');
-      _.result(vm,'attrsForm.$setPristine');
+      _.result(vm, 'attrsForm.$setUntouched');
+      _.result(vm, 'attrsForm.$setPristine');
       selectParamsChecker();
+      initBaguetteColours();
+
     }
-
-
 
   }
 
