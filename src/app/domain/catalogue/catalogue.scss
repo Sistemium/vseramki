@@ -2,6 +2,12 @@
 
 .articles {
 
+  md-card {
+    .not-in-cart {
+      margin-bottom: 15px;
+    }
+  }
+
   .state-bar {
     .cart-totals {
       font-size: 14px;
