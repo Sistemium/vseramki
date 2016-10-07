@@ -2,15 +2,10 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .service('Article', Article)
-  ;
-
   function Article(Schema) {
 
-    var totalThreshold = 100000;
-    var minThreshold = 10000;
+    const totalThreshold = 100000;
+    const minThreshold = 10000;
 
     return Schema.register({
 
@@ -126,5 +121,10 @@
     });
 
   }
+
+  angular
+    .module('vseramki')
+    .service('Article', Article);
+
 
 }());

@@ -2,10 +2,6 @@
 
 (function () {
 
-  angular.module('vseramki')
-    .service('ArticleFrameSize', ArticleFrameSize)
-    .run(ArticleFrameSize => ArticleFrameSize.findAll());
-
   function ArticleFrameSize(Schema) {
 
     return Schema.register({
@@ -28,5 +24,9 @@
     });
 
   }
+
+  angular.module('vseramki')
+    .service('ArticleFrameSize', ArticleFrameSize)
+    .run(ArticleFrameSize => ArticleFrameSize.findAll());
 
 }());

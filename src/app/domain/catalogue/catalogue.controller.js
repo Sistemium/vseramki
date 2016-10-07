@@ -20,7 +20,7 @@
 
     var chunkSize = 3;
 
-    angular.extend(vm, {
+    _.assign(vm, {
 
       rootState: 'catalogue',
       rows: [],
@@ -64,8 +64,6 @@
 
     Cart.findAll();
 
-    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
-
     Baguette.findAll().then(function (data) {
       vm.baguette = data;
     });
@@ -104,6 +102,8 @@
      */
 
     VSHelper.watchForGroupSize($scope, 300, 270, setChunks);
+
+    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
 
     $scope.$watch('vm.articleFilter', filterArticles);
 
