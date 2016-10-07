@@ -1,0 +1,45 @@
+searchable-select(
+label='Материал'
+model='vm.baguette.materialId'
+model-name='Material'
+options='vm.materials'
+)
+
+searchable-select(
+label='Фактура'
+label-of='Фактуры'
+model='vm.baguette.surfaceId'
+model-name='Surface'
+options='vm.surfaces'
+)
+
+searchable-select(
+label='Бренд'
+model='vm.baguette.brandId'
+model-name='Brand'
+options='vm.brands'
+)
+
+searchable-select(
+label='Цвет'
+model='vm.baguette.colourId'
+model-name='Colour'
+options='vm.colours'
+)
+
+searchable-select(
+label='Дополнительные цвета'
+label-of='цвета'
+model='vm.extraBaguetteColourId'
+model-name='Colour'
+options='vm.colours'
+)
+
+md-chips(
+ng-model="vm.baguetteColours"
+readonly='true'
+)
+  md-chip-template
+    span {{$chip.colour.name}}
+    md-button.micro-fab(ng-click='vm.deleteColour($chip)') -
+
