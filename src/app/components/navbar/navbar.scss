@@ -17,13 +17,7 @@ md-toolbar.toolbar-fixed-top.white-background {
 
 .toolbar-fixed-top {
 
-  //position: fixed;
-  top: 0;
-  z-index: 70;
-
-  & + * {
-    //margin-top: 64px;
-  }
+  z-index: 3;
 
 }
 
@@ -94,5 +88,21 @@ body {
       }
     }
 
+  }
+}
+
+@media (max-width: $layout-breakpoint-tight - 1) {
+  md-toolbar {
+    .hidden-tight {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-tight) {
+  md-toolbar {
+    .shown-tight {
+      display: none;
+    }
   }
 }

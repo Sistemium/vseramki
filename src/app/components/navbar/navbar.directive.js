@@ -18,7 +18,7 @@
   }
 
   /** @ngInject */
-  function NavbarController(Cart, $scope, $mdMedia, $window, $state, AuthHelper, ToastHelper) {
+  function NavbarController(Cart, $scope, $window, $state, AuthHelper, ToastHelper) {
 
     Cart.bindAll({}, $scope, 'vm.cart');
     Cart.findAll();
@@ -105,16 +105,6 @@
       }
 
     });
-
-    $scope.$watch(
-      function () {
-        return $mdMedia('max-width: 800px');
-      },
-
-      function (value) {
-        vm.breakpoint = value;
-      }
-    );
 
   }
 

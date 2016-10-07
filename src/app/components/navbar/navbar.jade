@@ -4,19 +4,17 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
       img.top-logo(ng-src='{{windowWidth < 450 ? "images/logo-230x150.png" : "images/top-logo.jpg"}}')
 
     .margin-left.visible-print-inline(flex)
-      small(ng-show='!vm.isAdmin && (windowWidth > 850 || windowWidth < 800)')
+      small(ng-show='!vm.isAdmin && (windowWidth > 850 || windowWidth < 799)')
         a(href='tel:+74957668887') +7(495)766-888-7
 
-    md-button.tool-button(
+    md-button.tool-button.hidden-tight(
     ng-repeat='btn in vm.buttons track by btn.sref'
     ui-sref='{{btn.sref}}'
     ui-sref-active='md-primary'
-    ng-if='!vm.breakpoint'
     ) {{ btn.label }}
 
-    md-fab-speed-dial.md-scale.fab-menu(
+    md-fab-speed-dial.md-scale.fab-menu.shown-tight(
     md-direction='down'
-    ng-if='vm.breakpoint'
     )
       md-fab-trigger
         md-button.md-fab.md-mini.md-icon-button.md-primary.tool-button(aria-label='menu')
@@ -29,10 +27,9 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
         ui-sref-active='md-primary'
         ) {{ fab.label }}
 
-    span(flex='5' ng-if='!vm.breakpoint')
+    span.hidden-tight(flex='5')
 
-    md-button.md-fab.md-icon-button.md-mini(
-    ng-if='!vm.breakpoint'
+    md-button.md-fab.md-icon-button.md-mini.hidden-tight(
     ng-click='vm.loginBtnClick()'
     aria-label='login-button'
     ng-disabled='!!vm.settingUser'
