@@ -35,7 +35,7 @@
             td.hide-sm.hide-xs(md-cell) {{article.packageRel}}
             td.prevent-clicks(md-cell)
 
-              md-button.mini-fab(
+              md-button.mini-fab.default-button(
               aria-label="Добавить в корзину"
               ng-click="vm.addToCart(article)"
               ng-if='!article.inCart'

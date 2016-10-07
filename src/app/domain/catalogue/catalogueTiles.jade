@@ -46,8 +46,8 @@ ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
 
                 md-button.micro-fab(ng-click='vm.plusOne(article)') +
 
-          md-card-actions(ng-if='!article.inCart')
-            md-button.md-fab.md-mini.md-icon-button(
+          md-card-actions.not-in-cart(ng-if='!article.inCart')
+            md-button.md-fab.md-mini.md-icon-button.default-button(
             aria-label="Добавить в корзину"
             ng-click="vm.addToCart(article)"
             )
