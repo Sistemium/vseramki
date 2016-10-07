@@ -160,7 +160,9 @@
 
     function checkForDuplicates() {
 
-      var filter = _.pick(vm.baguette, keys);
+      var filter = {};
+
+      _.each(keys, key => filter[key] = vm.baguette[key] || null);
 
       Baguette.findAll(filter, {bypassCache: true, cacheResponse: false})
         .then(function (data) {
