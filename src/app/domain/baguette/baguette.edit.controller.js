@@ -120,10 +120,9 @@
         var isDuplicate = _.find(vm.baguetteColours, colourId);
 
         if (!isDuplicate) {
-          isDuplicate = BaguetteColour.createInstance({
+          vm.baguetteColours.push(BaguetteColour.createInstance({
             colourId: vm.extraBaguetteColourId
-          });
-          vm.baguetteColours.push(isDuplicate);
+          }));
         }
 
       }
