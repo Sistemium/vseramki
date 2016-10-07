@@ -88,7 +88,7 @@ readonly='true'
 )
   md-chip-template
     span {{$chip.colour.name}}
-    md-button.micro-fab(ng-click='vm.save()') -
+    md-button.micro-fab(ng-click='vm.deleteColour($chip)') -
 
 
 input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
