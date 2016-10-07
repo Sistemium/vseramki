@@ -8,7 +8,7 @@ form {
     padding-left: 0;
   }
 
-  &.wide .form-controls > *, .form-controls > .wide, .form-controls.wide > * {
+  .wide .form-controls > *, &.wide .form-controls > *, .form-controls > .wide, .form-controls.wide > * {
 
     width: $input-wide-width;
     min-width: $input-wide-width - 50;
