@@ -113,7 +113,7 @@
       changeBaguette: function (bag) {
         var newState = $state.current.name;
 
-        newState = newState.replace(/\.edit$/,'')  + '.edit';
+        newState = newState.replace(/\.(edit|create)$/,'')  + '.edit';
 
         $state.go(newState, {id: bag.id});
       },
