@@ -37,10 +37,10 @@
       quit: () => $state.go('^'),
 
       showImageDialog: ImageHelper.mdDialogHelper(
-        function (imsImg, id) {
+        function (imsImg) {
           BaguetteImage.create(
             angular.extend(imsImg, {
-              baguetteId: id
+              baguetteId: vm.baguette.id
             }));
         })
 
