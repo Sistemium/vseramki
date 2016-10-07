@@ -54,13 +54,21 @@
     function setButtons(isAdmin, isLoggedIn) {
 
       vm.navs = [
-        {
-          sref: 'home',
-          label: 'Главная'
-        },
+        // {
+        //   sref: 'home',
+        //   label: 'Главная'
+        // },
         {
           sref: 'catalogue',
-          label: 'Рамки'
+          label: 'Каталог'
+        },
+        {
+          sref: 'info',
+          label: 'Контакты'
+        },
+        {
+          sref: 'delivery',
+          label: 'Доставка'
         }
       ];
 
@@ -78,6 +86,7 @@
       });
 
       vm.buttons = _.filter(vm.navs, nav => !nav.fabOnly);
+      vm.isAdmin = isAdmin;
 
     }
 

@@ -2,22 +2,116 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('ItemController', ItemController)
-  ;
-
-  function ItemController($filter, Schema, ArticleImage, $scope, $state, ToastHelper, ImageHelper, AuthHelper, AlertHelper) {
-
-    var Article = Schema.model('Article');
-    var Cart = Schema.model('Cart');
-    // var Colour = Schema.model('Colour');
-    // var Material = Schema.model('Material');
-    // var FrameSize = Schema.model('FrameSize');
-    var BaguetteImage = Schema.model('BaguetteImage');
+  function ItemController($filter, $scope, $state, Schema, ToastHelper, ImageHelper, AuthHelper, AlertHelper) {
 
     var vm = this;
+
+    var {
+      Article,
+      ArticleImage,
+      Cart,
+      BaguetteImage
+    } = Schema.models();
+
     var numberFilter = $filter('number');
+
+    var stateFilter = {
+      articleId: $state.params.id
+    };
+
+    _.assign(vm, {
+
+      uploading: true,
+      imageClick,
+      deletePhoto,
+      minusOne,
+      plusOne,
+      onBlur,
+      onCartChange,
+      onThumbnailClick,
+
+      currentImageHover: {},
+      addToCart: Cart.addToCart,
+      article: '',
+      isRootState: true,
+      isAdmin: AuthHelper.isAdmin(),
+
+      minThreshold: Article.minThreshold(),
+      middleThreshold1: Math.round(Article.maxThreshold() / 4),
+      middleThreshold2: Math.round(Article.maxThreshold() / 2),
+      maxThreshold: Article.maxThreshold(),
+
+      showImageDialog: ImageHelper.mdDialogHelper(
+        imsImg => ArticleImage.create(_.assign(imsImg, {articleId: vm.article.id}))
+      ),
+
+      clearCart: function () {
+        vm.article.inCart.count = 0;
+        minusOne(vm.article);
+      },
+
+      editFrame: () => $state.go($state.current.name + '.edit', {id: vm.article.id}),
+      addFrame: () => $state.go('catalogue.' + $state.current.name.split('.')[1] + '.create'),
+      deleteFrame,
+
+      previewClick: () => $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
+
+    }, stateFilter);
+
+
+    /*
+
+     Init
+
+     */
+
+    Article.findAll({limit: 1000})
+      .then(function (data) {
+        vm.allArt = data;
+      });
+
+
+    Article.find($state.params.id)
+      .then(article => {
+
+        vm.article = article;
+
+        if (vm.article) {
+
+          setPrices();
+
+          var baguetteImageFilter = {
+            baguetteId: vm.article.baguetteId
+          };
+
+          ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', mergeImages);
+          BaguetteImage.bindAll(baguetteImageFilter, $scope, 'vm.baguetteImages', mergeImages);
+
+          ArticleImage.findAll(stateFilter);
+          BaguetteImage.findAll(baguetteImageFilter);
+
+        }
+
+      });
+
+    /*
+
+     Listeners
+
+     */
+
+
+    $scope.$on('$stateChangeSuccess', function (event, to) {
+      vm.isRootState = /(^|\.)item$/.test(to.name);
+    });
+
+    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
+
+    /*
+
+    Functions
+
+     */
 
     function recalcTotals() {
       Cart.recalcTotals(vm);
@@ -26,13 +120,26 @@
       }
     }
 
-    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
+    function deleteFrame($event) {
 
-    vm.isAdmin = AuthHelper.isAdmin();
+      var frameId = vm.article.id;
 
-    var stateFilter = {
-      articleId: $state.params.id
-    };
+      var promise = AlertHelper.showConfirm($event);
+
+      promise.then(function (response) {
+        if (response) {
+          Article.destroy(frameId).then(function (frameId) {
+            if (frameId) {
+              ToastHelper.showToast('Рамка удалена', true);
+              $state.go('catalogue')
+            }
+          }).catch(function () {
+            ToastHelper.showToast('Ошибка. Рамка не удалена', false);
+          });
+        }
+      });
+
+    }
 
     function minusOne(item) {
 
@@ -70,34 +177,6 @@
       vm.currentImage = _.first(vm.images);
     }
 
-    Article.findAll({limit: 100})
-      .then(function (data) {
-        vm.allArt = data;
-      });
-
-
-    Article.find($state.params.id).then(function (article) {
-      vm.article = article;
-
-      if (vm.article) {
-
-        setPrices();
-
-        var baguetteImageFilter = {
-          baguetteId: vm.article.baguetteId
-        };
-
-        ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', mergeImages);
-        BaguetteImage.bindAll(baguetteImageFilter, $scope, 'vm.baguetteImages', mergeImages);
-
-        ArticleImage.findAll(stateFilter);
-        BaguetteImage.findAll(baguetteImageFilter);
-
-      }
-
-    });
-
-
     function imageClick(item) {
       vm.clickedImage = item;
     }
@@ -108,7 +187,7 @@
 
     function setPrices() {
 
-      var discount = 100 - 100 * vm.article.discountedPrice(vm.cartSubTotal)/vm.article.highPrice;
+      var discount = 100 - 100 * vm.article.discountedPrice(vm.cartSubTotal) / vm.article.highPrice;
 
       vm.prices = [
         {
@@ -122,28 +201,28 @@
         },
         {
           label: 'До',
-          from: numberFilter(vm.minThreshold,0),
+          from: numberFilter(vm.minThreshold, 0),
           value: vm.article.highPrice,
           ord: vm.minThreshold,
           id: 2
         },
         {
           label: 'От',
-          from: numberFilter(vm.middleThreshold1,0),
+          from: numberFilter(vm.middleThreshold1, 0),
           value: vm.article.discountedPrice(vm.middleThreshold1),
           ord: vm.middleThreshold1,
           id: 3
         },
         {
           label: 'От',
-          from: numberFilter(vm.middleThreshold2,0),
+          from: numberFilter(vm.middleThreshold2, 0),
           value: vm.article.discountedPrice(vm.middleThreshold2),
           ord: vm.middleThreshold2,
           id: 4
         },
         {
           label: 'От',
-          from: numberFilter(vm.maxThreshold,0),
+          from: numberFilter(vm.maxThreshold, 0),
           value: vm.article.discountedPrice(vm.maxThreshold),
           ord: vm.maxThreshold,
           id: 5
@@ -152,11 +231,11 @@
 
     }
 
-    function onThumbnailHover (newImg) {
+    function onThumbnailClick(i, newImg) {
 
-      var newId = _.get(newImg,'id');
+      var newId = _.get(newImg, 'id');
 
-      if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage,'id')) {
+      if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage, 'id')) {
 
         vm.currentImageLoading = newId;
 
@@ -168,75 +247,11 @@
 
     }
 
-    angular.extend(vm, {
-
-      uploading: true,
-      imageClick,
-      deletePhoto,
-      minusOne,
-      plusOne,
-      onBlur,
-      onCartChange,
-      onThumbnailHover,
-
-      currentImageHover: {},
-      addToCart: Cart.addToCart,
-      article: '',
-      isRootState: true,
-
-      minThreshold: Article.minThreshold(),
-      middleThreshold1: Math.round(Article.maxThreshold()/4),
-      middleThreshold2: Math.round(Article.maxThreshold()/2),
-      maxThreshold: Article.maxThreshold(),
-
-      showImageDialog: ImageHelper.mdDialogHelper(
-        function (imsImg) {
-          ArticleImage.create(
-            angular.extend(imsImg, {
-              articleId: vm.article.id
-            }));
-        }),
-
-      clearCart: function () {
-        vm.article.inCart.count = 0;
-        minusOne(vm.article);
-      },
-
-      editFrame: function () {
-        $state.go('catalogue.item.edit', {id: vm.article.id});
-      },
-
-      addFrame: () => $state.go('catalogue.add'),
-
-      deleteFrame: function ($event) {
-
-        var frameId = vm.article.id;
-
-        var promise = AlertHelper.showConfirm($event);
-
-        promise.then(function (response) {
-          if (response) {
-            Article.destroy(frameId).then(function (frameId) {
-              if (frameId) {
-                ToastHelper.showToast('Рамка удалена', true);
-                $state.go('catalogue')
-              }
-            }).catch(function () {
-              ToastHelper.showToast('Ошибка. Рамка не удалена', false);
-            });
-          }
-        });
-
-      },
-
-      previewClick: () => $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
-
-    }, stateFilter);
-
-    $scope.$on('$stateChangeSuccess', function (event, to) {
-      vm.isRootState = /(^|\.)item$/.test(to.name);
-    });
-
   }
+
+  angular
+    .module('vseramki')
+    .controller('ItemController', ItemController);
+
 
 }());

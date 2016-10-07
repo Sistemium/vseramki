@@ -12,13 +12,13 @@
     var children = [{
       name: 'edit',
       url: '/edit/:id',
-      templateUrl: 'app/domain/baguette/baguetteEdit.html',
+      templateUrl: 'app/domain/baguette/editBaguette.html',
       controller: 'BaguetteEditController',
       controllerAs: 'vm'
     }, {
       name: 'create',
       url: '/create',
-      templateUrl: 'app/domain/baguette/baguetteCreate.html',
+      templateUrl: 'app/domain/baguette/editBaguette.html',
       controller: 'BaguetteEditController',
       controllerAs: 'vm'
     }];
@@ -30,10 +30,8 @@
         name: 'baguettes',
         url: '/baguettes',
         templateUrl: 'app/domain/baguette/baguettes.html',
-
         controller: 'BaguettesController',
         controllerAs: 'vm',
-
         defaultChild: 'table',
 
         data: {
@@ -50,8 +48,6 @@
             name: 'table',
             url: '/table',
             templateUrl: 'app/domain/baguette/baguetteTable.html',
-            // controller: 'BaguettesController',
-            // controllerAs: 'vm',
             children: angular.copy(children)
           }
         ]

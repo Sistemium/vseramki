@@ -2,22 +2,41 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('CartController', CartController)
-  ;
-
-  function CartController(Cart, Article, $scope, ArticleImage, $state, Baguette, Schema, AlertHelper) {
+  function CartController($scope, $state, Schema, AlertHelper) {
 
     var vm = this;
     var stateParam = [];
-    var BaguetteImage = Schema.model('BaguetteImage');
 
-    Cart.bindAll({}, $scope, 'vm.data', refreshPrice);
+    var {
+      Article,
+      ArticleImage,
+      Baguette,
+      BaguetteImage,
+      Cart
+    } = Schema.models();
+
+    _.assign(vm, {
+
+      clearCart,
+      clearItem,
+      saveItem,
+      plusOne,
+      minusOne,
+      itemClick
+
+    });
+
+    /*
+
+     Init
+
+     */
 
     Baguette.findAll();
     BaguetteImage.findAll();
     ArticleImage.findAll();
+    Article.findAll({limit: 1000})
+      .then(refreshPrice);
 
     Cart.findAll().then(function (carts) {
 
@@ -31,9 +50,22 @@
 
     });
 
+    /*
+
+     Listeners
+
+     */
+
+    Cart.bindAll({}, $scope, 'vm.data', refreshPrice);
+
+    /*
+
+    Functions
+
+     */
+
     function refreshPrice() {
-      vm.cartSubTotal = Cart.orderSubTotal();
-      vm.cartTotal = Cart.orderTotal();
+      Cart.recalcTotals(vm);
     }
 
     function clearCart($event) {
@@ -42,7 +74,7 @@
     }
 
     function itemClick(item) {
-      $state.go('catalogue.item', {id: item.articleId});
+      $state.go('catalogue.table.item', {id: item.articleId});
     }
 
     function clearItem(item) {
@@ -64,20 +96,16 @@
       item.count--;
 
       if (item.count < 1) {
-        item.count = 1;
+        return Cart.destroy(item);
       }
       saveItem();
     }
 
-    angular.extend(vm, {
-      clearCart,
-      clearItem,
-      saveItem,
-      plusOne,
-      minusOne,
-      itemClick
-    });
-
   }
+
+  angular
+    .module('vseramki')
+    .controller('CartController', CartController);
+
 
 }());

@@ -1,0 +1,23 @@
+@import "_vars";
+
+md-sidenav {
+
+  max-width: 300px;
+
+  @media (max-width: $layout-breakpoint-tight) {
+
+    max-width: 280px;
+
+    &.md-whiteframe-1dp, .md-whiteframe-1dp {
+      box-shadow: none;
+      border-right: solid 1px $gray-borders-color;
+      padding: 0;
+    }
+
+  }
+
+  .header {
+    margin: 5px 0;
+  }
+
+}

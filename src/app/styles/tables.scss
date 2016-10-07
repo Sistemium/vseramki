@@ -1,3 +1,5 @@
+@import "_vars";
+
 .md-padding > md-table-container > table.md-table th.md-column {
   font-size: 16px;
 }
@@ -6,6 +8,49 @@ tr {
   height: 50px;
 }
 
-table.md-table td.md-cell, table.md-table th.md-column {
-  text-align: center;
+
+table.md-table {
+
+  th.md-column {
+    text-align: center;
+  }
+
+  td.md-cell {
+
+    text-align: center;
+
+    &.text-left{
+      text-align: left;
+    }
+
+    &.text-right{
+      text-align: right;
+    }
+
+  }
+
+}
+
+
+table.md-table {
+
+  tr {
+    .md-cell, .md-column {
+      padding: 0 5px !important;
+
+    }
+    td.md-checkbox-cell, th.md-checkbox-column {
+      padding: 0 5px 0 15px !important;
+    }
+  }
+
+}
+
+md-table-container {
+  > h1, > h2, > h3 {
+
+    margin-right: $margin-default;
+    margin-left: $margin-default;
+
+  }
 }

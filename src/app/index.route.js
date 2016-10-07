@@ -13,10 +13,10 @@
         url: '/?access-token',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
-        controllerAs: 'main'
+        controllerAs: 'vm'
       });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('catalogue');
   }
 
 })();

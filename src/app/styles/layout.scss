@@ -21,6 +21,10 @@
   margin-top: $margin-default;
 }
 
+.margin-auto {
+  margin: auto;
+}
+
 .no-padding {
   padding: 0 !important;
 }
@@ -52,6 +56,10 @@
 
 .height-100 {
   height: 100%;
+}
+
+.width-100 {
+  width: 100%;
 }
 
 .scroll-y {
@@ -102,7 +110,6 @@ md-dialog {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  cursor: default;
 }
 
 .vertical-divider {

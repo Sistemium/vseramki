@@ -1,8 +1,22 @@
+@import "_vars";
+
 md-card {
   md-card-title {
     padding-top: 0;
     padding-bottom: 0;
     margin-bottom: auto;
+  }
+
+  md-card-content.catalogue-tile {
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+      color: $primary-button-background-color;
+      .gray, .title, .title > * {
+        color: $primary-button-background-color;
+      }
+    }
   }
 
   md-card-actions md-card-icon-actions {
@@ -12,4 +26,24 @@ md-card {
   //&.vs-repeat-after-content, &.vs-repeat-before-content {
   //  padding: 0;
   //}
+
+}
+
+.md-card-corner {
+  text-align: right;
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  font-size: smaller;
+  > * {
+    color: #808080;
+    padding: 4px 6px;
+    border: solid 1px rgba(0,0,0,0.12);
+    border-top: none;
+    border-right: none;
+  }
+  label {
+    //padding-right: 0;
+    border-bottom-left-radius: 6px;
+  }
 }

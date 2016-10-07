@@ -1,27 +1,6 @@
-.view-mode-tool{
+@import "_vars";
 
-  .header {
-    width: 160px;
-  }
-
-  .options {
-    display: flex;
-    margin-top: 3px;
-  }
-
-}
-
-.fixed-toolbar {
-  position: fixed !important;
-  background: white;
-}
-
-md-toolbar > .fixed-toolbar {
-  min-width: 56px !important;
-  height: 56px !important;
-}
-
-@media (max-width: 799px) {
+@media (max-width: $layout-breakpoint-tight) {
   md-toolbar {
     .md-toolbar-tools {
       padding: 6px;

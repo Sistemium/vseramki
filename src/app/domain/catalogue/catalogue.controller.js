@@ -2,29 +2,67 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('CatalogueController', CatalogueController)
-  ;
-
-  function CatalogueController($scope, Article, Cart, Schema, ArticleImage, $q, $state, Baguette, VSHelper, AuthHelper) {
-
-    var FrameSize = Schema.model('FrameSize');
-    var Brand = Schema.model('Brand');
-    var Material = Schema.model('Material');
-    var Colour = Schema.model('Colour');
-    var BaguetteImage = Schema.model('BaguetteImage');
+  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper) {
 
     var vm = this;
-    var groupSize = 3;
 
-    vm.isAdmin = AuthHelper.isAdmin();
+    var {
+      Article,
+      Baguette,
+      Cart,
+      ArticleImage,
+      FrameSize,
+      Brand,
+      Material,
+      Colour,
+      BaguetteImage
+    } = Schema.models();
+
+    var chunkSize = 3;
+
+    angular.extend(vm, {
+
+      rootState: 'catalogue',
+      rows: [],
+      rowsFlex: 33,
+      articleFilter: {},
+      currentFilter: {},
+      filterLength: false,
+      selected: [],
+
+      pagination: TableHelper.pagination($scope),
+      isAdmin: AuthHelper.isAdmin(),
+      onPaginate: TableHelper.setPagination,
+
+      plusOne,
+      minusOne,
+      addToCart: Cart.addToCart,
+      gotoItemView: onClickWithPrevent(gotoItemView),
+
+      onBlur,
+      onCartChange,
+      filterOptionClick,
+      resetFilters,
+      delCurrFilter,
+
+      changeView: to => $state.go(to),
+      goToCreateFrame,
+
+      changeFrame: function (frame) {
+        var newState = vm.currentState === 'create' ? '^.item' : $state.current.name;
+        $state.go(newState, {id: frame.id});
+      }
+
+    });
+
+    /*
+
+     Init
+
+     */
+
 
     Cart.findAll();
-
-    function recalcTotals() {
-      Cart.recalcTotals(vm);
-    }
 
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
 
@@ -40,6 +78,90 @@
       .then(function (data) {
         vm.images = data;
       });
+
+    Article.findAll({limit: 1000})
+      .then(() => {
+
+        return $q.all([
+          Colour.findAll(),
+          Material.findAll(),
+          FrameSize.findAll(),
+          Brand.findAll()
+        ]);
+
+      })
+      .then(() => {
+        recalcTotals();
+        vm.ready = true;
+        filterArticles();
+      });
+
+
+    /*
+
+     Listeners
+
+     */
+
+    VSHelper.watchForGroupSize($scope, 300, 270, setChunks);
+
+    $scope.$watch('vm.articleFilter', filterArticles);
+
+    $scope.$watch('vm.search', () => {
+      filterArticles();
+    });
+
+    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
+      vm.disableAddFrame = toState.url === '/add';
+      vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
+      vm.currentItemId = toParams.id;
+    });
+
+
+    /*
+
+     Functions
+
+     */
+
+    function goToCreateFrame (parent) {
+
+      var re = new RegExp(`${vm.rootState}\.([^.]+)`);
+      var currentState = parent || _.last($state.current.name.match(re));
+      $state.go(`${vm.rootState}.${currentState}.create`);
+
+    }
+
+    function onClickWithPrevent(fn) {
+      return function (item, event) {
+        if (_.get(event, 'defaultPrevented')) {
+          return;
+        }
+        fn(item);
+      }
+    }
+
+    function gotoItemView(article) {
+      $state.go($state.current.name + '.item', {id: article.id});
+    }
+
+    function setChunks(nv) {
+      chunkSize = nv;
+      vm.rowsFlex = nv > 1 ? Math.round(100 / (chunkSize + 1)) : 100;
+      vm.rows = _.chunk(vm.articles, nv);
+    }
+
+    function rebind(filter) {
+      if (vm.unbind) {
+        vm.unbind();
+      }
+      vm.unbind = Article.bindAll(filter, $scope, 'vm.articles', () => setChunks(chunkSize));
+    }
+
+    function recalcTotals() {
+      Cart.recalcTotals(vm);
+    }
 
     function plusOne(item) {
       var cart = item.inCart;
@@ -69,19 +191,37 @@
       }
     }
 
+    function makeJsFilter(filter) {
+
+      var f = filter || vm.articleFilter;
+      var jsFilter = f ? {
+        where: _.mapValues(f, v => ({'==': v}))
+      } : {};
+
+      if (vm.search) {
+        _.set(jsFilter, 'where.name', {
+          'likei': `%${vm.search}%`
+        });
+      }
+      return jsFilter;
+
+    }
+
     function filterArticles(filter) {
 
       var f = filter || vm.articleFilter;
+      var jsFilter = makeJsFilter(f);
 
-      vm.articles = Article.filter(f);
-      vm.rows = _.chunk(vm.articles, groupSize);
+      rebind(jsFilter);
+
+      vm.rows = _.chunk(vm.articles, chunkSize);
       vm.filterLength = !!Object.keys(f).length;
 
       function getVisibleBy(prop) {
 
-        var propFilter = _.pickBy(f, function (val, key) {
+        var propFilter = makeJsFilter(_.pickBy(f, function (val, key) {
           return key !== prop;
-        });
+        }));
 
         var articles = Article.filter(propFilter);
 
@@ -106,6 +246,7 @@
 
     function resetFilters() {
       vm.articleFilter = {};
+      vm.search = '';
       vm.currentFilter = {};
     }
 
@@ -133,70 +274,10 @@
 
     }
 
-    angular.extend(vm, {
-      rows: [],
-      rowsFlex: 33,
-      articleFilter: {},
-      currentFilter: {},
-      filterLength: false,
-
-      plusOne,
-      minusOne,
-      onCartChange,
-      onBlur,
-      filterOptionClick,
-      resetFilters,
-      delCurrFilter,
-      addToCart: Cart.addToCart,
-
-      goToCreateFrame: function () {
-        $state.go('catalogue.add');
-      },
-
-      changeFrame: function (frame) {
-        $state.go('catalogue.item', {id: frame.id});
-      }
-
-    });
-
-    Article.findAll({limit: 10})
-      .then(function (data) {
-        vm.articles = data;
-        vm.rows = _.chunk(data, groupSize);
-        vm.ready = true;
-        vm.total = Math.ceil(data.length / vm.pageSize);
-
-        $q.all([
-          Colour.findAll(),
-          Material.findAll(),
-          FrameSize.findAll(),
-          Brand.findAll()
-        ]).then(function () {
-          filterArticles();
-        });
-
-      });
-
-    Article.bindAll({}, $scope, 'vm.articles', () => VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
-      groupSize = nv;
-      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
-      vm.rows = _.chunk(vm.articles, nv);
-    }));
-
-    VSHelper.watchForGroupSize($scope, 345, 270, function (nv) {
-      groupSize = nv;
-      vm.rowsFlex = nv > 1 ? Math.round(100 / (groupSize + 1)) : 100;
-      vm.rows = _.chunk(vm.articles, nv);
-    });
-
-    $scope.$watch('vm.articleFilter', filterArticles);
-
-    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-      vm.disableAddFrame = toState.url === '/add';
-      vm.isRootState = /^catalogue$/.test(toState.name);
-      vm.currentItemId = toParams.id;
-    });
-
   }
+
+  angular
+    .module('vseramki')
+    .controller('CatalogueController', CatalogueController);
 
 }());

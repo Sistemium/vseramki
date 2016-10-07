@@ -1,6 +1,6 @@
 md-button.md-fab.md-mini.micro-square(
 ng-click='vm.clearFilter()' ng-if='vm.currentOption'
-style='margin-left: 4px; margin-right: 0;'
+style='margin: 0 0 0 4px;'
 )
   i.material-icons.mini clear
 
@@ -12,6 +12,7 @@ md-menu(md-offset='20 0')
   )
     span.label {{vm.propertyLabel}}:
     = ' '
+    span.label(ng-if='!vm.options.length') Нет вариантов
     span.label(ng-if='vm.options.length > 1')
       span.active {{vm.currentOption.name}}
       span(ng-if='vm.currentOption.name') &nbsp;(из

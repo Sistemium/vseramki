@@ -1,0 +1,73 @@
+h3 Контактные данные
+
+.form-controls(layout='column' layout-align='start center')
+
+  md-input-container
+    label Телефон
+      =' '
+      span.required-field-asterisk *
+    input(
+    type='text'
+    ng-model='vm.checkout.phone'
+    required
+    name='shippingPhone'
+    input-clear='black'
+    )
+    div(ng-messages="checkoutForm.shippingPhone.$error")
+      div(ng-message="required") Поле не может быть пустым
+
+  md-input-container
+    label E-mail
+      =' '
+      span.required-field-asterisk *
+    input(
+    type='text'
+    ng-model='vm.checkout.email'
+    required
+    name='shippingEmail'
+    input-clear='black'
+    )
+    div(ng-messages="checkoutForm.shippingEmail.$error")
+      div(ng-message="required") Поле не может быть пустым
+
+  md-input-container
+    label Контактное лицо
+      =' '
+      span.required-field-asterisk *
+    input(
+    type='text'
+    ng-model='vm.checkout.contact'
+    required
+    name='shippingPerson'
+    input-clear='black'
+    )
+    div(ng-messages="checkoutForm.shippingPerson.$error")
+      div(ng-message="required") Поле не может быть пустым
+
+  md-input-container
+    label Адрес доставки
+      =' '
+      span.required-field-asterisk *
+    input(
+    type='text'
+    ng-model='vm.checkout.address'
+    required
+    name='shippingAddress'
+    input-clear='black'
+    )
+    div(ng-messages="checkoutForm.shippingAddress.$error")
+      div(ng-message="required") Поле не может быть пустым
+
+  md-input-container
+    label Комментарий
+    textarea(
+    md-maxlength="200" rows="7"
+    ng-model='vm.checkout.comment'
+    name='shippingComment'
+    )
+
+.text-center
+  md-button.width-100.no-margin.md-button.pink-button(
+  type='submit'
+  ng-disabled='checkoutForm.$invalid'
+  ) Завершить оформление

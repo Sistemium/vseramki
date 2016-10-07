@@ -44,12 +44,24 @@
           Material: {
             localField: 'material',
             localKey: 'materialId'
+          },
+          Screening: {
+            localField: 'screening',
+            localKey: 'screeningId'
+          },
+          BackMount: {
+            localField: 'backMount',
+            localKey: 'backMountId'
           }
 
         },
         hasMany: {
           ArticleImage: {
             localField: 'images',
+            foreignKey: 'articleId'
+          },
+          ArticleFrameSize: {
+            localField: 'articleFrameSizes',
             foreignKey: 'articleId'
           }
         }
@@ -71,6 +83,42 @@
           }
 
           return Math.floor(100.0 * (this.highPrice - (this.highPrice - this.lowPrice) * Math.pow(useTotal / totalThreshold, 2))) / 100.0;
+
+        },
+
+        multiTypeName: function () {
+          if (!this.multiType) {
+            return null;
+          }
+          return this.multiType === 'passePartout' ? 'С паcпарту' : 'Мульти-рамка';
+        },
+
+        articleFrameSizesName: function (frameSizes) {
+
+          var fs = frameSizes || this.articleFrameSizes;
+
+          return _.sortBy(_.filter(_.map(fs, afs => {
+            if (!afs.count) {
+              return '';
+            }
+            return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
+          })))
+            .join(' + ');
+
+        },
+
+        stringName: function (frameSizes) {
+
+          var baguette = this.baguette;
+
+          var res = !baguette ? null :
+            `"${baguette.brand.name}" ${_.get(this, 'frameSize.name') || ''} ${baguette.colour.name}`;
+
+          if (this.multiType) {
+            res += ` ${this.multiTypeName().toLowerCase()} (${this.articleFrameSizesName(frameSizes)})`;
+          }
+
+          return res;
 
         }
       }

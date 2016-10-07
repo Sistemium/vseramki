@@ -53,17 +53,33 @@
         thumbsNum: '@',
         hideOverflow: '=',
         imageHoveredFn: '&',
+        thumbnailClickFn: '&',
         isDeletable: '='
       },
 
       controller: [
         '$scope',
         function ($scope) {
+
+          var vm = this;
+
           $scope.$on('openGallery', function (e, args) {
             $scope.openGallery(args.index);
           });
+
+          vm.thumbnailClick = function (img, index) {
+
+            var fn = $scope.thumbnailClickFn() || $scope.openGallery;
+
+            if (_.isFunction(fn)) {
+              fn(index, img);
+            }
+
+          }
         }
       ],
+
+      controllerAs: 'vm',
 
       templateUrl: function (element, attrs) {
         return attrs.templateUrl || defaults.templateUrl;
@@ -77,9 +93,13 @@
           scope.thumbsNum = 11;
         }
 
+        function querySelectorAll (q){
+          return element[0].querySelectorAll(q);
+        }
+
         var $body = $document.find('body');
-        var $thumbwrapper = angular.element(element[0].querySelectorAll('.ng-thumbnails-wrapper'));
-        var $thumbnails = angular.element(element[0].querySelectorAll('.ng-thumbnails'));
+        var $thumbwrapper;// = angular.element(querySelectorAll('.ng-thumbnails-wrapper'));
+        var $thumbnails;// = angular.element(querySelectorAll('.ng-thumbnails'));
 
         scope.index = 0;
         scope.opened = false;
@@ -124,12 +144,10 @@
           scope.description = scope.images[i].id || '';
         };
 
-
         //var defineClass = function (width, height) {
         //  scope.useWide = false, scope.useTall = false;
         //  width >= height ? scope.useWide = true : scope.useTall = true;
         //};
-
 
         scope.changeImage = function (i) {
           scope.index = i;
@@ -159,7 +177,7 @@
           if (_.isFunction(scope.imageHoveredFn())) {
             scope.imageHoveredFn()(image);
           }
-        }
+        };
 
         scope.openGallery = function (i) {
 
@@ -167,12 +185,17 @@
             scope.index = i;
             showImage(scope.index);
           }
+
           scope.opened = true;
+
           if (scope.hideOverflow) {
             el('body').css({overflow: 'hidden'});
           }
 
           $timeout(function () {
+
+            $thumbwrapper = angular.element(querySelectorAll('.ng-thumbnails-wrapper'));
+            $thumbnails = angular.element(querySelectorAll('.ng-thumbnails'));
 
             var calculatedWidth = calculateThumbsWidth();
             scope.thumbs_width = calculatedWidth.width;
@@ -193,11 +216,15 @@
         };
 
         scope.showAlert = function () {
+          // TODO: really show alert
+          // TODO: model can be ArticleImage or BaguetteImage
           model.destroy(scope.images[scope.index]);
           scope.closeGallery();
         };
 
         scope.deletePhoto = function (id, index) {
+
+          console.log(id, index);
 
           if (scope.images.length == 1) {
             model.destroy(id);
@@ -214,7 +241,6 @@
           }
 
         };
-
 
         $body.bind('keydown', function (event) {
           if (!scope.opened) {
@@ -253,7 +279,7 @@
         var smartScroll = function (index) {
           $timeout(function () {
 
-            if (!$thumbwrapper[0]) {
+            if (!_.first($thumbwrapper)) {
               return;
             }
 

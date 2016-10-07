@@ -6,22 +6,30 @@
     .module('vseramki')
     .controller('MainController', MainController);
 
-  function MainController(toastr, Auth, $state) {
+  function MainController(toastr, Auth, $state, $timeout) {
 
     var vm = this;
     var accessToken = $state.params ['access-token'];
 
-    if (accessToken) {
-      Auth.login(accessToken, function (err) {
-        if (!err) {
-          $state.go('home', false, {inherit: false});
-        } else {
-          toastr.error('Ошибка авторизации');
-        }
-      });
-    }
-
     _.assign(vm, {});
+
+    if (accessToken) {
+      vm.busy = Auth.login(accessToken)
+        .then(() => {
+          return $timeout(1000)
+            .then(()=>{
+              $state.go('catalogue', true, {inherit: false});
+            });
+        })
+        .catch(err => {
+          vm.ready = true;
+          toastr.error('Ошибка авторизации', angular.toJson(err));
+          console.error(err);
+        });
+    } else {
+      vm.ready = true;
+      $state.go('catalogue');
+    }
 
   }
 

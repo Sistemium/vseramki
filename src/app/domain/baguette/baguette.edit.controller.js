@@ -2,11 +2,7 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('BaguetteEditController', BaguetteEditController);
-
-  function BaguetteEditController(Schema, Baguette, $scope, $state, $window, ImageHelper, ToastHelper) {
+  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper) {
 
     var vm = this;
 
@@ -17,57 +13,24 @@
     var Colour = Schema.model('Colour');
     var BaguetteImage = Schema.model('BaguetteImage');
 
-    vm.id = $state.params.id;
+    _.assign(vm, {
 
-    vm.unique = true;
-
-    Colour.bindAll(false, $scope, 'vm.colours');
-    Material.bindAll(false, $scope, 'vm.materials');
-    Brand.bindAll(false, $scope, 'vm.brands');
-    BaguetteImage.bindAll({
-      baguetteId: vm.id
-    }, $scope, 'vm.baguetteImages');
-
-    if (vm.id) {
-      Baguette.find(vm.id)
-        .then(function (baguette) {
-          vm.baguette = baguette;
-        });
-    } else {
-      vm.isCreateState = true;
-      vm.baguette = Baguette.createInstance();
-    }
-
-
-    function selectParamsChecker() {
-      return vm.unique && vm.baguette && vm.baguette.colour && vm.baguette.material && vm.baguette.brand && vm.baguette.borderWidth;
-    }
-
-    function hasChanges() {
-      return vm.id && Baguette.hasChanges(vm.id);
-    }
-
-    function cancelChanges() {
-      if (hasChanges()) {
-        return Baguette.revert(vm.baguette);
-      }
-    }
-
-    $scope.$on('$destroy', cancelChanges);
-
-    angular.extend(vm, {
+      id: $state.params.id,
+      unique: true,
 
       attrsSearchMaterial: {},
       attrsSearchColour: {},
       attrsSearchBrand: {},
       selected: [],
       dupMessage: '',
+      saveLabel: 'Сохранить новый багет',
 
-      hasChanges: hasChanges,
-      cancelChanges: cancelChanges,
+      hasChanges,
+      cancelChanges,
+      save,
+      saveClickedOption,
+
       quit: () => $state.go('^'),
-
-      selectParamsChecker: selectParamsChecker,
 
       showImageDialog: ImageHelper.mdDialogHelper(
         function (imsImg, id) {
@@ -75,41 +38,70 @@
             angular.extend(imsImg, {
               baguetteId: id
             }));
-        }),
-
-      createBaguette: function () {
-        Baguette.create(vm.baguette)
-          .then(function () {
-            ToastHelper.showToast('Багет сохранен', true);
-            if (!vm.id) {
-              vm.baguette = Baguette.createInstance();
-            }
-            $scope.widthForm.$setUntouched();
-          })
-          .catch(function (obj) {
-
-            if (obj.status == '500') {
-              ToastHelper.showToast('Ошибка. Багет не сохранен', false, vm);
-            } else {
-              ToastHelper.showToast('Ошибка. Обратитесь в тех. поддержку', false, vm);
-            }
-
-          });
-      },
-
-      saveClickedOption: function () {
-
-        if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand && (hasChanges() || vm.isCreateState)) {
-          checkForDuplicates();
-        }
-
-        if (!vm.id) {
-          $scope.$emit('baguetteRefresh', _.pick(vm.baguette, keys));
-        }
-
-      }
+        })
 
     });
+
+    /*
+
+     Init
+
+     */
+
+    if (vm.id) {
+      Baguette.find(vm.id)
+        .then(function (baguette) {
+          vm.baguette = baguette;
+          vm.saveLabel = 'Сохранить';
+        });
+    } else {
+      vm.isCreateState = true;
+      vm.baguette = Baguette.createInstance();
+    }
+
+    /*
+
+     Listeners
+
+     */
+
+
+    Colour.bindAll(false, $scope, 'vm.colours');
+    Material.bindAll(false, $scope, 'vm.materials');
+    Brand.bindAll(false, $scope, 'vm.brands');
+
+    BaguetteImage.bindAll({
+      baguetteId: vm.id
+    }, $scope, 'vm.baguetteImages');
+
+    $scope.$on('$destroy', cancelChanges);
+
+
+    /*
+
+    Functions
+
+     */
+
+    function selectParamsChecker() {
+      vm.paramsCheck =  vm.unique &&
+        vm.baguette && vm.baguette.colour &&
+        vm.baguette.material &&
+        vm.baguette.brand &&
+        vm.baguette.borderWidth;
+    }
+
+    function hasChanges() {
+      selectParamsChecker();
+      return vm.id ? Baguette.hasChanges(vm.id) : _.get(vm,'attrsForm.$dirty');
+    }
+
+    function cancelChanges() {
+      if (vm.id && hasChanges()) {
+        selectParamsChecker();
+        return Baguette.revert(vm.baguette);
+      }
+    }
 
     function checkForDuplicates() {
 
@@ -124,18 +116,60 @@
             vm.unique = true;
             vm.dupMessage = '';
           }
+          selectParamsChecker();
         });
     }
 
-    vm.inputReady = function () {
+    function save() {
+      Baguette.create(vm.baguette)
+        .then(function () {
+          ToastHelper.showToast('Багет сохранен', true);
+          if (!vm.id) {
+            vm.baguette = Baguette.createInstance();
+          }
+          clearForm();
+        })
+        .catch(function (obj) {
 
-      var elem = angular.element($window.document.getElementById('materialInput'));
-      elem.on('keydown', function (ev) {
-        ev.stopPropagation();
-      });
+          if (obj.status == '500') {
+            ToastHelper.showToast('Ошибка. Багет не сохранен', false, vm);
+          } else {
+            ToastHelper.showToast('Ошибка. Обратитесь в тех. поддержку', false, vm);
+          }
 
-    };
+        });
+    }
+
+    function saveClickedOption() {
+
+      if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand && (hasChanges() || vm.isCreateState)) {
+        checkForDuplicates();
+      }
+
+      if (!vm.id) {
+        $scope.$emit('baguetteRefresh', _.pick(vm.baguette, keys));
+      }
+
+    }
+
+    function clearForm () {
+      if (!vm.id) {
+        vm.baguette = Baguette.createInstance();
+      }
+      vm.dupMessage = false;
+      vm.unique = true;
+      //initArticleFrameSizes();
+      _.result(vm,'attrsForm.$setUntouched');
+      _.result(vm,'attrsForm.$setPristine');
+      selectParamsChecker();
+    }
+
+
 
   }
+
+  angular
+    .module('vseramki')
+    .controller('BaguetteEditController', BaguetteEditController);
 
 }());

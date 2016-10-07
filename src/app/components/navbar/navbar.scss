@@ -1,4 +1,3 @@
-@import "../../styles/_vars.scss";
 
 .top-logo {
   max-height: 36px;
@@ -11,7 +10,6 @@
   }
 }
 
-
 md-toolbar.toolbar-fixed-top.white-background {
   background-color: $toolbar-background-color;
   color: #202020;
@@ -19,22 +17,34 @@ md-toolbar.toolbar-fixed-top.white-background {
 
 .toolbar-fixed-top {
 
-  position: fixed;
+  //position: fixed;
   top: 0;
   z-index: 70;
 
   & + * {
-    margin-top: 64px;
+    //margin-top: 64px;
   }
 
+}
+
+body {
+  //position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 
 .tool-button {
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .26);
   background-color: rgb(250, 250, 250);
-  &.md-button.md-primary, &.md-button.md-primary:hover {
+  &.md-button.md-primary {
     color: rgba(255, 255, 255, 0.87);
     background-color: $primary-button-background-color;
+  }
+  &.md-button.md-primary:hover:not([disabled])  {
+    background-color: $md-fab-tool-hover;
   }
 }
 
@@ -50,7 +60,7 @@ md-toolbar.toolbar-fixed-top.white-background {
       min-height: 56px;
     }
     & + * {
-      margin-top: 56px;
+      //margin-top: 56px;
     }
   }
 }
@@ -70,8 +80,19 @@ md-toolbar.toolbar-fixed-top.white-background {
 }
 
 .fab-menu {
-  position: fixed;
+  position: absolute;
   top: 8px;
-  right: 2px;
-  z-index: 100;
+  right: 0;
+}
+
+@media print {
+  .toolbar-fixed-top {
+
+    .md-toolbar-tools {
+      > div {
+        display: none;
+      }
+    }
+
+  }
 }

@@ -1,26 +1,73 @@
+@import "../../styles/_vars";
+
 .ui-view.article {
 
   .main-photo {
 
-    max-width: 300px;
+    //max-width: 300px;
     min-width: 300px;
 
-    min-height: 420px;
-    max-height: 420px;
+    .preview {
+      min-height: 320px;
 
-    img.preview {
-      max-width: 260px;
-      max-height: 320px;
-      cursor: zoom-in;
+      @media (min-width: 1150px) {
+        min-width: 400px;
+        max-width: 400px;
+      }
+
+      @media (max-width: 1149px) {
+        min-width: 350px;
+        max-width: 350px;
+      }
+
+      @media (max-width: 1059px) {
+        min-width: 300px;
+        max-width: 300px;
+      }
+
+      @media (max-width: 959px) {
+        min-width: 400px;
+        max-width: 400px;
+      }
+
+      @media (max-width: 769px) {
+        min-width: 350px;
+        max-width: 350px;
+      }
+
+      @media (max-width: 709px) {
+        min-width: 300px;
+        max-width: 300px;
+      }
+
+      img {
+        //max-width: 260px;
+        max-height: 320px;
+        cursor: zoom-in;
+      }
     }
+//    max-height: 420px;
 
     .ng-gallery {
-      margin-top: 10px;
+      min-height: 50px;
+      //margin-top: $margin-default;
+      max-width: 300px;
     }
+
+    .property-list {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    //padding-bottom: 16px;
   }
 
   .fixed-bottom-right.admin-buttons > * {
-    margin-bottom: 10px;
+    margin-bottom: $margin-default;
+  }
+
+  #viewport > * {
+    margin: 0 $margin-default;
   }
 
 }

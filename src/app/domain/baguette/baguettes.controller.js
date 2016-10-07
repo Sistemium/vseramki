@@ -7,7 +7,7 @@
     .controller('BaguettesController', BaguettesController)
   ;
 
-  function BaguettesController(Schema, Baguette, AuthHelper, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper) {
+  function BaguettesController(Schema, Baguette, AuthHelper, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper) {
 
     var vm = this;
 
@@ -64,20 +64,10 @@
 
     angular.extend(vm, {
 
+      rootState: 'baguettes',
       selected: [],
-
-      pagination: {
-        labels: {
-          page: 'Страница:',
-          rowsPerPage: 'Кол-во элементов: ',
-          of: 'из'
-        },
-        query: {
-          limit: 10,
-          page: 1
-        },
-        limitOptions: [10, 20, 40, 80]
-      },
+      pagination: TableHelper.pagination(),
+      onPaginate: TableHelper.setPagination,
 
       showImageDialog: ImageHelper.mdDialogHelper(
         function (imsImg, id) {
@@ -132,7 +122,9 @@
       },
 
       goToCreateBaguette: function (parent) {
-        $state.go(`${parent || ''}.create`);
+        var re = new RegExp(`${vm.rootState}\.([^.]+)`);
+        var currentState = parent || _.last($state.current.name.match(re));
+        $state.go(`${vm.rootState}.${currentState}.create`);
       },
 
       backToList: function () {

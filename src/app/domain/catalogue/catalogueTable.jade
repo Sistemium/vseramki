@@ -1,0 +1,73 @@
+.ui-view
+
+  #scroll-main(
+  resize='catalogueTable'
+  ng-style='{height: (catalogueTable.windowHeight - catalogueTable.offsetTop - 57)+"px"}'
+  )
+    md-table-container(ng-if='vm.articles.length')
+      table(md-table)
+        thead(md-head md-order='filterBy')
+          th.hide-sm.hide-xs(md-column) Фото
+          th(md-column md-order-by='brand.name') Бренд
+          th(md-column md-order-by='frameSize.name') Размер
+          th(md-column md-order-by='colour.name') Цвет
+          th.hide-sm.hide-xs(md-column md-order-by='lowPrice') Цена опт
+          th(md-column md-order-by='highPrice') Цена розн.
+          th.hide-sm.hide-xs(md-column md-order-by='packageRel') Шт. в кор.
+          th(md-column md-order-by='inCart.count') Заказ, шт.
+          //th(md-column md-order-by='pieceWeight') Вес (кг.)
+
+        tbody.clickable(md-body)
+          tr(
+          md-row
+          ng-repeat='article in vm.articles |orderBy: filterBy track by article.id'
+          md-select='article'
+          md-select-id='id'
+          ng-click='vm.gotoItemView(article, $event)'
+          )
+            td.hide-sm.hide-xs(md-cell)
+              img.thumbnail(ng-src='{{article.activePhoto()}}')
+            td(md-cell) {{article.brand.name}}
+            td(md-cell) {{article.frameSize.name}}
+            td(md-cell) {{article.colour.name}}
+            td.hide-sm.hide-xs(md-cell) {{article.lowPrice}}
+            td(md-cell) {{article.highPrice}}
+            td.hide-sm.hide-xs(md-cell) {{article.packageRel}}
+            td.prevent-clicks(md-cell)
+
+              md-button.mini-fab(
+              aria-label="Добавить в корзину"
+              ng-click="vm.addToCart(article)"
+              ng-if='!article.inCart'
+              )
+                i.material-icons add_shopping_cart
+
+              .plus-minus(layout='row' layout-align='center center' ng-if='article.inCart')
+                md-button.micro-fab(ng-click='vm.minusOne(article)') -
+
+                md-input-container
+                  input(
+                  aria-label="Количество"
+                  ng-model="article.inCart.count"
+                  type="number"
+                  ng-change="vm.onCartChange(article)"
+                  ng-blur="vm.onBlur(article)"
+                  ng-pattern="vm.pattern"
+                  required
+                  min='0'
+                  step='1'
+                  )
+
+                md-button.micro-fab(ng-click='vm.plusOne(article)') +
+            //td(md-cell) {{article.pieceWeight || 'Не указан'}}
+
+  md-table-pagination(
+  md-limit='vm.pagination.query.limit',
+  md-label='{{vm.pagination.labels}}',
+  md-limit-options='vm.pagination.limitOptions',
+  md-page='vm.pagination.query.page',
+  md-total='{{vm.articles.length}}',
+  md-page-select='!vm.useMobile',
+  md-boundary-links='!vm.useMobile'
+  md-on-paginate='vm.onPaginate'
+  )

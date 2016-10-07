@@ -23,11 +23,11 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <section layout-fill ng-cloak>
+    <!--section layout-fill ng-cloak-->
 
-      <md-content class='height-fix'>
+      <md-content layout-fill>
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
-        <div class="root viewport" ui-view>
+        <div class="root viewport" ui-view resize="root" ng-style="{height: (root.windowHeight - root.offsetTop) + 'px'}">
           <div layout="column" layout-align="center center">
             <h1>Загрузка</h1>
             <md-progress-circular md-diameter="300" md-mode="indeterminate"></md-progress-circular>
@@ -35,7 +35,7 @@
         </div>
       </md-content>
 
-    </section>
+    <!--/section-->
 
       <!-- build:js(src) scripts/vendor.js -->
       <!-- bower:js -->

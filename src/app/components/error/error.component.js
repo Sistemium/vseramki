@@ -19,7 +19,9 @@
 
         vm.close = function () {
           vm.hidden = true;
-        }
+        };
+
+        console.error(vm.errorText || 'No error');
 
       }
 

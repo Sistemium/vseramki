@@ -1,0 +1,27 @@
+md-toolbar.state-bar(ng-if='vm.showIf')
+  .md-toolbar-tools.fixed-toolbar.gray-bottom-border
+
+    .view-mode-tool(layout='row' layout-align='center center')
+      h2.header {{ vm.title }}
+      .options(ng-if='vm.modeOptions')
+        i.material-icons.icon-button(
+        ng-click="vm.changeView('table')"
+        ng-class="vm.currentState == 'table' ? 'icons-button-active' : 'icon-button-disabled'"
+        ) view_headline
+
+        .vertical-divider |
+
+        i.material-icons.icon-button(
+        ng-click="vm.changeView('tiles')"
+        ng-class="vm.currentState == 'tiles' ? 'icons-button-active' : 'icon-button-disabled'"
+        ) view_comfy
+
+    span(flex)
+
+    //.buttons
+    //  md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.addClick()' ng-if='vm.isAdmin')
+    //    i.material-icons add
+
+    //span(flex)
+
+    ng-transclude

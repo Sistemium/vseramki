@@ -1,73 +1,43 @@
-.cart
+state-bar(
+title='Заказ'
+)
+  div(layout='row')
+    md-button.md-button.pink-button.md-raised(
+    ng-if='vm.data.length'
+    ui-sref='checkout'
+    ) Оформить заказ
 
-  div(
+.cart.scroll-y(resize='cart' ng-style='{height: (cart.windowHeight - cart.offsetTop - 61)+"px"}')
+
+  .height-100(
   ng-if='!vm.data.length'
   layout='column'
-  layout-align='space-around center'
-  resize='emptyCart'
-  style='height: {{emptyCart.windowHeight - emptyCart.offsetTop}}px;'
+  layout-align='center center'
   )
+    //.flex
     .emptyCart.md-whiteframe-1dp(ng-if='!vm.data.length')
       div(style='text-align: center') Корзина пуста
       div
         md-button.md-raised.pink-button(ui-sref='catalogue')
           | Перейти в Каталог
+    //.flex
+  ng-include(src="'app/domain/cart/partials/cartTable.html'" ng-if='vm.data.length')
 
-  md-table-container(ng-if='vm.data.length')
-    table(md-table)
-      thead(md-head)
-        tr(md-row)
-          th(md-column) Фото
-          th(md-column) Наименование
-          th(md-column) Количество
-          th(md-column) Цена без скидки
-          th(md-column) Скидка
-          th(md-column) Цена со скидкой
-          th(md-column) Стоимость
-          th(md-column) Удалить
-      tbody(md-body)
-        tr(
-        vr-animate-remove
-        ar-watch='item.count'
-        on-animate-end="vm.itemRemove(item)"
-        md-row
-        md-on-select='logItem'
-        ng-repeat='item in vm.data track by item.id'
-        )
-          td.clickable(md-cell ng-click='vm.itemClick(item)')
-            img.thumbnail(ng-src='{{item.article.activePhoto()}}')
-          td.clickable(md-cell ng-click='vm.itemClick(item)') {{item.article.name}}
-          td(md-cell)
-            .plus-minus(layout-align='start center' layout='row')
-              md-button.micro-fab(ng-click='vm.minusOne(item)') -
-              md-input-container
-                input(aria-label="Количество" ng-model="item.count" type="number" ng-change="vm.saveItem(item)" min='1' step='1')
-              md-button.micro-fab(ng-click='vm.plusOne(item)') +
-          td(md-cell) {{ item.article.highPrice | number: 2 }}&nbsp;₽
-          td(md-cell) {{ (1 - item.article.discountedPrice(vm.cartSubTotal) / item.article.highPrice) * 100 | number: 1}}%
-          td(md-cell) {{ item.article.discountedPrice(vm.cartSubTotal) | number: 2}}&nbsp;₽
-          td(md-cell) {{ item.cost(vm.cartSubTotal) | number: 2}}&nbsp;₽
-          td(md-cell)
-            md-button.md-mini.md-icon-button(ng-click='vm.clearItem(item)' class="slide")
-              i.material-icons.clear-icon-size clear
-
-  .footer.fixed-bottom(ng-show='vm.data.length' layout='row' layout-align='center center')
-    md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab(
-    ng-if='vm.data.length'
-    ng-click='vm.clearCart($event)'
-    )
-      i.material-icons remove_shopping_cart
-    span(flex)
-    .md-margin(layout='row' layout-align='center center')
-      div(layout='column')
-        p.no-margin.text-right
-          span Cкидка {{ (vm.cartSubTotal / vm.cartTotal - 1) * 100 | number: 1 }}%:
-          = ' '
-          span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽
-        p.no-margin.text-right
-          span Итого к оплате:
-          = ' '
-          span.bold(style='min-width: 120px; display: inline-block; text-align: left;') {{vm.cartTotal | number: 2}}&nbsp;₽
-      md-button.md-button.md-fab.md-mini.md-icon-button.pink-button.pink-button-fab
-        i.material-icons chevron_right
-
+.footer.cart(layout='row' layout-align='center center')
+  md-button.md-button.md-fab.md-mini.md-icon-button.default-button(
+  ng-if='vm.data.length'
+  ng-click='vm.clearCart($event)'
+  )
+    i.material-icons remove_shopping_cart
+  span(flex)
+  div(layout='column')
+    p.no-margin.text-right
+      span Итого к оплате:
+      = ' '
+      span.bold(style='min-width: 120px; display: inline-block; text-align: left;')
+        | {{vm.cartTotal | number: 2}}&nbsp;₽
+    p.no-margin.text-right
+      span Cкидка {{ vm.cartDiscount | number: 1 }}%:
+      = ' '
+      span.bold(style='min-width: 120px; display: inline-block; text-align: left;')
+        | {{vm.cartSubTotal - vm.cartTotal | number:2}}&nbsp;₽

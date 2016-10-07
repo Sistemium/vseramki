@@ -13,7 +13,8 @@
       'ngMessages',
       'sistemiumAngularAuth',
       'models',
-      'ui.bootstrap.position'
+      'ui.bootstrap.position',
+      'yaMap'
     ]);
 
 })();

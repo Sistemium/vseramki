@@ -1,0 +1,63 @@
+.main-photo.md-whiteframe-1dp(
+layout='column'
+layout-align='space-between center'
+)
+  .md-card-corner
+    label арт {{ vm.article.code }}
+
+  .text-center.preview(
+  flex
+  layout='column'
+  layout-align='space-between center'
+  )
+    span(flex)
+    md-progress-circular(
+    md-mode="indeterminate"
+    md-diameter='170'
+    ng-if='vm.currentImageLoading'
+    )
+    img(
+    ng-if='!vm.currentImageLoading'
+    ng-src='{{vm.currentImage.smallSrc}}'
+    ng-click='vm.previewClick()'
+    )
+    span(flex)
+
+  h4.text-center.margin-top-bottom
+    div "{{ ::vm.article.brand.name }}" {{ ::vm.article.frameSize.name }} {{ ::vm.article.colour.name }}
+    small.gray {{ ::vm.article.multiTypeName() }}
+
+  ng-gallery(
+  images='vm.images'
+  thumbnail-click-fn='vm.onThumbnailClick'
+  is-deletable='vm.isAdmin'
+  thumbs-num='5'
+  layout='row' layout-align='center center'
+  )
+
+  .property-list.margin-top
+    .property-list-container.flex-5-4
+      .property(ng-if='vm.article.multiType')
+        .property-label Внутренние размеры:
+        .property-value
+          p(ng-repeat='fs in vm.article.articleFrameSizes | orderBy:"fs.frameSize.name" track by fs.id')
+            | {{ fs.count }} * {{ fs.frameSize.name }}
+      .property
+        .property-label Материал багета:
+        .property-value {{vm.article.material.name}}
+      .property
+        .property-label Ширина багета:
+        .property-value {{vm.article.baguette.borderWidth}} мм.
+      .property(ng-if='vm.article.screeningId')
+        .property-label Прозрачная вставка:
+        .property-value {{vm.article.screening.name}}
+      .property(ng-if='vm.article.backMountId')
+        .property-label Крепление задника:
+        .property-value {{vm.article.backMount.name}}
+      .property
+        .property-label Вес:
+        .property-value(ng-class='{gray: !vm.article.pieceWeight}')
+          | {{vm.article.pieceWeight ? vm.article.pieceWeight + ' кг.' : 'Не указан' }}
+      .property
+        .property-label Штук в коробке:
+        .property-value {{vm.article.packageRel}}

@@ -10,11 +10,6 @@
     var vm = this;
 
     vm.buttons = [
-      // {
-      //   url: 'sms/vseramki',
-      //   name: 'Мобильный номер',
-      //   class: 'mobile'
-      // },
       {
         url: 'facebook/vseramki',
         name: 'Facebook',
@@ -41,6 +36,14 @@
         class: 'vk'
       }
     ];
+
+    vm.mobile = [{
+
+      url: 'sms/vseramki',
+      name: 'СМС-пароль',
+      class: 'mobile'
+
+    }];
 
     vm.error = $stateParams.error;
 

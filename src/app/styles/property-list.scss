@@ -36,10 +36,10 @@
   .property {
 
     display: flex;
+    font-size: 14px;
 
     & > * {
       margin: 10px 0;
-      font-size: 14px;
     }
 
     .property-label {
@@ -53,6 +53,9 @@
     .property-value {
       flex: 1;
       margin: auto;
+      p {
+        margin: 5px 0;
+      }
     }
 
   }
