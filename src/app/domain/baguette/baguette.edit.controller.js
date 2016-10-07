@@ -74,7 +74,7 @@
 
     $scope.$watch(() => {
       return _.pick(vm.baguette, keys);
-    },checkForDuplicates, true);
+    }, checkForDuplicates, true);
 
     $scope.$watch('vm.extraBaguetteColourId', addBaguetteColour);
 
@@ -143,7 +143,7 @@
 
       var filter = _.pick(vm.baguette, keys);
 
-      Baguette.findAll(filter, {bypassCache: true})
+      Baguette.findAll(filter, {bypassCache: true, cacheResponse: false})
         .then(function (data) {
 
           _.remove(data, {id: _.get(vm,'baguette.id')});
