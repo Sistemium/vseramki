@@ -57,11 +57,13 @@
         .then(function (baguette) {
           vm.baguette = baguette;
           vm.saveLabel = 'Сохранить';
+          initBaguetteColours();
         });
     } else {
       vm.isCreateState = true;
       vm.baguette = Baguette.createInstance();
     }
+
 
     /*
 
@@ -188,7 +190,6 @@
       vm.dupMessage = false;
       vm.unique = true;
       vm.extraBaguetteColourId = false;
-      //initArticleFrameSizes();
       _.result(vm, 'attrsForm.$setUntouched');
       _.result(vm, 'attrsForm.$setPristine');
       selectParamsChecker();
