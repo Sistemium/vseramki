@@ -58,5 +58,5 @@ readonly='true'
   md-chip-template
     span(ng-if='$chip.count>1') {{ $chip.count }} *&nbsp;
     span(ng-class='{"strike-through gray": !$chip.count}') {{$chip.frameSize.name}}
-    md-button.micro-fab(ng-show='$chip.count>0' ng-click='vm.articleFrameSizeDecrement($chip)') -
+    md-button.micro-fab(ng-show='$chip.count>0' ng-click='vm.articleFrameSizeDecrement($chip)') –
     md-button.micro-fab(ng-click='vm.articleFrameSizeIncrement($chip)') +
