@@ -109,7 +109,13 @@
 
     function hasChanges() {
       selectParamsChecker();
-      return vm.id ? Baguette.hasChanges(vm.id) : _.get(vm, 'attrsForm.$dirty');
+      return !vm.id ?
+        _.get(vm, 'attrsForm.$dirty') :
+        Baguette.hasChanges(vm.id) ||
+          _.find(
+            vm.baguetteColours,
+            item => !item.id || BaguetteColour.hasChanges(item)
+          );
     }
 
     function addBaguetteColour() {
@@ -144,8 +150,11 @@
 
     function cancelChanges() {
       if (vm.id && hasChanges()) {
+
+        Baguette.revert(vm.baguette);
+        _.each(vm.baguette.colours, item => item.id && BaguetteColour.revert(item));
         selectParamsChecker();
-        return Baguette.revert(vm.baguette);
+
       }
     }
 
