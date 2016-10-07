@@ -16,7 +16,7 @@
         hasMany: {
           Baguette: {
             localField: 'baguettes',
-            foreignKey: 'baguetteId'
+            foreignKey: 'surfaceId'
           }
         }
       }
