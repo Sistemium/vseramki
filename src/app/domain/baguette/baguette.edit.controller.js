@@ -181,7 +181,7 @@
     }
 
     function save() {
-      Baguette.create(vm.baguette)
+      return Baguette.create(vm.baguette)
         .then(baguette => {
 
           return $q.all(_.map(vm.baguetteColours, item => {
@@ -190,17 +190,20 @@
             }
             return BaguetteColour.create(_.assign(item, {baguetteId: baguette.id}));
           }));
+
         })
-        .then(function () {
+        .then(() => {
+
           ToastHelper.success('Багет сохранен');
+
           if (!vm.id) {
             vm.baguette = Baguette.createInstance();
           }
+
           clearForm();
+
         })
-        .catch(function () {
-          ToastHelper.error('Ошибка. Багет не сохранен');
-        });
+        .catch(() => ToastHelper.error('Ошибка. Багет не сохранен'));
     }
 
     function clearForm() {
