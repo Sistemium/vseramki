@@ -1,6 +1,6 @@
 md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
-  .md-toolbar-tools
-    a(ui-sref='home' style='padding-top: 4px;' layout='row')
+  .md-toolbar-tools(layout='row' layout-align='space-between center')
+    a(ui-sref='home' style='padding-top: 4px;')
       img.top-logo(ng-src='{{windowWidth < 450 ? "images/logo-230x150.png" : "images/top-logo.jpg"}}')
 
     .margin-left.visible-print-inline(flex)
