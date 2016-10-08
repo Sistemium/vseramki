@@ -10,21 +10,10 @@
   div(layout='row')
 
     md-sidenav.md-sidenav-left.md-whiteframe-1dp(
-    layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
+    layout-padding
+    md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
     ng-if='!vm.isRoot'
+    ng-include="'app/domain/baguette/partials/sidenav.html'"
     )
-      .no-padding(
-      layout='column'
-      resize='baguettesList'
-      style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 15 }}px'
-      )
-
-        md-virtual-repeat-container.scroll-y(flex)
-          .item(
-          md-virtual-repeat='bag in vm.baguettes'
-          ng-class="{'active ': vm.currentItem.id == bag.id }"
-          ng-click='vm.changeBaguette(bag)'
-          )
-            span {{bag.name}}
 
     .ui-view(flex layout='row')
