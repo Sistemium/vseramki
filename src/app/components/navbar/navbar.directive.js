@@ -92,6 +92,9 @@
         vm.navs.push({
           sref: 'baguettes',
           label: 'Багет'
+        },{
+          sref: 'dictionary',
+          label: 'Словари'
         });
       }
 

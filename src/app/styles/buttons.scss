@@ -198,7 +198,7 @@ button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab 
   cursor: pointer;
 }
 
-md-fab-actions {
+md-fab-actions, .viewport {
   .md-button.md-primary {
     &, &.md-raised {
       background-color: $vr-blue-color;
