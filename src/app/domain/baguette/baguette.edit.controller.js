@@ -203,7 +203,7 @@
           ToastHelper.success('Багет сохранен');
 
           if (!vm.id) {
-            vm.baguette = Baguette.createInstance();
+            $state.go('^.edit', {id: vm.baguette.id});
           }
 
           clearForm();
