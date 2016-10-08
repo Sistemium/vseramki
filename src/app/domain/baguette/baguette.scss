@@ -2,6 +2,10 @@
 
 .baguettes {
 
+  .md-sidenav-left {
+    margin: $margin-default-half;
+  }
+
   md-card img.thumbnail {
     width: 200px;
     height: 200px;

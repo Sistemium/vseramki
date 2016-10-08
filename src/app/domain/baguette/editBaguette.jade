@@ -13,7 +13,7 @@ form-edit(vm="vm" item="vm.baguette" title="{{ vm.id ? '' : 'Новый баге
 
   form-footer(ng-if='vm.id')
 
-    md-divider.md-margin
+    md-divider.md-margin.hide-xs.hide-sm
 
     .space-children-em
       ng-gallery.margin-top-em(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length')

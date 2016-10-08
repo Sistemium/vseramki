@@ -1,3 +1,5 @@
+@import "_vars";
+
 $input-wide-width: 300px;
 $input-normal-width: 250px;
 
@@ -47,6 +49,10 @@ form {
 
       input, md-select {
         width: $input-normal-width;
+      }
+
+      @media (max-width: $layout-breakpoint-sm) {
+        margin-bottom: 0;
       }
 
     }
