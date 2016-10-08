@@ -174,7 +174,9 @@
 
     function mergeImages() {
       vm.images = _.union(vm.baguetteImages, vm.articleImages);
-      vm.currentImage = _.first(vm.images);
+      if (vm.images.length) {
+        onThumbnailClick(0,_.first(vm.images));
+      }
     }
 
     function imageClick(item) {
