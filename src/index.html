@@ -29,9 +29,9 @@
 
     <!--section layout-fill ng-cloak-->
 
-      <md-content layout-fill>
+      <md-content id="root-md-content" layout-fill>
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
-        <div class="root viewport" ui-view resize="root" ng-style="{height: (root.windowHeight - root.offsetTop) + 'px'}">
+        <div class="root viewport" ui-view>
           <div layout="column" layout-align="center center">
             <h1>Загрузка</h1>
             <md-progress-circular md-diameter="300" md-mode="indeterminate"></md-progress-circular>
