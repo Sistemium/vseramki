@@ -3,17 +3,16 @@
 .baguettes {
 
   .md-sidenav-left {
-    margin: $margin-default-half;
+    margin: $margin-default;
   }
 
   md-card img.thumbnail {
     width: 200px;
     height: 200px;
-    padding: 10px;
   }
 
   .repeated-group {
-    height: 378px;
+    height: 370px;
     padding: 2px;
   }
 
@@ -41,6 +40,10 @@
     overflow: hidden;
     .property-list-container .property > * {
       margin-top: 0;
+    }
+    md-card-content {
+      margin: 0 0 15px 0;
+      padding: 0;
     }
   }
 

@@ -5,12 +5,14 @@
   ng-style='{height: (baguetteTable.windowHeight - baguetteTable.offsetTop - 57)+"px"}'
   )
     md-table-container(ng-if='vm.baguettes.length')
-      table(md-table md-row-select multiple ng-model='vm.selected')
+      table(md-table)
         thead(md-head md-order='filterBy')
           th(md-column) Фото
-          th(md-column md-order-by='colour.name') Цвет
-          th(md-column md-order-by='material.name') Материал
+          th(md-column md-order-by='brand.code') Код
           th(md-column md-order-by='brand.name') Бренд
+          th(md-column md-order-by='surface.name') Материал
+          th(md-column md-order-by='colour.name') Цвет
+          th(md-column) Цвета
           th(md-column md-order-by='borderWidth') Ширина (мм.)
         tbody.clickable(md-body)
           tr(
@@ -25,9 +27,12 @@
           )
             td(md-cell)
               img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}')
-            td(md-cell) {{bag.colour.name}}
-            td(md-cell) {{bag.material.name}}
+            td(md-cell) {{bag.code}}
             td(md-cell) {{bag.brand.name}}
+            td(md-cell) {{bag.surface.name}}
+            td(md-cell) {{bag.colour.name}}
+            td(md-cell)
+              div(ng-repeat='bc in bag.colours track by bc.id') {{ bc.colour.name }}
             td(md-cell) {{bag.borderWidth}}
 
   md-table-pagination(

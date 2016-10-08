@@ -2,7 +2,7 @@
 
 (function () {
 
-  const keys = ['brandId', 'colourId', 'materialId', 'surfaceId'];
+  const keys = ['brandId', 'colourId', 'materialId', 'surfaceId', 'lastName', 'code'];
 
   function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper, $q) {
 
@@ -96,6 +96,10 @@
 
      */
 
+    function refreshName() {
+      vm.baguette.name = vm.baguette.stringName();
+    }
+
     function checkParams() {
       vm.paramsCheck = vm.unique &&
         vm.baguette &&
@@ -109,13 +113,13 @@
 
     function hasChanges() {
       checkParams();
-      return !vm.id ?
-        _.get(vm, 'attrsForm.$dirty') :
-      Baguette.hasChanges(vm.id) ||
-      _.find(
-        vm.baguetteColours,
-        item => !item.id || BaguetteColour.hasChanges(item)
-      );
+      return !vm.id
+        ? _.get(vm, 'attrsForm.$dirty')
+        : Baguette.hasChanges(vm.id) ||
+          _.find(
+            vm.baguetteColours,
+            item => !item.id || BaguetteColour.hasChanges(item)
+          );
     }
 
     function addBaguetteColour() {
@@ -163,6 +167,8 @@
       if (!vm.baguette) {
         return;
       }
+
+      refreshName();
 
       var filter = {};
 

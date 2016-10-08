@@ -15,6 +15,9 @@ style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
         .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
           md-card(layout='column' layout-align='center center' ng-click='vm.editBaguette(bag)')
 
+            .md-card-corner
+              label {{ bag.code }}
+
             md-card-content.clickable
               img.thumbnail(
               ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}'
@@ -23,11 +26,11 @@ style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
 
               .property-list-container.title
                 .property
-                  .property-label Материал:
-                  .property-value {{bag.material.name}}
-                .property
                   .property-label Бренд:
                   .property-value {{bag.brand.name}}
+                .property
+                  .property-label Материал:
+                  .property-value {{bag.surface.name}}
                 .property
                   .property-label Цвет:
                   .property-value {{bag.colour.name}}
