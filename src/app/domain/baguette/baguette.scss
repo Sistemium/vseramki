@@ -21,7 +21,7 @@
   }
 
   .repeated-group-item {
-    height: 400px;
+    //height: 350px;
     max-width: 300px;
     padding-top: 10px;
     margin: 2px;
@@ -35,6 +35,9 @@
 
   md-card {
     overflow: hidden;
+    .property-list-container .property > * {
+      margin-top: 0;
+    }
   }
 
 }
