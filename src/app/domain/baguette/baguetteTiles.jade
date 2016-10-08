@@ -13,16 +13,15 @@ style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
     md-virtual-repeat-container.height-100
       .repeated-group(md-virtual-repeat='chunk in vm.chunked' layout='row' layout-align='center center')
         .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
-          md-card(layout='column' layout-align='center center')
+          md-card(layout='column' layout-align='center center' ng-click='vm.editBaguette(bag)')
 
-            a(href ng-click='vm.editBaguette(bag)')
+            md-card-content.clickable
               img.thumbnail(
               ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}'
               alt='Baguette {{$index}}'
               )
 
-            md-card-content
-              .property-list-container
+              .property-list-container.title
                 .property
                   .property-label Материал:
                   .property-value {{bag.material.name}}
