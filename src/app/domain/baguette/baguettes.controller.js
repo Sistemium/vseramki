@@ -133,7 +133,7 @@
       }
       // TODO: check tiles flickering after nth delete
       unbindBaguettes = Baguette.bindAll(filter, $scope, 'vm.baguettes', () => {
-        setFiltered();
+        setFiltered(vm.search);
         setChunks(chunkSize);
       });
     }
