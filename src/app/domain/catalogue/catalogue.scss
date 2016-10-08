@@ -14,8 +14,8 @@
     }
 
     .view-mode-tool {
-      .header {
-        @media (max-width: $layout-breakpoint-xs) {
+      .options {
+        @media (max-width: $layout-breakpoint-xxs) {
           display: none;
         }
       }
