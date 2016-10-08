@@ -77,7 +77,9 @@
             return this.highPrice;
           }
 
-          return Math.floor(100.0 * (this.highPrice - (this.highPrice - this.lowPrice) * Math.pow(useTotal / totalThreshold, 2))) / 100.0;
+          return Math.floor(100.0 * (
+                this.highPrice - (this.highPrice - this.lowPrice) * Math.pow(useTotal / totalThreshold, 2)
+              )) / 100.0;
 
         },
 
