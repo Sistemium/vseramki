@@ -3,11 +3,11 @@ form-edit(vm="vm" item="vm.baguette" title="{{ vm.id ? '' : 'Новый баге
   form-fields.wide(layout='column' layout-align='space-between top' layout-gt-sm='row')
     .flex
 
-    .form-controls(layout='column' layout-align='start center' ng-include="'app/domain/baguette/baguetteSelects.html'")
+    .form-controls(layout='column' layout-align='start center' ng-include="'app/domain/baguette/partials/baguetteSelects.html'")
 
     .flex
 
-    .form-controls(layout='column' layout-align='start center' ng-include="'app/domain/baguette/baguetteFields.html'")
+    .form-controls(layout='column' layout-align='start center' ng-include="'app/domain/baguette/partials/baguetteFields.html'")
 
     .flex
 
