@@ -10,7 +10,7 @@ style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
   resize='baguettes'
   style='height: {{ baguettes.windowHeight - baguettes.offsetTop - 2 }}px'
   )
-    md-virtual-repeat-container.height-100
+    md-virtual-repeat-container.scroll-y.height-100
       .repeated-group(md-virtual-repeat='chunk in vm.chunked' layout='row' layout-align='center center')
         .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
           md-card(layout='column' layout-align='center center' ng-click='vm.editBaguette(bag)')

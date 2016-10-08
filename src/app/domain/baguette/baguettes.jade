@@ -13,17 +13,13 @@
     layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
     ng-if='!vm.isRoot'
     )
-
-      p.md-title(layout-margin)
-        md-button.md-raised.no-margin(ng-click='vm.backToList()') Показать список
-
       .no-padding(
       layout='column'
       resize='baguettesList'
       style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 10 }}px'
       )
 
-        md-virtual-repeat-container(flex)
+        md-virtual-repeat-container.scroll-y(flex)
           .item(
           md-virtual-repeat='bag in vm.baguettes'
           ng-class="{'active ': vm.currentItem.id == bag.id }"
