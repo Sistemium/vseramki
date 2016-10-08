@@ -157,6 +157,7 @@
 
         Baguette.revert(vm.baguette);
         _.each(vm.baguette.colours, item => item.id && BaguetteColour.revert(item));
+        initBaguetteColours();
         checkParams();
 
       }
