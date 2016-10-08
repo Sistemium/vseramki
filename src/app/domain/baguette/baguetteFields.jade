@@ -41,4 +41,21 @@ md-input-container
   div(ng-messages="vm.attrsForm.baguetteWidth.$error")
     div(ng-message="required") Поле не может быть пустым
 
+searchable-select(
+label='Дополнительные цвета'
+label-of='цвета'
+model='vm.extraBaguetteColourId'
+model-name='Colour'
+options='vm.colours'
+)
+
+md-chips(
+ng-model="vm.baguetteColours"
+readonly='true'
+)
+  md-chip-template
+    span(ng-class='{"strike-through gray": $chip.toRemove}') {{$chip.colour.name}}
+    md-button.micro-fab(ng-click='vm.baguetteColourRemoveClick($chip)')
+      | {{ $chip.toRemove ? '+' : '–' }}
+
 input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
