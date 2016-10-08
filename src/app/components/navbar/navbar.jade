@@ -1,6 +1,6 @@
 md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
   .md-toolbar-tools
-    a(ui-sref='home' style='padding-top: 4px;')
+    a(ui-sref='home' style='padding-top: 4px;' layout='row')
       img.top-logo(ng-src='{{windowWidth < 450 ? "images/logo-230x150.png" : "images/top-logo.jpg"}}')
 
     .margin-left.visible-print-inline(flex)
@@ -27,7 +27,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
         ui-sref-active='md-primary'
         ) {{ fab.label }}
 
-    span.hidden-tight(flex='5')
+    span.hidden-tight.margin-left
 
     md-button.md-fab.md-icon-button.md-mini.hidden-tight(
     ng-click='vm.loginBtnClick()'

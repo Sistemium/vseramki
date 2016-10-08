@@ -19,6 +19,10 @@ md-toolbar.toolbar-fixed-top.white-background {
 
   z-index: 3;
 
+  .md-button.md-fab {
+    min-width: 40px;
+  }
+
 }
 
 body {
