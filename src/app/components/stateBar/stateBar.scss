@@ -1,3 +1,5 @@
+@import "../../styles/_vars";
+
 state-bar {
 
   md-toolbar.state-bar {
@@ -15,6 +17,12 @@ state-bar {
       margin-left: 4px;
       text-transform: uppercase;
       font-weight: 500;
+      .sref {
+        color: #303030;
+        &:hover {
+          color: $primary-button-background-color;
+        }
+      }
     }
 
     .options {
