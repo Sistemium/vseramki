@@ -3,7 +3,7 @@ md-toolbar.state-bar(ng-if='vm.showIf')
 
     .view-mode-tool(layout='row' layout-align='center center')
       h2.header(nf-show='vm.title')
-        a(ui-sref='{{vm.rootState}}') {{ vm.title }}
+        a(ui-sref='{{vm.rootState || "."}}') {{ vm.title }}
       .options(ng-if='vm.modeOptions')
         i.material-icons.icon-button(
         ng-click="vm.changeView('table')"
