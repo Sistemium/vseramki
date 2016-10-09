@@ -100,15 +100,8 @@ button .label {
     background-color: $md-fab-hover;
   }
 
-
 }
 
-.admin-button {
-  background-color: #dfdfdf !important;
-  color: black !important;
-  min-width: 40px !important;
-  min-height: 40px !important;
-}
 
 .pink-button-fab {
   width: 40px;
@@ -232,6 +225,13 @@ md-fab-actions, .viewport {
   &.default-button {
     background-color: $default-button-background-color;
     color: black;
+  }
+
+  &.admin-button {
+    background-color: #dfdfdf;
+    color: black;
+    min-width: 40px;
+    min-height: 40px;
   }
 
 }
