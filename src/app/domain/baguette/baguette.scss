@@ -2,6 +2,23 @@
 
 .baguettes {
 
+  .state-bar {
+    .md-toolbar-tools {
+      span.flex {
+        //display: none;
+      }
+      ng-transclude {
+        //flex: 1;
+      }
+      md-input-container {
+        margin-left: 15px;
+      }
+    }
+    #searcher {
+      max-width: 160px;
+    }
+  }
+
   .md-sidenav-left {
     margin: $margin-default;
   }

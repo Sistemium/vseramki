@@ -17,7 +17,7 @@
         tbody.clickable(md-body)
           tr(
           md-row
-          ng-repeat='bag in vm.baguettes ' +
+          ng-repeat='bag in vm.filteredBaguettes ' +
           '| orderBy: filterBy ' +
           '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
           ' track by bag.id'
@@ -40,7 +40,7 @@
   md-label='{{vm.pagination.labels}}',
   md-limit-options='vm.pagination.limitOptions',
   md-page='vm.pagination.query.page',
-  md-total='{{vm.baguettes.length}}',
+  md-total='{{vm.filteredBaguettes.length}}',
   md-page-select='!vm.useMobile',
   md-boundary-links='!vm.useMobile'
   md-on-paginate='vm.onPaginate'
