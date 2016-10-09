@@ -105,6 +105,9 @@ button .label {
     color: black;
     min-width: 40px;
     min-height: 40px;
+    &:not([disabled]):hover {
+      background-color: $admin-button-fab-color;
+    }
   }
 
 }
