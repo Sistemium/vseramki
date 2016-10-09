@@ -58,7 +58,7 @@
 
     /*
 
-    Init
+     Init
 
      */
 
@@ -77,7 +77,7 @@
 
     /*
 
-    Listeners
+     Listeners
 
      */
 
@@ -146,20 +146,15 @@
 
       promise.then(function (answer) {
         if (answer) {
-          if (item.length) {
-            _(item).forEach(function (item) {
-              Baguette.destroy(item);
-            });
-            ToastHelper.showToast('Багет удален', true);
-            vm.selected = [];
-          }
-          else {
-            Baguette.destroy(item);
-            ToastHelper.showToast('Багет удален', true);
-          }
+          var q = _.isArray(item)
+            ? $q.all(_.map(item, itm => Baguette.destroy(itm)))
+            : Baguette.destroy(item);
+          q.then(()=> {
+            ToastHelper.success('Багет удален');
+          }, () => {
+            ToastHelper.error('Ошибка. Не удалось удалить');
+          });
         }
-      }).catch(function () {
-        vm.selected = [];
       });
 
     }
@@ -170,10 +165,10 @@
       $state.go(`${vm.rootState}.${currentState}.create`);
     }
 
-    function changeBaguette (bag) {
+    function changeBaguette(bag) {
       var newState = $state.current.name;
 
-      newState = newState.replace(/\.(edit|create)$/,'')  + '.edit';
+      newState = newState.replace(/\.(edit|create)$/, '') + '.edit';
 
       $state.go(newState, {id: bag.id});
     }
