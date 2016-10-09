@@ -73,7 +73,7 @@ button .label {
 
 .md-button, .md-button.md-raised {
 
-  &.default-button:hover:not([disabled]) {
+  &.default-button:hover:not([disabled]), &:hover:not([disabled]) {
     background-color: $default-button-hover;
   }
 
@@ -98,6 +98,13 @@ button .label {
   &.micro-fab:not([disabled]):hover,
   &.mini-fab:not([disabled]):hover {
     background-color: $md-fab-hover;
+  }
+
+  &.admin-button {
+    background-color: #dfdfdf;
+    color: black;
+    min-width: 40px;
+    min-height: 40px;
   }
 
 }
