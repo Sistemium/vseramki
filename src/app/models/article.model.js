@@ -114,7 +114,7 @@
           var baguette = this.baguette;
 
           var res = !baguette ? null :
-            `"${baguette.brand.name}" ${_.get(this, 'frameSize.name') || ''} ${baguette.colour.name}`;
+            `"${baguette.brand.name}" ${baguette.colour.name} ${_.get(this, 'frameSize.name') || ''}`;
 
           if (this.multiType) {
             res += ` ${this.multiTypeName().toLowerCase()} (${this.articleFrameSizesName(frameSizes)})`;
