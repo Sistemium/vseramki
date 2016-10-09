@@ -15,5 +15,10 @@ form-edit(vm="vm" item="vm.baguette" title="{{ vm.id ? '' : 'Новый баге
 
     md-divider.md-margin.hide-xs.hide-sm
 
-    .space-children-em
-      ng-gallery.margin-top-em(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length')
+    .margin-top
+      ng-gallery(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length')
+
+    .text-center.margin-top#frames(ng-if='vm.baguette.articles.length')
+      label Рамк{{vm.baguette.articles.length > 1 ? 'и' : 'а'}}:
+      span(ng-repeat='frame in vm.baguette.articles track by frame.id')
+        md-button.tool-button.default-button(ui-sref='catalogue.tiles.item({id: frame.id})') {{ frame.frameSize.name }}
