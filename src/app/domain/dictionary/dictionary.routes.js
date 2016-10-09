@@ -2,36 +2,9 @@
 
 (function () {
 
-  function routerConfig(stateHelperProvider) {
+  const options = ['FrameSize', 'Colour', 'Brand', 'Surface', 'Material'];
 
-    // var children = [
-    //
-    //   {
-    //     name: 'create',
-    //     url: '/create',
-    //     templateUrl: 'app/domain/addFrame/editFrame.html',
-    //     controller: 'AddFrameController',
-    //     controllerAs: 'vm'
-    //   },
-    //
-    //   {
-    //     name: 'item',
-    //     url: '/:id',
-    //     controller: 'ItemController',
-    //     templateUrl: 'app/domain/itemView/item.html',
-    //     controllerAs: 'vm',
-    //     children: [
-    //
-    //       {
-    //         name: 'edit',
-    //         url: '/edit',
-    //         templateUrl: 'app/domain/addFrame/editFrame.html',
-    //         controller: 'AddFrameController',
-    //         controllerAs: 'vm'
-    //       }
-    //
-    //     ]
-    //   }];
+  function routerConfig(stateHelperProvider) {
 
     stateHelperProvider
       .state({
@@ -43,11 +16,12 @@
         // defaultChild: 'FrameSize',
 
         data: {
-          needRoles: 'admin'
+          needRoles: 'admin',
+          options
         },
 
         children: _.map(
-          ['FrameSize', 'Colour', 'Brand', 'Surface', 'Material'], name => {
+          options, name => {
             return {
               name,
               url: `/${name}`

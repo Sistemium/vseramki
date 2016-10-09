@@ -2,17 +2,9 @@
 
 (function () {
 
-  function DictionaryController($scope, $q, $state, Schema, AuthHelper) {
+  function DictionaryController($scope, $q, $state, Schema, AuthHelper, AlertHelper) {
 
     var vm = this;
-
-    var {
-      FrameSize,
-      Brand,
-      Material,
-      Colour,
-      Surface
-    } = Schema.models();
 
     _.assign(vm, {
 
@@ -22,13 +14,7 @@
       optionClick,
       deleteItem,
 
-      options: [
-        FrameSize,
-        Brand,
-        Material,
-        Colour,
-        Surface
-      ],
+      options: _.map($state.current.data.options, o => Schema.model(o)),
 
       columns: [
         {
@@ -71,9 +57,14 @@
         .then(data => vm.data = _.sortBy(data, 'name'));
     }
 
-    function deleteItem(item) {
-      vm.option.destroy(item)
-        .then(()=>optionClick(vm.option));
+    function deleteItem(item, $event) {
+      AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} ${item.name}"?`)
+        .then(response => {
+          if (response){
+            vm.option.destroy(item)
+              .then(()=>optionClick(vm.option));
+          }
+        });
     }
 
 
