@@ -73,7 +73,7 @@
     Baguette.findAll()
       .then(function (baguettes) {
         vm.baguettes = baguettes;
-        setChunks(chunkSize);
+        setFiltered();
       });
 
     /*
@@ -127,11 +127,13 @@
 
     function setFiltered(search) {
       vm.filteredBaguettes = filter(vm.baguettes, search);
+      setChunks(chunkSize);
     }
 
     function setChunks(nv) {
       chunkSize = nv;
-      vm.chunked = _.chunk(vm.baguettes, nv);
+      console.info(nv);
+      vm.chunked = _.chunk(vm.filteredBaguettes, nv);
     }
 
     function rebind(filter) {
@@ -141,7 +143,6 @@
       // TODO: check tiles flickering after nth delete
       unbindBaguettes = Baguette.bindAll(filter, $scope, 'vm.baguettes', () => {
         setFiltered(vm.search);
-        setChunks(chunkSize);
       });
     }
 
