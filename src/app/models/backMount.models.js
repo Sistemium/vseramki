@@ -15,8 +15,8 @@
     return Schema.register({
 
       labels: {
-        plural: 'Крепления задника',
-        what: 'крепление задника'
+        plural: 'Крепления',
+        what: 'крепление'
       },
 
       name: 'BackMount',

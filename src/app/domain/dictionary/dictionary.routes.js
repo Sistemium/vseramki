@@ -2,7 +2,9 @@
 
 (function () {
 
-  const options = ['FrameSize', 'Colour', 'Brand', 'Surface', 'Material'];
+  const options = [
+    'FrameSize', 'Colour', 'Brand', 'Surface', 'Material', 'Screening', 'BackMount'
+  ];
 
   function routerConfig(stateHelperProvider) {
 

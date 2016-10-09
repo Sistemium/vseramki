@@ -15,8 +15,8 @@
     return Schema.register({
 
       labels: {
-        plural: 'Прозрачные вставки',
-        what: 'прозрачную вставку'
+        plural: 'Вставки',
+        what: 'вставку'
       },
 
       name: 'Screening',
