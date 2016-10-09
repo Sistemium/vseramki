@@ -20,7 +20,10 @@
         tbody.clickable(md-body)
           tr(
           md-row
-          ng-repeat='article in vm.articles |orderBy: filterBy track by article.id'
+          ng-repeat='article in vm.articles ' +
+          '| orderBy: filterBy ' +
+          '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+          ' track by article.id'
           md-select='article'
           md-select-id='id'
           ng-click='vm.gotoItemView(article, $event)'
