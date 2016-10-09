@@ -4,8 +4,14 @@
   root-state='baguettes'
   title='Багет'
   )
-    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateBaguette()' ng-if='vm.isAdmin')
-      i.material-icons add
+    .buttons(ng-if='vm.isAdmin')
+      md-button.md-fab.md-mini.md-icon-button.admin-button(
+      ng-click='vm.deleteBaguette(vm.)'
+      ng-if='!vm.isRoot'
+      )
+        i.material-icons delete
+      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateBaguette()')
+        i.material-icons add
 
   div(layout='row')
 

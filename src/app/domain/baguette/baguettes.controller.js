@@ -2,11 +2,13 @@
 
 (function () {
 
-  function BaguettesController(Schema, $filter, AuthHelper, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper) {
+  function BaguettesController(Schema, $filter, AuthHelper, $scope, $q, $state, Helpers) {
 
     const filter = $filter('filter');
 
     var vm = this;
+
+    var {ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper} = Helpers;
 
     var {
       Brand,
