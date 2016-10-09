@@ -14,6 +14,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Багет',
+        what: 'багет'
+      },
+
       name: 'Baguette',
 
       relations: {

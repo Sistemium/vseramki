@@ -10,6 +10,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Поверхности',
+        what: 'поверхность'
+      },
+
       name: 'Surface',
 
       relations: {

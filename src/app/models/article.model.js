@@ -9,6 +9,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Рамки',
+        what: 'рамку'
+      },
+
       name: 'Article',
 
       maxThreshold: () => totalThreshold,

@@ -14,6 +14,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Размеры',
+        what: 'размер'
+      },
+
       name: 'FrameSize',
 
       relations: {
