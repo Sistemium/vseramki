@@ -1,43 +1,38 @@
-.ui-view(ng-if='!vm.isRoot' flex)
-
-md-content#scroll-main(
+md-content#scroll-main.ui-view(
 flex
-style='max-width: {{ vm.isRoot ? "100%" : "0"}}'
 )
 
-  .repeat-wrapper(
-  layout='row' layout-align='center center'
+  md-virtual-repeat-container.scroll-y.height-100(
   resize='baguettes'
-  style='height: {{ baguettes.windowHeight - baguettes.offsetTop - 2 }}px'
+  ng-style='{height: (baguettes.windowHeight - baguettes.offsetTop - 2) + "px"}'
   )
-    md-virtual-repeat-container.scroll-y.height-100
-      .repeated-group(md-virtual-repeat='chunk in vm.chunked' layout='row' layout-align='center center')
-        .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
-          md-card(layout='column' layout-align='center center' ng-click='vm.editBaguette(bag)')
+    .repeated-group(md-virtual-repeat='chunk in vm.chunked' layout='row' layout-align='center center')
+      .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
+        md-card(layout='column' layout-align='center center' ng-click='vm.editBaguette(bag)')
 
-            .md-card-corner
-              label {{ bag.code }}
+          .md-card-corner
+            label {{ bag.code }}
 
-            md-card-content.clickable
-              img.thumbnail(
-              ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}'
-              alt='Baguette {{$index}}'
-              )
+          md-card-content.clickable
+            img.thumbnail(
+            ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}'
+            alt='Baguette {{$index}}'
+            )
 
-              .property-list-container.title
-                .property
-                  .property-label Бренд:
-                  .property-value {{bag.brand.name}}
-                .property
-                  .property-label Материал:
-                  .property-value {{bag.surface.name}}
-                .property
-                  .property-label Цвет:
-                  .property-value {{bag.colour.name}}
-                .property
-                  .property-label Ширина:
-                  .property-value {{bag.borderWidth}} мм.
+            .property-list-container.title
+              .property
+                .property-label Бренд:
+                .property-value {{bag.brand.name}}
+              .property
+                .property-label Материал:
+                .property-value {{bag.surface.name}}
+              .property
+                .property-label Цвет:
+                .property-value {{bag.colour.name}}
+              .property
+                .property-label Ширина:
+                .property-value {{bag.borderWidth}} мм.
 
-            //md-card-actions.admin-button(layout='row', layout-align='center center')
-              md-button(ng-click='vm.editBaguette(bag)') Редактировать
-              md-button(ng-click='vm.deleteBaguette(bag, $event)') Удалить
+          //md-card-actions.admin-button(layout='row', layout-align='center center')
+            md-button(ng-click='vm.editBaguette(bag)') Редактировать
+            md-button(ng-click='vm.deleteBaguette(bag, $event)') Удалить
