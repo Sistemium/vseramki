@@ -89,6 +89,10 @@
 
     $scope.$on('$destroy', cancelChanges);
 
+    $scope.$on('addPhotoClick', (e, event) => {
+      vm.showImageDialog(event);
+    });
+
 
     /*
 

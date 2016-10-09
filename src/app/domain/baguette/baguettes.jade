@@ -6,6 +6,11 @@
   )
     .buttons(ng-if='vm.isAdmin')
       md-button.md-fab.md-mini.md-icon-button.admin-button(
+      ng-click='vm.addPhotoClick($event)'
+      ng-if='vm.currentItem.id'
+      )
+        i.material-icons add_a_photo
+      md-button.md-fab.md-mini.md-icon-button.admin-button(
       ng-click='vm.deleteBaguette(vm.currentItem, $event)'
       ng-if='vm.currentItem.id'
       )

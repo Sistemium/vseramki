@@ -48,6 +48,7 @@
       deleteBaguette,
       goToCreateBaguette,
       changeBaguette,
+      addPhotoClick,
 
       resetFilters: () => vm.search = '',
       resetCheckedBaguette: () => vm.selected = [],
@@ -118,6 +119,10 @@
      Functions
 
      */
+
+    function addPhotoClick(event) {
+      $scope.$broadcast('addPhotoClick', event);
+    }
 
 
     function setFiltered(search) {
