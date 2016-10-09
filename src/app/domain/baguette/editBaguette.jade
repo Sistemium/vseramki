@@ -21,4 +21,4 @@ form-edit(vm="vm" item="vm.baguette" title="{{ vm.id ? '' : 'Новый баге
     .text-center.margin-top#frames(ng-if='vm.baguette.articles.length')
       label Рамк{{vm.baguette.articles.length > 1 ? 'и' : 'а'}}:
       span(ng-repeat='frame in vm.baguette.articles track by frame.id')
-        md-button.tool-button.default-button(ui-sref='catalogue.tiles.item({id: frame.id})') {{ frame.frameSize.name }}
+        md-button.tool-button.default-button(ui-sref='catalogue({item: frame.id})') {{ frame.frameSize.name }}
