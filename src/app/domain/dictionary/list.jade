@@ -1,17 +1,17 @@
 state-bar(title='Словари')
 
-.md-padding(layout='row' layout-align='space-around start')
+.md-padding(layout='row' layout-align='space-between start' layout-align-xs='space-around start')
 
-  #sidenav
-    .margin-bottom(ng-repeat='dict in vm.options')
+  #sidenav(flex='nogrow')
+    div(ng-repeat='dict in vm.options')
       md-button.default-button.md-raised.width-100(
       ng-click='vm.optionClick(dict)'
       ng-class='{ "md-primary": dict.name === vm.option.name}'
       ) {{ dict.labels.plural || dict.name }}
 
-  .flex
+  span.hide-xs(flex='15')
 
-  #viewport.margin-top.scroll-y.md-whiteframe-1dp(flex)
+  #viewport.margin-top.scroll-y.md-whiteframe-1dp(flex='50' flex-xs='65')
     md-table-container(ng-if='vm.data')
       table(md-table)
         thead(md-head md-order='filterBy')
@@ -20,7 +20,7 @@ state-bar(title='Словари')
           ng-repeat='col in vm.columns track by col.name'
           md-order-by='{{col.name}}'
           ) {{ col.title }}
-          th(
+          th.col-remove(
           md-column
           ) Удалить
         tbody.clickable(md-body)
@@ -39,4 +39,4 @@ state-bar(title='Словари')
               md-button.md-mini.md-icon-button(ng-click='vm.deleteItem(row,$event)' class="slide")
                 i.material-icons.clear-icon-size clear
 
-  .flex
+  span.hide-xs(flex='15')
