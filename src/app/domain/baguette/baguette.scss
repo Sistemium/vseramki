@@ -65,6 +65,11 @@
     md-card-content {
       margin: 0 0 15px 0;
       padding: 0;
+      width: 100%;
+      text-align: center;
+      .property-value {
+        text-align: left;
+      }
     }
   }
 
