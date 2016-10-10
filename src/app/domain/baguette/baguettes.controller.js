@@ -162,6 +162,8 @@
                 var newItem = _.get(vm.filteredBaguettes, (itemIndex || 2) - 1);
                 if (newItem) {
                   $state.go('.', {id: newItem.id});
+                } else {
+                  $state.go('^');
                 }
               })
             ;
