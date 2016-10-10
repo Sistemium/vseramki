@@ -23,7 +23,7 @@ md-content.ui-view.height-100#scroll-main
                 .md-subhead.text-center {{ article.name }}
             .flex
             .md-margin
-              .md-title.text-center.text-nowrap
+              .price
                 span(ng-class='{"strike-through gray": vm.cartHasDiscount}') {{ article.highPrice }} ₽
                 span(ng-if='vm.cartHasDiscount') &nbsp; {{ article.discountedPrice(vm.cartSubTotal) }} ₽
 
