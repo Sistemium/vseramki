@@ -12,14 +12,14 @@
 .ng-gallery-fullscreen.no-select(ng-if='opened' layout='row' layout-align='center center')
 
   .left-right-chevron(flex layout='row' layout-align='start center' hide-xs)
-    .material-icons(ng-click='prevImage()') chevron_left
+    .material-icons(ng-click='prevImage()' ng-show='images.length > 1') chevron_left
 
   .main-view(flex='80' layout='column' layout-align='space-between center' flex-xs='100')
 
     .window-controls(flex='10' layout='row' show-xs hide)
       p.photo-counter {{index + 1}}/{{images.length}}
       span(flex)
-      i.material-icons(ng-click='showAlert()' ng-if='isDeletable') delete
+      i.material-icons(ng-click='deletePhoto()' ng-if='isDeletable') delete
       i.material-icons(ng-click='closeGallery()') close
 
     // Photo div
@@ -55,8 +55,8 @@
               )
 
   .left-right-chevron(flex layout='row' layout-align='end center' hide-xs)
-    .material-icons(ng-click='nextImage()') chevron_right
+    .material-icons(ng-click='nextImage()' ng-show='images.length > 1') chevron_right
 
   .window-controls(hide-xs)
-    i.material-icons(ng-if='isDeletable' ng-click='showAlert($index)') delete
+    i.material-icons(ng-if='isDeletable' ng-click='deleteClick()' ng-class="{confirm : confirmDelete}") delete
     i.material-icons(ng-click='closeGallery()') close

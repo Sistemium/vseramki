@@ -4,23 +4,11 @@
 
   angular.module('vseramki').directive('ngGallery', ngGallery);
 
-  function ngGallery($document, $timeout, $q, $templateCache, $window, $state, Schema) {
+  function ngGallery($document, $timeout, $q, $templateCache, $window, Schema) {
 
     var el = $window.$;
-    var model;
 
-
-    if (/^cat/.test($state.current.name)) {
-      var ArticleImage = Schema.model('ArticleImage');
-      model = ArticleImage;
-
-    } else if (/^bag/.test($state.current.name)) {
-      var BaguetteImage = Schema.model('BaguetteImage');
-      model = BaguetteImage;
-
-    } else {
-      console.error('Unknown state');
-    }
+    var imageModel;
 
     var defaults = {
       baseClass: 'ng-gallery',
@@ -93,7 +81,7 @@
           scope.thumbsNum = 11;
         }
 
-        function querySelectorAll (q){
+        function querySelectorAll(q) {
           return element[0].querySelectorAll(q);
         }
 
@@ -106,6 +94,7 @@
 
         scope.thumb_wrapper_width = 0;
         scope.thumbs_width = 0;
+        scope.clickCount = 0;
 
         var loadImage = function (i) {
 
@@ -142,6 +131,7 @@
             smartScroll(scope.index);
           });
           scope.description = scope.images[i].id || '';
+          scope.confirmDelete = false;
         };
 
         //var defineClass = function (width, height) {
@@ -215,31 +205,35 @@
           }
         };
 
-        scope.showAlert = function () {
-          // TODO: really show alert
-          // TODO: model can be ArticleImage or BaguetteImage
-          model.destroy(scope.images[scope.index]);
-          scope.closeGallery();
-        };
+        scope.deletePhoto = function () {
 
-        scope.deletePhoto = function (id, index) {
+          var obj = scope.images[scope.index];
 
-          console.log(id, index);
+          Object.getOwnPropertyNames(obj).map(function (propertyName) {
 
-          if (scope.images.length == 1) {
-            model.destroy(id);
+            if (propertyName === 'baguetteId') {
+              imageModel = 'BaguetteImage'
+            } else if (propertyName === 'articleId') {
+              imageModel = 'ArticleImage'
+            }
+
+          });
+
+          if (imageModel) {
+            imageModel = Schema.model(imageModel);
+            imageModel.destroy(obj);
             scope.closeGallery();
-          } else if ((scope.index + 1) == scope.images.length) {
-            model.destroy(id);
-            scope.index = 0;
-            showImage(scope.index + 1);
           } else {
-            model.destroy(id);
-            scope.index = index;
-            scope.changeImage(index);
-
+            console.error('ngGallery: Failed to initialize image model');
           }
 
+        };
+
+        scope.deleteClick = function () {
+          if (scope.confirmDelete) {
+            scope.deletePhoto();
+          }
+          scope.confirmDelete = !scope.confirmDelete;
         };
 
         $body.bind('keydown', function (event) {
