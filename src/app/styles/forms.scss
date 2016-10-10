@@ -52,7 +52,7 @@ form {
       }
 
       @media (max-width: $layout-breakpoint-sm) {
-        margin-bottom: 0;
+        //$layout-breakpoint-smmargin-bottom: 0;
       }
 
     }
