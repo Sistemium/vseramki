@@ -205,7 +205,7 @@ md-fab-actions, .viewport {
   .md-button.md-primary {
     &, &.md-raised {
       background-color: $vr-blue-color;
-      &:hover:not([disabled]) {
+      &:hover:not([disabled]), &.md-focused {
         background-color: $md-fab-tool-hover;
       }
     }

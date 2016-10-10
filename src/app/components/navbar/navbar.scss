@@ -42,7 +42,7 @@ body {
     color: rgba(255, 255, 255, 0.87);
     background-color: $primary-button-background-color;
   }
-  &.md-button.md-primary:hover:not([disabled])  {
+  &.md-button.md-primary:hover:not([disabled]), &.md-button.md-primary.md-focused {
     background-color: $md-fab-tool-hover;
   }
 }
