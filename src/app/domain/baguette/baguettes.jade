@@ -2,7 +2,7 @@
 
   state-bar(
   root-state='baguettes'
-  title='Багет'
+  bar-title='Багет'
   )
     div(layout='row' layout-align='end center')
       md-input-container(ng-if='!vm.currentItem.id' layout='row')
@@ -13,17 +13,25 @@
       .flex
 
       .buttons.margin-left(ng-if='vm.isAdmin')
+
         md-button.md-fab.md-mini.md-icon-button.admin-button(
         ng-click='vm.addPhotoClick($event)'
         ng-if='vm.currentItem.id'
+        title='Добавить фото'
         )
           i.material-icons add_a_photo
+
         md-button.md-fab.md-mini.md-icon-button.admin-button(
         ng-click='vm.deleteBaguette(vm.currentItem, $event)'
         ng-if='vm.currentItem.id'
+        title='Удалить багет'
         )
           i.material-icons delete
-        md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateBaguette()')
+
+        md-button.md-fab.md-mini.md-icon-button.admin-button(
+        ng-click='vm.goToCreateBaguette()'
+        title='Добавить багет'
+        )
           i.material-icons add
 
   div(layout='row')
