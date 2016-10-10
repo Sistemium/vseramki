@@ -126,13 +126,21 @@
 
 
     function setFiltered(search) {
-      vm.filteredBaguettes = filter(vm.baguettes, search);
+
+      if (!search) {
+        vm.filteredBaguettes = vm.baguettes;
+      } else {
+        var re = new RegExp(_.escapeRegExp(search), 'ig');
+        vm.filteredBaguettes = filter(vm.baguettes, (value) => {
+          return re.test(value.name) || re.test(value.code) || value.id === search;
+        });
+      }
+
       setChunks(chunkSize);
     }
 
     function setChunks(nv) {
       chunkSize = nv;
-      console.info(nv);
       vm.chunked = _.chunk(vm.filteredBaguettes, nv);
     }
 
