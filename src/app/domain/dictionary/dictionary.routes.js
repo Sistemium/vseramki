@@ -15,7 +15,7 @@
         templateUrl: 'app/domain/dictionary/list.html',
         controller: 'DictionaryController',
         controllerAs: 'vm',
-        // defaultChild: 'FrameSize',
+        defaultChild: 'FrameSize',
 
         data: {
           needRoles: 'admin',

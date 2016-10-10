@@ -58,7 +58,7 @@
     }
 
     function deleteItem(item, $event) {
-      AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} ${item.name}"?`)
+      AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
         .then(response => {
           if (response){
             vm.option.destroy(item)
