@@ -2,15 +2,15 @@
 
 (function () {
 
-  function Helpers(ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper) {
+  function Helpers(ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper) {
 
     return {
-      ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper
+      ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper
     };
 
   }
 
   angular.module('vseramki')
-      .service('Helpers', Helpers);
+    .service('Helpers', Helpers);
 
 })();
