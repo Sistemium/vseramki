@@ -1,6 +1,6 @@
 state-bar.articles(
 root-state='catalogue'
-title='Каталог'
+bar-title='Каталог'
 )
   div(layout='row' layout-align='space-between center')
 
@@ -24,7 +24,7 @@ title='Каталог'
         ) {{ vm.cartTotal | number:2}}&nbsp;₽
 
     .buttons
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' ng-if='vm.isAdmin')
+      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' ng-if='vm.isAdmin' title='Добавить рамку')
         i.material-icons add
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
