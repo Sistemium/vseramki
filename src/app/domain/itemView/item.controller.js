@@ -11,7 +11,7 @@
       ArticleImage,
       Cart,
       BaguetteImage
-    } = Schema.models();
+      } = Schema.models();
 
     var numberFilter = $filter('number');
 
@@ -23,7 +23,6 @@
 
       uploading: true,
       imageClick,
-      deletePhoto,
       minusOne,
       plusOne,
       onBlur,
@@ -109,7 +108,7 @@
 
     /*
 
-    Functions
+     Functions
 
      */
 
@@ -175,16 +174,12 @@
     function mergeImages() {
       vm.images = _.union(vm.baguetteImages, vm.articleImages);
       if (vm.images.length) {
-        onThumbnailClick(0,_.first(vm.images));
+        onThumbnailClick(0, _.first(vm.images));
       }
     }
 
     function imageClick(item) {
       vm.clickedImage = item;
-    }
-
-    function deletePhoto(photo) {
-      ArticleImage.destroy(photo);
     }
 
     function setPrices() {
