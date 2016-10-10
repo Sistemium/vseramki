@@ -88,6 +88,9 @@
 
     .title {
       color: lighten($black-font-color, 10%);
+      span {
+        margin-right: $margin-default-half;
+      }
     }
 
   }

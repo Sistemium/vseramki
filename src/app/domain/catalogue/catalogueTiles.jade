@@ -11,8 +11,12 @@ md-content.ui-view.height-100#scroll-main
               label арт {{ article.code }}
             md-card-header
               img.thumbnail(ng-src='{{article.activePhoto()}}')
-            h4.text-center.margin-top-bottom.title
-              div "{{ ::article.brand.name }}" {{ ::article.frameSize.name }} {{ ::article.colour.name }}
+            h4.text-center.margin-top-bottom
+              .title
+                span(ng-if='article.brand') "{{ ::article.brand.name }}"
+                span(ng-if='!article.brand') {{ ::article.baguette.code }}
+                span {{ ::article.colour.name }}
+                span {{ ::article.frameSize.name }}
               small.gray {{ ::article.multiTypeName() }}
             //md-card-title.md-margin
               md-card-title-text
