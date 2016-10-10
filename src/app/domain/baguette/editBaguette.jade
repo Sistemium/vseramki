@@ -16,7 +16,7 @@ form-edit(vm="vm" item="vm.baguette" title="{{ vm.id ? '' : 'Новый баге
     md-divider.md-margin.hide-xs.hide-sm
 
     .margin-top
-      ng-gallery(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length')
+      ng-gallery(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length' is-deletable='true')
 
     .text-center.margin-top#frames(ng-if='vm.baguette.articles.length')
       span
