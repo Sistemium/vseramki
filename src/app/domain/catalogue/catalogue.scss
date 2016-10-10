@@ -9,12 +9,6 @@ frame-name{
 
 .articles {
 
-  md-card {
-    .not-in-cart {
-      margin-bottom: 15px;
-    }
-  }
-
   .state-bar {
     .cart-totals {
       font-size: 14px;
@@ -79,15 +73,21 @@ frame-name{
   }
 
   md-card {
+
+    .not-in-cart {
+      margin-bottom: $margin-default-half;
+    }
+
     height: 340px;
+    position: relative;;
 
     md-card-content {
       padding: 0;
       width: 100%;
       img {
-        max-width: 160px;
-        max-height: 160px;
-        height: 160px;
+        max-width: 170px;
+        max-height: 170px;
+        height: 170px;
       }
       .price {
         text-align: center;
@@ -97,10 +97,15 @@ frame-name{
 
     md-card-actions {
       min-height: 40px !important;
+      position: absolute;
+      bottom: $margin-default-half;
+      width: 100%;
+      text-align: center;
+      margin: 0;
     }
 
     md-card-header {
-      padding: 6px;
+      padding: 0;
     }
 
     .title {
