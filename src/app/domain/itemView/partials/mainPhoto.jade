@@ -24,7 +24,7 @@ layout-align='space-between center'
     span(flex)
 
   h4.text-center.margin-top-bottom
-    div "{{ ::vm.article.brand.name }}" {{ ::vm.article.colour.name }} {{ ::vm.article.frameSize.name }}
+    frame-name(article='vm.article')
     small.gray {{ ::vm.article.multiTypeName() }}
 
   ng-gallery(

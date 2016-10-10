@@ -1,5 +1,12 @@
 @import "../../styles/_vars";
 
+frame-name{
+  display: block;
+  span {
+    margin-right: $margin-default-half;
+  }
+}
+
 .articles {
 
   md-card {
@@ -98,9 +105,6 @@
 
     .title {
       color: lighten($black-font-color, 10%);
-      span {
-        margin-right: $margin-default-half;
-      }
     }
 
   }
