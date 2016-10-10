@@ -11,7 +11,7 @@
       ArticleImage,
       Cart,
       BaguetteImage
-      } = Schema.models();
+    } = Schema.models();
 
     var numberFilter = $filter('number');
 
@@ -172,7 +172,7 @@
     }
 
     function mergeImages() {
-      vm.images = _.union(vm.baguetteImages, vm.articleImages);
+      vm.images = _.union(vm.articleImages, vm.baguetteImages);
       if (vm.images.length) {
         onThumbnailClick(0, _.first(vm.images));
       }
