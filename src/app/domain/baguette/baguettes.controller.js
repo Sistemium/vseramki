@@ -8,7 +8,7 @@
 
     var vm = this;
 
-    var {ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper} = Helpers;
+    var {ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper} = Helpers;
 
     var {
       Brand,
@@ -90,10 +90,7 @@
 
     $scope.$on('$destroy', un);
 
-    var subscription = $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-
-      vm.isRoot = /(table|tiles)$/.test(toState.name);
-      vm.currentState = _.last($state.current.name.match(/baguettes\.([^\.]+)/));
+    ControllerHelper.setup(vm, $scope, (toState, toParams) => {
 
       if (vm.isRoot || !unbindBaguettes) {
         rebind(baguetteFilter);
@@ -109,8 +106,6 @@
       }
 
     });
-
-    $scope.$on('$destroy', subscription);
 
     VSHelper.watchForGroupSize($scope, 50, 250, setChunks);
 
