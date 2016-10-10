@@ -8,7 +8,7 @@ md-content.ui-view.height-100#scroll-main
         md-card(layout='column' layout-align='space-between center')
           md-card-content.clickable(ng-click='vm.gotoItemView(article, $event)')
             .md-card-corner
-              label арт {{ article.code }}
+              label {{ article.code }}
             md-card-header
               img.thumbnail(ng-src='{{article.activePhoto()}}')
             h4.text-center.margin-top-bottom
