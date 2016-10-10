@@ -8,7 +8,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, $rootScope, $state, AuthHelper, localStorageService, $window) {
+  function runBlock($log, $rootScope, $state, AuthHelper, $window) {
 
     var loggedIn;
     var loggingIn;
