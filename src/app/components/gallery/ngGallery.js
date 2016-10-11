@@ -4,7 +4,7 @@
 
   angular.module('vseramki').directive('ngGallery', ngGallery);
 
-  function ngGallery($document, $timeout, $q, $templateRequest, $compile, Schema) {
+  function ngGallery($document, $timeout, $q, $templateRequest, $compile, ToastHelper) {
 
     var imageModel;
 
@@ -204,22 +204,18 @@
 
         scope.deletePhoto = function () {
 
-          var obj = scope.images[scope.index];
-
-          Object.getOwnPropertyNames(obj).map(function (propertyName) {
-
-            if (propertyName === 'baguetteId') {
-              imageModel = 'BaguetteImage'
-            } else if (propertyName === 'articleId') {
-              imageModel = 'ArticleImage'
-            }
-
-          });
+          var imageModel = scope.images[scope.index];
 
           if (imageModel) {
-            imageModel = Schema.model(imageModel);
-            imageModel.destroy(obj);
-            scope.closeGallery();
+            imageModel.DSDestroy()
+              .then(()=>{
+                scope.closeGallery();
+              })
+              .catch(err => {
+                scope.closeGallery();
+                ToastHelper.error('Не удалось удалить изображение');
+                console.error(err);
+              });
           } else {
             console.error('ngGallery: Failed to initialize image model');
           }
