@@ -229,7 +229,8 @@ md-fab-actions, .viewport {
   }
 
   &.admin-button.md-mini:not([disabled]):hover {
-    background-color: $admin-button-fab-color;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.20);
+    background-color: lighten($admin-button-fab-color,20%);
   }
 
   &.default-button {
@@ -238,8 +239,12 @@ md-fab-actions, .viewport {
   }
 
   &.admin-button {
-    background-color: #dfdfdf;
-    color: black;
+    //background-color: #dfdfdf;
+    //color: black;
+    //box-shadow: none;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.16);
+    color: #606060;
+    background-color: #ffffff;
     min-width: 40px;
     min-height: 40px;
   }
