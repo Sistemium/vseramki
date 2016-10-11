@@ -30,7 +30,7 @@ bar-title='Каталог'
         i.material-icons delete
       md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Добавить фото')
         i.material-icons add_a_photo
-    .buttons(ng-if='vm.isAdmin')
+    .buttons(ng-if='vm.isAdmin && vm.currentState !== "create"')
       md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' title='Добавить рамку')
         i.material-icons add
 

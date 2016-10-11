@@ -114,8 +114,6 @@
     });
 
     ControllerHelper.setup(vm, $scope, (toState, toParams) => {
-      // vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
-      vm.disableAddFrame = toState.url === '/add';
       vm.currentItemId = toParams.id;
     });
 
