@@ -45,7 +45,7 @@
           var re = new RegExp(`${vm.rootState}\.([^.]+)`);
 
           vm.currentState = _.last($state.current.name.match(re));
-          vm.isRoot = (new RegExp(`${vm.currentState}$`)).test(toState.name);
+          //vm.isRoot = (new RegExp(`${vm.currentState}$`)).test(toState.name);
 
         }
 

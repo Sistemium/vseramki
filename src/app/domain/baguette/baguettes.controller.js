@@ -92,7 +92,7 @@
 
     ControllerHelper.setup(vm, $scope, (toState, toParams) => {
 
-      if (vm.isRoot || !unbindBaguettes) {
+      if (vm.isRootState || !unbindBaguettes) {
         rebind(baguetteFilter);
       }
 
