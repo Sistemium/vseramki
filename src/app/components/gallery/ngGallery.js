@@ -4,9 +4,7 @@
 
   angular.module('vseramki').directive('ngGallery', ngGallery);
 
-  function ngGallery($document, $timeout, $q, $templateCache, $window, Schema) {
-
-    var el = $window.$;
+  function ngGallery($document, $timeout, $q, $templateRequest, $compile, Schema) {
 
     var imageModel;
 
@@ -134,6 +132,8 @@
           scope.confirmDelete = false;
         };
 
+        var fullscreenElement;
+
         //var defineClass = function (width, height) {
         //  scope.useWide = false, scope.useTall = false;
         //  width >= height ? scope.useWide = true : scope.useTall = true;
@@ -171,6 +171,13 @@
 
         scope.openGallery = function (i) {
 
+          $templateRequest('app/components/gallery/galleryFullscreen.html')
+            .then(function (html) {
+              var template = angular.element(html);
+              $body.append(template);
+              fullscreenElement = $compile(template)(scope);
+            });
+
           if (angular.isDefined(i)) {
             scope.index = i;
             showImage(scope.index);
@@ -203,6 +210,7 @@
           if (scope.hideOverflow) {
             el('body').css({overflow: ''});
           }
+          fullscreenElement.remove();
         };
 
         scope.deletePhoto = function () {
