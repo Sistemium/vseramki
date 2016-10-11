@@ -2,43 +2,24 @@
 
 (function () {
 
-  angular
-    .module('vseramki')
-    .controller('BaguettesController', BaguettesController)
-  ;
+  function BaguettesController(Schema, $filter, AuthHelper, $scope, $q, $state, Helpers) {
 
-  function BaguettesController(Schema, Baguette, AuthHelper, $scope, $q, $state, ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper) {
+    const filter = $filter('filter');
 
     var vm = this;
 
-    var Brand = Schema.model('Brand');
-    var Material = Schema.model('Material');
-    var Colour = Schema.model('Colour');
-    var BaguetteImage = Schema.model('BaguetteImage');
+    var {ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper} = Helpers;
 
-    $q.all([
-      Colour.findAll(),
-      Material.findAll(),
-      Brand.findAll(),
-      BaguetteImage.findAll()
-    ]);
+    var {
+      Brand,
+      Material,
+      Colour,
+      BaguetteImage,
+      Baguette
+    } = Schema.models();
 
     var chunkSize;
-
-    vm.isAdmin = AuthHelper.isAdmin();
-
-    function setChunks(nv) {
-      chunkSize = nv;
-      vm.chunked = _.chunk(vm.baguettes, nv);
-    }
-
-    Baguette.findAll()
-      .then(function (baguettes) {
-        vm.baguettes = baguettes;
-        setChunks(chunkSize);
-      })
-    ;
-
+    var unbindBaguettes;
 
     var baguetteFilter = {
       orderBy: [
@@ -46,28 +27,15 @@
       ]
     };
 
-    var unbindBaguettes;
+    _.assign(vm, {
 
-    function rebind(filter) {
-      if (unbindBaguettes) {
-        unbindBaguettes();
-      }
-      // TODO: check tiles flickering after nth delete
-      unbindBaguettes = Baguette.bindAll(filter, $scope, 'vm.baguettes', () => setChunks(chunkSize));
-    }
-
-    var un = $scope.$on('baguetteRefresh', function (e, a) {
-      rebind(_.assign({}, baguetteFilter, a));
-    });
-
-    $scope.$on('$destroy', un);
-
-    angular.extend(vm, {
-
+      filteredBaguettes: [],
       rootState: 'baguettes',
       selected: [],
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,
+
+      isAdmin: AuthHelper.isAdmin(),
 
       showImageDialog: ImageHelper.mdDialogHelper(
         function (imsImg, id) {
@@ -77,72 +45,54 @@
             }));
         }),
 
+      deleteBaguette,
+      goToCreateBaguette,
+      changeBaguette,
+      addPhotoClick,
 
-      editBaguette: function (item) {
-        $state.go('.edit', {id: item.id});
-      },
-
-
-      deleteBaguette: function (item, $event) {
-
-        var promise = AlertHelper.showConfirm($event);
-
-
-        promise.then(function (answer) {
-          if (answer) {
-            if (item.length) {
-              _(item).forEach(function (item) {
-                Baguette.destroy(item);
-              });
-              ToastHelper.showToast('Багет удален', true);
-              vm.selected = [];
-            }
-            else {
-              Baguette.destroy(item);
-              ToastHelper.showToast('Багет удален', true);
-            }
-          }
-        }).catch(function () {
-          vm.selected = [];
-        });
-
-      },
-
-      resetCheckedBaguette: function () {
-        vm.selected = [];
-      },
-
-      ///???????????????????????????????????????////
-      saveClickedOption: function (obj, name) {
-        vm.baguette[name] = obj.id;
-      },
-
-      changeBaguette: function (bag) {
-        $state.go($state.current.name, {id: bag.id});
-      },
-
-      goToCreateBaguette: function (parent) {
-        var re = new RegExp(`${vm.rootState}\.([^.]+)`);
-        var currentState = parent || _.last($state.current.name.match(re));
-        $state.go(`${vm.rootState}.${currentState}.create`);
-      },
-
-      backToList: function () {
-        $state.go($state.current.parent.name);
-      },
-
-      changeView: function (goTo) {
-        $state.go(goTo);
-      }
+      resetFilters: () => vm.search = '',
+      resetCheckedBaguette: () => vm.selected = [],
+      editBaguette: item => $state.go('.edit', {id: item.id}),
+      changeView: goTo => $state.go(goTo)
 
     });
 
-    var subscription = $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+    /*
 
-      vm.isRoot = /(table|tiles)$/.test(toState.name);
-      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
+     Init
 
-      if (vm.isRoot || !unbindBaguettes) {
+     */
+
+    $q.all([
+      Colour.findAll(),
+      Material.findAll(),
+      Brand.findAll(),
+      BaguetteImage.findAll()
+    ]);
+
+    Baguette.findAll()
+      .then(function (baguettes) {
+        vm.baguettes = baguettes;
+        setFiltered();
+      });
+
+    /*
+
+     Listeners
+
+     */
+
+    $scope.$watch('vm.search', setFiltered);
+
+    var un = $scope.$on('baguetteRefresh', function (e, a) {
+      rebind(_.assign({}, baguetteFilter, a));
+    });
+
+    $scope.$on('$destroy', un);
+
+    ControllerHelper.setup(vm, $scope, (toState, toParams) => {
+
+      if (vm.isRootState || !unbindBaguettes) {
         rebind(baguetteFilter);
       }
 
@@ -157,10 +107,94 @@
 
     });
 
-    $scope.$on('$destroy', subscription);
-
     VSHelper.watchForGroupSize($scope, 50, 250, setChunks);
 
+    /*
+
+     Functions
+
+     */
+
+    function addPhotoClick(event) {
+      $scope.$broadcast('addPhotoClick', event);
+    }
+
+
+    function setFiltered(search) {
+
+      if (!search) {
+        vm.filteredBaguettes = vm.baguettes;
+      } else {
+        var re = new RegExp(_.escapeRegExp(search), 'ig');
+        vm.filteredBaguettes = filter(vm.baguettes, (value) => {
+          return re.test(value.name) || re.test(value.code) || value.id === search;
+        });
+      }
+
+      setChunks(chunkSize);
+    }
+
+    function setChunks(nv) {
+      chunkSize = nv;
+      vm.chunked = _.chunk(vm.filteredBaguettes, nv);
+    }
+
+    function rebind(filter) {
+      if (unbindBaguettes) {
+        unbindBaguettes();
+      }
+      // TODO: check tiles flickering after nth delete
+      unbindBaguettes = Baguette.bindAll(filter, $scope, 'vm.baguettes', () => {
+        setFiltered(vm.search);
+      });
+    }
+
+    function deleteBaguette(item, $event) {
+
+      var promise = AlertHelper.showConfirm($event);
+
+      promise.then(function (answer) {
+        if (answer) {
+          var itemIndex = _.findIndex(vm.filteredBaguettes, item);
+          var q = _.isArray(item)
+            ? $q.all(_.map(item, itm => Baguette.destroy(itm)))
+            : Baguette.destroy(item).then(()=>{
+                var newItem = _.get(vm.filteredBaguettes, (itemIndex || 2) - 1);
+                if (newItem) {
+                  $state.go('.', {id: newItem.id});
+                } else {
+                  $state.go('^');
+                }
+              })
+            ;
+          q.then(()=> {
+            ToastHelper.success('Багет удален');
+          }, () => {
+            ToastHelper.error('Ошибка. Не удалось удалить');
+          });
+        }
+      });
+
+    }
+
+    function goToCreateBaguette(parent) {
+      var re = new RegExp(`${vm.rootState}\.([^.]+)`);
+      var currentState = parent || _.last($state.current.name.match(re));
+      $state.go(`${vm.rootState}.${currentState}.create`);
+    }
+
+    function changeBaguette(bag) {
+      var newState = $state.current.name;
+
+      newState = newState.replace(/\.(edit|create)$/, '') + '.edit';
+
+      $state.go(newState, {id: bag.id});
+    }
+
   }
+
+  angular
+    .module('vseramki')
+    .controller('BaguettesController', BaguettesController);
 
 }());

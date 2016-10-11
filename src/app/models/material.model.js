@@ -14,6 +14,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Материалы',
+        what: 'материал'
+      },
+
       name: 'Material',
 
       relations: {

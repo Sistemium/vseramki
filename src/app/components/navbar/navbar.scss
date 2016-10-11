@@ -2,6 +2,7 @@
 .top-logo {
   max-height: 36px;
   cursor: pointer;
+  max-width: 100%;
 }
 
 @media (max-width: 449px) {
@@ -17,12 +18,10 @@ md-toolbar.toolbar-fixed-top.white-background {
 
 .toolbar-fixed-top {
 
-  //position: fixed;
-  top: 0;
-  z-index: 70;
+  z-index: 3;
 
-  & + * {
-    //margin-top: 64px;
+  .md-button.md-fab {
+    min-width: 40px;
   }
 
 }
@@ -43,7 +42,7 @@ body {
     color: rgba(255, 255, 255, 0.87);
     background-color: $primary-button-background-color;
   }
-  &.md-button.md-primary:hover:not([disabled])  {
+  &.md-button.md-primary:hover:not([disabled]), &.md-button.md-primary.md-focused {
     background-color: $md-fab-tool-hover;
   }
 }
@@ -94,5 +93,21 @@ body {
       }
     }
 
+  }
+}
+
+@media (max-width: $layout-breakpoint-tight - 1) {
+  md-toolbar {
+    .hidden-tight {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-tight) {
+  md-toolbar {
+    .shown-tight {
+      display: none;
+    }
   }
 }

@@ -1,37 +1,48 @@
 .ui-view(flex)
 
-  md-table-container(ng-if='vm.baguettes.length')
-    table(md-table md-row-select multiple ng-model='vm.selected')
-      thead(md-head md-order='filterBy')
-        th(md-column) Фото
-        th(md-column md-order-by='colour.name') Цвет
-        th(md-column md-order-by='material.name') Материал
-        th(md-column md-order-by='brand.name') Бренд
-        th(md-column md-order-by='borderWidth') Ширина (мм.)
-      tbody.clickable(md-body)
-        tr(
-        md-row
-        ng-repeat='bag in vm.baguettes ' +
-        '| orderBy: filterBy ' +
-        '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
-        ' track by bag.id'
-        md-select='bag'
-        md-select-id='id'
-        ng-click='vm.editBaguette(bag, $event)'
-        )
-          td(md-cell)
-            img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}')
-          td(md-cell) {{bag.colour.name}}
-          td(md-cell) {{bag.material.name}}
-          td(md-cell) {{bag.brand.name}}
-          td(md-cell) {{bag.borderWidth}}
+  #scroll-main.scroll-y(
+  resize='baguetteTable'
+  ng-style='{height: (baguetteTable.windowHeight - baguetteTable.offsetTop - 57)+"px"}'
+  )
+    md-table-container(ng-if='vm.baguettes.length')
+      table(md-table)
+        thead(md-head md-order='filterBy')
+          th.hide-xs(md-column) Фото
+          th(md-column md-order-by='brand.code') Код
+          th(md-column md-order-by='brand.name') Бренд
+          th(md-column md-order-by='surface.name') Поверхность
+          th(md-column md-order-by='colour.name') Цвет
+          th(md-column md-order-by='lastName') Комментарий
+          th(md-column) Цвета
+          th.hide-xs.hide-sm(md-column md-order-by='borderWidth') Ширина (мм.)
+        tbody.clickable(md-body)
+          tr(
+          md-row
+          ng-repeat='bag in vm.filteredBaguettes ' +
+          '| orderBy: filterBy ' +
+          '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+          ' track by bag.id'
+          md-select='bag'
+          md-select-id='id'
+          ng-click='vm.editBaguette(bag, $event)'
+          )
+            td.hide-xs(md-cell)
+              img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}')
+            td(md-cell) {{bag.code}}
+            td(md-cell) {{bag.brand.name}}
+            td(md-cell) {{bag.surface.name}}
+            td(md-cell) {{bag.colour.name}}
+            td(md-cell) {{bag.lastName}}
+            td(md-cell)
+              div(ng-repeat='bc in bag.colours track by bc.id') {{ bc.colour.name }}
+            td.hide-xs.hide-sm(md-cell) {{bag.borderWidth}}
 
-  md-table-pagination.fixed-bottom(
+  md-table-pagination(
   md-limit='vm.pagination.query.limit',
   md-label='{{vm.pagination.labels}}',
   md-limit-options='vm.pagination.limitOptions',
   md-page='vm.pagination.query.page',
-  md-total='{{vm.baguettes.length}}',
+  md-total='{{vm.filteredBaguettes.length}}',
   md-page-select='!vm.useMobile',
   md-boundary-links='!vm.useMobile'
   md-on-paginate='vm.onPaginate'

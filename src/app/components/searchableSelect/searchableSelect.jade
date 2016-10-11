@@ -7,17 +7,19 @@
       md-input-container(flex)
         label Поиск {{ vm.labelOf }}
         input(
-          elem-ready='vm.inputReady'
-          ng-model="vm.search.name"
-          type="text"
-          input-clear='black'
-          md-autofocus
+        elem-ready='vm.inputReady'
+        ng-model="vm.search.name"
+        ng-change='vm.onSearchChange(vm.search.name)'
+        type="text"
+        input-clear='black'
+        md-autofocus
         )
       div(ng-if='!vm.notAddable && vm.search.name')
 
         md-button.button-cust-fab(
-          ng-class='vm.addingMode ? "green-button-fab" : "yellow-button-fab"'
-          ng-click="vm.addClick($event)"
+        ng-show='vm.isValidToAdd'
+        ng-class='vm.addingMode ? "green-button-fab" : "yellow-button-fab"'
+        ng-click="vm.addClick($event)"
         )
           i.material-icons.md-fab add
 

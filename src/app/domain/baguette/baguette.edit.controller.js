@@ -2,16 +2,19 @@
 
 (function () {
 
-  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper) {
+  const keys = ['brandId', 'colourId', 'materialId', 'surfaceId', 'lastName', 'code'];
+
+  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper, $q) {
 
     var vm = this;
-
-    var keys = ['brandId', 'colourId', 'materialId'];
 
     var Brand = Schema.model('Brand');
     var Material = Schema.model('Material');
     var Colour = Schema.model('Colour');
     var BaguetteImage = Schema.model('BaguetteImage');
+    var BaguetteColour = Schema.model('BaguetteColour');
+    var Surface = Schema.model('Surface');
+
 
     _.assign(vm, {
 
@@ -22,21 +25,22 @@
       attrsSearchColour: {},
       attrsSearchBrand: {},
       selected: [],
+      baguetteColours: [],
       dupMessage: '',
       saveLabel: 'Сохранить новый багет',
 
       hasChanges,
       cancelChanges,
       save,
-      saveClickedOption,
+      baguetteColourRemoveClick,
 
       quit: () => $state.go('^'),
 
       showImageDialog: ImageHelper.mdDialogHelper(
-        function (imsImg, id) {
+        function (imsImg) {
           BaguetteImage.create(
             angular.extend(imsImg, {
-              baguetteId: id
+              baguetteId: vm.baguette.id
             }));
         })
 
@@ -53,11 +57,13 @@
         .then(function (baguette) {
           vm.baguette = baguette;
           vm.saveLabel = 'Сохранить';
+          initBaguetteColours();
         });
     } else {
       vm.isCreateState = true;
       vm.baguette = Baguette.createInstance();
     }
+
 
     /*
 
@@ -66,9 +72,16 @@
      */
 
 
+    $scope.$watch(() => {
+      return _.pick(vm.baguette, keys);
+    }, checkForDuplicates, true);
+
+    $scope.$watch('vm.extraBaguetteColourId', addBaguetteColour);
+
     Colour.bindAll(false, $scope, 'vm.colours');
     Material.bindAll(false, $scope, 'vm.materials');
     Brand.bindAll(false, $scope, 'vm.brands');
+    Surface.bindAll(false, $scope, 'vm.surfaces');
 
     BaguetteImage.bindAll({
       baguetteId: vm.id
@@ -76,38 +89,100 @@
 
     $scope.$on('$destroy', cancelChanges);
 
+    $scope.$on('addPhotoClick', (e, event) => {
+      vm.showImageDialog(event);
+    });
+
 
     /*
 
-    Functions
+     Functions
 
      */
 
-    function selectParamsChecker() {
-      vm.paramsCheck =  vm.unique &&
-        vm.baguette && vm.baguette.colour &&
+    function refreshName() {
+      vm.baguette.name = vm.baguette.stringName();
+    }
+
+    function checkParams() {
+      vm.paramsCheck = vm.unique &&
+        vm.baguette &&
         vm.baguette.material &&
-        vm.baguette.brand &&
         vm.baguette.borderWidth;
     }
 
+    function initBaguetteColours() {
+      vm.baguetteColours = vm.baguette.colours || [];
+    }
+
     function hasChanges() {
-      selectParamsChecker();
-      return vm.id ? Baguette.hasChanges(vm.id) : _.get(vm,'attrsForm.$dirty');
+      checkParams();
+      return !vm.id
+        ? _.get(vm, 'attrsForm.$dirty')
+        : Baguette.hasChanges(vm.id) ||
+          _.find(
+            vm.baguetteColours,
+            item => !item.id || BaguetteColour.hasChanges(item)
+          );
+    }
+
+    function addBaguetteColour() {
+      if (vm.extraBaguetteColourId) {
+
+        var colourId = {colourId: vm.extraBaguetteColourId};
+
+        var isDuplicate = _.find(vm.baguetteColours, colourId);
+
+        if (!isDuplicate) {
+          vm.baguetteColours.push(BaguetteColour.createInstance({
+            colourId: vm.extraBaguetteColourId
+          }));
+        }
+
+        vm.extraBaguetteColourId = null;
+
+      }
+    }
+
+    function baguetteColourRemoveClick(chip) {
+      if (chip.id) {
+        if (chip.toRemove) {
+          BaguetteColour.revert(chip.id);
+        } else {
+          chip.toRemove = true;
+        }
+      } else {
+        _.remove(vm.baguetteColours, chip);
+      }
     }
 
     function cancelChanges() {
       if (vm.id && hasChanges()) {
-        selectParamsChecker();
-        return Baguette.revert(vm.baguette);
+
+        Baguette.revert(vm.baguette);
+        _.each(vm.baguette.colours, item => item.id && BaguetteColour.revert(item));
+        initBaguetteColours();
+        checkParams();
+
       }
     }
 
     function checkForDuplicates() {
 
-      var filter = _.pick(vm.baguette, keys);
-      Baguette.findAll(filter, {bypassCache: true})
+      if (!vm.baguette) {
+        return;
+      }
+
+      refreshName();
+
+      var filter = {};
+
+      _.each(keys, key => filter[key] = vm.baguette[key] || null);
+
+      Baguette.findAll(filter, {bypassCache: true, cacheResponse: false})
         .then(function (data) {
+
+          _.remove(data, {id: _.get(vm, 'baguette.id')});
 
           if (data.length) {
             vm.dupMessage = 'Такой багет уже существует';
@@ -116,55 +191,51 @@
             vm.unique = true;
             vm.dupMessage = '';
           }
-          selectParamsChecker();
+
+          checkParams();
+
         });
     }
 
     function save() {
-      Baguette.create(vm.baguette)
-        .then(function () {
-          ToastHelper.showToast('Багет сохранен', true);
-          if (!vm.id) {
-            vm.baguette = Baguette.createInstance();
-          }
-          clearForm();
+      return Baguette.create(vm.baguette)
+        .then(baguette => {
+
+          return $q.all(_.map(vm.baguetteColours, item => {
+            if (item.toRemove) {
+              return item.id ? BaguetteColour.destroy(item) : $q.reject();
+            }
+            return BaguetteColour.create(_.assign(item, {baguetteId: baguette.id}));
+          }));
+
         })
-        .catch(function (obj) {
+        .then(() => {
 
-          if (obj.status == '500') {
-            ToastHelper.showToast('Ошибка. Багет не сохранен', false, vm);
-          } else {
-            ToastHelper.showToast('Ошибка. Обратитесь в тех. поддержку', false, vm);
+          ToastHelper.success('Багет сохранен');
+
+          if (!vm.id) {
+            $state.go('^.edit', {id: vm.baguette.id});
           }
 
-        });
+          clearForm();
+
+        })
+        .catch(() => ToastHelper.error('Ошибка. Багет не сохранен'));
     }
 
-    function saveClickedOption() {
-
-      if (vm.baguette.material && vm.baguette.colour && vm.baguette.brand && (hasChanges() || vm.isCreateState)) {
-        checkForDuplicates();
-      }
-
-      if (!vm.id) {
-        $scope.$emit('baguetteRefresh', _.pick(vm.baguette, keys));
-      }
-
-    }
-
-    function clearForm () {
+    function clearForm() {
       if (!vm.id) {
         vm.baguette = Baguette.createInstance();
       }
       vm.dupMessage = false;
       vm.unique = true;
-      //initArticleFrameSizes();
-      _.result(vm,'attrsForm.$setUntouched');
-      _.result(vm,'attrsForm.$setPristine');
-      selectParamsChecker();
+      vm.extraBaguetteColourId = false;
+      _.result(vm, 'attrsForm.$setUntouched');
+      _.result(vm, 'attrsForm.$setPristine');
+      checkParams();
+      initBaguetteColours();
+
     }
-
-
 
   }
 

@@ -2,7 +2,7 @@
 
 (function () {
 
-  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper) {
+  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper) {
 
     var vm = this;
 
@@ -20,7 +20,7 @@
 
     var chunkSize = 3;
 
-    angular.extend(vm, {
+    _.assign(vm, {
 
       rootState: 'catalogue',
       rows: [],
@@ -48,10 +48,19 @@
       changeView: to => $state.go(to),
       goToCreateFrame,
 
-      changeFrame: function (frame) {
-        var newState = vm.currentState === 'create' ? '^.item' : $state.current.name;
+      articlesListItemClick: function (frame) {
+        var newState = $state.current.name;
+
+        if (vm.currentState === 'create') {
+          newState = '^.item';
+        } else if ($state.params.id === frame.id && $state.current.name.match(/edit/)) {
+          newState = '^'
+        }
+
         $state.go(newState, {id: frame.id});
-      }
+      },
+
+      stateBarButtonClick: event => $scope.$broadcast('stateBarButtonClick', event)
 
     });
 
@@ -64,21 +73,6 @@
 
     Cart.findAll();
 
-    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
-
-    Baguette.findAll().then(function (data) {
-      vm.baguette = data;
-    });
-
-    BaguetteImage.findAll().then(function (data) {
-      vm.baguetteImage = data;
-    });
-
-    ArticleImage.findAll({limit: 1000})
-      .then(function (data) {
-        vm.images = data;
-      });
-
     Article.findAll({limit: 1000})
       .then(() => {
 
@@ -86,7 +80,10 @@
           Colour.findAll(),
           Material.findAll(),
           FrameSize.findAll(),
-          Brand.findAll()
+          Brand.findAll(),
+          Baguette.findAll(),
+          BaguetteImage.findAll(),
+          ArticleImage.findAll()
         ]);
 
       })
@@ -105,19 +102,22 @@
 
     VSHelper.watchForGroupSize($scope, 300, 270, setChunks);
 
+    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
+    // Baguette.bindAll({}, $scope, 'vm.baguette');
+    // BaguetteImage.bindAll({}, $scope, 'vm.baguetteImage');
+    // ArticleImage.bindAll({}, $scope, 'vm.images');
+
     $scope.$watch('vm.articleFilter', filterArticles);
 
     $scope.$watch('vm.search', () => {
       filterArticles();
     });
 
-    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
-      vm.disableAddFrame = toState.url === '/add';
-      vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
+    ControllerHelper.setup(vm, $scope, (toState, toParams) => {
       vm.currentItemId = toParams.id;
     });
 
+    $scope.$watch(() => Article.lastModified(), () => filterArticles());
 
     /*
 

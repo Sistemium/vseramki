@@ -2,26 +2,51 @@
 
 .baguettes {
 
+  .state-bar {
+    .md-toolbar-tools {
+      span.flex {
+        //display: none;
+      }
+      ng-transclude {
+        //flex: 1;
+      }
+      md-input-container {
+        margin-left: 15px;
+      }
+    }
+    #searcher {
+      max-width: 160px;
+      font-size: 16px;
+    }
+  }
+
+  .md-sidenav-left {
+    margin: $margin-default;
+  }
+
   md-card img.thumbnail {
     width: 200px;
     height: 200px;
-    padding: 10px;
   }
 
   .repeated-group {
-    height: 378px;
+    height: 370px;
     padding: 2px;
   }
 
   .item {
     padding: 5px;
-    margin: 5px 0;
+    margin: 0;
     font-size: 14px;
     cursor: pointer;
+    .gray {
+      text-align: right;
+    }
+    border-bottom: solid 1px lighten(silver,15%);
   }
 
   .repeated-group-item {
-    height: 400px;
+    //height: 350px;
     max-width: 300px;
     padding-top: 10px;
     margin: 2px;
@@ -35,6 +60,24 @@
 
   md-card {
     overflow: hidden;
+    .property-list-container .property > * {
+      margin-top: 0;
+    }
+    md-card-content {
+      margin: 0 0 15px 0;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+      .property-value {
+        text-align: left;
+      }
+    }
+  }
+
+  form-footer #frames {
+    .md-button {
+      min-width: 60px;
+    }
   }
 
 }

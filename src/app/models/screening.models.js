@@ -14,6 +14,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Вставки',
+        what: 'вставку'
+      },
+
       name: 'Screening',
 
       relations: {

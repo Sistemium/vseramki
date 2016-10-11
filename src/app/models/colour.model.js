@@ -14,6 +14,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Цвета',
+        what: 'цвет'
+      },
+
       name: 'Colour',
 
       relations: {

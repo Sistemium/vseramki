@@ -23,7 +23,6 @@
 
       uploading: true,
       imageClick,
-      deletePhoto,
       minusOne,
       plusOne,
       onBlur,
@@ -41,7 +40,7 @@
       middleThreshold2: Math.round(Article.maxThreshold() / 2),
       maxThreshold: Article.maxThreshold(),
 
-      showImageDialog: ImageHelper.mdDialogHelper(
+      addAPhotoClick: ImageHelper.mdDialogHelper(
         imsImg => ArticleImage.create(_.assign(imsImg, {articleId: vm.article.id}))
       ),
 
@@ -50,9 +49,9 @@
         minusOne(vm.article);
       },
 
-      editFrame: () => $state.go($state.current.name + '.edit', {id: vm.article.id}),
-      addFrame: () => $state.go('catalogue.' + $state.current.name.split('.')[1] + '.create'),
-      deleteFrame,
+      editClick: () => $state.go($state.current.name + '.edit', {id: vm.article.id}),
+      // addFrame: () => $state.go('catalogue.' + $state.current.name.split('.')[1] + '.create'),
+      deleteClick,
 
       previewClick: () => $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
 
@@ -105,11 +104,16 @@
       vm.isRootState = /(^|\.)item$/.test(to.name);
     });
 
+    $scope.$on('stateBarButtonClick', (scopeEvent, domEvent) => {
+      var fn = _.get(vm, `${_.camelCase(domEvent.target.textContent)}Click`);
+      _.isFunction(fn) && fn(domEvent);
+    });
+
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
 
     /*
 
-    Functions
+     Functions
 
      */
 
@@ -120,7 +124,7 @@
       }
     }
 
-    function deleteFrame($event) {
+    function deleteClick($event) {
 
       var frameId = vm.article.id;
 
@@ -173,16 +177,14 @@
     }
 
     function mergeImages() {
-      vm.images = _.union(vm.baguetteImages, vm.articleImages);
-      vm.currentImage = _.first(vm.images);
+      vm.images = _.union(vm.articleImages, vm.baguetteImages);
+      if (vm.images.length) {
+        setPreviewImage(_.first(vm.images));
+      }
     }
 
     function imageClick(item) {
       vm.clickedImage = item;
-    }
-
-    function deletePhoto(photo) {
-      ArticleImage.destroy(photo);
     }
 
     function setPrices() {
@@ -231,8 +233,7 @@
 
     }
 
-    function onThumbnailClick(i, newImg) {
-
+    function setPreviewImage(newImg) {
       var newId = _.get(newImg, 'id');
 
       if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage, 'id')) {
@@ -243,6 +244,17 @@
           .then(() => vm.currentImageLoading === newImg.id && (vm.currentImage = newImg))
           .finally(() => vm.currentImageLoading === newImg.id && (vm.currentImageLoading = false));
 
+      }
+    }
+
+    function onThumbnailClick(i, newImg) {
+
+      var newId = _.get(newImg, 'id');
+
+      if (!vm.currentImageLoading && newId === _.get(vm,'currentImage.id')) {
+        return $scope.$broadcast('openGallery', {index: i});
+      } else {
+        setPreviewImage(newImg);
       }
 
     }

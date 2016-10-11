@@ -14,6 +14,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Багет',
+        what: 'багет'
+      },
+
       name: 'Baguette',
 
       relations: {
@@ -51,7 +56,32 @@
             foreignKey: 'baguetteId'
           }
         }
-        
+
+      },
+
+      methods: {
+
+        stringName: function () {
+
+          var names = [
+            this.brand ? '"' + this.brand.name + '"' : this.code
+          ];
+
+          if (this.surface){
+            names.push(this.surface.name);
+          }
+
+          if (this.colour){
+            names.push(this.colour.name);
+          }
+
+          if (this.lastName) {
+            names.push(this.lastName);
+          }
+
+          return names.join(' ');
+
+        }
       }
 
     });

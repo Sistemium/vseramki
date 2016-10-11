@@ -2,9 +2,6 @@
 
 (function () {
 
-  angular.module('vseramki')
-    .directive('acmeNavbar', acmeNavbar);
-
   function acmeNavbar() {
 
     var directive = {
@@ -18,14 +15,33 @@
   }
 
   /** @ngInject */
-  function NavbarController(Cart, $scope, $mdMedia, $window, $state, AuthHelper, ToastHelper) {
-
-    Cart.bindAll({}, $scope, 'vm.cart');
-    Cart.findAll();
+  function NavbarController(Cart, $scope, $window, $state, AuthHelper, ToastHelper) {
 
     var vm = this;
 
+    _.assign(vm, {
+
+      loginBtnClick: () => vm.loggedIn ? $state.go('profile') : $state.go('login')
+
+    });
+
+    Cart.findAll();
+
+    setUser(AuthHelper.hasUser()) || $scope.$on('logging-in', (e, q) => {
+      setUser(q.then(AuthHelper.hasUser));
+    });
+
     setButtons();
+
+    Cart.bindAll({}, $scope, 'vm.cart');
+
+    $scope.$on('logged-off', function () {
+      $window.location.href = '';
+    });
+
+    /*
+    Functions
+     */
 
     function setUser(q) {
 
@@ -76,6 +92,9 @@
         vm.navs.push({
           sref: 'baguettes',
           label: 'Багет'
+        },{
+          sref: 'dictionary',
+          label: 'Словари'
         });
       }
 
@@ -90,32 +109,10 @@
 
     }
 
-    setUser(AuthHelper.hasUser()) || $scope.$on('logging-in', (e, q) => {
-      setUser(q.then(AuthHelper.hasUser));
-    });
-
-    $scope.$on('logged-off', function () {
-      $window.location.href = '';
-    });
-
-    _.assign(vm, {
-
-      loginBtnClick: function () {
-        vm.loggedIn ? $state.go('profile') : $state.go('login');
-      }
-
-    });
-
-    $scope.$watch(
-      function () {
-        return $mdMedia('max-width: 800px');
-      },
-
-      function (value) {
-        vm.breakpoint = value;
-      }
-    );
-
   }
+
+  angular.module('vseramki')
+    .directive('acmeNavbar', acmeNavbar);
+
 
 })();

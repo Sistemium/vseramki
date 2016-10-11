@@ -13,7 +13,7 @@
         theme = 'fail-toast';
       }
 
-      $mdToast.show(
+      return $mdToast.show(
         $mdToast.simple()
           .textContent(resStr)
           .position('top right')

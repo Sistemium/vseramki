@@ -2,21 +2,6 @@ $ng-gallery-icon-hover-color: #d8d8d8;
 
 .ng-gallery, ng-gallery {
 
-  .window-controls.hide-xs {
-
-    top: 0;
-    right: 0;
-    position: fixed;
-    height: auto;
-
-    i {
-      font-size: 37px;
-      margin-top: 8px;
-      margin-right: 5px;
-    }
-
-  }
-
   .material-icons {
     color: white;
     cursor: pointer;
@@ -24,6 +9,13 @@ $ng-gallery-icon-hover-color: #d8d8d8;
 
   .material-icons:hover {
     color: $ng-gallery-icon-hover-color;
+  }
+
+  .confirm {
+    &:hover {
+      color: yellow;
+    }
+    color: yellow;
   }
 
   .thumbnails {
@@ -74,6 +66,25 @@ ng-gallery.margin-top-em > .ng-gallery {
 
   > * {
     height: 100%;
+  }
+
+  .window-controls {
+
+    &.hide-xs {
+      top: 0;
+      right: 0;
+      position: fixed;
+      height: auto;
+    }
+
+    max-height: 40px;
+
+    i {
+      font-size: 37px;
+      margin-top: 8px;
+      margin-right: 5px;
+    }
+
   }
 
   .left-right-chevron {

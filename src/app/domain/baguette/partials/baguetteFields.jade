@@ -1,0 +1,61 @@
+md-input-container
+  label Комментарий
+  input(
+  type='text'
+  ng-model='vm.baguette.lastName'
+  name='lastName'
+  input-clear='black'
+  input-clear-value='null'
+  autocomplete='off'
+  )
+  div(ng-messages="vm.attrsForm.lastName.$error")
+    div(ng-message="required") Поле не может быть пустым
+
+md-input-container
+  label Код
+    =' '
+    span.required-field-asterisk *
+  input(
+  required type='text'
+  ng-model='vm.baguette.code'
+  name='code'
+  input-clear='black'
+  input-clear-value='null'
+  autocomplete='off'
+  )
+  div(ng-messages="vm.attrsForm.code.$error")
+    div(ng-message="required") Поле не может быть пустым
+
+md-input-container
+  label Ширина багета (мм.)
+    =' '
+    span.required-field-asterisk *
+  input(
+  required type='number' step='1' min='1'
+  ng-model='vm.baguette.borderWidth'
+  name='baguetteWidth'
+  input-clear='black'
+  input-clear-value='null'
+  autocomplete='off'
+  )
+  div(ng-messages="vm.attrsForm.baguetteWidth.$error")
+    div(ng-message="required") Поле не может быть пустым
+
+searchable-select.no-margin(
+placeholder='Дополнительные цвета'
+label-of='цвета'
+model='vm.extraBaguetteColourId'
+model-name='Colour'
+options='vm.colours'
+)
+
+md-chips.removable(
+ng-model="vm.baguetteColours"
+readonly='true'
+)
+  md-chip-template
+    span(ng-class='{"strike-through gray": $chip.toRemove}') {{$chip.colour.name}}
+    md-button.micro-fab(ng-click='vm.baguetteColourRemoveClick($chip)')
+      | {{ $chip.toRemove ? '+' : '–' }}
+
+input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')

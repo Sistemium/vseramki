@@ -14,6 +14,11 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Бренды',
+        what: 'бренд'
+      },
+
       name: 'Brand',
 
       relations: {

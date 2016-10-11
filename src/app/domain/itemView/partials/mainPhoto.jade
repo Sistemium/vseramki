@@ -3,7 +3,7 @@ layout='column'
 layout-align='space-between center'
 )
   .md-card-corner
-    label арт {{ vm.article.code }}
+    label {{ vm.article.code }}
 
   .text-center.preview(
   flex
@@ -24,7 +24,7 @@ layout-align='space-between center'
     span(flex)
 
   h4.text-center.margin-top-bottom
-    div "{{ ::vm.article.brand.name }}" {{ ::vm.article.frameSize.name }} {{ ::vm.article.colour.name }}
+    frame-name(article='vm.article')
     small.gray {{ ::vm.article.multiTypeName() }}
 
   ng-gallery(
@@ -43,10 +43,16 @@ layout-align='space-between center'
           p(ng-repeat='fs in vm.article.articleFrameSizes | orderBy:"fs.frameSize.name" track by fs.id')
             | {{ fs.count }} * {{ fs.frameSize.name }}
       .property
-        .property-label Материал багета:
+        .property-label
+          span Материал
+          = ' '
+          a(ui-sref='baguettes.table.edit({id: vm.article.baguetteId})') багета:
         .property-value {{vm.article.material.name}}
       .property
-        .property-label Ширина багета:
+        .property-label
+          span Ширина
+          = ' '
+          a(ui-sref='baguettes.table.edit({id: vm.article.baguetteId})') багета:
         .property-value {{vm.article.baguette.borderWidth}} мм.
       .property(ng-if='vm.article.screeningId')
         .property-label Прозрачная вставка:

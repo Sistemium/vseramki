@@ -7,8 +7,8 @@ md-card {
     margin-bottom: auto;
   }
 
-  md-card-content.catalogue-tile {
-    width: 100%;
+  md-card-content.clickable, md-card.clickable {
+    //width: 100%;
     cursor: pointer;
 
     &:hover {

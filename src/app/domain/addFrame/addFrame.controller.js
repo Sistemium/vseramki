@@ -30,7 +30,9 @@
       cancelChanges,
       addArticleFrameSize,
       articleFrameSizeDecrement,
-      articleFrameSizeIncrement
+      articleFrameSizeIncrement,
+      frameSizeNameFormatter: FrameSize.nameFormatter,
+      frameSizePattern: _.get(_.find(FrameSize.columns, {name: 'name'}), 'validators.ng-pattern')
 
     });
 
@@ -182,8 +184,12 @@
           }));
         })
         .then(function () {
-          clearForm();
           ToastHelper.success('Рамка сохранена');
+          if (!vm.id) {
+            $state.go('^.item.edit', {id: vm.frame.id});
+          } else {
+            clearForm();
+          }
         })
         .catch(() => ToastHelper.error('Ошибка. Рамка не сохранена'));
     }

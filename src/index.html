@@ -2,10 +2,14 @@
 <html ng-app="vseramki">
   <head>
     <meta charset="utf-8">
-    <title>vseramki</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <title>Все рамки</title>
+    <meta name="description" content="Рамки для фотографий, дипломов сертификатов на заказ и в наличии оптом и в розницу">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/logo-square-120.png">
 
     <!-- build:css(src) styles/vendor.css -->
     <!-- bower:css -->
@@ -25,9 +29,9 @@
 
     <!--section layout-fill ng-cloak-->
 
-      <md-content layout-fill>
+      <md-content id="root-md-content" layout-fill>
         <acme-navbar creation-date="main.creationDate"></acme-navbar>
-        <div class="root viewport" ui-view resize="root" ng-style="{height: (root.windowHeight - root.offsetTop) + 'px'}">
+        <div class="root viewport" ui-view>
           <div layout="column" layout-align="center center">
             <h1>Загрузка</h1>
             <md-progress-circular md-diameter="300" md-mode="indeterminate"></md-progress-circular>

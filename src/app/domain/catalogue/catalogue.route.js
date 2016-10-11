@@ -44,7 +44,7 @@
     stateHelperProvider
       .state({
         name: 'catalogue',
-        url: '/catalogue',
+        url: '/catalogue?item',
         templateUrl: 'app/domain/catalogue/catalogue.html',
         controller: 'CatalogueController',
         controllerAs: 'vm',
