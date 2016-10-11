@@ -174,7 +174,7 @@
     function mergeImages() {
       vm.images = _.union(vm.articleImages, vm.baguetteImages);
       if (vm.images.length) {
-        onThumbnailClick(0, _.first(vm.images));
+        setPreviewImage(_.first(vm.images));
       }
     }
 
@@ -228,8 +228,7 @@
 
     }
 
-    function onThumbnailClick(i, newImg) {
-
+    function setPreviewImage(newImg) {
       var newId = _.get(newImg, 'id');
 
       if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage, 'id')) {
@@ -240,6 +239,17 @@
           .then(() => vm.currentImageLoading === newImg.id && (vm.currentImage = newImg))
           .finally(() => vm.currentImageLoading === newImg.id && (vm.currentImageLoading = false));
 
+      }
+    }
+
+    function onThumbnailClick(i, newImg) {
+
+      var newId = _.get(newImg, 'id');
+
+      if (!vm.currentImageLoading && newId === _.get(vm,'currentImage.id')) {
+        return $scope.$broadcast('openGallery', {index: i});
+      } else {
+        setPreviewImage(newImg);
       }
 
     }
