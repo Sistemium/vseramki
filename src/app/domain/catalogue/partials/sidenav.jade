@@ -64,6 +64,6 @@ style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px'
     .item(
     md-virtual-repeat='frame in vm.articles'
     ng-class="{'active' : vm.currentItemId == frame.id }"
-    ng-click='vm.changeFrame(frame)'
+    ng-click='vm.articlesListItemClick(frame)'
     )
       span {{ frame.name }}

@@ -48,8 +48,15 @@
       changeView: to => $state.go(to),
       goToCreateFrame,
 
-      changeFrame: function (frame) {
-        var newState = vm.currentState === 'create' ? '^.item' : $state.current.name;
+      articlesListItemClick: function (frame) {
+        var newState = $state.current.name;
+
+        if (vm.currentState === 'create') {
+          newState = '^.item';
+        } else if ($state.params.id === frame.id && $state.current.name.match(/edit/)) {
+          newState = '^'
+        }
+
         $state.go(newState, {id: frame.id});
       }
 
