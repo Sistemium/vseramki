@@ -2,7 +2,7 @@
 
 (function () {
 
-  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper) {
+  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper) {
 
     var vm = this;
 
@@ -58,7 +58,9 @@
         }
 
         $state.go(newState, {id: frame.id});
-      }
+      },
+
+      stateBarButtonClick: event => $scope.$broadcast('stateBarButtonClick', event)
 
     });
 
@@ -111,10 +113,9 @@
       filterArticles();
     });
 
-    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
+    ControllerHelper.setup(vm, $scope, (toState, toParams) => {
+      // vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
       vm.disableAddFrame = toState.url === '/add';
-      vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
       vm.currentItemId = toParams.id;
     });
 

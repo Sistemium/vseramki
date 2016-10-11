@@ -23,8 +23,15 @@ bar-title='Каталог'
         span.bold(style='min-width: 90px; display: inline-block; text-align: right;'
         ) {{ vm.cartTotal | number:2}}&nbsp;₽
 
-    .buttons
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' ng-if='vm.isAdmin' title='Добавить рамку')
+    .buttons(ng-if='vm.isAdmin && vm.currentState==="item"')
+      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Редактировать рамку')
+        i.material-icons edit
+      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Удалить рамку')
+        i.material-icons delete
+      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Добавить фото')
+        i.material-icons add_a_photo
+    .buttons(ng-if='vm.isAdmin')
+      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' title='Добавить рамку')
         i.material-icons add
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")

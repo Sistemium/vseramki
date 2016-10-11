@@ -40,7 +40,7 @@
       middleThreshold2: Math.round(Article.maxThreshold() / 2),
       maxThreshold: Article.maxThreshold(),
 
-      showImageDialog: ImageHelper.mdDialogHelper(
+      addAPhotoClick: ImageHelper.mdDialogHelper(
         imsImg => ArticleImage.create(_.assign(imsImg, {articleId: vm.article.id}))
       ),
 
@@ -49,9 +49,9 @@
         minusOne(vm.article);
       },
 
-      editFrame: () => $state.go($state.current.name + '.edit', {id: vm.article.id}),
-      addFrame: () => $state.go('catalogue.' + $state.current.name.split('.')[1] + '.create'),
-      deleteFrame,
+      editClick: () => $state.go($state.current.name + '.edit', {id: vm.article.id}),
+      // addFrame: () => $state.go('catalogue.' + $state.current.name.split('.')[1] + '.create'),
+      deleteClick,
 
       previewClick: () => $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
 
@@ -104,6 +104,11 @@
       vm.isRootState = /(^|\.)item$/.test(to.name);
     });
 
+    $scope.$on('stateBarButtonClick', (scopeEvent, domEvent) => {
+      var fn = _.get(vm, `${_.camelCase(domEvent.target.textContent)}Click`);
+      _.isFunction(fn) && fn(domEvent);
+    });
+
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
 
     /*
@@ -119,7 +124,7 @@
       }
     }
 
-    function deleteFrame($event) {
+    function deleteClick($event) {
 
       var frameId = vm.article.id;
 
