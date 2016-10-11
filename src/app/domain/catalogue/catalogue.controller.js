@@ -71,19 +71,6 @@
 
     Cart.findAll();
 
-    Baguette.findAll().then(function (data) {
-      vm.baguette = data;
-    });
-
-    BaguetteImage.findAll().then(function (data) {
-      vm.baguetteImage = data;
-    });
-
-    ArticleImage.findAll({limit: 1000})
-      .then(function (data) {
-        vm.images = data;
-      });
-
     Article.findAll({limit: 1000})
       .then(() => {
 
@@ -91,7 +78,10 @@
           Colour.findAll(),
           Material.findAll(),
           FrameSize.findAll(),
-          Brand.findAll()
+          Brand.findAll(),
+          Baguette.findAll(),
+          BaguetteImage.findAll(),
+          ArticleImage.findAll()
         ]);
 
       })
@@ -111,6 +101,9 @@
     VSHelper.watchForGroupSize($scope, 300, 270, setChunks);
 
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
+    // Baguette.bindAll({}, $scope, 'vm.baguette');
+    // BaguetteImage.bindAll({}, $scope, 'vm.baguetteImage');
+    // ArticleImage.bindAll({}, $scope, 'vm.images');
 
     $scope.$watch('vm.articleFilter', filterArticles);
 
