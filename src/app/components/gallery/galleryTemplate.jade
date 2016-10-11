@@ -2,7 +2,7 @@
 .thumbnails(class='{{ baseClass }}', layout='row', layout-align='center center')
   .thumbnail(ng-repeat='i in images')
     a(href ng-click='vm.thumbnailClick(i, $index)' ng-mouseover='setHovered(i)')
-      img.thumb-image-fit-div(
+      img(
       ng-src='{{ i.thumbnailSrc }}'
       ng-class='{{ thumbClass }}'
       ng-attr-alt='Image {{ $index + 1 }}'

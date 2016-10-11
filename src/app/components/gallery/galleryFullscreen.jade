@@ -37,7 +37,7 @@
         .ng-thumbnails-wrapper
           .ng-thumbnails
             div(ng-repeat='i in images track by i.id')
-              img.thumb-image-fit-div.thumbnail-style(
+              img(
               draggable='false'
               ng-src='{{ i.thumbnailSrc }}'
               ng-class='{active : index === $index}'
