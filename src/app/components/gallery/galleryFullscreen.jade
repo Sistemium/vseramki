@@ -9,7 +9,7 @@
     .window-controls(flex='10' layout='row' show-xs hide)
       p.photo-counter {{index + 1}}/{{images.length}}
       span(flex)
-      i.material-icons(ng-click='deletePhoto()' ng-if='isDeletable') delete
+      i.material-icons(ng-if='isDeletable' ng-click='deleteClick()' ng-class="{confirm : confirmDelete}") delete
       i.material-icons(ng-click='closeGallery()') close
 
     // Photo div
