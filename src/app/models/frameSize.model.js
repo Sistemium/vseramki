@@ -50,6 +50,10 @@
             foreignKey: 'frameSizeId'
           }
         }
+      },
+
+      nameFormatter: function(name) {
+        return _.replace(name,'х','x');
       }
 
     });
