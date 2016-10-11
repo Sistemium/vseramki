@@ -1,4 +1,4 @@
-md-dialog(aria-label='Add photo' ng-cloak)
+md-dialog.photo-dialog(aria-label='Add photo' ng-cloak)
   form
     md-toolbar
       .md-toolbar-tools
@@ -8,8 +8,8 @@ md-dialog(aria-label='Add photo' ng-cloak)
           i.material-icons.mini clear
     md-dialog-content
       .md-dialog-content
-        div(layout="column")
-          form.custom-form(name='pictureUpload' layout='column')
+        div
+          form(name='pictureUpload' layout='column')
             lf-ng-md-file-input(
             name='files',
             lf-files='vm.files',
@@ -19,16 +19,16 @@ md-dialog(aria-label='Add photo' ng-cloak)
             lf-totalsize='25MB',
             lf-mimetype='image/*',
             accept="image/*",
-            lf-browse-label = 'Обзор',
+            lf-browse-label = 'Выбор файла',
             lf-drag-and-drop-label = 'Перетащите файл сюда',
             lf-remove-label ='Удалить',
-            lf-placeholder="Выберите файл",
+            lf-placeholder='Файл не выбран',
             lf-caption="{{vm.files.length > 1 ? 'Файлов выбрано: ' + vm.files.length  : '1 файл выбран'}} ",
             multiple='',
             drag='',
             preview=''
             )
-        div(layout='column' layout-align='center')
+        #upload-controls(layout='column' layout-align='center')
           md-button.md-raised.button-upload(
           ng-click='vm.uploadFiles()'
           ng-if='vm.files.length'
@@ -38,6 +38,7 @@ md-dialog(aria-label='Add photo' ng-cloak)
             span(ng-if='!vm.busy') Загрузить картинки
             span(ng-if='vm.busy && vm.progressPercent < 100') Идет загрузка
             span(ng-if='vm.busy && vm.progressPercent >= 100') Завершение обработки
-          md-progress-linear(ng-if='vm.busy' value='{{vm.progressPercent}}' md-mode='determinate')
-          md-progress-linear(ng-if='vm.busy' md-mode="query" ng-show='vm.progressPercent >= 100')
+          #progress
+            md-progress-linear(ng-show='vm.busy' value='{{vm.progressPercent}}' md-mode='determinate')
+            md-progress-linear(md-mode="query" ng-show='vm.busy && vm.progressPercent >= 100')
 
