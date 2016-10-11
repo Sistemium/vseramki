@@ -15,28 +15,35 @@ bar-title='Словари'
 
   #viewport.margin-top.scroll-y.md-whiteframe-1dp(flex='50' flex-xs='65')
     md-table-container(ng-if='vm.data')
+
       table(md-table)
+
         thead(md-head md-order='filterBy')
+
           th(
           md-column
           ng-repeat='col in vm.columns track by col.name'
           md-order-by='{{col.name}}'
           ) {{ col.title }}
+
           th.col-remove(
           md-column
           ) Удалить
+
         tbody.clickable(md-body)
+
           tr(
           md-row
           ng-repeat='row in vm.data|orderBy: filterBy track by row.id'
           md-select='article'
-          cng-click='vm.itemClick(row, $event)'
           md-select-id='id'
           )
             td(
             md-cell
             ng-repeat='col in vm.columns track by col.name'
-            ) {{ row[col.name] }}
+            ng-click='vm.editCell($event, row, col)'
+            ) {{row[col.name]}}
+
             td(md-cell)
               md-button.md-mini.md-icon-button(ng-click='vm.deleteItem(row,$event)' class="slide")
                 i.material-icons.clear-icon-size clear
