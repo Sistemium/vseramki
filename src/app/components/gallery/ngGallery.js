@@ -27,10 +27,6 @@
       scope.thumbsNum = scope.thumbsNum || 3; // should be odd
     }
 
-
-    // Set the default template
-    $templateCache.put('galleryTemplate.html');
-
     return {
       restrict: 'EA',
 
@@ -185,10 +181,6 @@
 
           scope.opened = true;
 
-          if (scope.hideOverflow) {
-            el('body').css({overflow: 'hidden'});
-          }
-
           $timeout(function () {
 
             $thumbwrapper = angular.element(querySelectorAll('.ng-thumbnails-wrapper'));
@@ -207,9 +199,6 @@
 
         scope.closeGallery = function () {
           scope.opened = false;
-          if (scope.hideOverflow) {
-            el('body').css({overflow: ''});
-          }
           fullscreenElement.remove();
         };
 
