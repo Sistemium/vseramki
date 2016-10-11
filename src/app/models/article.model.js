@@ -113,8 +113,10 @@
 
           var baguette = this.baguette;
 
-          var res = !baguette ? null :
-            `"${baguette.brand.name}" ${baguette.colour.name} ${_.get(this, 'frameSize.name') || ''}`;
+          var brandName = _.get(baguette,'brand.name');
+
+          var res = brandName ? `"${brandName}"` : 'Рамка';
+          res += ` ${baguette.colour.name} ${_.get(this, 'frameSize.name') || ''}`;
 
           if (this.multiType) {
             res += ` ${this.multiTypeName().toLowerCase()} (${this.articleFrameSizesName(frameSizes)})`;
