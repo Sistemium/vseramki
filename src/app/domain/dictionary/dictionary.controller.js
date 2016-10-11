@@ -12,6 +12,7 @@
   function DictionaryController($scope, $q, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog) {
 
     var vm = this;
+    var unbind;
 
     _.assign(vm, {
 
@@ -87,20 +88,23 @@
       $state.go('dictionary.' + item.name);
       vm.option = item;
       var model = Schema.model(item.name);
-      model.findAll()
-        .then(data => vm.data = _.sortBy(data, 'name'));
+      model.findAll();
+
+      if (unbind) {
+        unbind();
+      }
+
+      model.bindAll({
+        orderBy: ['name']
+      },$scope, 'vm.data');
+
       vm.columns = model.columns || DEFAULT_COLUMNS;
       vm.model = model;
     }
 
     function deleteItem(item, $event) {
       AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
-        .then(response => {
-          if (response) {
-            vm.option.destroy(item)
-              .then(()=>optionClick(vm.option));
-          }
-        });
+        .then(confirmed => confirmed && vm.model.destroy(item));
     }
 
 
