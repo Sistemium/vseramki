@@ -6,8 +6,6 @@
 
   function ngGallery($document, $timeout, $q, $templateRequest, $compile, ToastHelper) {
 
-    var imageModel;
-
     var defaults = {
       baseClass: 'ng-gallery',
       thumbClass: 'ng-thumb',
