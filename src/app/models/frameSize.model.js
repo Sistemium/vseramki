@@ -19,6 +19,24 @@
         what: 'размер'
       },
 
+      columns: [
+        {
+          name: 'name',
+          title: 'Имя',
+          validators: {
+            'ng-pattern': /^[\d]{1,3}x[\d]{1,3}$/,
+            maxlength: 7
+          }
+        },{
+          name: 'isoCode',
+          title: 'Код ISO',
+          validators: {
+            'ng-pattern': /^[ABCD]\d$/,
+            maxlength: 2
+          }
+        }
+      ],
+
       name: 'FrameSize',
 
       relations: {
