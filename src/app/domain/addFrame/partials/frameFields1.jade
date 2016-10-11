@@ -12,9 +12,12 @@ not-addable='true'
 
 searchable-select(
 label='Размер фото'
+label-of='Размера фото'
 model='vm.frame.frameSizeId'
 model-name='FrameSize'
 options='vm.frameSizes'
+pattern= "vm.frameSizePattern"
+formatter='vm.frameSizeNameFormatter'
 )
 
 searchable-select(
