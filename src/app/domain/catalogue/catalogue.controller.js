@@ -125,6 +125,7 @@
       vm.currentItemId = toParams.id;
     });
 
+    $scope.$watch(() => Article.lastModified(), () => filterArticles());
 
     /*
 
