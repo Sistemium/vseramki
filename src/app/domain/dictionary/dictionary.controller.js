@@ -2,7 +2,14 @@
 
 (function () {
 
-  function DictionaryController($scope, $q, $state, Schema, AuthHelper, AlertHelper) {
+  const DEFAULT_COLUMNS = [
+    {
+      name: 'name',
+      title: 'Имя'
+    }
+  ];
+
+  function DictionaryController($scope, $q, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog) {
 
     var vm = this;
 
@@ -13,15 +20,11 @@
 
       optionClick,
       deleteItem,
+      editCell,
 
       options: _.map($state.current.data.options, o => Schema.model(o)),
 
-      columns: [
-        {
-          name: 'name',
-          title: 'Имя'
-        }
-      ]
+      columns: DEFAULT_COLUMNS
 
     });
 
@@ -47,20 +50,53 @@
 
      */
 
+
+    function editCell(event, row, column) {
+
+      event.stopPropagation();
+
+      var editDialog = {
+        modelValue: row[column.name],
+        placeholder: column.title,
+
+        save: function (input) {
+          row[column.name] = input.$modelValue;
+          vm.model.save(row)
+            .catch(err => console.error(err));
+        },
+
+        targetEvent: event,
+        title: column.title,
+        validators: column.validators,
+        type: 'text" autocomplete="off',
+        ok: 'Сохранить',
+        cancel: 'Отмена',
+        messages: {
+          pattern: 'Некорректный формат поля'
+        }
+      };
+
+      $mdEditDialog.large(editDialog);
+
+    }
+
     function optionClick(item) {
       if (!item) {
         return;
       }
       $state.go('dictionary.' + item.name);
       vm.option = item;
-      Schema.model(item.name).findAll()
+      var model = Schema.model(item.name);
+      model.findAll()
         .then(data => vm.data = _.sortBy(data, 'name'));
+      vm.columns = model.columns || DEFAULT_COLUMNS;
+      vm.model = model;
     }
 
     function deleteItem(item, $event) {
       AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
         .then(response => {
-          if (response){
+          if (response) {
             vm.option.destroy(item)
               .then(()=>optionClick(vm.option));
           }
