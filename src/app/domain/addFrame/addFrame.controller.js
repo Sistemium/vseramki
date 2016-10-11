@@ -184,8 +184,12 @@
           }));
         })
         .then(function () {
-          clearForm();
           ToastHelper.success('Рамка сохранена');
+          if (!vm.id) {
+            $state.go('^.item.edit', {id: vm.frame.id});
+          } else {
+            clearForm();
+          }
         })
         .catch(() => ToastHelper.error('Ошибка. Рамка не сохранена'));
     }
