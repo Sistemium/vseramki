@@ -4,7 +4,7 @@
 
   function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper) {
 
-    var vm = this;
+    var vm = ControllerHelper.setup(this, $scope, onStateChange);
 
     var {
       Article,
@@ -58,9 +58,7 @@
         }
 
         $state.go(newState, {id: frame.id});
-      },
-
-      stateBarButtonClick: event => $scope.$broadcast('stateBarButtonClick', event)
+      }
 
     });
 
@@ -113,10 +111,6 @@
       filterArticles();
     });
 
-    ControllerHelper.setup(vm, $scope, (toState, toParams) => {
-      vm.currentItemId = toParams.id;
-    });
-
     $scope.$watch(() => Article.lastModified(), () => filterArticles());
 
     /*
@@ -124,6 +118,10 @@
      Functions
 
      */
+
+    function onStateChange (toState, toParams) {
+      vm.currentItemId = toParams.id;
+    }
 
     function goToCreateFrame (parent) {
 
