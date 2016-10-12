@@ -8,7 +8,7 @@
 
     var vm = this;
 
-    var {ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper} = Helpers;
+    var {VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper} = Helpers;
 
     var {
       Brand,
@@ -37,18 +37,9 @@
 
       isAdmin: AuthHelper.isAdmin(),
 
-      showImageDialog: ImageHelper.mdDialogHelper(
-        function (imsImg, id) {
-          BaguetteImage.create(
-            angular.extend(imsImg, {
-              baguetteId: id
-            }));
-        }),
-
-      deleteBaguette,
+      deleteClick,
       goToCreateBaguette,
       changeBaguette,
-      addPhotoClick,
 
       resetFilters: () => vm.search = '',
       resetCheckedBaguette: () => vm.selected = [],
@@ -114,11 +105,6 @@
 
      */
 
-    function addPhotoClick(event) {
-      $scope.$broadcast('addPhotoClick', event);
-    }
-
-
     function setFiltered(search) {
 
       if (!search) {
@@ -148,7 +134,9 @@
       });
     }
 
-    function deleteBaguette(item, $event) {
+    function deleteClick($event) {
+
+      var item = vm.currentItem;
 
       var promise = AlertHelper.showConfirm($event);
 

@@ -4,17 +4,12 @@
 
   const keys = ['brandId', 'colourId', 'materialId', 'surfaceId', 'lastName', 'code'];
 
-  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper, $q, Entity) {
+  function BaguetteEditController(Schema, $scope, $state, Helpers, $q) {
 
-    var vm = this;
+    var {ImageHelper, ToastHelper, ControllerHelper} = Helpers;
+    var {Entity, Brand, Baguette, Material, Colour, BaguetteImage, BaguetteColour, Surface} = Schema.models();
 
-    var Brand = Schema.model('Brand');
-    var Material = Schema.model('Material');
-    var Colour = Schema.model('Colour');
-    var BaguetteImage = Schema.model('BaguetteImage');
-    var BaguetteColour = Schema.model('BaguetteColour');
-    var Surface = Schema.model('Surface');
-
+    var vm = ControllerHelper.setup(this, $scope);
 
     _.assign(vm, {
 
@@ -34,9 +29,7 @@
       save,
       baguetteColourRemoveClick,
 
-      quit: () => $state.go('^'),
-
-      showImageDialog: ImageHelper.mdDialogHelper(
+      addAPhotoClick: ImageHelper.mdDialogHelper(
         function (imsImg) {
           BaguetteImage.create(
             angular.extend(imsImg, {
@@ -91,11 +84,6 @@
     }, $scope, 'vm.baguetteImages');
 
     $scope.$on('$destroy', cancelChanges);
-
-    $scope.$on('addPhotoClick', (e, event) => {
-      vm.showImageDialog(event);
-    });
-
 
     /*
 
