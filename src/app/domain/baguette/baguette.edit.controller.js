@@ -4,7 +4,7 @@
 
   const keys = ['brandId', 'colourId', 'materialId', 'surfaceId', 'lastName', 'code'];
 
-  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper, $q) {
+  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper, $q, Entity) {
 
     var vm = this;
 
@@ -61,7 +61,10 @@
         });
     } else {
       vm.isCreateState = true;
-      vm.baguette = Baguette.createInstance();
+      vm.baguette = Baguette.createInstance({
+        materialId: _.get(Entity.get('Material'), 'options.defaultId')
+        //colourId: Entity.defaultId('Colour')
+      });
     }
 
 
@@ -120,10 +123,10 @@
       return !vm.id
         ? _.get(vm, 'attrsForm.$dirty')
         : Baguette.hasChanges(vm.id) ||
-          _.find(
-            vm.baguetteColours,
-            item => !item.id || BaguetteColour.hasChanges(item)
-          );
+      _.find(
+        vm.baguetteColours,
+        item => !item.id || BaguetteColour.hasChanges(item)
+      );
     }
 
     function addBaguetteColour() {
