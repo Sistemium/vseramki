@@ -1,7 +1,20 @@
-state-bar(
+state-bar.dictionary(
 bar-title='Словари'
-style='position: relative'
 )
+  div.shown-tight
+    md-fab-speed-dial.md-scale(
+    md-direction='down'
+    )
+      md-fab-trigger
+        md-button.md-primary.admin-button(aria-label='Options menu'
+        md-ink-ripple='false'
+        ) {{ vm.option.labels.plural }}
+      md-fab-actions
+        md-button.md-raised.md-mini(
+        ng-repeat='dict in vm.options' align='center'
+        ng-click='vm.optionClick(dict)'
+        ng-class='{ "md-primary": dict.name === vm.option.name}'
+        ) {{ dict.labels.plural || dict.name }}
 
 
 .md-padding(layout='row' layout-align='space-between start' layout-align-xs='space-around start' resize='dictionary'
@@ -34,7 +47,7 @@ ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
 
           th.col-remove(
           md-column
-          ) Удалить
+          ) Опции
 
         tbody.clickable(md-body)
 
@@ -51,7 +64,13 @@ ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
             ) {{row[col.name]}}
 
             td(md-cell)
-              md-button.md-mini.md-icon-button(ng-click='vm.deleteItem(row,$event)' class="slide")
-                i.material-icons.clear-icon-size clear
+              md-menu(md-offset='0 -7')
+                md-button.md-icon-button(aria-label='Open Options Menu', ng-click='$mdOpenMenu($event)')
+                  i.material-icons.clear-icon-size(style='color: gray') more_horiz
+                md-menu-content(width='2')
+                  md-menu-item(ng-repeat='item in vm.onClickOptions')
+                    md-button(ng-click='item.fn(row, $event)')
+                      span(md-menu-align-target) {{item.name}}
 
   span.hide-xs(flex='15')
+
