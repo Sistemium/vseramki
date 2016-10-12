@@ -2,9 +2,11 @@
 
 (function () {
 
-  function ItemController($filter, $scope, $state, Schema, ToastHelper, ImageHelper, AuthHelper, AlertHelper) {
+  function ItemController($filter, $scope, $state, Schema, Helpers) {
 
-    var vm = this;
+    var {ToastHelper, ImageHelper, AuthHelper, AlertHelper} = Helpers;
+
+    var vm = Helpers.ControllerHelper.setup(this, $scope);
 
     var {
       Article,
@@ -98,16 +100,6 @@
      Listeners
 
      */
-
-
-    $scope.$on('$stateChangeSuccess', function (event, to) {
-      vm.isRootState = /(^|\.)item$/.test(to.name);
-    });
-
-    $scope.$on('stateBarButtonClick', (scopeEvent, domEvent) => {
-      var fn = _.get(vm, `${_.camelCase(domEvent.target.textContent)}Click`);
-      _.isFunction(fn) && fn(domEvent);
-    });
 
     Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
 
