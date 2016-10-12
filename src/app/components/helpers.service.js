@@ -2,10 +2,10 @@
 
 (function () {
 
-  function Helpers(ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper) {
+  function Helpers(ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper, AuthHelper) {
 
     return {
-      ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper
+      ImageHelper, VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper, AuthHelper
     };
 
   }
