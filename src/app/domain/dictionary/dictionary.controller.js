@@ -9,7 +9,7 @@
     }
   ];
 
-  function DictionaryController($scope, $q, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog) {
+  function DictionaryController($scope, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog, Entity) {
 
     var vm = this;
     var unbind;
@@ -20,8 +20,12 @@
       isAdmin: AuthHelper.isAdmin(),
 
       optionClick,
-      deleteItem,
       editCell,
+
+      onClickOptions: [
+        {name: 'Удалить', fn: deleteItem},
+        {name: 'Сделать основным', fn: makeDefault}
+      ],
 
       options: _.map($state.current.data.options, o => Schema.model(o)),
 
@@ -96,7 +100,7 @@
 
       model.bindAll({
         orderBy: ['name']
-      },$scope, 'vm.data');
+      }, $scope, 'vm.data');
 
       vm.columns = model.columns || DEFAULT_COLUMNS;
       vm.model = model;
@@ -105,6 +109,16 @@
     function deleteItem(item, $event) {
       AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
         .then(confirmed => confirmed && vm.model.destroy(item));
+    }
+
+    function makeDefault(item) {
+      console.log(item);
+      Entity.create({
+        id: vm.model.name,
+        options: {
+          defaultId: item.id
+        }
+      }).catch(err=>{console.log (err)});
     }
 
 
