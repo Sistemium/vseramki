@@ -24,6 +24,7 @@ bar-title='Каталог'
         ) {{ vm.cartTotal | number:2}}&nbsp;₽
 
     .buttons(ng-if='vm.isAdmin && vm.currentState==="item"')
+      //TODO: state-bar-button.admin-button(icon='edit' title='Редактировать рамку')
       md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Редактировать рамку')
         i.material-icons edit
       md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Удалить рамку')
