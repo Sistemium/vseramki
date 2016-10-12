@@ -2,7 +2,7 @@
 
 (function () {
 
-  function ItemController($filter, $scope, $state, Schema, Helpers) {
+  function ItemController($filter, $scope, $state, Schema, Helpers, $uiViewScroll, $timeout, $mdMedia) {
 
     var {ToastHelper, ImageHelper, AuthHelper, AlertHelper} = Helpers;
 
@@ -32,7 +32,12 @@
       onThumbnailClick,
 
       currentImageHover: {},
-      addToCart: Cart.addToCart,
+      addToCart: () => {
+        Cart.addToCart(vm.article);
+        $mdMedia('gt-sm') || $timeout(()=>{
+          $uiViewScroll(angular.element(document.getElementById('cartCountInput')));
+        });
+      },
       article: '',
       isRootState: true,
       isAdmin: AuthHelper.isAdmin(),
