@@ -52,8 +52,7 @@
 
       resetFilters: () => vm.search = '',
       resetCheckedBaguette: () => vm.selected = [],
-      editBaguette: item => $state.go('.edit', {id: item.id}),
-      changeView: goTo => $state.go(goTo)
+      editBaguette: item => $state.go('.edit', {id: item.id})
 
     });
 

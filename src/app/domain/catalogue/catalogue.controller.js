@@ -44,8 +44,6 @@
       filterOptionClick,
       resetFilters,
       delCurrFilter,
-
-      changeView: to => $state.go(to),
       goToCreateFrame,
 
       articlesListItemClick: function (frame) {
