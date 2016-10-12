@@ -230,7 +230,8 @@ md-fab-actions, .viewport {
 
   &.admin-button.md-mini:not([disabled]):hover {
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.20);
-    background-color: lighten($admin-button-fab-color,20%);
+    color: $black;
+    background-color: lighten($admin-button-fab-color,15%);
   }
 
   &.default-button {
