@@ -9,11 +9,8 @@
     }
   ];
 
-<<<<<<< HEAD
   function DictionaryController($scope, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog, Entity, ToastHelper) {
-=======
-  function DictionaryController($scope, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog, Entity) {
->>>>>>> origin/frameview
+
 
     var vm = this;
     var unbind;
@@ -29,16 +26,12 @@
 
       onClickOptions: [
         {name: 'Удалить', fn: deleteItem},
-<<<<<<< HEAD
+
         {name: 'Сделать основным', fn: makeDefault},
         {name: 'Удалить основной', fn: deleteDefault}
-=======
-        {name: 'Сделать основным', fn: makeDefault}
->>>>>>> origin/frameview
       ],
 
       options: _.map($state.current.data.options, o => Schema.model(o)),
-
       columns: DEFAULT_COLUMNS
 
     });
@@ -130,7 +123,7 @@
     }
 
     function makeDefault(item) {
-<<<<<<< HEAD
+
       var name = vm.model.name;
       Entity.setDefault(vm.model.name, item.id)
         .then(() => {
@@ -141,17 +134,6 @@
         ToastHelper.error('Не удалось сохранить значение по-умолчанию');
       });
     }
-=======
-      console.log(item);
-      Entity.create({
-        id: vm.model.name,
-        options: {
-          defaultId: item.id
-        }
-      }).catch(err=>{console.log (err)});
-    }
-
->>>>>>> origin/frameview
 
     function deleteDefault() {
 
