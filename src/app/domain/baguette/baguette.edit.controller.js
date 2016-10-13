@@ -7,7 +7,7 @@
   function BaguetteEditController(Schema, $scope, $state, Helpers, $q) {
 
     var {ImageHelper, ToastHelper, ControllerHelper} = Helpers;
-    var {Entity, Brand, Baguette, Material, Colour, BaguetteImage, BaguetteColour, Surface} = Schema.models();
+    var {Brand, Baguette, Material, Colour, BaguetteImage, BaguetteColour, Surface} = Schema.models();
 
     var vm = ControllerHelper.setup(this, $scope);
 
