@@ -9,10 +9,11 @@
     }
   ];
 
-  function DictionaryController($scope, $q, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog) {
+  function DictionaryController($scope, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog, Entity, ToastHelper) {
 
     var vm = this;
     var unbind;
+
 
     _.assign(vm, {
 
@@ -20,8 +21,13 @@
       isAdmin: AuthHelper.isAdmin(),
 
       optionClick,
-      deleteItem,
       editCell,
+
+      onClickOptions: [
+        {name: 'Удалить', fn: deleteItem},
+        {name: 'Сделать основным', fn: makeDefault},
+        {name: 'Удалить основной', fn: deleteDefault}
+      ],
 
       options: _.map($state.current.data.options, o => Schema.model(o)),
 
@@ -82,13 +88,21 @@
     }
 
     function optionClick(item) {
+
       if (!item) {
         return;
       }
+
       $state.go('dictionary.' + item.name);
       vm.option = item;
+
       var model = Schema.model(item.name);
-      model.findAll();
+
+      model.findAll().then(function () {
+
+        vm.modelDefaultId = Entity.getDefault(item.name);
+
+      });
 
       if (unbind) {
         unbind();
@@ -96,7 +110,7 @@
 
       model.bindAll({
         orderBy: ['name']
-      },$scope, 'vm.data');
+      }, $scope, 'vm.data');
 
       vm.columns = model.columns || DEFAULT_COLUMNS;
       vm.model = model;
@@ -107,7 +121,21 @@
         .then(confirmed => confirmed && vm.model.destroy(item));
     }
 
+    function makeDefault(item) {
+      var name = vm.model.name;
+      Entity.setDefault(vm.model.name, item.id)
+        .then(() => {
+          if (vm.model.name === name) {
+            vm.modelDefaultId = item.id;
+          }
+        }).catch(()=> {
+        ToastHelper.error('Не удалось сохранить значение по-умолчанию');
+      });
+    }
 
+    function deleteDefault() {
+
+    }
   }
 
   angular
