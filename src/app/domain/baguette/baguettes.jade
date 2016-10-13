@@ -13,8 +13,8 @@
       .flex
 
       .buttons.margin-left(ng-if='vm.isAdmin')
-        state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo')
-        state-bar-button.admin-button(title='Удалить багет' icon='delete')
+        state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo' ng-show='vm.currentItem')
+        state-bar-button.admin-button(title='Удалить багет' icon='delete' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Добавить багет' icon='add')
 
   div(layout='row')
