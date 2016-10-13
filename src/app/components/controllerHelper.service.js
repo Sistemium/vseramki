@@ -20,9 +20,13 @@
 
       });
 
-      var stateBarButtonClickSubscription = $scope.$on('stateBarButtonClick', (scopeEvent, domEvent) => {
-        var fn = _.get(vm, `${_.camelCase(domEvent.target.textContent)}Click`);
-        _.isFunction(fn) && fn(domEvent);
+      var stateBarButtonClickSubscription = $scope.$on('stateBarButtonClick', (scopeEvent, domEvent, isFromChild) => {
+        if (isFromChild) {
+          $scope.$broadcast('stateBarButtonClick', domEvent);
+        } else {
+          var fn = _.get(vm, `${_.camelCase(domEvent.target.textContent)}Click`);
+          _.isFunction(fn) && fn(domEvent);
+        }
       });
 
       $scope.$on('$destroy', () => {
@@ -31,7 +35,7 @@
       });
 
       return _.assign(vm,{
-        stateBarButtonClick: event => $scope.$broadcast('stateBarButtonClick', event)
+        //stateBarButtonClick: event => $scope.$broadcast('stateBarButtonClick', event)
       });
 
     }
