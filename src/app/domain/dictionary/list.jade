@@ -17,7 +17,7 @@ bar-title='Словари'
         ) {{ dict.labels.plural || dict.name }}
 
 
-.md-padding(layout='row' layout-align='space-between start' layout-align-xs='space-around start' resize='dictionary'
+.md-padding.dictionary(layout='row' layout-align='space-between start' layout-align-xs='space-around start' resize='dictionary'
 ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
 
   md-sidenav(flex='nogrow' md-is-locked-open="$mdMedia('gt-xs')" class="md-sidenav-left")
@@ -68,7 +68,7 @@ ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
             td(md-cell)
               md-menu(md-offset='0 -7')
                 md-button.md-icon-button(aria-label='Open Options Menu', ng-click='$mdOpenMenu($event)')
-                  i.material-icons.clear-icon-size(style='color: gray') more_horiz
+                  i.material-icons.clear-icon-size more_horiz
                 md-menu-content(width='2')
 
                   md-menu-item

@@ -26,8 +26,15 @@
     }
   }
 
+  .md-icon-button {
+    color: $gray;
+  }
+
+  tr.default {
+    > td, .md-icon-button {
+      color: $primary-button-background-color;
+    }
+  }
+
 }
 
-.default {
-  background-color: #DFDFDF;
-}
