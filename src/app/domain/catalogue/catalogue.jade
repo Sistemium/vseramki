@@ -24,15 +24,13 @@ bar-title='Каталог'
         ) {{ vm.cartTotal | number:2}}&nbsp;₽
 
     .buttons(ng-if='vm.isAdmin && vm.currentState==="item"')
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Редактировать рамку')
-        i.material-icons edit
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Удалить рамку')
-        i.material-icons delete
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.stateBarButtonClick($event)' title='Добавить фото')
-        i.material-icons add_a_photo
+      state-bar-button.admin-button(title='Редактировать рамку' icon='edit')
+      state-bar-button.admin-button(title='Удалить рамку' icon='delete')
+      state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo')
+
     .buttons(ng-if='vm.isAdmin && vm.currentState !== "create"')
-      md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' title='Добавить рамку')
-        i.material-icons add
+      state-bar-button.admin-button(title='Добавить рамку' icon='add')
+
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
