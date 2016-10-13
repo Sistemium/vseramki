@@ -26,7 +26,6 @@
 
       onClickOptions: [
         {name: 'Удалить', fn: deleteItem},
-
         {name: 'Сделать основным', fn: makeDefault},
         {name: 'Удалить основной', fn: deleteDefault}
       ],

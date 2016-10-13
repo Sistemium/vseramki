@@ -76,7 +76,7 @@ ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
                       span(md-menu-align-target) {{vm.onClickOptions[0].name}}
 
                   md-menu-item
-                    md-button(ng-click='item.fn(row, $event)')
+                    md-button(ng-click='vm.onClickOptions[1].fn(row, $event)')
                       span(md-menu-align-target) {{ vm.modelDefaultId === row.id ? vm.onClickOptions[2].name : vm.onClickOptions[1].name}}
 
   span.hide-xs(flex='15')
