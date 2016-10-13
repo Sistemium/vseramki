@@ -3,7 +3,7 @@ resize='edit'
 style="height: {{ edit.windowHeight - edit.offsetTop - 2}}px;"
 )
   .text-center
-    h2.gray(ng-if='vm$.title') {{ vm$.title }}
+    h2.gray(ng-if='vm$.formTitle') {{ vm$.formTitle }}
     h2 {{ vm$.item.name }}
 
   form(name="vm.attrsForm" ng-transclude='fields')
