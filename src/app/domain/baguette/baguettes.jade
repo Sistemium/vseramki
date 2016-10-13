@@ -13,26 +13,9 @@
       .flex
 
       .buttons.margin-left(ng-if='vm.isAdmin')
-
-        md-button.md-fab.md-mini.md-icon-button.admin-button(
-        ng-click='vm.stateBarButtonClick($event)'
-        ng-if='vm.currentItem.id'
-        title='Добавить фото'
-        )
-          i.material-icons add_a_photo
-
-        md-button.md-fab.md-mini.md-icon-button.admin-button(
-        ng-click='vm.stateBarButtonClick($event)'
-        ng-if='vm.currentItem.id'
-        title='Удалить багет'
-        )
-          i.material-icons delete
-
-        md-button.md-fab.md-mini.md-icon-button.admin-button(
-        ng-click='vm.goToCreateBaguette()'
-        title='Добавить багет'
-        )
-          i.material-icons add
+        state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo')
+        state-bar-button.admin-button(title='Удалить багет' icon='delete')
+        state-bar-button.admin-button(title='Добавить багет' icon='add')
 
   div(layout='row')
 

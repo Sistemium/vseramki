@@ -38,7 +38,7 @@
       isAdmin: AuthHelper.isAdmin(),
 
       deleteClick,
-      goToCreateBaguette,
+      addClick,
       changeBaguette,
 
       resetFilters: () => vm.search = '',
@@ -164,9 +164,9 @@
 
     }
 
-    function goToCreateBaguette(parent) {
+    function addClick() {
       var re = new RegExp(`${vm.rootState}\.([^.]+)`);
-      var currentState = parent || _.last($state.current.name.match(re));
+      var currentState = _.last($state.current.name.match(re));
       $state.go(`${vm.rootState}.${currentState}.create`);
     }
 
