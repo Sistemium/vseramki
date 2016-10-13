@@ -11,7 +11,7 @@
       },
 
       bindings: {
-        title: '@',
+        formTitle: '@',
         item: '=',
         vm: '='
       },
