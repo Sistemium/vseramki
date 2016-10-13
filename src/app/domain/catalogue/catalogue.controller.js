@@ -44,13 +44,9 @@
       filterOptionClick,
       resetFilters,
       delCurrFilter,
-<<<<<<< HEAD
-
       changeView: to => $state.go(to),
       addClick,
-=======
-      goToCreateFrame,
->>>>>>> origin/frameview
+
 
       articlesListItemClick: function (frame) {
         var newState = $state.current.name;
