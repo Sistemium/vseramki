@@ -1,0 +1,35 @@
+@import "../../styles/_vars";
+
+.dictionary {
+  div {
+    md-fab-speed-dial {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-top: 8px;
+
+      md-fab-trigger > .md-button {
+        min-width: 120px;
+      }
+    }
+
+    md-fab-actions > .md-button {
+      margin-top: 10px
+    }
+  }
+
+  @media (min-width: $layout-breakpoint-xs) {
+    div {
+      .shown-tight {
+        display: none;
+      }
+    }
+  }
+
+}
+
+.default {
+  background-color: #DFDFDF;
+}
+
+
