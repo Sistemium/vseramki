@@ -46,7 +46,7 @@
       delCurrFilter,
 
       changeView: to => $state.go(to),
-      goToCreateFrame,
+      addClick,
 
       articlesListItemClick: function (frame) {
         var newState = $state.current.name;
@@ -67,7 +67,6 @@
      Init
 
      */
-
 
     Cart.findAll();
 
@@ -123,10 +122,10 @@
       vm.currentItemId = toParams.id;
     }
 
-    function goToCreateFrame (parent) {
+    function addClick () {
 
       var re = new RegExp(`${vm.rootState}\.([^.]+)`);
-      var currentState = parent || _.last($state.current.name.match(re));
+      var currentState = _.last($state.current.name.match(re));
       $state.go(`${vm.rootState}.${currentState}.create`);
 
     }
