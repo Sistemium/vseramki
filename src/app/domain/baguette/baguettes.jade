@@ -5,7 +5,7 @@
   bar-title='Багет'
   )
     div(layout='row' layout-align='end center')
-      md-input-container(ng-if='!vm.currentItem.id' layout='row')
+      md-input-container(ng-if='vm.isRootState' layout='row')
         i.material-icons.search-label search
         label(for='searcher')
         input#searcher(type="search" ng-model="vm.search" input-clear='black')
@@ -15,14 +15,14 @@
       .buttons.margin-left(ng-if='vm.isAdmin')
 
         md-button.md-fab.md-mini.md-icon-button.admin-button(
-        ng-click='vm.addPhotoClick($event)'
+        ng-click='vm.stateBarButtonClick($event)'
         ng-if='vm.currentItem.id'
         title='Добавить фото'
         )
           i.material-icons add_a_photo
 
         md-button.md-fab.md-mini.md-icon-button.admin-button(
-        ng-click='vm.deleteBaguette(vm.currentItem, $event)'
+        ng-click='vm.stateBarButtonClick($event)'
         ng-if='vm.currentItem.id'
         title='Удалить багет'
         )
