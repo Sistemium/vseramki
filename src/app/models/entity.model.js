@@ -12,7 +12,6 @@
 
   function Entity(Schema) {
 
-<<<<<<< HEAD
     var model = Schema.register({
 
       name: 'Entity',
@@ -34,15 +33,6 @@
     });
 
     return model;
-
-=======
-    return Schema.register({
-
-      name: 'Entity'
-
-    });
-
->>>>>>> origin/frameview
   }
 
 }());
