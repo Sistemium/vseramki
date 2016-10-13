@@ -4,17 +4,12 @@
 
   const keys = ['brandId', 'colourId', 'materialId', 'surfaceId', 'lastName', 'code'];
 
-  function BaguetteEditController(Schema, Baguette, $scope, $state, ImageHelper, ToastHelper, $q) {
+  function BaguetteEditController(Schema, $scope, $state, Helpers, $q) {
 
-    var vm = this;
+    var {ImageHelper, ToastHelper, ControllerHelper} = Helpers;
+    var {Entity, Brand, Baguette, Material, Colour, BaguetteImage, BaguetteColour, Surface} = Schema.models();
 
-    var Brand = Schema.model('Brand');
-    var Material = Schema.model('Material');
-    var Colour = Schema.model('Colour');
-    var BaguetteImage = Schema.model('BaguetteImage');
-    var BaguetteColour = Schema.model('BaguetteColour');
-    var Surface = Schema.model('Surface');
-
+    var vm = ControllerHelper.setup(this, $scope);
 
     _.assign(vm, {
 
@@ -34,9 +29,7 @@
       save,
       baguetteColourRemoveClick,
 
-      quit: () => $state.go('^'),
-
-      showImageDialog: ImageHelper.mdDialogHelper(
+      addAPhotoClick: ImageHelper.mdDialogHelper(
         function (imsImg) {
           BaguetteImage.create(
             angular.extend(imsImg, {
@@ -61,7 +54,12 @@
         });
     } else {
       vm.isCreateState = true;
-      vm.baguette = Baguette.createInstance();
+      vm.baguette = Baguette.createInstance({
+        colourId: Entity.getDefault('Colour'),
+        surfaceId: Entity.getDefault('Surface'),
+        brandId: Entity.getDefault('Brand'),
+        materialId: Entity.getDefault('Material')
+      });
     }
 
 
@@ -89,11 +87,6 @@
 
     $scope.$on('$destroy', cancelChanges);
 
-    $scope.$on('addPhotoClick', (e, event) => {
-      vm.showImageDialog(event);
-    });
-
-
     /*
 
      Functions
@@ -120,10 +113,10 @@
       return !vm.id
         ? _.get(vm, 'attrsForm.$dirty')
         : Baguette.hasChanges(vm.id) ||
-          _.find(
-            vm.baguetteColours,
-            item => !item.id || BaguetteColour.hasChanges(item)
-          );
+      _.find(
+        vm.baguetteColours,
+        item => !item.id || BaguetteColour.hasChanges(item)
+      );
     }
 
     function addBaguetteColour() {
