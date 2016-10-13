@@ -2,7 +2,25 @@
 
 (function () {
 
-  function RouterDecorator($rootScope, $state, localStorageService) {
+  function RouterDecorator($rootScope, $state, localStorageService, Entity) {
+
+    var entityLoading;
+
+    var ensureEntityLoad = $rootScope.$on('$stateChangeStart', (event, to, params) => {
+
+      event.preventDefault();
+
+      if (entityLoading) {
+        return;
+      }
+
+      entityLoading = Entity.findAll()
+        .then(()=>{
+          ensureEntityLoad();
+          $state.go(to, params);
+        });
+
+    });
 
     $rootScope.$on('$stateChangeStart', (event, toState, toParams) => {
 

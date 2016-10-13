@@ -4,11 +4,7 @@
 
   angular
     .module('vseramki')
-    .service('Entity', Entity)
-    .run(function (Entity) {
-      Entity.findAll();
-    })
-  ;
+    .service('Entity', Entity);
 
   function Entity(Schema) {
 
