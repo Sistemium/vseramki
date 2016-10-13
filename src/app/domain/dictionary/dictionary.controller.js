@@ -129,9 +129,10 @@
           if (vm.model.name === name) {
             vm.modelDefaultId = item.id;
           }
-        }).catch(()=> {
-        ToastHelper.error('Не удалось сохранить значение по-умолчанию');
-      });
+        })
+        .catch(()=> {
+          ToastHelper.error('Не удалось сохранить значение по-умолчанию');
+        });
     }
 
     function deleteDefault() {
