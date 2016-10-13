@@ -55,10 +55,15 @@
     } else {
       vm.isCreateState = true;
       vm.baguette = Baguette.createInstance({
+<<<<<<< HEAD
         colourId: Entity.getDefault('Colour'),
         surfaceId: Entity.getDefault('Surface'),
         brandId: Entity.getDefault('Brand'),
         materialId: Entity.getDefault('Material')
+=======
+        materialId: _.get(Entity.get('Material'), 'options.defaultId')
+        //colourId: Entity.defaultId('Colour')
+>>>>>>> origin/frameview
       });
     }
 
