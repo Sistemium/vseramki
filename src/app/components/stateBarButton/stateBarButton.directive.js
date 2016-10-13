@@ -2,26 +2,16 @@
 
 (function () {
 
-  function stateBarButton($compile, $templateRequest) {
+  function stateBarButton() {
     return {
 
       restrict: 'ACE',
+      templateUrl: 'app/components/stateBarButton/stateBarButton.html',
 
       scope: {
         icon: '@',
-        title: '@'
-      },
-
-      link: function (scope, element, attrs) {
-
-        $templateRequest('app/components/stateBarButton/stateBarButton.html')
-          .then(html => {
-            var template = angular.element(html);
-            template.addClass(attrs.class);
-            element.replaceWith(template);
-            $compile(template)(scope);
-          });
-
+        title: '@',
+        cls: '@class'
       },
 
       controller: function ($scope) {
