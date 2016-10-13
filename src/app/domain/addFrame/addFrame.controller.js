@@ -2,7 +2,7 @@
 
 (function () {
 
-  function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper, $q) {
+  function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper, $q, Entity) {
 
     var vm = this;
     var FrameSize = Schema.model('FrameSize');
@@ -14,7 +14,10 @@
 
     _.assign(vm, {
 
-      frame: Article.createInstance(),
+      frame: Article.createInstance({
+        backMountId: Entity.getDefault('BackMount'),
+        screeningId: Entity.getDefault('Screening')
+      }),
       saved: false,
       articleFrameSizes: [],
       saveLabel: 'Сохранить новую рамку',
@@ -102,9 +105,9 @@
 
     function hasChanges() {
       checkParams();
-      return !vm.id ? _.get(vm,'attrsForm.$dirty') :
-        Article.hasChanges(vm.id) ||
-        _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
+      return !vm.id ? _.get(vm, 'attrsForm.$dirty') :
+      Article.hasChanges(vm.id) ||
+      _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
     }
 
     function cancelChanges() {
@@ -148,7 +151,7 @@
         var afs = _.find(vm.articleFrameSizes, efs);
 
         if (afs) {
-          afs.count ++;
+          afs.count++;
         } else {
           afs = ArticleFrameSize.createInstance({
             frameSizeId: vm.extraFrameSizeId,
@@ -163,18 +166,18 @@
       }
     }
 
-    function save () {
+    function save() {
 
       Article.create(vm.frame)
         .then(article => {
-          return $q.all(_.map(vm.articleFrameSizes,afs => {
+          return $q.all(_.map(vm.articleFrameSizes, afs => {
 
             if (!vm.frame.multiType) {
               return afs.id ? ArticleFrameSize.destroy(afs.id) : $q.resolve();
             } else if (afs.id && !afs.count) {
               return ArticleFrameSize.destroy(afs.id);
             } else if (afs.count) {
-              return  (!afs.id || ArticleFrameSize.hasChanges(afs.id)) ?
+              return (!afs.id || ArticleFrameSize.hasChanges(afs.id)) ?
                 ArticleFrameSize.create(_.assign(afs, {articleId: article.id})) :
                 $q.resolve(afs);
             }
@@ -218,15 +221,15 @@
       }
     }
 
-    function clearForm () {
+    function clearForm() {
       if (!vm.editState) {
         vm.frame = Article.createInstance();
       }
       vm.dupMessage = false;
       unique = true;
       initArticleFrameSizes();
-      _.result(vm,'attrsForm.$setUntouched');
-      _.result(vm,'attrsForm.$setPristine');
+      _.result(vm, 'attrsForm.$setUntouched');
+      _.result(vm, 'attrsForm.$setPristine');
       checkParams();
     }
 
