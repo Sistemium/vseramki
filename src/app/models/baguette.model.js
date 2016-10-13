@@ -10,7 +10,7 @@
     })
   ;
 
-  function Baguette(Schema) {
+  function Baguette(Schema, Entity) {
 
     return Schema.register({
 
@@ -82,6 +82,15 @@
           return names.join(' ');
 
         }
+      },
+
+      beforeCreateInstance: function (model, attrs) {
+        attrs.id || _.defaults(attrs, {
+          colourId: Entity.getDefault('Colour'),
+          surfaceId: Entity.getDefault('Surface'),
+          brandId: Entity.getDefault('Brand'),
+          materialId: Entity.getDefault('Material')
+        });
       }
 
     });

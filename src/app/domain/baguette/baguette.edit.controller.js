@@ -54,12 +54,7 @@
         });
     } else {
       vm.isCreateState = true;
-      vm.baguette = Baguette.createInstance({
-        colourId: Entity.getDefault('Colour'),
-        surfaceId: Entity.getDefault('Surface'),
-        brandId: Entity.getDefault('Brand'),
-        materialId: Entity.getDefault('Material')
-      });
+      vm.baguette = Baguette.createInstance();
     }
 
 
