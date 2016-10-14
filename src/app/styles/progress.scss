@@ -17,3 +17,13 @@ md-progress-circular {
     }
   }
 }
+
+
+md-progress-linear {
+  .md-bar {
+    background-color: $primary-button-background-color;
+  }
+  .md-container {
+    background-color: lighten($primary-button-background-color, 50%);
+  }
+}
