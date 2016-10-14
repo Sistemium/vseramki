@@ -2,7 +2,7 @@
 
 (function () {
 
-  function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper, $q, Entity) {
+  function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper, $q) {
 
     var vm = this;
     var FrameSize = Schema.model('FrameSize');
@@ -14,10 +14,7 @@
 
     _.assign(vm, {
 
-      frame: Article.createInstance({
-        backMountId: Entity.getDefault('BackMount'),
-        screeningId: Entity.getDefault('Screening')
-      }),
+      frame: Article.createInstance(),
       saved: false,
       articleFrameSizes: [],
       saveLabel: 'Сохранить новую рамку',

@@ -2,7 +2,7 @@
 
 (function () {
 
-  function Article(Schema) {
+  function Article(Schema, Entity) {
 
     const totalThreshold = 100000;
     const minThreshold = 10000;
@@ -100,11 +100,11 @@
           var fs = frameSizes || this.articleFrameSizes;
 
           return _.sortBy(_.filter(_.map(fs, afs => {
-            if (!afs.count) {
-              return '';
-            }
-            return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
-          })))
+              if (!afs.count) {
+                return '';
+              }
+              return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
+            })))
             .join(' + ');
 
         },
@@ -113,10 +113,10 @@
 
           var baguette = this.baguette;
 
-          var brandName = _.get(baguette,'brand.name');
+          var brandName = _.get(baguette, 'brand.name');
 
           var res = brandName ? '' : 'Рамка';
-          res += ` ${_.get(baguette,'name') || ''} ${_.get(this, 'frameSize.name') || ''}`;
+          res += ` ${_.get(baguette, 'name') || ''} ${_.get(this, 'frameSize.name') || ''}`;
 
           if (this.multiType) {
             res += ` ${this.multiTypeName().toLowerCase()} (${this.articleFrameSizesName(frameSizes)})`;
@@ -125,6 +125,14 @@
           return res;
 
         }
+      },
+
+      beforeCreateInstance: function (model, attrs) {
+        attrs.id || _.defaults(attrs, {
+          frameSizeId: Entity.getDefault('FrameSize'),
+          screeningId: Entity.getDefault('Screening'),
+          backMountId: Entity.getDefault('BackMount')
+        });
       }
 
     });
