@@ -21,10 +21,6 @@
 
         var vm = this;
 
-        if (vm.title) {
-          console.warn('stateBar: title is deprecated');
-        }
-
         _.assign(vm, {
 
           isAdmin: AuthHelper.isAdmin(),
