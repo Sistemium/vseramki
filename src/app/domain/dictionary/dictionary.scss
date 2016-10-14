@@ -1,6 +1,18 @@
 @import "../../styles/_vars";
 
 .dictionary {
+
+  busy-linear {
+    height: 5px;
+    display: block;
+  }
+
+  md-table-container {
+    position: relative;
+    top: -5px;
+    margin-bottom: -5px;
+  }
+
   div {
     md-fab-speed-dial {
       position: absolute;

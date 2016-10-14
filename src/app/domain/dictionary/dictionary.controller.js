@@ -120,14 +120,11 @@
     }
 
     function deleteItem(item, $event) {
-      vm.busy = true;
-
       AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
-        .then(() => Entity.find(vm.model.name, {bypassCache: true})
+        .then(() => vm.busy = Entity.find(vm.model.name, {bypassCache: true})
           .then(() => Entity.getDefault(name) === item.id || Entity.setDefault(name, null))
           .catch(err => err.status === 404 || $q.reject())
-          .then(() => vm.model.destroy(item)))
-        .finally(() => vm.busy = false);
+          .then(() => vm.model.destroy(item)));
     }
 
     function makeDefault(item) {

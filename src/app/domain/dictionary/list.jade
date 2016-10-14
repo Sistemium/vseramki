@@ -1,24 +1,18 @@
-state-bar.dictionary(
-bar-title='Словари'
-)
-  div.shown-tight
-    md-fab-speed-dial.md-scale(
-    md-direction='down'
-    )
-      md-fab-trigger
-        md-button.md-primary.admin-button(aria-label='Options menu'
-        md-ink-ripple='false'
-        ) {{ vm.option.labels.plural }}
-      md-fab-actions
-        md-button.md-raised.md-mini(
-        ng-repeat='dict in vm.options' align='center'
-        ng-click='vm.optionClick(dict)'
-        ng-class='{ "md-primary": dict.name === vm.option.name}'
-        ) {{ dict.labels.plural || dict.name }}
+state-bar.dictionary(bar-title='Словари')
 
+  md-fab-speed-dial.shown-tight.md-scale(md-direction='down')
+    md-fab-trigger
+      md-button.md-primary.admin-button(aria-label='Options menu'
+      md-ink-ripple='false'
+      ) {{ vm.option.labels.plural }}
+    md-fab-actions
+      md-button.md-raised.md-mini(
+      ng-repeat='dict in vm.options' align='center'
+      ng-click='vm.optionClick(dict)'
+      ng-class='{ "md-primary": dict.name === vm.option.name}'
+      ) {{ dict.labels.plural || dict.name }}
 
-.md-padding.dictionary(layout='row' layout-align='space-between start' layout-align-xs='space-around start' resize='dictionary'
-ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
+.md-padding.dictionary(layout='row' layout-align='space-between start' layout-align-xs='space-around start')
 
   md-sidenav(flex='nogrow' md-is-locked-open="$mdMedia('gt-xs')" class="md-sidenav-left")
     div(ng-repeat='dict in vm.options' align='center')
@@ -28,17 +22,22 @@ ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
       ng-class='{ "md-primary": dict.name === vm.option.name}'
       ) {{ dict.labels.plural || dict.name }}
 
-
-
   span.hide-xs(flex='15')
 
-  #viewport.scroll-y.md-whiteframe-1dp(flex='60' flex-xs='100' flex-sm='80')
-    md-table-container(ng-if='vm.data')
+  #viewport(flex='60' flex-xs='100' flex-sm='80')
+
+    busy-linear(promise='vm.busy')
+    //md-progress-linear(md-mode="indeterminate")
+
+    md-table-container.scroll-y.md-whiteframe-1dp(
+    ng-if='vm.data'
+    resize='dictionary'
+    ng-style='{"max-height": (dictionary.windowHeight - dictionary.offsetTop - 5)+"px"}'
+    )
 
       table(md-table)
 
         thead(md-head md-order='filterBy')
-
           th(
           md-column
           ng-repeat='col in vm.columns track by col.name'
