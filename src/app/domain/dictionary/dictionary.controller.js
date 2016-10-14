@@ -111,25 +111,35 @@
     }
 
     function deleteItem(item, $event) {
+      vm.busy = true;
+
       AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
-        .then(confirmed => {
+        .then(() => {
 
-          var currState = _.last($state.current.name.match(/dictionary\.([^.]+)/));
-          var isDefault = Entity.getDefault(currState) == item.id;
+          var name = vm.model.name;
 
-          if (isDefault) {
+          return Entity.find(name, {bypassCache: true})
+            .then(() => {
 
-            Entity.setDefault(currState, null).then(()=> {
-              confirmed && vm.model.destroy(item);
+              var isDefault = Entity.getDefault(name) === item.id;
+
+              if (isDefault) {
+
+                return Entity.setDefault(name, null).then(()=> {
+                  vm.model.destroy(item);
+                });
+
+              } else {
+
+                return vm.model.destroy(item);
+
+              }
+
             });
 
-          } else {
 
-            confirmed && vm.model.destroy(item);
-
-          }
-
-        });
+        })
+        .finally(() => vm.busy = false);
     }
 
     function makeDefault(item) {

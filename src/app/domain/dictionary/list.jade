@@ -77,7 +77,7 @@ ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
 
                   md-menu-item
                     md-button(ng-click='vm.defineFunction(row)')
-                      span(md-menu-align-target) {{ vm.modelDefaultId === row.id ? 'Удалить из основных свойств' : 'Сделать основным свойством' }}
+                      span(md-menu-align-target) {{ vm.modelDefaultId === row.id ? 'Убрать умолчание' : 'Использовать по умолчанию' }}
 
   span.hide-xs(flex='15')
 
