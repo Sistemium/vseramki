@@ -32,7 +32,8 @@
 
   tr.default {
     > td, .md-icon-button {
-      color: $primary-button-background-color;
+      background-color: $primary-button-background-color;
+      color: white;
     }
   }
 
