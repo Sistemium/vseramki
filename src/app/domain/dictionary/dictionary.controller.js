@@ -112,7 +112,24 @@
 
     function deleteItem(item, $event) {
       AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
-        .then(confirmed => confirmed && vm.model.destroy(item));
+        .then(confirmed => {
+
+          var currState = _.last($state.current.name.match(/dictionary\.([^.]+)/));
+          var isDefault = Entity.getDefault(currState) == item.id;
+
+          if (isDefault) {
+
+            Entity.setDefault(currState, null).then(()=> {
+              confirmed && vm.model.destroy(item);
+            });
+
+          } else {
+
+            confirmed && vm.model.destroy(item);
+
+          }
+
+        });
     }
 
     function makeDefault(item) {
