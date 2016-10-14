@@ -135,8 +135,15 @@
         });
     }
 
-    function deleteDefault() {
+    function defineFunction(row) {
+      vm.modelDefaultId === row.id ? deleteDefault(row) : makeDefault(row)
+    }
 
+    function deleteDefault() {
+      var id = _.last($state.current.name.match(/dictionary\.([^.]+)/));
+      Entity.setDefault(id, null).then(()=> {
+        vm.modelDefaultId = Entity.getDefault(id);
+      });
     }
   }
 
