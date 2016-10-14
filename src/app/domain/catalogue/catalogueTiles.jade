@@ -18,10 +18,11 @@ md-content.ui-view.height-100#scroll-main
               md-card-title-text
                 .md-subhead.text-center {{ article.name }}
             .flex
-            .md-margin
-              .price
+            .md-margin.price
+              .prices(ng-if='article.highPrice')
                 span(ng-class='{"strike-through gray": vm.cartHasDiscount}') {{ article.highPrice }} ₽
                 span(ng-if='vm.cartHasDiscount') &nbsp; {{ article.discountedPrice(vm.cartSubTotal) }} ₽
+              .alert(ng-if='!article.highPrice') Цены не установлены
 
           md-card-actions(ng-if='article.inCart')
             .div-order-info.space-children-em(layout='row' layout-align="center center")
@@ -46,7 +47,7 @@ md-content.ui-view.height-100#scroll-main
 
                 md-button.micro-fab(ng-click='vm.plusOne(article)') +
 
-          md-card-actions.not-in-cart(ng-if='!article.inCart')
+          md-card-actions.not-in-cart(ng-if='article.highPrice && !article.inCart')
             md-button.md-fab.md-mini.md-icon-button.default-button(
             aria-label="Добавить в корзину"
             ng-click="vm.addToCart(article)"

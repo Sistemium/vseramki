@@ -94,6 +94,11 @@ frame-name{
       .price {
         text-align: center;
         text-wrap: none;
+        .alert {
+          box-shadow: none;
+          background: none;
+          color: $vr-red-color;
+        }
       }
     }
 

@@ -98,7 +98,7 @@
         vm.frame.name &&
         // vm.frame.packageRel &&
         unique &&
-        vm.frame.highPrice &&
+        // vm.frame.highPrice &&
         (!vm.frame.multiType || _.find(vm.articleFrameSizes, afs => afs.count))
       ;
     }

@@ -41,7 +41,7 @@
               md-button.mini-fab.default-button(
               aria-label="Добавить в корзину"
               ng-click="vm.addToCart(article)"
-              ng-if='!article.inCart'
+              ng-if='article.highPrice && !article.inCart'
               )
                 i.material-icons add_shopping_cart
 

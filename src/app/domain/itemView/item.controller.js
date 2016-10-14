@@ -186,6 +186,11 @@
 
     function setPrices() {
 
+      if (!vm.article.highPrice || !vm.article.lowPrice) {
+        vm.prices = false;
+        return;
+      }
+
       var discount = 100 - 100 * vm.article.discountedPrice(vm.cartSubTotal) / vm.article.highPrice;
 
       vm.prices = [

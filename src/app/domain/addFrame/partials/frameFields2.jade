@@ -26,23 +26,29 @@ md-input-container
 
 md-input-container
   label Рыночная цена (руб.)
-    =' '
-    span.required-field-asterisk *
-  input(step='1' type='number' ng-model='vm.frame.highPrice' min='1'  name='highPrice' input-clear='black' required)
+    //=' '
+    //span.required-field-asterisk *
+  input(
+  step='1'
+  type='number'
+  ng-model='vm.frame.highPrice'
+  min='0'
+  name='highPrice'
+  input-clear='black'
+  )
   div(ng-messages="vm.attrsForm.highPrice.$error")
     div(ng-message="required") Поле не может быть пустым
 
 md-input-container
   label Оптовая цена (руб.)
-    =' '
-    span.required-field-asterisk *
+    //=' '
+    //span.required-field-asterisk *
   input(
   name='lowPrice'
   type='number'
   ng-model='vm.frame.lowPrice'
-  required
   step='1'
-  min='1'
+  min='0'
   input-clear='black'
   check-price="{{vm.frame.highPrice}}"
   )
