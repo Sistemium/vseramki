@@ -23,12 +23,8 @@
 
       optionClick,
       editCell,
-
-      onClickOptions: [
-        {name: 'Удалить', fn: deleteItem},
-        {name: 'Сделать основным', fn: makeDefault},
-        {name: 'Удалить основной', fn: deleteDefault}
-      ],
+      deleteItem,
+      defineFunction,
 
       options: _.map($state.current.data.options, o => Schema.model(o)),
       columns: DEFAULT_COLUMNS
@@ -99,9 +95,7 @@
       var model = Schema.model(item.name);
 
       model.findAll().then(function () {
-
         vm.modelDefaultId = Entity.getDefault(item.name);
-
       });
 
       if (unbind) {
