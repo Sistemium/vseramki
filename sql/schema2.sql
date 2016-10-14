@@ -71,7 +71,7 @@ meta.defineEntity 'Manufacturer',
 
 
 meta.defineEntity 'Article',
- 'name;code,code,,nullable;packageRel;pieceWeight,pieceWeight,,nullable;'
+ 'name;code,code,,nullable;packageRel,,,nullable;pieceWeight,pieceWeight,,nullable;'
   + 'lowPrice,price,,nullable;highPrice,price,,nullable;'
   + 'isDeleted',
  'Baguette,baguetteId,nullable;FrameSize,frameSizeId;'

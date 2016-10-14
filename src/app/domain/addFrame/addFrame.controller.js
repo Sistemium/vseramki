@@ -96,7 +96,7 @@
     function checkParams() {
       vm.paramsCheck = vm.frame.frameSizeId &&
         vm.frame.name &&
-        vm.frame.packageRel &&
+        // vm.frame.packageRel &&
         unique &&
         vm.frame.highPrice &&
         (!vm.frame.multiType || _.find(vm.articleFrameSizes, afs => afs.count))
