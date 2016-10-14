@@ -10,8 +10,8 @@
           th.hide-xs(md-column) Фото
           th(md-column md-order-by='brand.code') Код
           th(md-column md-order-by='brand.name') Бренд
-          th(md-column md-order-by='surface.name') Поверхность
           th(md-column md-order-by='colour.name') Цвет
+          th(md-column md-order-by='surface.name') Поверхность
           th(md-column md-order-by='lastName') Комментарий
           th(md-column) Цвета
           th.hide-xs.hide-sm(md-column md-order-by='borderWidth') Ширина (мм.)
@@ -30,8 +30,8 @@
               img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}')
             td(md-cell) {{bag.code}}
             td(md-cell) {{bag.brand.name}}
-            td(md-cell) {{bag.surface.name}}
             td(md-cell) {{bag.colour.name}}
+            td(md-cell) {{bag.surface.name}}
             td(md-cell) {{bag.lastName}}
             td(md-cell)
               div(ng-repeat='bc in bag.colours track by bc.id') {{ bc.colour.name }}
