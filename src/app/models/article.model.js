@@ -11,7 +11,8 @@
 
       labels: {
         plural: 'Рамки',
-        what: 'рамку'
+        what: 'рамку',
+        ofMany: 'Рамок'
       },
 
       name: 'Article',

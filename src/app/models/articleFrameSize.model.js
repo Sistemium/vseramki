@@ -8,6 +8,12 @@
 
       name: 'ArticleFrameSize',
 
+      labels: {
+        // plural: 'Рамки',
+        // what: 'рамку',
+        ofMany: 'Доп. Рамок'
+      },
+
       relations: {
         hasOne: {
           Article: {

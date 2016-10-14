@@ -16,7 +16,8 @@
 
       labels: {
         plural: 'Багет',
-        what: 'багет'
+        what: 'багет',
+        ofMany: 'Багетов'
       },
 
       name: 'Baguette',
