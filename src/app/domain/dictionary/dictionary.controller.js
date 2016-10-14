@@ -9,7 +9,7 @@
     }
   ];
 
-  function DictionaryController($scope, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog, Entity, ToastHelper) {
+  function DictionaryController($scope, $q, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog, Entity, ToastHelper) {
 
 
     var vm = this;
@@ -109,9 +109,11 @@
 
       vm.columns = model.columns || DEFAULT_COLUMNS;
       vm.relations = _.map(_.filter(model.relationList, {type: 'hasMany'}), rel => {
+        var model = Schema.model(rel.relation);
+        model.findAll();
         return {
           name: rel.localField,
-          title: _.get(Schema.model(rel.relation),'labels.ofMany')
+          title: _.get(model,'labels.ofMany')
         };
       });
       vm.model = model;
@@ -121,31 +123,10 @@
       vm.busy = true;
 
       AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
-        .then(() => {
-
-          var name = vm.model.name;
-
-          return Entity.find(name, {bypassCache: true})
-            .then(() => {
-
-              var isDefault = Entity.getDefault(name) === item.id;
-
-              if (isDefault) {
-
-                return Entity.setDefault(name, null).then(()=> {
-                  vm.model.destroy(item);
-                });
-
-              } else {
-
-                return vm.model.destroy(item);
-
-              }
-
-            });
-
-
-        })
+        .then(() => Entity.find(vm.model.name, {bypassCache: true})
+            .then(() => Entity.getDefault(name) === item.id || Entity.setDefault(name, null))
+            .catch(err => err.status === 404 || $q.reject())
+            .then(() => vm.model.destroy(item)))
         .finally(() => vm.busy = false);
     }
 
