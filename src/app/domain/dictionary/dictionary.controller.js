@@ -27,7 +27,8 @@
       defineFunction,
 
       options: _.map($state.current.data.options, o => Schema.model(o)),
-      columns: DEFAULT_COLUMNS
+      columns: DEFAULT_COLUMNS,
+      relations: []
 
     });
 
@@ -107,6 +108,12 @@
       }, $scope, 'vm.data');
 
       vm.columns = model.columns || DEFAULT_COLUMNS;
+      vm.relations = _.map(_.filter(model.relationList, {type: 'hasMany'}), rel => {
+        return {
+          name: rel.localField,
+          title: _.get(Schema.model(rel.relation),'labels.ofMany')
+        };
+      });
       vm.model = model;
     }
 

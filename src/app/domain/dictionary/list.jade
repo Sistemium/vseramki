@@ -45,6 +45,11 @@ ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
           md-order-by='{{col.name}}'
           ) {{ col.title }}
 
+          th(
+          md-column
+          ng-repeat='rel in vm.relations track by rel.name'
+          ) {{ rel.title }}
+
           th.col-remove(
           md-column
           ) Опции
@@ -62,8 +67,12 @@ ng-style='{height: (dictionary.windowHeight - dictionary.offsetTop)+"px"}')
             md-cell
             ng-repeat='col in vm.columns track by col.name'
             ng-click='vm.editCell($event, row, col)'
-
             ) {{row[col.name]}}
+
+            td(
+            md-cell
+            ng-repeat='rel in vm.relations track by rel.name'
+            ) {{row[rel.name].length || ''}}
 
             td(md-cell)
               md-menu(md-offset='0 -7')
