@@ -20,10 +20,21 @@ md-progress-circular {
 
 
 md-progress-linear {
+
   .md-bar {
     background-color: $primary-button-background-color;
   }
   .md-container {
     background-color: lighten($primary-button-background-color, 50%);
   }
+
+  &.yellow {
+    .md-bar {
+      background-color: $vr-yellow-color; //$primary-button-background-color;
+    }
+    .md-container {
+      background-color: lighten($vr-yellow-color, 40%);
+    }
+  }
+
 }
