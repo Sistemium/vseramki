@@ -66,4 +66,7 @@ style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px'
     ng-class="{'active' : vm.currentItemId == frame.id }"
     ng-click='vm.articlesListItemClick(frame)'
     )
-      span {{ frame.name }}
+      frame-name(article='frame')
+      small.gray(layout='row' layout-align='space-between center')
+        span {{ frame.secondName() }}
+        span {{ frame.code }}
