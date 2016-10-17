@@ -224,7 +224,7 @@ md-fab-actions, .viewport {
     background-color: $fab-button-hover-background-color;
   }
 
-  &.default-button:not([disabled]):hover {
+  &.default-button:not([disabled]):hover, &.active:hover {
     background-color: $default-button-hover;
   }
 
@@ -234,7 +234,7 @@ md-fab-actions, .viewport {
     background-color: lighten($admin-button-fab-color,15%);
   }
 
-  &.default-button {
+  &.default-button, &.active {
     background-color: $default-button-background-color;
     color: black;
   }

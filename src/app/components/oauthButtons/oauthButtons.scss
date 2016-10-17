@@ -81,6 +81,10 @@ $oab-google-bg-color: #4285f4;
     cursor: pointer !important;
     border-radius: 5px;
 
+    &:hover {
+      box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.5);
+    }
+
     .name {
       font-weight: 500;
     }
