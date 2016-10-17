@@ -6,9 +6,9 @@
 
     const filter = $filter('filter');
 
-    var vm = this;
-
     var {VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper} = Helpers;
+
+    var vm = ControllerHelper.setup(this, $scope, onStateChange);
 
     var {
       Brand,
@@ -16,10 +16,11 @@
       Colour,
       BaguetteImage,
       Baguette
-    } = Schema.models();
+      } = Schema.models();
 
     var chunkSize;
     var unbindBaguettes;
+    var lockArticlesScroll;
 
     var baguetteFilter = {
       orderBy: [
@@ -34,16 +35,17 @@
       selected: [],
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,
-
       isAdmin: AuthHelper.isAdmin(),
 
       deleteClick,
       addClick,
-      changeBaguette,
+      sideNavListItemClick: changeBaguette,
 
       resetFilters: () => vm.search = '',
       resetCheckedBaguette: () => vm.selected = [],
-      editBaguette: item => $state.go('.edit', {id: item.id})
+      editBaguette: item => {
+        $state.go('.edit', {id: item.id});
+      }
 
     });
 
@@ -53,17 +55,19 @@
 
      */
 
-    $q.all([
-      Colour.findAll(),
-      Material.findAll(),
-      Brand.findAll(),
-      BaguetteImage.findAll()
-    ]);
-
     Baguette.findAll()
-      .then(function (baguettes) {
+      .then(baguettes => {
         vm.baguettes = baguettes;
+        return $q.all([
+          Colour.findAll(),
+          Material.findAll(),
+          Brand.findAll(),
+          BaguetteImage.findAll()
+        ]);
+      })
+      .then(() => {
         setFiltered();
+        vm.ready = true;
       });
 
     /*
@@ -80,7 +84,16 @@
 
     $scope.$on('$destroy', un);
 
-    ControllerHelper.setup(vm, $scope, (toState, toParams) => {
+
+    VSHelper.watchForGroupSize($scope, 50, 250, setChunks);
+
+    /*
+
+     Functions
+
+     */
+
+    function onStateChange(toState, toParams) {
 
       if (vm.isRootState || !unbindBaguettes) {
         rebind(baguetteFilter);
@@ -91,19 +104,12 @@
           .then(function (item) {
             vm.currentItem = item;
           });
+        scrollToIndex();
       } else {
         vm.currentItem = false;
       }
 
-    });
-
-    VSHelper.watchForGroupSize($scope, 50, 250, setChunks);
-
-    /*
-
-     Functions
-
-     */
+    }
 
     function setFiltered(search) {
 
@@ -116,12 +122,21 @@
         });
       }
 
+      scrollToIndex();
       setChunks(chunkSize);
+
     }
 
     function setChunks(nv) {
       chunkSize = nv;
       vm.chunked = _.chunk(vm.filteredBaguettes, nv);
+    }
+
+    function scrollToIndex() {
+      var id = _.get($state, 'params.id');
+      if (!lockArticlesScroll && id) {
+        vm.articlesListTopIndex = _.findIndex(vm.filteredBaguettes, {'id': id}) - 1;
+      }
     }
 
     function rebind(filter) {
@@ -144,15 +159,15 @@
         if (answer) {
           var itemIndex = _.findIndex(vm.filteredBaguettes, item);
           var q = _.isArray(item)
-            ? $q.all(_.map(item, itm => Baguette.destroy(itm)))
-            : Baguette.destroy(item).then(()=>{
-                var newItem = _.get(vm.filteredBaguettes, (itemIndex || 2) - 1);
-                if (newItem) {
-                  $state.go('.', {id: newItem.id});
-                } else {
-                  $state.go('^');
-                }
-              })
+              ? $q.all(_.map(item, itm => Baguette.destroy(itm)))
+              : Baguette.destroy(item).then(()=> {
+              var newItem = _.get(vm.filteredBaguettes, (itemIndex || 2) - 1);
+              if (newItem) {
+                $state.go('.', {id: newItem.id});
+              } else {
+                $state.go('^');
+              }
+            })
             ;
           q.then(()=> {
             ToastHelper.success('Багет удален');
@@ -172,12 +187,11 @@
 
     function changeBaguette(bag) {
       var newState = $state.current.name;
-
       newState = newState.replace(/\.(edit|create)$/, '') + '.edit';
-
-      $state.go(newState, {id: bag.id});
+      lockArticlesScroll = true;
+      $state.go(newState, {id: bag.id})
+        .then(()=> lockArticlesScroll = false);
     }
-
   }
 
   angular
