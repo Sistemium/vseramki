@@ -16,7 +16,7 @@
       Material,
       Colour,
       BaguetteImage
-    } = Schema.models();
+      } = Schema.models();
 
     var chunkSize = 3;
 
@@ -29,6 +29,7 @@
       currentFilter: {},
       filterLength: false,
       selected: [],
+      scrollTo: 1,
 
       pagination: TableHelper.pagination($scope),
       isAdmin: AuthHelper.isAdmin(),
@@ -118,11 +119,12 @@
 
      */
 
-    function onStateChange (toState, toParams) {
+    function onStateChange(toState, toParams) {
       vm.currentItemId = toParams.id;
+      vm.currentItemId && scrollToIndex(vm.currentItemId);
     }
 
-    function addClick () {
+    function addClick() {
 
       var re = new RegExp(`${vm.rootState}\.([^.]+)`);
       var currentState = _.last($state.current.name.match(re));
@@ -149,11 +151,20 @@
       vm.rows = _.chunk(vm.articles, nv);
     }
 
+    function onArticleListChange() {
+      scrollToIndex($state.params.id);
+      setChunks(chunkSize);
+    }
+
+    function scrollToIndex(id) {
+      vm.articlesListTopIndex = _.findIndex(vm.articles, {'id': id});
+    }
+
     function rebind(filter) {
       if (vm.unbind) {
         vm.unbind();
       }
-      vm.unbind = Article.bindAll(filter, $scope, 'vm.articles', () => setChunks(chunkSize));
+      vm.unbind = Article.bindAll(filter, $scope, 'vm.articles', onArticleListChange);
     }
 
     function recalcTotals() {
