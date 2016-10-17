@@ -110,6 +110,16 @@
 
         },
 
+        firstName: function () {
+
+        },
+
+        secondName: function () {
+          var name = this.multiTypeName();
+
+          return name ? `${this.multiTypeName()} (${this.articleFrameSizesName()})` : '';
+        },
+
         stringName: function (frameSizes) {
 
           var baguette = this.baguette;
