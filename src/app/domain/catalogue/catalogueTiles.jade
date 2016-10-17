@@ -3,9 +3,10 @@ md-content#scroll-main.ui-view
   md-virtual-repeat-container.scroll-y.height-100(
   resize='tiles'
   ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
+  md-top-index='vm.topIndex'
   )
     .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
-      .repeated-group-item(ng-repeat='article in row' flex)
+      .repeated-group-item(ng-repeat='article in row track by $index' flex)
         md-card(layout='column' layout-align='space-between center')
           md-card-content.clickable(ng-click='vm.gotoItemView(article, $event)')
             .md-card-corner
