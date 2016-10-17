@@ -30,6 +30,7 @@
       filterLength: false,
       selected: [],
       scrollTo: 1,
+      lockArticlesScroll: false,
 
       pagination: TableHelper.pagination($scope),
       isAdmin: AuthHelper.isAdmin(),
@@ -58,7 +59,9 @@
           newState = '^'
         }
 
-        $state.go(newState, {id: frame.id});
+        vm.lockArticlesScroll = true;
+        $state.go(newState, {id: frame.id})
+          .then(()=> vm.lockArticlesScroll = false);
       }
 
     });
@@ -121,7 +124,7 @@
 
     function onStateChange(toState, toParams) {
       vm.currentItemId = toParams.id;
-      vm.currentItemId && scrollToIndex(vm.currentItemId);
+      vm.currentItemId && !vm.lockArticlesScroll && scrollToIndex(vm.currentItemId);
     }
 
     function addClick() {
