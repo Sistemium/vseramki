@@ -42,7 +42,7 @@
     .gray {
       text-align: right;
     }
-    border-bottom: solid 1px lighten(silver,15%);
+    border-bottom: $list-item-border;
   }
 
   .repeated-group-item {
