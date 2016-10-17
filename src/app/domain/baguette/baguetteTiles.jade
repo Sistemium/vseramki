@@ -3,6 +3,7 @@ md-content#scroll-main.ui-view
   md-virtual-repeat-container.scroll-y.height-100(
   resize='baguettes'
   ng-style='{height: (baguettes.windowHeight - baguettes.offsetTop - 2) + "px"}'
+  md-top-index='vm.topIndex'
   )
     .repeated-group(md-virtual-repeat='chunk in vm.chunked' layout='row' layout-align='center center')
       .repeated-group-item(ng-repeat='bag in chunk track by bag.id' flex)
