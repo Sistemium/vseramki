@@ -2,7 +2,7 @@
 
 $card-thumbnail-size: 180px;
 
-frame-name{
+frame-name {
   display: block;
   span {
     margin-right: $margin-default-half;
@@ -65,6 +65,13 @@ frame-name{
       padding-left: 0;
     }
 
+    .item{
+      min-height: 35px;
+      .gray {
+        margin-top: 4px;
+      }
+      border-bottom: $list-item-border;
+    }
   }
 
   #scroll-main {
@@ -85,7 +92,6 @@ frame-name{
 
   .item {
     padding: $margin-default-half;
-    margin: $margin-default-half 0;
   }
 
   md-card {
