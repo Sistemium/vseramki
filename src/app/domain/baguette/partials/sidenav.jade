@@ -14,16 +14,16 @@
     i.material-icons.mini clear
 
 .no-padding(
-layout='column'
 resize='baguettesList'
 style='height: {{ baguettesList.windowHeight - baguettesList.offsetTop - 15 }}px'
 )
-
-  md-virtual-repeat-container.clickable.scroll-y(flex)
+  md-virtual-repeat-container.clickable.scroll-y.height-100(
+  md-top-index='vm.articlesListTopIndex'
+  )
     .item(
     md-virtual-repeat='bag in vm.filteredBaguettes'
     ng-class="{'active ': vm.currentItem.id == bag.id }"
-    ng-click='vm.changeBaguette(bag)'
+    ng-click='vm.sideNavListItemClick(bag)'
     )
       div {{bag.name}}
       .gray
