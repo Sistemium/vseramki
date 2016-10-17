@@ -29,7 +29,6 @@
       currentFilter: {},
       filterLength: false,
       selected: [],
-      scrollTo: 1,
       lockArticlesScroll: false,
 
       pagination: TableHelper.pagination($scope),
@@ -124,7 +123,7 @@
 
     function onStateChange(toState, toParams) {
       vm.currentItemId = toParams.id;
-      vm.currentItemId && !vm.lockArticlesScroll && scrollToIndex(vm.currentItemId);
+      vm.currentItemId && scrollToIndex();
     }
 
     function addClick() {
@@ -155,12 +154,15 @@
     }
 
     function onArticleListChange() {
-      scrollToIndex($state.params.id);
+      scrollToIndex();
       setChunks(chunkSize);
     }
 
-    function scrollToIndex(id) {
-      vm.articlesListTopIndex = _.findIndex(vm.articles, {'id': id});
+    function scrollToIndex() {
+      var id = _.get($state, 'params.id');
+      if(!vm.lockArticlesScroll && id){
+        vm.articlesListTopIndex = _.findIndex(vm.articles, {'id': id});
+      }
     }
 
     function rebind(filter) {
