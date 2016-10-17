@@ -65,7 +65,7 @@ frame-name {
       padding-left: 0;
     }
 
-    .item{
+    .item {
       min-height: 35px;
       .gray {
         margin-top: 4px;
@@ -82,7 +82,6 @@ frame-name {
   .repeated-group {
     height: 355px;
     padding: 2px;
-    margin: 2px;
   }
 
   .repeated-group-item {
@@ -100,8 +99,7 @@ frame-name {
       margin-bottom: $margin-default-half;
     }
 
-    height: 340px;
-    position: relative;;
+    position: relative;
 
     md-card-content {
       padding: 0;
