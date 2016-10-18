@@ -18,7 +18,8 @@
         searchable: '=',
         placeholder: '@',
         pattern: '=',
-        formatter: '&'
+        formatter: '&',
+        requiredField: '='
       },
 
       controllerAs: 'vm',
