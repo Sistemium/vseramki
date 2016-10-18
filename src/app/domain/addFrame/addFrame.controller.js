@@ -72,7 +72,6 @@
 
     $scope.$watch('vm.extraFrameSizeId', addArticleFrameSize);
     $scope.$watchGroup(['vm.frame.frameSizeId', 'vm.frame.baguetteId'], function (nv, ov) {
-
       if ((nv != ov) && hasChanges() && !reverted) {
         vm.checkAttrs();
       } else {
@@ -93,9 +92,9 @@
     function checkParams() {
       vm.paramsCheck = vm.frame.frameSizeId &&
         vm.frame.name &&
-        // vm.frame.packageRel &&
+          // vm.frame.packageRel &&
         unique &&
-        // vm.frame.highPrice &&
+          // vm.frame.highPrice &&
         (!vm.frame.multiType || _.find(vm.articleFrameSizes, afs => afs.count))
       ;
     }
@@ -200,6 +199,7 @@
       _.assign(params, {baguetteId: vm.frame.baguetteId}, {frameSizeId: vm.frame.frameSizeId});
 
       if (params.baguetteId && params.frameSizeId) {
+
         Article.findAll(params).then(function (data) {
 
           _.remove(data, {id: vm.id});
@@ -215,6 +215,9 @@
           checkParams();
 
         });
+      } else {
+        vm.attrsForm.$invalid = true;
+        vm.dupMessage = false;
       }
     }
 
