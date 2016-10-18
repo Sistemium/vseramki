@@ -31,7 +31,7 @@ bar-title='Заказ'
   )
     i.material-icons remove_shopping_cart
   span(flex)
-  div(layout='column')
+  div(layout='column' ng-if='vm.data.length')
     p.no-margin.text-right
       span Итого к оплате:
       = ' '
