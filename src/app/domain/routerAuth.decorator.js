@@ -9,10 +9,11 @@
 
       function checkRoles() {
 
-        var needAdmin = _.get(to, 'data.needRoles') || /(edit|add)/g.test(to.name);
+        var needRoles = _.get(to, 'data.needRoles');
+        var needAdmin =  needRoles === 'admin' || /(edit|add)/g.test(to.name);
 
         // TODO: check needRoles value
-        if (needAdmin && !AuthHelper.isAdmin()) {
+        if (needAdmin && !AuthHelper.isAdmin() || needRoles && !AuthHelper.getUser()) {
           event.preventDefault();
           $state.go('home');
         }

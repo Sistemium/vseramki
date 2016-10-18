@@ -48,7 +48,8 @@
     return {
       isAdmin,
       hasUser,
-      userRoles: () => currentUserRoles
+      userRoles: () => currentUserRoles,
+      getUser: () => currentUser
     }
 
   }
