@@ -2,7 +2,7 @@
 
 (function () {
 
-  function CartController($scope, $state, Schema, AlertHelper) {
+  function CartController($scope, $state, Schema, AlertHelper, $q) {
 
     var vm = this;
     var stateParam = [];
@@ -12,7 +12,9 @@
       ArticleImage,
       Baguette,
       BaguetteImage,
-      Cart
+      Cart,
+      SaleOrder,
+      SaleOrderPosition
     } = Schema.models();
 
     _.assign(vm, {
@@ -99,6 +101,39 @@
         return Cart.destroy(item);
       }
       saveItem();
+    }
+
+    function saveSaleOrder() {
+
+      vm.busy = SaleOrder.create({
+        comment: '',
+        contactName: '',
+        email: '',
+        creatorId: ''
+      })
+        .then(saleOrder => {
+
+          var positions = _.map(vm.data, cartItem => {
+            return SaleOrderPosition.create({
+              saleOrderId: saleOrder.id,
+              articleId: cartItem.articleId,
+              count: cartItem.count,
+              price: cartItem.article.discountedPrice(vm.cartSubTotal)
+            });
+          });
+
+          return $q.all(positions)
+            .catch(err=>{
+              console.error(err);
+              //TODO: delete created saleOrder if failed to create all positions
+              return $q.reject();
+            });
+
+        })
+        .then(()=>{
+          //TODO: clear cart, show success screen for unregistered, redirect to order history for registered
+        });
+
     }
 
   }
