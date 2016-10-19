@@ -4,7 +4,7 @@ meta.defineType 'comment:STRING,,nullable';
 
 meta.defineEntity 'SaleOrder',
  'shipDate,date,,nullable;comment;' +
- 'contactName,name;email,name;phone,name;isDeleted',
+ 'contactName,name;shipTo,name;email,name;phone,name;isDeleted',
  'User,creatorId,nullable'
 ;
 
