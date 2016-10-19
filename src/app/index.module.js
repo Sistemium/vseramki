@@ -14,7 +14,8 @@
       'sistemiumAngularAuth',
       'models',
       'ui.bootstrap.position',
-      'yaMap'
+      'yaMap',
+      'ui.mask'
     ]);
 
 })();
