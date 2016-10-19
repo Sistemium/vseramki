@@ -1,5 +1,57 @@
-div(layout='column' layout-align='center center')
-  h3 Добро пожаловать, {{vm.user.name}}
-  md-button.pink-button(ng-click='vm.logout()') Завершить работу
+state-bar(
+bar-title='Профиль ({{::vm.user.name}})'
+)
+  div(layout='row')
+    md-button.pink-button.md-raised(
+    ng-click='vm.logout()'
+    ) Завершить работу
 
-  //pre {{ vm.roles | json }}
+div(layout='column' layout-align='center center')
+
+  form-edit(vm="vm" item="vm.user" form-title="Контактная информация" name-field='')
+    form-fields.wide(layout='column' layout-align='space-between top' layout-gt-sm='row')
+      .flex
+
+      .form-controls(layout='column' layout-align='top center')
+
+        md-input-container(md-no-float)
+          label Имя
+            =' '
+            span.required-field-asterisk *
+          input(
+          ng-model='vm.user.name'
+          name='name'
+          placeholder=''
+          input-clear='black'
+          autocomplete='off'
+          required
+          )
+          div(ng-messages="vm.attrsForm.name.$error")
+            div(ng-message="required") Поле не может быть пустым
+
+        md-input-container(md-no-float)
+          label Телефон
+          input(
+          ng-model='vm.user.phone'
+          name='phone'
+          input-clear='black'
+          ui-mask="+7(999) 999-9999"
+          placeholder=''
+          ui-mask-placeholder
+          ui-mask-placeholder-char="_"
+          ng-required
+          autocomplete='off'
+          )
+
+        md-input-container(md-no-float)
+          label E-mail
+          input(
+          ng-model='vm.user.email'
+          name='email'
+          placeholder=''
+          ng-pattern='vm.emailPattern'
+          input-clear='black'
+          autocomplete='off'
+          )
+          div(ng-messages="vm.attrsForm.email.$error")
+            div(ng-message="pattern") Неверный формат ввода
