@@ -19,12 +19,15 @@
 
     _.assign(vm, {
 
+      checkout: {},
+
       clearCart,
       clearItem,
       saveItem,
       plusOne,
       minusOne,
-      itemClick
+      itemClick,
+      onSubmit: saveSaleOrder
 
     });
 
@@ -105,12 +108,9 @@
 
     function saveSaleOrder() {
 
-      vm.busy = SaleOrder.create({
-        comment: '',
-        contactName: '',
-        email: '',
-        creatorId: ''
-      })
+      vm.busy = SaleOrder.create(_.assign({
+        creatorId: null
+      }, vm.checkout))
         .then(saleOrder => {
 
           var positions = _.map(vm.data, cartItem => {
