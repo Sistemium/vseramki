@@ -4,7 +4,7 @@ style="height: {{ edit.windowHeight - edit.offsetTop - 2}}px;"
 )
   .text-center
     h2.gray(ng-if='vm$.formTitle') {{ vm$.formTitle }}
-    h2 {{ vm$.item.name }}
+    h2(ng-if='vm$.nameField') {{ vm$.item[vm$.nameField]}}
 
   form(name="vm.attrsForm" ng-transclude='fields')
 
@@ -13,12 +13,12 @@ style="height: {{ edit.windowHeight - edit.offsetTop - 2}}px;"
   layout='row' layout-align='center center'
   )
     md-button.md-raised(
-    ng-if='vm.id'
+    ng-if='vm.id || vm.emailPattern'
     ng-click='vm.cancelChanges()'
     ) Отменить изменения
 
     md-button.md-raised.pink-button(
     ng-disabled='vm.attrsForm.$invalid' ng-click='vm.save()'
-    ) {{ vm.dupMessage || (vm.attrsForm.$invalid ? 'Форма некорректно заполнена' : vm.saveLabel) }}
+    ) {{ vm.dupMessage || (vm.attrsForm.$invalid ? 'Форма некорректно заполнена' : (vm.saveLabel || 'Сохранить')) }}
 
   ng-transclude(ng-transclude-slot='footer')
