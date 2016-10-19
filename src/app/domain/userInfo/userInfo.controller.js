@@ -73,7 +73,9 @@
     }
 
     function cancelChanges() {
-      User.revert(vm.user.id);
+      _.get(vm,'user.id') && User.revert(vm.user.id);
+      _.result(vm, 'attrsForm.$setPristine');
+      _.result(vm, 'attrsForm.$setUntouched');
     }
 
 
