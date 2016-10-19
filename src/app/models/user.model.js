@@ -9,7 +9,18 @@
   function User(Schema) {
 
     return Schema.register({
-      name: 'User'
+
+      name: 'User',
+
+      relations: {
+        hasMany: {
+          SaleOrder: {
+            localField: 'saleOrders',
+            foreignKey: 'creatorId'
+          }
+        }
+      }
+
     });
 
   }
