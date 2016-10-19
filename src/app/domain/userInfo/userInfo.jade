@@ -9,10 +9,9 @@ bar-title='Профиль ({{::vm.user.name}})'
 div(layout='column' layout-align='center center')
 
   form-edit(vm="vm" item="vm.user" form-title="Контактная информация" name-field='')
-    form-fields.wide(layout='column' layout-align='space-between top' layout-gt-sm='row')
-      .flex
+    form-fields.wide
 
-      .form-controls(layout='column' layout-align='top center')
+      .form-controls(layout='column' layout-align='start center')
 
         md-input-container(md-no-float)
           label Имя
