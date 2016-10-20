@@ -22,6 +22,14 @@
             localKey: 'articleId'
           }
         }
+      },
+
+      methods: {
+
+        cost: function () {
+          return Math.round(100.0 * this.count * this.price) / 100.0;
+        }
+
       }
 
     });
