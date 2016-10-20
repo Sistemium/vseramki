@@ -2,10 +2,11 @@
 
 (function () {
 
-  function CartController($scope, $state, Schema, Helpers, $q) {
+  function CartController($scope, $state, Schema, Helpers, $q, ToastHelper) {
 
     var vm = this;
     var {AlertHelper} = Helpers;
+    const validSymbols = '\\dA-z\\-\\._$';
 
     var {
       Article,
@@ -16,12 +17,13 @@
       SaleOrder,
       SaleOrderPosition,
       User
-    } = Schema.models();
+      } = Schema.models();
 
     _.assign(vm, {
 
       id: $state.params.id,
-      saleOrder: {},
+      saleOrder: null,
+      emailPattern: new RegExp(`[${validSymbols}]+@[${validSymbols}]+\\.[A-z]{2,}`),
 
       clearCart,
       clearItem,
@@ -29,11 +31,25 @@
       plusOne,
       minusOne,
       itemClick,
-      onSubmit: saveSaleOrder
+      onSubmit: saveSaleOrder,
+      hasChanges,
+      cancelChanges,
+      save
 
     });
 
+
+    vm.id = $state.params.id;
+
+    if (vm.id) {
+      vm.title = 'Заказ'
+    } else {
+      vm.title = 'Оформление заказа'
+    }
+
     var PositionsModel = vm.id ? SaleOrderPosition : Cart;
+
+    console.log(PositionsModel);
 
     /*
 
@@ -44,6 +60,7 @@
     var authUser = Helpers.AuthHelper.getUser();
 
     if (authUser) {
+      var isLoggedIn = true;
       User.find(authUser.id)
         .then(setup);
     } else {
@@ -79,20 +96,25 @@
 
     /*
 
-    Functions
+     Functions
 
      */
 
     function setup(user) {
 
       if (vm.id) {
-        SaleOrder.find(vm.id, saleOrder => vm.saleOrder = saleOrder);
+        SaleOrder.find(vm.id)
+          .then(saleOrder => {
+            vm.saleOrder = saleOrder;
+            return SaleOrder.loadRelations(saleOrder);
+          });
       } else {
         vm.saleOrder = SaleOrder.createInstance({
           creatorId: user.id,
           phone: user.phone,
           email: user.email,
-          contactName: user.name
+          contactName: user.name,
+          shipTo: user.address
         });
       }
 
@@ -100,7 +122,7 @@
 
     function refreshPrice() {
       if (vm.id) {
-        SaleOrder.recalcTotals(vm);
+        vm.saleOrder && vm.saleOrder.recalcTotals(vm);
       } else {
         Cart.recalcTotals(vm);
       }
@@ -166,18 +188,39 @@
           });
 
           return $q.all(positions)
-            .catch(err=>{
+            .catch(err=> {
               console.error(err);
               //TODO: delete created saleOrder if failed to create all positions
               return $q.reject();
             });
 
         })
-        .then(()=>{
+        .then(()=> {
+
+          Cart.destroyAll()
+            .then(() => ToastHelper.success('Заказ оформлен'));
+
+          if (isLoggedIn) {
+            $state.go('saleorder', {id: vm.saleOrder.id});
+          }
+
           //TODO: clear cart, show success screen for unregistered, redirect to order history for registered
         });
 
     }
+
+    function hasChanges() {
+      return vm.saleOrder && SaleOrder.hasChanges(vm.saleOrder.id);
+    }
+
+    function cancelChanges() {
+      SaleOrder.revert(vm.saleOrder.id);
+    }
+
+    function save() {
+      SaleOrder.save(vm.saleOrder);
+    }
+
 
   }
 
