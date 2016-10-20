@@ -5,7 +5,12 @@ bar-title='Профиль пользователя'
   ng-click='vm.logout()'
   ) Завершить работу
 
-div(layout='column' layout-align='center center')
+.scroll-y(
+resize='userInfo'
+ng-style="{height: (userInfo.windowHeight - userInfo.offsetTop - 2) + 'px'}"
+layout-align='top center'
+layout='column'
+)
 
   form-edit(vm="vm" item="vm.user" form-title="Контактная информация" name-field='')
     form-fields.wide
@@ -21,7 +26,6 @@ div(layout='column' layout-align='center center')
           name='name'
           placeholder=''
           input-clear='black'
-          autocomplete='off'
           required
           )
           div(ng-messages="vm.attrsForm.name.$error")
@@ -38,7 +42,6 @@ div(layout='column' layout-align='center center')
           ui-mask-placeholder
           ui-mask-placeholder-char="_"
           ng-required
-          autocomplete='off'
           )
 
         md-input-container(md-no-float)
@@ -49,7 +52,29 @@ div(layout='column' layout-align='center center')
           placeholder=''
           ng-pattern='vm.emailPattern'
           input-clear='black'
-          autocomplete='off'
           )
           div(ng-messages="vm.attrsForm.email.$error")
             div(ng-message="pattern") Неверный формат ввода
+
+        md-input-container(md-no-float)
+          label Адрес доставки
+          input(
+          ng-model='vm.user.address'
+          name='address'
+          placeholder=''
+          input-clear='black'
+          )
+
+  div(ng-if='vm.orders' layout='row')
+    p.bold Всего заказов: {{vm.orders.length}}
+    md-button.pink-button.md-raised.md-button(ng-click='vm.goToOrders()') Открыть заказы
+
+  //.saleOrders(flex='30' layout='column')
+  //  h3 Заказы
+  //  .md-whiteframe-1dp(ng-repeat='order in vm.orders')
+  //    p Имя: {{order.contactName}}
+  //    p Тел: {{order.phone}}
+  //    p Адрес: {{order.shipTo}}
+  //    p ID: {{order.id}}
+  //    md-button.pink-button(ng-click='vm.goTo(order.id)') goto
+
