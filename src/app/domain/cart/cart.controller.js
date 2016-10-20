@@ -2,10 +2,10 @@
 
 (function () {
 
-  function CartController($scope, $state, Schema, AlertHelper, $q) {
+  function CartController($scope, $state, Schema, Helpers, $q) {
 
     var vm = this;
-    var stateParam = [];
+    var {AlertHelper} = Helpers;
 
     var {
       Article,
@@ -14,12 +14,14 @@
       BaguetteImage,
       Cart,
       SaleOrder,
-      SaleOrderPosition
+      SaleOrderPosition,
+      User
     } = Schema.models();
 
     _.assign(vm, {
 
-      checkout: {},
+      id: $state.params.id,
+      saleOrder: {},
 
       clearCart,
       clearItem,
@@ -31,29 +33,39 @@
 
     });
 
+    var PositionsModel = vm.id ? SaleOrderPosition : Cart;
+
     /*
 
      Init
 
      */
 
+    var authUser = Helpers.AuthHelper.getUser();
+
+    if (authUser) {
+      User.find(authUser.id)
+        .then(setup);
+    } else {
+      setup({});
+    }
+
     Baguette.findAll();
     BaguetteImage.findAll();
     ArticleImage.findAll();
-    Article.findAll({limit: 1000})
+    Article.findAll()
       .then(refreshPrice);
 
-    Cart.findAll().then(function (carts) {
+    if (!vm.id) {
+      Cart.findAll().then(function (carts) {
 
-      _.each(carts, function (cart) {
+        _.each(carts, cart =>
+          Article.find(cart.articleId)
+            .catch(() => Cart.destroy(cart))
+        );
 
-        stateParam.push({articleId: cart['articleId']});
-
-        Article.find(cart.articleId)
-          .catch(() => Cart.destroy(cart));
       });
-
-    });
+    }
 
     /*
 
@@ -61,7 +73,9 @@
 
      */
 
-    Cart.bindAll({}, $scope, 'vm.data', refreshPrice);
+    PositionsModel.bindAll({
+      saleOrderId: vm.id
+    }, $scope, 'vm.data', refreshPrice);
 
     /*
 
@@ -69,13 +83,39 @@
 
      */
 
+    function setup(user) {
+
+      if (vm.id) {
+        SaleOrder.find(vm.id, saleOrder => vm.saleOrder = saleOrder);
+      } else {
+        vm.saleOrder = SaleOrder.createInstance({
+          creatorId: user.id,
+          phone: user.phone,
+          email: user.email,
+          contactName: user.name
+        });
+      }
+
+    }
+
     function refreshPrice() {
-      Cart.recalcTotals(vm);
+      if (vm.id) {
+        SaleOrder.recalcTotals(vm);
+      } else {
+        Cart.recalcTotals(vm);
+      }
     }
 
     function clearCart($event) {
       AlertHelper.showConfirm($event, 'Отменить заказ?')
-        .then(response => response && Cart.destroyAll());
+        .then(() => {
+          if (!vm.id) {
+            Cart.destroyAll()
+          } else {
+            // TODO: set saleOrder status = 'canceled'
+            console.error('Not implemented');
+          }
+        });
     }
 
     function itemClick(item) {
@@ -84,16 +124,16 @@
 
     function clearItem(item) {
       item.count = 0;
-      Cart.destroy(item);
+      PositionsModel.destroy(item);
     }
 
     function saveItem(item) {
-      Cart.save(item);
+      PositionsModel.save(item);
     }
 
     function plusOne(item) {
       item.count++;
-      Cart.save(item);
+      PositionsModel.save(item);
     }
 
     function minusOne(item) {
@@ -101,24 +141,27 @@
       item.count--;
 
       if (item.count < 1) {
-        return Cart.destroy(item);
+        return PositionsModel.destroy(item);
       }
       saveItem();
     }
 
     function saveSaleOrder() {
 
-      vm.busy = SaleOrder.create(_.assign({
-        creatorId: null
-      }, vm.checkout))
+      vm.busy = SaleOrder.create(vm.saleOrder)
         .then(saleOrder => {
+
+          if (vm.id) {
+            return;
+          }
 
           var positions = _.map(vm.data, cartItem => {
             return SaleOrderPosition.create({
               saleOrderId: saleOrder.id,
               articleId: cartItem.articleId,
               count: cartItem.count,
-              price: cartItem.article.discountedPrice(vm.cartSubTotal)
+              price: cartItem.article.discountedPrice(vm.cartSubTotal),
+              priceOrigin: cartItem.article.highPrice
             });
           });
 
