@@ -7,8 +7,13 @@ h3 Контактные данные
       =' '
       span.required-field-asterisk *
     input(
+    autocomplete='off'
     type='text'
     ng-model='vm.saleOrder.phone'
+    ui-mask="+7(999) 999-9999"
+    placeholder=''
+    ui-mask-placeholder
+    ui-mask-placeholder-char="_"
     required
     name='shippingPhone'
     input-clear='black'
@@ -21,20 +26,24 @@ h3 Контактные данные
       =' '
       span.required-field-asterisk *
     input(
+    autocomplete='off'
     type='text'
     ng-model='vm.saleOrder.email'
+    ng-pattern='vm.emailPattern'
     required
     name='shippingEmail'
     input-clear='black'
     )
     div(ng-messages="checkoutForm.shippingEmail.$error")
       div(ng-message="required") Поле не может быть пустым
+      div(ng-message="pattern") Неверный формат ввода
 
   md-input-container
     label Контактное лицо
       =' '
       span.required-field-asterisk *
     input(
+    autocomplete='off'
     type='text'
     ng-model='vm.saleOrder.contactName'
     required
@@ -49,6 +58,7 @@ h3 Контактные данные
       =' '
       span.required-field-asterisk *
     input(
+    autocomplete='off'
     type='text'
     ng-model='vm.saleOrder.shipTo'
     required
@@ -64,10 +74,12 @@ h3 Контактные данные
     md-maxlength="200" rows="7"
     ng-model='vm.saleOrder.comment'
     name='shippingComment'
+    autocomplete='off'
     )
 
 .text-center
   md-button.width-100.no-margin.md-button.pink-button(
   type='submit'
+  ng-if='!vm.id'
   ng-disabled='checkoutForm.$invalid'
   ) Завершить оформление
