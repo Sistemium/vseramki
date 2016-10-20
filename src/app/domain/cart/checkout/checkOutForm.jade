@@ -8,7 +8,7 @@ h3 Контактные данные
       span.required-field-asterisk *
     input(
     type='text'
-    ng-model='vm.checkout.phone'
+    ng-model='vm.saleOrder.phone'
     required
     name='shippingPhone'
     input-clear='black'
@@ -22,7 +22,7 @@ h3 Контактные данные
       span.required-field-asterisk *
     input(
     type='text'
-    ng-model='vm.checkout.email'
+    ng-model='vm.saleOrder.email'
     required
     name='shippingEmail'
     input-clear='black'
@@ -36,7 +36,7 @@ h3 Контактные данные
       span.required-field-asterisk *
     input(
     type='text'
-    ng-model='vm.checkout.contactName'
+    ng-model='vm.saleOrder.contactName'
     required
     name='shippingPerson'
     input-clear='black'
@@ -50,7 +50,7 @@ h3 Контактные данные
       span.required-field-asterisk *
     input(
     type='text'
-    ng-model='vm.checkout.shipTo'
+    ng-model='vm.saleOrder.shipTo'
     required
     name='shippingAddress'
     input-clear='black'
@@ -62,7 +62,7 @@ h3 Контактные данные
     label Комментарий
     textarea(
     md-maxlength="200" rows="7"
-    ng-model='vm.checkout.comment'
+    ng-model='vm.saleOrder.comment'
     name='shippingComment'
     )
 
