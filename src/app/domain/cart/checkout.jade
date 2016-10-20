@@ -1,5 +1,5 @@
 state-bar.hidden-print(
-bar-title='Оформление заказа'
+bar-title='{{vm.title}}'
 )
 
 #checkout.scroll-y(resize='checkout' ng-style='{height: (checkout.windowHeight - checkout.offsetTop - 1)+"px"}')
@@ -14,7 +14,9 @@ bar-title='Оформление заказа'
     .flex
     #order-info.property-list.flex-5-4(ng-include="'app/domain/cart/checkout/orderInfo.html'")
     .flex
+
     form.wide(name='checkoutForm' ng-include="'app/domain/cart/checkout/checkOutForm.html'" ng-submit='vm.onSubmit()')
+
     .flex
 
   ng-include#orderTable(src="'app/domain/cart/checkout/orderTable.html'")
