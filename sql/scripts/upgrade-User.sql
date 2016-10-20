@@ -1,5 +1,5 @@
 meta.defineEntity 'User',
- 'name;email,name,,nullable;phone,name,,nullable;isDeleted'
+ 'name;email,name,,nullable;phone,name,,nullable;address,name,,nullable;isDeleted'
 ;
 
 meta.createTable 'User',
