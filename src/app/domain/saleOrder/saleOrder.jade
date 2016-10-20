@@ -1,0 +1,20 @@
+state-bar.hidden-print(
+bar-title='{{vm.title}} от {{vm.saleOrder.cts}}'
+)
+
+.scroll-y.saleOrder(resize='saleOrder' ng-style='{height: (saleOrder.windowHeight - saleOrder.offsetTop - 1)+"px"}')
+
+  form-edit(vm="vm" item="vm.saleOrder" form-title="" name-field='')
+    form-fields.wide(
+    layout='column' layout-align='center center'
+    layout-gt-xs='row'
+    layout-align-gt-xs='space-between start'
+    )
+      .flex
+      #order-info.property-list.flex-5-4(ng-include="'app/domain/cart/checkout/orderInfo.html'")
+      .flex
+      div(ng-include="'app/domain/saleOrder/saleOrderFields.html'")
+      .flex
+
+  ng-include#orderTable(src="'app/domain/cart/checkout/orderTable.html'")
+

@@ -1,0 +1,62 @@
+h3 Контактная информация
+
+.form-controls(layout='column' layout-align='start center')
+
+  md-input-container(md-no-float)
+    label Имя
+      =' '
+      span.required-field-asterisk *
+    input(
+    ng-model='vm.saleOrder.contactName'
+    name='name'
+    placeholder=''
+    input-clear='black'
+    autocomplete='off'
+    required
+    )
+    div(ng-messages="vm.attrsForm.name.$error")
+      div(ng-message="required") Поле не может быть пустым
+
+  md-input-container(md-no-float)
+    label Телефон
+      =' '
+      span.required-field-asterisk *
+    input(
+    ng-model='vm.saleOrder.phone'
+    name='phone'
+    input-clear='black'
+    ui-mask="+7(999) 999-9999"
+    placeholder=''
+    ui-mask-placeholder
+    ui-mask-placeholder-char="_"
+    ng-required
+    autocomplete='off'
+    )
+
+  md-input-container(md-no-float)
+    label E-mail
+      =' '
+      span.required-field-asterisk *
+    input(
+    ng-model='vm.saleOrder.email'
+    name='email'
+    placeholder=''
+    ng-pattern='vm.emailPattern'
+    input-clear='black'
+    autocomplete='off'
+    )
+    div(ng-messages="vm.attrsForm.email.$error")
+      div(ng-message="pattern") Неверный формат ввода
+
+  md-input-container(md-no-float)
+    label Адрес доставки
+      =' '
+      span.required-field-asterisk *
+    input(
+    ng-model='vm.saleOrder.shipTo'
+    name='address'
+    placeholder=''
+    input-clear='black'
+    autocomplete='off'
+    required
+    )
