@@ -9,7 +9,7 @@ meta.defineEntity 'SaleOrder',
 ;
 
 meta.defineEntity 'SaleOrderPosition',
- 'count;price;isDeleted',
+ 'count;price;priceOrigin,price;isDeleted',
  'SaleOrder,saleOrderId;Article,articleId'
 ;
 
