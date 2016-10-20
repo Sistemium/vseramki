@@ -1,0 +1,17 @@
+state-bar(
+bar-title='Заказы'
+)
+
+.scroll-y.user-info(
+resize='orders'
+ng-style="{height: (orders.windowHeight - orders.offsetTop - 2) + 'px'}"
+layout-align='top center'
+layout='column'
+)
+  .saleOrders(flex='40' layout='column')
+    .md-padding.md-margin.md-whiteframe-1dp.order-tile(ng-repeat='order in vm.orders' ng-click='vm.goTo(order.id)')
+      p Имя: {{order.contactName}}
+      p Тел: {{order.phone}}
+      p Адрес: {{order.shipTo}}
+      p ID: {{order.id}}
+      p Дата заказа: {{order.cts}}
