@@ -13,7 +13,7 @@ style="height: {{ edit.windowHeight - edit.offsetTop - 2}}px;"
   layout='row' layout-align='center center'
   )
     md-button.md-raised(
-    ng-if='vm.id || vm.emailPattern'
+    ng-if='vm.id'
     ng-click='vm.cancelChanges()'
     ) Отменить изменения
 

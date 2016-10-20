@@ -50,6 +50,7 @@
         })
         .then(user => {
           vm.user = user;
+          vm.id = user.id;
         })
         .catch(err => console.error(err));
 
