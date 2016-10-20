@@ -29,11 +29,7 @@
 
       methods: {
 
-        cost: function () {
-          return Math.round(100.0 * this.count * this.price) / 100.0;
-        },
-
-        orderSubTotal: () => {
+        orderSubTotal: function () {
           return _.sumBy(this.positions, item =>
             item.count > 0 ? Math.round(100.0 * item.priceOrigin * item.count) / 100.0 : 0
           );
@@ -41,7 +37,7 @@
 
         orderTotal: function () {
           var items = this.positions;
-          var subTotal = model.orderSubTotal(items);
+          var subTotal = this.orderSubTotal(items);
 
           return _.sumBy(items, item => item.count ? item.cost(subTotal) : 0);
         },
@@ -51,6 +47,7 @@
           var model = this;
           var items = model.positions;
 
+          // FIXME copy-pasted
           vm.cartSubTotal = model.orderSubTotal();
           vm.cartTotal = model.orderTotal();
           vm.cartItems = items.length;
