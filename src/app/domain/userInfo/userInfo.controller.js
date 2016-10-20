@@ -7,11 +7,12 @@
     .controller('UserInfoController', UserInfoController)
   ;
 
-  function UserInfoController(AuthHelper, Auth, Schema, $q, ToastHelper) {
+  function UserInfoController(AuthHelper, Auth, Schema, $q, ToastHelper, $state) {
 
     var vm = this;
 
     var User = Schema.model('User');
+    var SaleOrder = Schema.model('SaleOrder');
 
     const validSymbols = '\\dA-z\\-\\._$';
 
@@ -20,7 +21,9 @@
       logout: Auth.logout,
       save,
       hasChanges,
-      cancelChanges
+      cancelChanges,
+      goTo,
+      goToOrders
     });
 
     /*
@@ -32,6 +35,16 @@
     /*
      Functions
      */
+
+
+    function goTo(id) {
+      console.log(id);
+      $state.go('saleorder', {id: id});
+    }
+
+    function goToOrders() {
+      $state.go('order')
+    }
 
     function setUser() {
       var authUser = AuthHelper.getUser();
@@ -51,9 +64,16 @@
         .then(user => {
           vm.user = user;
           vm.id = user.id;
+          getOrder();
         })
         .catch(err => console.error(err));
 
+    }
+
+    function getOrder() {
+      SaleOrder.findAll({xid: vm.user.id}).then(function (orders) {
+        vm.orders = orders;
+      });
     }
 
     function save() {
@@ -74,7 +94,7 @@
     }
 
     function cancelChanges() {
-      _.get(vm,'user.id') && User.revert(vm.user.id);
+      _.get(vm, 'user.id') && User.revert(vm.user.id);
       _.result(vm, 'attrsForm.$setPristine');
       _.result(vm, 'attrsForm.$setUntouched');
     }
