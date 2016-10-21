@@ -7,17 +7,18 @@
     .controller('SaleOrderController', SaleOrderController)
   ;
 
-  function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper) {
+  function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper) {
 
-    var vm = this;
+    var vm = ControllerHelper.setup(this, $scope, onStateChange);
 
     var SaleOrder = Schema.model('SaleOrder');
 
     _.assign(vm, {
-      userId: _.get(AuthHelper.getUser(),'id'),
+      userId: _.get(AuthHelper.getUser(), 'id'),
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,
       rootState: 'saleOrders',
+      sideNavListItemClick,
       goToOrder
     });
 
@@ -33,9 +34,33 @@
      Functions
      */
 
+    function onStateChange(toState, toParams) {
+
+      vm.isRootState = !toParams.id;
+      vm.currentItem = toParams;
+
+
+      //if (vm.isRootState || !unbindBaguettes) {
+      //  rebind(baguetteFilter);
+      //}
+      //
+      //if (/\.edit$/.test(toState.name)) {
+      //  Baguette.find(toParams.id)
+      //    .then(function (item) {
+      //      vm.currentItem = item;
+      //    });
+      //  scrollToIndex();
+      //} else {
+      //  vm.currentItem = false;
+      //}
+
+    }
+
+    function sideNavListItemClick(item) {
+      $state.go('saleOrders.info', {id: item.id})
+    }
 
     function goToOrder(id) {
-      console.log(id);
       $state.go('.info', {id: id});
     }
 
