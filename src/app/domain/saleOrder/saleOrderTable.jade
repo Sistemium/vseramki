@@ -1,4 +1,4 @@
-.saleOrders.ui-view
+.saleOrders
 
   state-bar(
   bar-title='Заказы'
@@ -11,10 +11,11 @@
     md-component-id="left-nav"
     md-is-locked-open="$mdMedia('gt-xs')"
     md-is-open='vm.isSideNavOpen'
-    ng-if='!vm.rootState'
-    ng-include="'app/domain/baguette/partials/sidenav.html'"
+    ng-include="'app/domain/saleOrder/partials/sidenav.html'"
+    ng-if='!vm.isRootState'
     )
-    .flex
+
+    .flex.ui-view
       .scroll-y(
       resize='orders'
       ng-style="{height: (orders.windowHeight - orders.offsetTop - 57) + 'px'}"
