@@ -33,6 +33,10 @@ table.md-table {
     width: 60px;
   }
 
+  .clickable .md-row:hover {
+    background-color: $toolbar-background-color;;
+  }
+
 }
 
 
