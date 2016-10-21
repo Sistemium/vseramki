@@ -1,10 +1,3 @@
-state-bar.saleOrder(
-bar-title='Заказ'
-root-state='saleOrders'
-mode-options='false'
-)
-  span(ng-show='vm.saleOrder') № {{vm.saleOrder.ndoc}} от {{vm.saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
-
 .scroll-y.saleOrder(resize='saleOrder' ng-style='{height: (saleOrder.windowHeight - saleOrder.offsetTop - 1)+"px"}')
 
   form-edit(vm="vm" item="vm.saleOrder" form-title="" name-field='')
