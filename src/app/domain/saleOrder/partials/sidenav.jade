@@ -1,0 +1,15 @@
+.no-padding(
+resize='saleOrderList'
+ng-style='{height: (saleOrderList.windowHeight - 140)+"px"}'
+)
+
+  md-virtual-repeat-container.clickable.scroll-y.height-100(
+  md-top-index='vm.articlesListTopIndex'
+  )
+    .item(
+    md-virtual-repeat='saleOrder in vm.saleOrders'
+    ng-class="{'active ': vm.currentItem.id == saleOrder.id }"
+    ng-click='vm.sideNavListItemClick(saleOrder)'
+    )
+      div.md-margin Заказ № {{saleOrder.ndoc}} от {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
+
