@@ -1,11 +1,14 @@
-state-bar.hidden-print(
-bar-title='{{vm.title}} от {{vm.saleOrder.cts}}'
+state-bar.saleOrder(
+bar-title='Заказ'
+root-state='saleOrders'
+mode-options='false'
 )
+  span(ng-show='vm.saleOrder') № {{vm.saleOrder.ndoc}} от {{vm.saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
 
 .scroll-y.saleOrder(resize='saleOrder' ng-style='{height: (saleOrder.windowHeight - saleOrder.offsetTop - 1)+"px"}')
 
   form-edit(vm="vm" item="vm.saleOrder" form-title="" name-field='')
-    form-fields.wide(
+    form-fields.wide.print-layout-row.print-layout-align-space-around-start(
     layout='column' layout-align='center center'
     layout-gt-xs='row'
     layout-align-gt-xs='space-between start'
@@ -13,7 +16,7 @@ bar-title='{{vm.title}} от {{vm.saleOrder.cts}}'
       .flex
       #order-info.property-list.flex-5-4(ng-include="'app/domain/cart/checkout/orderInfo.html'")
       .flex
-      div(ng-include="'app/domain/saleOrder/saleOrderFields.html'")
+      div(ng-include="'app/domain/saleOrder/partials/saleOrderFields.html'")
       .flex
 
   ng-include#orderTable(src="'app/domain/cart/checkout/orderTable.html'")
