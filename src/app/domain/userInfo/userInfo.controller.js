@@ -14,11 +14,8 @@
     var User = Schema.model('User');
     var SaleOrder = Schema.model('SaleOrder');
 
-    const validSymbols = '\\dA-z\\-\\._$';
-
-
     _.assign(vm, {
-      emailPattern: new RegExp(`[${validSymbols}]+@[${validSymbols}]+\\.[A-z]{2,}`),
+      emailPattern: User.meta.emailPattern,
       logout: Auth.logout,
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,

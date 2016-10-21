@@ -6,7 +6,6 @@
 
     var vm = this;
     var {AlertHelper} = Helpers;
-    const validSymbols = '\\dA-z\\-\\._$';
 
     var {
       Article,
@@ -23,7 +22,7 @@
 
       id: $state.params.id,
       saleOrder: null,
-      emailPattern: new RegExp(`[${validSymbols}]+@[${validSymbols}]+\\.[A-z]{2,}`),
+      emailPattern: User.meta.emailPattern,
 
       clearCart,
       clearItem,
