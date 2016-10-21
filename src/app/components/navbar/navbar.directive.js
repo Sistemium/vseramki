@@ -2,17 +2,11 @@
 
 (function () {
 
-  function acmeNavbar() {
-
-    var directive = {
-      restrict: 'E',
-      replace: true,
-      templateUrl: 'app/components/navbar/navbar.html',
-      controller: NavbarController,
-      controllerAs: 'vm'
-    };
-    return directive;
-  }
+  var acmeNavbar = {
+    templateUrl: 'app/components/navbar/navbar.html',
+    controller: NavbarController,
+    controllerAs: 'vm'
+  };
 
   /** @ngInject */
   function NavbarController(Cart, $scope, $window, $state, AuthHelper, ToastHelper) {
@@ -119,7 +113,7 @@
   }
 
   angular.module('vseramki')
-    .directive('acmeNavbar', acmeNavbar);
+    .component('acmeNavbar', acmeNavbar);
 
 
 })();
