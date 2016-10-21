@@ -5,7 +5,10 @@
 
   angular
     .module('vseramki')
-    .run(runBlock);
+    .run(runBlock)
+    .run(function(amMoment) {
+      amMoment.changeLocale('ru');
+    });
 
   /** @ngInject */
   function runBlock($log, $window) {
