@@ -7,7 +7,7 @@
     .controller('UserInfoController', UserInfoController)
   ;
 
-  function UserInfoController(AuthHelper, Auth, Schema, $q, ToastHelper, $state, TableHelper) {
+  function UserInfoController(AuthHelper, Auth, Schema, $q, ToastHelper, $state, TableHelper, $scope) {
 
     var vm = this;
 
@@ -15,6 +15,7 @@
     var SaleOrder = Schema.model('SaleOrder');
 
     const validSymbols = '\\dA-z\\-\\._$';
+
 
     _.assign(vm, {
       emailPattern: new RegExp(`[${validSymbols}]+@[${validSymbols}]+\\.[A-z]{2,}`),
@@ -29,11 +30,13 @@
       goToOrders
     });
 
+
     /*
      Init
      */
 
     setUser();
+
 
     /*
      Functions
@@ -74,10 +77,9 @@
     }
 
     function getUserSaleOrders() {
-      SaleOrder.findAll({creatorId: vm.user.id})
-        .then(function (saleOrders) {
-          vm.saleOrders = saleOrders;
-        });
+      SaleOrder.findAll({creatorId: vm.user.id}).then(()=> {
+        SaleOrder.bindAll({}, $scope, 'vm.saleOrders');
+      });
     }
 
     function save() {
@@ -90,7 +92,6 @@
         ToastHelper.error('Ошибка');
       });
 
-      //console.log(vm.userInfo);
     }
 
     function hasChanges() {
