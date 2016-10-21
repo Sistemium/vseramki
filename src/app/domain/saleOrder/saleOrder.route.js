@@ -11,11 +11,29 @@
   function routerConfig(stateHelperProvider) {
     stateHelperProvider
       .state({
-        name: 'saleorder',
-        url: '/saleorder/:id',
-        templateUrl: 'app/domain/saleOrder/saleOrder.html',
-        controller: 'CartController',
-        controllerAs: 'vm'
+
+        name: 'saleOrders',
+        url: '/saleOrders',
+        templateUrl: 'app/domain/saleOrder/saleOrderTable.html',
+        controller: 'SaleOrderController',
+        controllerAs: 'vm',
+
+        data: {
+          needRoles: true
+        },
+
+        children: [{
+          name: 'info',
+          url: '/:id',
+          templateUrl: 'app/domain/saleOrder/saleOrder.html',
+          controller: 'CartController',
+          controllerAs: 'vm',
+
+          data: {
+            needRoles: false
+          }
+
+        }]
       })
     ;
   }
