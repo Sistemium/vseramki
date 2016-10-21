@@ -1,0 +1,54 @@
+.saleOrders.ui-view
+
+  state-bar(
+  bar-title='Заказы'
+  )
+
+  div(layout='row')
+
+    md-sidenav.md-sidenav-left.md-whiteframe-1dp(
+    layout-padding
+    md-component-id="left-nav"
+    md-is-locked-open="$mdMedia('gt-xs')"
+    md-is-open='vm.isSideNavOpen'
+    ng-if='!vm.rootState'
+    ng-include="'app/domain/baguette/partials/sidenav.html'"
+    )
+    .flex
+      .scroll-y(
+      resize='orders'
+      ng-style="{height: (orders.windowHeight - orders.offsetTop - 57) + 'px'}"
+      )
+        md-table-container(ng-if='vm.saleOrders')
+          table(md-table)
+            thead(md-head md-order='filterBy')
+              th(md-column md-order-by='ndoc') ID
+              th(md-column md-order-by='cts') Дата
+              th(md-column md-order-by='contactName') Контактное лицо
+              th(md-column md-order-by='phone') Телефон
+              th(md-column md-order-by='shipTo') Адрес
+            tbody.clickable(md-body)
+              tr(
+              md-row
+              ng-repeat='saleOrder in vm.saleOrders' +
+              '| orderBy: filterBy ' +
+              '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+              ' track by saleOrder.id'
+              ng-click='vm.goToOrder(saleOrder.id)'
+              )
+                td(md-cell) {{saleOrder.ndoc}}
+                td(md-cell) {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
+                td(md-cell) {{saleOrder.contactName}}
+                td(md-cell) {{saleOrder.phone}}
+                td(md-cell) {{saleOrder.shipTo}}
+
+      md-table-pagination(
+      md-limit='vm.pagination.query.limit',
+      md-label='{{vm.pagination.labels}}',
+      md-limit-options='vm.pagination.limitOptions',
+      md-page='vm.pagination.query.page',
+      md-total='{{vm.orders.length}}',
+      md-page-select='!vm.useMobile',
+      md-boundary-links='!vm.useMobile'
+      md-on-paginate='vm.onPaginate'
+      )
