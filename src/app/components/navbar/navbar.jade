@@ -11,6 +11,7 @@ md-toolbar.toolbar-fixed-top.white-background.md-menu-toolbar.md-whiteframe-1dp
     ng-repeat='btn in vm.buttons track by btn.sref'
     ui-sref='{{btn.sref}}'
     ui-sref-active='md-primary'
+    ng-class='btn.cls'
     ) {{ btn.label }}
 
     md-fab-speed-dial.md-scale.fab-menu.shown-tight(
