@@ -80,7 +80,8 @@
         },
         {
           sref: 'info',
-          label: 'Контакты'
+          label: 'Контакты',
+          cls: vm.loggedIn && 'hide-sm'
         },
         {
           sref: 'delivery',
@@ -88,6 +89,12 @@
         }
       ];
 
+      if (vm.loggedIn) {
+        vm.navs.push({
+          sref: 'saleOrders',
+          label: 'Заказы'
+        });
+      }
       if (isAdmin) {
         vm.navs.push({
           sref: 'baguettes',
