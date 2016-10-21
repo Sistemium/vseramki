@@ -1,5 +1,9 @@
 @media print {
 
+  * {
+    box-shadow: none !important;
+  }
+
   .hidden-print {
     display: none;
   }
@@ -34,6 +38,10 @@
 
     }
 
+  }
+
+  @page {
+    margin: 1cm;
   }
 
 }
