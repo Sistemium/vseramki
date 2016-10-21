@@ -65,8 +65,8 @@ layout='column'
           input-clear='black'
           )
 
-  div(ng-if='vm.orders' layout='row')
-    p.bold Всего заказов: {{vm.orders.length}}
+  div(ng-if='vm.saleOrders.length' layout='row')
+    p.bold Всего заказов: {{vm.saleOrders.length}}
     md-button.pink-button.md-raised.md-button(ng-click='vm.goToOrders()') Открыть заказы
 
   //.saleOrders(flex='30' layout='column')
