@@ -42,7 +42,7 @@
     vm.id = $state.params.id;
 
     if (vm.id) {
-      vm.title = 'Заказ'
+      vm.title = 'Заказ';
     } else {
       vm.title = 'Оформление заказа'
     }
@@ -60,7 +60,6 @@
     var authUser = Helpers.AuthHelper.getUser();
 
     if (authUser) {
-      var isLoggedIn = true;
       User.find(authUser.id)
         .then(setup);
     } else {
@@ -198,13 +197,14 @@
         .then(()=> {
 
           Cart.destroyAll()
-            .then(() => ToastHelper.success('Заказ оформлен'));
+            .then(() => {
+              $state.go('saleOrders.info', {id: vm.saleOrder.id})
+                .then(()=>{
+                  ToastHelper.success('Заказ успешно оформлен');
+                });
+            });
 
-          if (isLoggedIn) {
-            $state.go('saleorder', {id: vm.saleOrder.id});
-          }
 
-          //TODO: clear cart, show success screen for unregistered, redirect to order history for registered
         });
 
     }
