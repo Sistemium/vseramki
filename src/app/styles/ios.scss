@@ -1,7 +1,9 @@
-&, section, div, p, h1, h2, h3, h4, h5, h6, span, label, td, th, tr, body, md-toolbar, .md-toolbar-tools {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -webkit-user-drag: none;
+.iOS {
+  &, section, div, p, h1, h2, h3, h4, h5, h6, span, label, td, th, tr, body, md-toolbar, .md-toolbar-tools {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+  }
 }
 
 #root-md-content {
