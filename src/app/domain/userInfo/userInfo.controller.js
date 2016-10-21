@@ -7,7 +7,7 @@
     .controller('UserInfoController', UserInfoController)
   ;
 
-  function UserInfoController(AuthHelper, Auth, Schema, $q, ToastHelper, $state) {
+  function UserInfoController(AuthHelper, Auth, Schema, $q, ToastHelper, $state, TableHelper) {
 
     var vm = this;
 
@@ -19,10 +19,13 @@
     _.assign(vm, {
       emailPattern: new RegExp(`[${validSymbols}]+@[${validSymbols}]+\\.[A-z]{2,}`),
       logout: Auth.logout,
+      pagination: TableHelper.pagination(),
+      onPaginate: TableHelper.setPagination,
+      rootState: 'order',
       save,
       hasChanges,
       cancelChanges,
-      goTo,
+      goToOrder,
       goToOrders
     });
 
@@ -37,13 +40,13 @@
      */
 
 
-    function goTo(id) {
+    function goToOrder(id) {
       console.log(id);
-      $state.go('saleorder', {id: id});
+      $state.go('.', {id: id});
     }
 
     function goToOrders() {
-      $state.go('order')
+      $state.go('saleOrders')
     }
 
     function setUser() {
@@ -64,16 +67,17 @@
         .then(user => {
           vm.user = user;
           vm.id = user.id;
-          getOrder();
+          getUserSaleOrders();
         })
         .catch(err => console.error(err));
 
     }
 
-    function getOrder() {
-      SaleOrder.findAll({xid: vm.user.id}).then(function (orders) {
-        vm.orders = orders;
-      });
+    function getUserSaleOrders() {
+      SaleOrder.findAll({creatorId: vm.user.id})
+        .then(function (saleOrders) {
+          vm.saleOrders = saleOrders;
+        });
     }
 
     function save() {
