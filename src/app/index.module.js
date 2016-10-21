@@ -15,7 +15,8 @@
       'models',
       'ui.bootstrap.position',
       'yaMap',
-      'ui.mask'
+      'ui.mask',
+      'angularMoment'
     ]);
 
 })();
