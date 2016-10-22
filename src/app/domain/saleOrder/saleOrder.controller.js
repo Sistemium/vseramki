@@ -18,8 +18,8 @@
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,
       rootState: 'saleOrders',
-      sideNavListItemClick,
-      goToOrder
+      sideNavListItemClick: goToOrder,
+      saleOrderRowClick: goToOrder
     });
 
     /*
@@ -36,32 +36,14 @@
 
     function onStateChange(toState, toParams) {
 
-      vm.isRootState = !toParams.id;
-      vm.currentItem = toParams;
-
-
-      //if (vm.isRootState || !unbindBaguettes) {
-      //  rebind(baguetteFilter);
-      //}
-      //
-      //if (/\.edit$/.test(toState.name)) {
-      //  Baguette.find(toParams.id)
-      //    .then(function (item) {
-      //      vm.currentItem = item;
-      //    });
-      //  scrollToIndex();
-      //} else {
-      //  vm.currentItem = false;
-      //}
+      vm.currentItem = _.get(toParams, 'id') &&
+        SaleOrder.find(toParams.id)
+          .then(item => vm.currentItem = item);
 
     }
 
-    function sideNavListItemClick(item) {
+    function goToOrder(item) {
       $state.go('saleOrders.info', {id: item.id})
-    }
-
-    function goToOrder(id) {
-      $state.go('.info', {id: id});
     }
 
     function loadData() {

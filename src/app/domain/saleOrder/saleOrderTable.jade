@@ -35,7 +35,7 @@
               '| orderBy: filterBy ' +
               '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
               ' track by saleOrder.id'
-              ng-click='vm.goToOrder(saleOrder.id)'
+              ng-click='vm.saleOrderRowClick(saleOrder)'
               )
                 td(md-cell) {{saleOrder.ndoc}}
                 td(md-cell) {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
