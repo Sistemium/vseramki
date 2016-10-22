@@ -8,7 +8,7 @@
 
   function SaleOrder(Schema) {
 
-    return Schema.register({
+    var model = Schema.register({
 
       name: 'SaleOrder',
 
@@ -24,6 +24,14 @@
             localField: 'positions',
             foreignKey: 'saleOrderId'
           }
+        }
+      },
+
+      labels: {
+        count: {
+          1: 'заказ',
+          234: 'заказа',
+          567890: 'заказов'
         }
       },
 
@@ -59,6 +67,8 @@
       }
 
     });
+
+    return model;
 
   }
 
