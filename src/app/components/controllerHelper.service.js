@@ -10,7 +10,7 @@
 
       var stateChangeSuccessSubscription = $scope.$on('$stateChangeSuccess', (event, toState, toParams) => {
 
-        vm.isRootState = /(table|tiles)$/.test(toState.name);
+        vm.isRootState = /(table|tiles)$/.test(toState.name) || toState.name === vm.rootState;
         vm.currentMode = _.last(toState.name.match(re));
         vm.currentState = _.first(toState.name.match(/[^.]+$/));
 
