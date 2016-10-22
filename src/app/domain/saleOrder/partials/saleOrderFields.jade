@@ -27,7 +27,7 @@ h3 Информация для доставки
     placeholder
     ui-mask-placeholder
     ui-mask-placeholder-char="_"
-    ng-required
+    required
     autocomplete='off'
     )
 
@@ -55,4 +55,13 @@ h3 Информация для доставки
     placeholder
     autocomplete='off'
     required
+    )
+
+  md-input-container
+    label Комментарий
+    textarea(
+    md-maxlength="200" rows="7"
+    ng-model='vm.saleOrder.comment'
+    name='shippingComment'
+    autocomplete='off'
     )
