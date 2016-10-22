@@ -24,8 +24,8 @@ layout='column'
           input(
           ng-model='vm.user.name'
           name='name'
-          placeholder=''
-          input-clear='black'
+          placeholder
+          input-clear
           required
           )
           div(ng-messages="vm.attrsForm.name.$error")
@@ -36,9 +36,9 @@ layout='column'
           input(
           ng-model='vm.user.phone'
           name='phone'
-          input-clear='black'
+          input-clear
           ui-mask="+7(999) 999-9999"
-          placeholder=''
+          placeholder
           ui-mask-placeholder
           ui-mask-placeholder-char="_"
           ng-required
@@ -49,9 +49,9 @@ layout='column'
           input(
           ng-model='vm.user.email'
           name='email'
-          placeholder=''
+          placeholder
           ng-pattern='vm.emailPattern'
-          input-clear='black'
+          input-clear
           )
           div(ng-messages="vm.attrsForm.email.$error")
             div(ng-message="pattern") Неверный формат ввода
@@ -61,11 +61,11 @@ layout='column'
           input(
           ng-model='vm.user.address'
           name='address'
-          placeholder=''
-          input-clear='black'
+          placeholder
+          input-clear
           )
 
-  div(ng-if='vm.saleOrders.length' layout='row')
-    p.bold Всего заказов: {{vm.saleOrders.length}}
-    md-button.pink-button.md-raised.md-button(ng-click='vm.goToOrders()') Открыть заказы
+
+        md-button.tool-button.default-button(ng-if='vm.saleOrders.length' ng-click='vm.goToOrders()')
+          | {{vm.saleOrdersButton}}
 

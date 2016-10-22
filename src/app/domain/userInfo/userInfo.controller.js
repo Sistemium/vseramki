@@ -75,7 +75,10 @@
 
     function getUserSaleOrders() {
       SaleOrder.findAll({creatorId: vm.user.id}).then(()=> {
-        SaleOrder.bindAll({}, $scope, 'vm.saleOrders');
+        SaleOrder.bindAll({}, $scope, 'vm.saleOrders', () => {
+          var count = _.get(vm.saleOrders, 'length');
+          vm.saleOrdersButton = count ? `${count} ${SaleOrder.labelOf(count)}` : null;
+        });
       });
     }
 
