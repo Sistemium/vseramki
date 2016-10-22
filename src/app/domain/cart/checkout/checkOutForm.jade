@@ -16,7 +16,7 @@ h3 Контактные данные
     ui-mask-placeholder-char="_"
     required
     name='shippingPhone'
-    input-clear='black'
+    input-clear
     )
     div(ng-messages="checkoutForm.shippingPhone.$error")
       div(ng-message="required") Поле не может быть пустым
@@ -32,7 +32,7 @@ h3 Контактные данные
     ng-pattern='vm.emailPattern'
     required
     name='shippingEmail'
-    input-clear='black'
+    input-clear
     )
     div(ng-messages="checkoutForm.shippingEmail.$error")
       div(ng-message="required") Поле не может быть пустым
@@ -48,7 +48,7 @@ h3 Контактные данные
     ng-model='vm.saleOrder.contactName'
     required
     name='shippingPerson'
-    input-clear='black'
+    input-clear
     )
     div(ng-messages="checkoutForm.shippingPerson.$error")
       div(ng-message="required") Поле не может быть пустым
@@ -63,7 +63,7 @@ h3 Контактные данные
     ng-model='vm.saleOrder.shipTo'
     required
     name='shippingAddress'
-    input-clear='black'
+    input-clear
     )
     div(ng-messages="checkoutForm.shippingAddress.$error")
       div(ng-message="required") Поле не может быть пустым
@@ -75,6 +75,7 @@ h3 Контактные данные
     ng-model='vm.saleOrder.comment'
     name='shippingComment'
     autocomplete='off'
+    input-clear
     )
 
 .text-center
