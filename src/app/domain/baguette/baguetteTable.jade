@@ -7,13 +7,14 @@
     md-table-container(ng-if='vm.baguettes.length')
       table(md-table)
         thead(md-head md-order='filterBy')
-          th.hide-xs(md-column) Фото
+          th(md-column) Фото
           th(md-column md-order-by='brand.code') Артикул
-          th(md-column md-order-by='brand.name') Бренд
-          th(md-column md-order-by='colour.name') Цвет
-          th(md-column md-order-by='surface.name') Поверхность
-          th(md-column md-order-by='lastName') Комментарий
-          th(md-column) Цвета
+          th.visible-xs(md-column md-order-by='name') Наименование
+          th.hide-xs(md-column md-order-by='brand.name') Бренд
+          th.hide-xs(md-column md-order-by='colour.name') Цвет
+          th.hide-xs(md-column md-order-by='surface.name') Поверхность
+          th.hide-xs(md-column md-order-by='lastName') Комментарий
+          th.hide-xs.hide-sm(md-column) Цвета
           th.hide-xs.hide-sm(md-column md-order-by='borderWidth') Ширина (мм.)
         tbody.clickable(md-body)
           tr(
@@ -26,14 +27,15 @@
           md-select-id='id'
           ng-click='vm.editBaguette(bag, $event)'
           )
-            td.hide-xs(md-cell)
+            td(md-cell)
               img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}')
             td(md-cell) {{bag.code}}
-            td(md-cell) {{bag.brand.name}}
-            td(md-cell) {{bag.colour.name}}
-            td(md-cell) {{bag.surface.name}}
-            td(md-cell) {{bag.lastName}}
-            td(md-cell)
+            td.visible-xs(md-cell) {{bag.name}}
+            td.hide-xs(md-cell) {{bag.brand.name}}
+            td.hide-xs(md-cell) {{bag.colour.name}}
+            td.hide-xs(md-cell) {{bag.surface.name}}
+            td.hide-xs(md-cell) {{bag.lastName}}
+            td.hide-xs.hide-sm(md-cell)
               div(ng-repeat='bc in bag.colours track by bc.id') {{ bc.colour.name }}
             td.hide-xs.hide-sm(md-cell) {{bag.borderWidth}}
 
