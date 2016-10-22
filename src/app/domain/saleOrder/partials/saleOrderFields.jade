@@ -1,16 +1,15 @@
-h3 Контактная информация
+h3 Информация для доставки
 
-.form-controls(layout='column' layout-align='start center')
+.form-controls(layout='column' layout-align='start')
 
   md-input-container(md-no-float)
-    label Имя
+    label Контактное лицо
       =' '
       span.required-field-asterisk *
     input(
     ng-model='vm.saleOrder.contactName'
     name='name'
-    placeholder=''
-    input-clear='black'
+    placeholder
     autocomplete='off'
     required
     )
@@ -24,9 +23,8 @@ h3 Контактная информация
     input(
     ng-model='vm.saleOrder.phone'
     name='phone'
-    input-clear='black'
     ui-mask="+7(999) 999-9999"
-    placeholder=''
+    placeholder
     ui-mask-placeholder
     ui-mask-placeholder-char="_"
     ng-required
@@ -40,9 +38,8 @@ h3 Контактная информация
     input(
     ng-model='vm.saleOrder.email'
     name='email'
-    placeholder=''
+    placeholder
     ng-pattern='vm.emailPattern'
-    input-clear='black'
     autocomplete='off'
     )
     div(ng-messages="vm.attrsForm.email.$error")
@@ -55,8 +52,7 @@ h3 Контактная информация
     input(
     ng-model='vm.saleOrder.shipTo'
     name='address'
-    placeholder=''
-    input-clear='black'
+    placeholder
     autocomplete='off'
     required
     )
