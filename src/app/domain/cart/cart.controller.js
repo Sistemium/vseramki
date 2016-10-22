@@ -37,18 +37,8 @@
 
     });
 
-
-    vm.id = $state.params.id;
-
-    if (vm.id) {
-      vm.title = 'Заказ';
-    } else {
-      vm.title = 'Оформление заказа'
-    }
-
     var PositionsModel = vm.id ? SaleOrderPosition : Cart;
-
-    console.log(PositionsModel);
+    var authUser = Helpers.AuthHelper.getUser();
 
     /*
 
@@ -56,7 +46,12 @@
 
      */
 
-    var authUser = Helpers.AuthHelper.getUser();
+    if (vm.id) {
+      vm.title = 'Заказ';
+    } else {
+      vm.title = 'Оформление заказа'
+    }
+
 
     if (authUser) {
       User.find(authUser.id)
