@@ -209,7 +209,7 @@
     }
 
     function hasChanges() {
-      return vm.saleOrder && SaleOrder.hasChanges(vm.saleOrder.id);
+      return _.get(vm, 'saleOrder.id') && SaleOrder.hasChanges(vm.saleOrder.id);
     }
 
     function cancelChanges() {
