@@ -1,5 +1,12 @@
 h3(ng-show='!vm.saleOrder.id') Сводка по заказу
-h3(ng-show='vm.saleOrder.id') Заказ № {{vm.saleOrder.ndoc}} от {{vm.saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
+h3(ng-show='vm.saleOrder.id')
+  span.gray Заказ №
+  = ' '
+  span {{vm.saleOrder.ndoc}}
+  = ' '
+  span.gray от
+  = ' '
+  span {{vm.saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
 
 .property-list-container
   .property

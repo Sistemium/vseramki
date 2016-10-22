@@ -11,5 +11,12 @@ ng-style='{height: (saleOrderList.windowHeight - 140)+"px"}'
     ng-class="{'active ': vm.currentItem.id == saleOrder.id }"
     ng-click='vm.sideNavListItemClick(saleOrder)'
     )
-      div.md-margin Заказ № {{saleOrder.ndoc}} от {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
+      div.md-padding
+        span.gray №
+        = ' '
+        span {{saleOrder.ndoc}}
+        = ' '
+        span.gray от
+        = ' '
+        span {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
 
