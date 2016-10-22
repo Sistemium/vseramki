@@ -57,8 +57,10 @@ table.md-table {
 md-table-container {
   > h1, > h2, > h3 {
 
-    margin-right: $margin-default;
-    margin-left: $margin-default;
+    @media (min-width: $layout-breakpoint-xs) {
+      margin-right: $margin-default;
+      margin-left: $margin-default;
+    }
 
   }
 }

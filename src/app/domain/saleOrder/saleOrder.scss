@@ -4,3 +4,11 @@ state-bar.saleOrder {
     padding: 5px;
   }
 }
+
+.saleOrder, #checkout {
+  h3 + .form-controls {
+    md-input-container:first-child {
+      margin-top: 20px;
+    }
+  }
+}
