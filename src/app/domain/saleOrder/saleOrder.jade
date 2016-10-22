@@ -2,9 +2,10 @@
 
   form-edit(vm="vm" item="vm.saleOrder" form-title="" name-field='')
     form-fields.wide.print-layout-row.print-layout-align-space-around-start(
-    layout='column' layout-align='center center'
-    layout-gt-xs='row'
-    layout-align-gt-xs='space-between start'
+    layout='column' layout-align='center'
+    layout-gt-sm='row'
+    layout-align-sm='start center'
+    layout-align-gt-sm='space-between start'
     )
       .flex
       #order-info.property-list.flex-5-4(ng-include="'app/domain/cart/checkout/orderInfo.html'")

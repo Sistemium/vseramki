@@ -31,6 +31,21 @@ form {
     margin-bottom: 16px;
   }
 
+  form-fields, .form-fields {
+    padding: 0 10px;
+
+    @media (max-width: $layout-breakpoint-xs - 1) {
+      .form-controls.layout-column, &.form-controls.layout-column {
+        md-input-container, searchable-select, md-chips {
+          width: 100%;
+          > input, * md-select {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
   .form-controls {
 
     md-radio-group {
@@ -49,10 +64,6 @@ form {
 
       input, md-select {
         width: $input-normal-width;
-      }
-
-      @media (max-width: $layout-breakpoint-sm) {
-        //$layout-breakpoint-smmargin-bottom: 0;
       }
 
     }

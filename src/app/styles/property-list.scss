@@ -3,8 +3,11 @@
 .property-list {
 
   min-width: 300px;
-  max-width: 380px;
   border-radius: 5px;
+
+  @media (min-width: $layout-breakpoint-xs+1) {
+    max-width: 380px;
+  }
 
   .header {
     background-color: $toolbar-background-color;

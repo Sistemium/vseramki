@@ -4,18 +4,19 @@ bar-title='{{vm.title}}'
 
 #checkout.scroll-y(resize='checkout' ng-style='{height: (checkout.windowHeight - checkout.offsetTop - 1)+"px"}')
 
-  .order.width-100.print-layout-row.print-layout-align-space-around-start(
+  form.wide.order.width-100.print-layout-row.print-layout-align-space-around-start(
   layout='column'
-  layout-align='start center'
+  layout-align='start'
   layout-gt-xs='row'
   layout-align-gt-xs='space-around start'
+  name='checkoutForm' ng-submit='vm.onSubmit()'
   )
 
     .flex
-    #order-info.property-list.flex-5-4(ng-include="'app/domain/cart/checkout/orderInfo.html'")
+    #order-info.property-list.flex-5-4.form-fields(ng-include="'app/domain/cart/checkout/orderInfo.html'")
     .flex
 
-    form.wide(name='checkoutForm' ng-include="'app/domain/cart/checkout/checkOutForm.html'" ng-submit='vm.onSubmit()')
+    .form-fields(ng-include="'app/domain/cart/checkout/checkOutForm.html'")
 
     .flex
 
