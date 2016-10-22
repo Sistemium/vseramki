@@ -24,7 +24,7 @@
       },
 
       meta: {
-        emailPattern: new RegExp(`[${validSymbols}]+@[${validSymbols}]+\\.[A-z]{2,}`)
+        emailPattern: new RegExp(`[${validSymbols}]+@[${validSymbols}]+\\.[A-z]{2,}$`)
       }
 
     });
