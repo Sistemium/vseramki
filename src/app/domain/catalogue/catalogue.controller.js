@@ -16,9 +16,10 @@
       Material,
       Colour,
       BaguetteImage
-      } = Schema.models();
+    } = Schema.models();
 
     var chunkSize = 3;
+    var lockArticlesScroll;
 
     _.assign(vm, {
 
@@ -45,23 +46,8 @@
       filterOptionClick,
       resetFilters,
       delCurrFilter,
-      changeView: to => $state.go(to),
       addClick,
-
-
-      articlesListItemClick: function (frame) {
-        var newState = $state.current.name;
-
-        if (vm.currentState === 'create') {
-          newState = '^.item';
-        } else if ($state.params.id === frame.id && $state.current.name.match(/edit/)) {
-          newState = '^'
-        }
-
-        vm.lockArticlesScroll = true;
-        $state.go(newState, {id: frame.id})
-          .then(()=> vm.lockArticlesScroll = false);
-      }
+      sideNavListItemClick: sideNavListItemClick
 
     });
 
@@ -121,9 +107,8 @@
 
      */
 
-    function onStateChange(toState, toParams) {
-      vm.currentItemId = toParams.id;
-      vm.currentItemId && scrollToIndex();
+    function onStateChange() {
+      vm.id && scrollToIndex();
     }
 
     function addClick() {
@@ -159,8 +144,8 @@
     }
 
     function scrollToIndex() {
-      var id = _.get($state, 'params.id');
-      if(!vm.lockArticlesScroll && id){
+      var id = vm.id;
+      if (!lockArticlesScroll && id) {
         vm.articlesListTopIndex = _.findIndex(vm.articles, {'id': id});
       }
     }
@@ -285,6 +270,20 @@
       vm.currentFilter [field] = item;
       filterArticles();
 
+    }
+
+    function sideNavListItemClick(frame) {
+      var newState = $state.current.name;
+
+      if (vm.currentState === 'create') {
+        newState = '^.item';
+      } else if ($state.params.id === frame.id && $state.current.name.match(/edit/)) {
+        newState = '^'
+      }
+
+      lockArticlesScroll = true;
+      $state.go(newState, {id: frame.id})
+        .then(()=> lockArticlesScroll = false);
     }
 
   }
