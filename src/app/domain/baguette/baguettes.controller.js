@@ -133,7 +133,7 @@
     }
 
     function scrollToIndex() {
-      var id = _.get($state, 'params.id');
+      var id = vm.id;
       if (!lockArticlesScroll && id) {
         vm.articlesListTopIndex = _.findIndex(vm.filteredBaguettes, {'id': id}) - 1;
       }

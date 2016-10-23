@@ -63,8 +63,8 @@ style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px'
   )
     .item(
     md-virtual-repeat='frame in vm.articles'
-    ng-class="{'active' : vm.currentItemId == frame.id }"
-    ng-click='vm.articlesListItemClick(frame)'
+    ng-class="{'active' : vm.id == frame.id }"
+    ng-click='vm.sideNavListItemClick(frame)'
     )
       frame-name(article='frame')
       small.gray(layout='row' layout-align='space-between center')
