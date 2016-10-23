@@ -105,6 +105,10 @@ frame-name {
     md-card-content {
       padding: 0;
       width: 100%;
+      .name {
+        margin: $margin-default $margin-default-half;
+        text-align: center;
+      }
       img {
         max-width: $card-thumbnail-size;
         max-height: $card-thumbnail-size;

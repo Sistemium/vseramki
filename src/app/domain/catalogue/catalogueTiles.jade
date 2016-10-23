@@ -13,7 +13,7 @@ md-content#scroll-main.ui-view
               label {{ article.code }}
             md-card-header
               img.thumbnail(ng-src='{{article.activePhoto()}}')
-            h4.text-center.margin-top-bottom
+            h5.name
               frame-name.title(article='article')
               small.gray {{ ::article.multiTypeName() }}
             //md-card-title.md-margin
