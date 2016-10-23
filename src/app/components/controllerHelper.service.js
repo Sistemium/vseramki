@@ -10,9 +10,12 @@
 
       var stateChangeSuccessSubscription = $scope.$on('$stateChangeSuccess', (event, toState, toParams) => {
 
-        vm.isRootState = /(table|tiles)$/.test(toState.name) || toState.name === vm.rootState;
-        vm.currentMode = _.last(toState.name.match(re));
-        vm.currentState = _.first(toState.name.match(/[^.]+$/));
+        _.assign(vm, {
+          isRootState: /(table|tiles)$/.test(toState.name) || toState.name === vm.rootState,
+          currentMode: _.last(toState.name.match(re)),
+          currentState: _.first(toState.name.match(/[^.]+$/)),
+          id: toParams.id
+        });
 
         if (_.isFunction(callback)) {
           callback(toState, toParams);
