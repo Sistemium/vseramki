@@ -15,13 +15,13 @@
 
         var labels = this.labels.count;
 
-        if (_.inRange(count, 9, 20)) {
+        if (_.inRange(count % 100, 9, 21)) {
           return labels['567890'];
         } else {
           var digit = count % 10;
           if (digit === 1) {
             return labels['1'];
-          } else if (_.inRange(count, 2, 4)) {
+          } else if (_.inRange(digit, 2, 5)) {
             return labels['234'];
           } else {
             return labels['567890'];
