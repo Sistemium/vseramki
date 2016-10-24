@@ -14,7 +14,13 @@ md-table-container
     tbody(md-body)
       tr(md-row ng-repeat='item in vm.data track by item.id')
         td.text-left(md-cell) {{ ::item.article.name}}
-        td(md-cell) {{ ::item.count}}
+        td(md-cell)
+          .plus-minus(layout-align='center center' layout='row' ng-if='vm.editMode')
+            md-button.micro-fab(ng-click='vm.minusOne(item)') -
+            md-input-container
+              input(aria-label="Количество" ng-model="item.count" type="number" ng-change="vm.saveItem(item)" min='1' step='1')
+            md-button.micro-fab(ng-click='vm.plusOne(item)') +
+          span(ng-if='!vm.editMode') {{ ::item.count }}
         td(md-cell) {{ item.article.discountedPrice(vm.cartSubTotal) | number: 2}}&nbsp;₽
         td(md-cell) {{ item.cost(vm.cartSubTotal) | number: 2}}&nbsp;₽
     tfoot(md-foot)
