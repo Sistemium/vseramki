@@ -1,10 +1,11 @@
 meta.defineType 'date:DATE';
 meta.defineType 'count:INT';
 meta.defineType 'comment:STRING,,nullable';
+meta.defineType 'processing:CODE';
 
 meta.defineEntity 'SaleOrder',
  'shipDate,date,,nullable;comment;' +
- 'contactName,name;shipTo,name;email,name;phone,name;isDeleted',
+ 'contactName,name;shipTo,name;email,name;phone,name;processing;isDeleted',
  'User,creatorId,nullable'
 ;
 
