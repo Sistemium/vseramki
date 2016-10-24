@@ -8,6 +8,12 @@
     display: none;
   }
 
+  div {
+    md-sidenav {
+      display: none !important;
+    }
+  }
+
   .visible-print-inline {
     display: inline !important;
   }
