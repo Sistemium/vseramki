@@ -55,7 +55,7 @@
     }
 
     function goToOrder(item) {
-      //$state.go('saleOrders.info', {id: item.id})
+      $state.go('saleOrders.info', {id: item.id})
     }
 
     function loadData() {
