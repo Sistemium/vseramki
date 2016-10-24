@@ -7,6 +7,7 @@ h3(ng-show='vm.saleOrder.id')
   span.gray от
   = ' '
   span {{vm.saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
+  p Состояние заказа: {{vm.saleOrder.processing | translate}}
 
 .property-list-container
   .property
