@@ -3,6 +3,8 @@
   state-bar(
   bar-title='Заказы'
   )
+    md-button.md-raised(ng-click='vm.goToEdit()' ng-if='vm.id && (vm.currentState !== "edit")') Редактировать
+    md-button.md-raised(ng-click='vm.printOrder()' ng-if='vm.id') Печать заказа
 
   div(layout='row')
 
@@ -28,6 +30,7 @@
               th(md-column md-order-by='contactName') Контактное лицо
               th(md-column md-order-by='phone') Телефон
               th(md-column md-order-by='shipTo') Адрес
+              th(md-column md-order-by='processing') Состояние
             tbody.clickable(md-body)
               tr(
               md-row
@@ -35,13 +38,30 @@
               '| orderBy: filterBy ' +
               '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
               ' track by saleOrder.id'
-              ng-click='vm.saleOrderRowClick(saleOrder)'
+              ng-click='vm.saleOrderRowClick($event, saleOrder)'
               )
                 td(md-cell) {{saleOrder.ndoc}}
                 td(md-cell) {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
                 td(md-cell) {{saleOrder.contactName}}
                 td(md-cell) {{saleOrder.phone}}
                 td(md-cell) {{saleOrder.shipTo}}
+                td(md-cell)
+
+                  p(ng-if='!vm.isAdmin') {{saleOrder.processing | translate}}
+
+                  md-input-container(ng-if='vm.isAdmin')
+                    md-select(
+                    ng-model='saleOrder.processing'
+                    placeholder='{{saleOrder.processing | translate}}'
+                    aria-label='$index state'
+                    md-on-close='vm.saveOption(saleOrder.processing,saleOrder.id)'
+                    )
+                      md-option(ng-repeat='state in vm.dictionary'
+                      ng-value="state"
+                      aria-label='state'
+                      )
+                        | {{state}}
+
 
       md-table-pagination(
       md-limit='vm.pagination.query.limit',
@@ -53,3 +73,4 @@
       md-boundary-links='!vm.useMobile'
       md-on-paginate='vm.onPaginate'
       )
+
