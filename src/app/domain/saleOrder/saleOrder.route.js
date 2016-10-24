@@ -31,11 +31,23 @@
 
           data: {
             needRoles: false
-          }
+          },
+
+          children: [{
+            name: 'edit',
+            url: '/edit',
+            templateUrl: 'app/domain/saleOrder/saleOrder.html',
+            controller: 'CartController',
+            controllerAs: 'vm',
+
+            data: {
+              needRoles: false
+            }
+
+          }]
 
         }]
-      })
-    ;
+      });
   }
 
 }());
