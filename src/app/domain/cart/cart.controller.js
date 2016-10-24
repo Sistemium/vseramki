@@ -18,6 +18,7 @@
       User
       } = Schema.models();
 
+
     _.assign(vm, {
 
       id: $state.params.id,
@@ -49,7 +50,7 @@
     if (vm.id) {
       vm.title = 'Заказ';
     } else {
-      vm.title = 'Оформление заказа'
+      vm.title = 'Оформление заказа';
     }
 
 
@@ -82,6 +83,13 @@
      Listeners
 
      */
+
+    $scope.$on('$destroy', $scope.$on('$stateChangeSuccess', (event, toState) => {
+
+      vm.editMode = !(_.last((toState.name.split('.'))) != 'edit');
+
+    }));
+
 
     PositionsModel.bindAll({
       saleOrderId: vm.id
@@ -162,7 +170,7 @@
     }
 
     function saveSaleOrder() {
-
+      vm.saleOrder.processing = 'submitted';
       vm.busy = SaleOrder.create(vm.saleOrder)
         .then(saleOrder => {
 
@@ -193,7 +201,7 @@
           Cart.destroyAll()
             .then(() => {
               $state.go('saleOrders.info', {id: vm.saleOrder.id})
-                .then(()=>{
+                .then(()=> {
                   ToastHelper.success('Заказ успешно оформлен');
                 });
             });
@@ -220,7 +228,14 @@
 
   angular
     .module('vseramki')
-    .controller('CartController', CartController);
+    .controller('CartController', CartController)
+    .filter('translate', function () {
+      var dictionary = {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'};
+
+      return function (word) {
+        return _.get(dictionary, word) || word;
+      };
+    });
 
 
 }());
