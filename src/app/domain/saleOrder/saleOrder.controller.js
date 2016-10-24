@@ -5,7 +5,13 @@
   angular
     .module('vseramki')
     .controller('SaleOrderController', SaleOrderController)
-  ;
+    .filter('translate', function () {
+      var dictionary = {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'};
+
+      return function (word) {
+        return _.get(dictionary, word) || word;
+      };
+    });
 
   function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper) {
 
@@ -15,11 +21,17 @@
 
     _.assign(vm, {
       userId: _.get(AuthHelper.getUser(), 'id'),
+      isAdmin: AuthHelper.isAdmin(),
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,
       rootState: 'saleOrders',
+      dictionary: {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'},
       sideNavListItemClick: goToOrder,
-      saleOrderRowClick: goToOrder
+      saleOrderRowClick: goToOrder,
+      printOrder,
+      goToEdit,
+      saveOption,
+      testModel: 'Submitted'
     });
 
     /*
@@ -43,7 +55,7 @@
     }
 
     function goToOrder(item) {
-      $state.go('saleOrders.info', {id: item.id})
+      //$state.go('saleOrders.info', {id: item.id})
     }
 
     function loadData() {
@@ -54,6 +66,20 @@
       } else {
         //TODO: load by deviceUUID
       }
+    }
+
+    function printOrder() {
+      window.print();
+    }
+
+    function goToEdit() {
+      if ($state.params.id) {
+        $state.go('saleOrders.info.edit');
+      }
+    }
+
+    function saveOption(a, b) {
+      console.log(a, b)
     }
 
   }
