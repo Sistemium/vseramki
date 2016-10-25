@@ -6,6 +6,7 @@
     .module('vseramki')
     .controller('SaleOrderController', SaleOrderController)
     .filter('translate', function () {
+
       var dictionary = {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'};
 
       return function (word) {
@@ -27,7 +28,7 @@
       rootState: 'saleOrders',
       dictionary: {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'},
       sideNavListItemClick: goToOrder,
-      saleOrderRowClick: goToOrder,
+      goToOrder: onClickWithPrevent(goToOrder),
       printOrder,
       goToEdit,
       saveOption,
@@ -71,6 +72,16 @@
     function printOrder() {
       window.print();
     }
+
+    function onClickWithPrevent(fn) {
+      return function (item, event) {
+        if (_.get(event, 'defaultPrevented')) {
+          return;
+        }
+        fn(item);
+      }
+    }
+
 
     function goToEdit() {
       if ($state.params.id) {
