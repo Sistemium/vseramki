@@ -49,7 +49,7 @@
 
                   p(ng-if='!vm.isAdmin') {{saleOrder.processing | translate}}
 
-                  md-input-container(ng-if='vm.isAdmin')
+                  md-input-container(ng-show='vm.isAdmin')
                     md-select(
                     disabled
                     ng-model='saleOrder.processing'
