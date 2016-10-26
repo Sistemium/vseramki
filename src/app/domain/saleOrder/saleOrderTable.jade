@@ -47,7 +47,7 @@
                 td(md-cell) {{saleOrder.shipTo}}
                 td(md-cell)
 
-                  p(ng-if='!vm.isAdmin') {{saleOrder.processing | translate}}
+                  p(ng-show='!vm.isAdmin') {{saleOrder.processing | translate}}
 
                   md-input-container(ng-show='vm.isAdmin')
                     md-select(
