@@ -6,7 +6,6 @@
     .module('vseramki')
     .controller('SaleOrderController', SaleOrderController)
     .filter('translate', function () {
-
       var dictionary = {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'};
 
       return function (word) {
@@ -14,7 +13,7 @@
       };
     });
 
-  function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper) {
+  function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper, ToastHelper) {
 
     var vm = ControllerHelper.setup(this, $scope, onStateChange);
 
@@ -26,13 +25,18 @@
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,
       rootState: 'saleOrders',
-      dictionary: {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'},
+      dictionary: {
+        submitted: ['submitted', 'Оформлен'],
+        accepted: ['accepted', 'Принят'],
+        delivery: ['delivery', 'Доставка'],
+        done: ['done', 'Выполнен']
+      },
+      blockMdSelect: false,
       sideNavListItemClick: goToOrder,
       goToOrder: onClickWithPrevent(goToOrder),
       printOrder,
       goToEdit,
-      saveOption,
-      testModel: 'Submitted'
+      changeOrderStatus
     });
 
     /*
@@ -89,10 +93,23 @@
       }
     }
 
-    function saveOption(a, b) {
-      console.log(a, b)
-    }
+    function changeOrderStatus(id) {
 
+      if (SaleOrder.hasChanges(id)) {
+        vm.blockMdSelect = true;
+        SaleOrder.save(id)
+          .then(()=> ToastHelper.success('Статус изменен')
+            .then(() => {
+              vm.blockMdSelect = false;
+            }))
+          .catch(() => {
+            ToastHelper.error('Статус не изменен').then(()=> {
+              SaleOrder.revert(id);
+              vm.blockMdSelect = false;
+            });
+          });
+      }
+    }
   }
 
 }());
