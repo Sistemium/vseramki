@@ -1,6 +1,6 @@
 h3 Информация для доставки
 
-.form-controls(layout='column' layout-align='start')
+.form-controls(layout='column' layout-align='start' ng-class="{'lock-screen': vm.busy }")
 
   md-input-container
     label Телефон
@@ -32,6 +32,7 @@ h3 Информация для доставки
     ng-pattern='vm.emailPattern'
     required
     name='shippingEmail'
+    placeholder=''
     input-clear
     )
     div(ng-messages="checkoutForm.shippingEmail.$error")
@@ -48,6 +49,7 @@ h3 Информация для доставки
     ng-model='vm.saleOrder.contactName'
     required
     name='shippingPerson'
+    placeholder=''
     input-clear
     )
     div(ng-messages="checkoutForm.shippingPerson.$error")
@@ -62,6 +64,7 @@ h3 Информация для доставки
     type='text'
     ng-model='vm.saleOrder.shipTo'
     required
+    placeholder=''
     name='shippingAddress'
     input-clear
     )
@@ -76,11 +79,14 @@ h3 Информация для доставки
     name='shippingComment'
     autocomplete='off'
     input-clear
+    placeholder=''
     )
 
 .text-center
   md-button.width-100.no-margin.md-button.pink-button(
   type='submit'
   ng-if='!vm.id'
-  ng-disabled='checkoutForm.$invalid'
+  ng-disabled='checkoutForm.$invalid || vm.busy'
   ) Завершить оформление
+
+  md-progress-linear(ng-if='vm.busy' md-diameter='200' md-mode='indeterminate')
