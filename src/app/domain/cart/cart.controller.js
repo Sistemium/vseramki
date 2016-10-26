@@ -103,6 +103,8 @@
 
     function setup(user) {
 
+      vm.userEmptyFieldKeys = _.keys(_.pickBy(user, _.isNull));
+
       if (vm.id) {
         SaleOrder.find(vm.id)
           .then(saleOrder => {
@@ -170,8 +172,10 @@
     }
 
     function saveSaleOrder() {
+      vm.busy = true;
       vm.saleOrder.processing = 'submitted';
-      vm.busy = SaleOrder.create(vm.saleOrder)
+
+      SaleOrder.create(vm.saleOrder)
         .then(saleOrder => {
 
           if (vm.id) {
@@ -198,15 +202,28 @@
         })
         .then(()=> {
 
+          User.find(authUser.id).then(function (user) {
+            var userObject = user;
+            vm.userEmptyFieldKeys.forEach(function (key) {
+              var keyDup = key;
+              if (keyDup === 'address') {
+                keyDup = 'shipTo';
+              }
+              userObject[key] = vm.saleOrder[keyDup];
+            });
+            User.save(userObject).catch(function (err) {
+              console.error(err);
+            });
+          });
+
           Cart.destroyAll()
             .then(() => {
               $state.go('saleOrders.info', {id: vm.saleOrder.id})
                 .then(()=> {
                   ToastHelper.success('Заказ успешно оформлен');
+                  vm.busy = false;
                 });
             });
-
-
         });
 
     }
