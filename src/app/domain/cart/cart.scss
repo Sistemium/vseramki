@@ -54,6 +54,11 @@
 
 #checkout, .saleOrder {
 
+  .lock-screen {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
   md-input-container {
     margin-top: 0;
   }
