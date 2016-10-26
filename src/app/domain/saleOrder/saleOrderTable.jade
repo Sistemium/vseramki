@@ -51,17 +51,16 @@
 
                   md-input-container(ng-show='vm.isAdmin')
                     md-select(
-                    disabled
+                    ng-disabled='vm.blockMdSelect'
                     ng-model='saleOrder.processing'
-                    placeholder='{{saleOrder.processing | translate}}'
                     aria-label='$index state'
-                    md-on-close='vm.saveOption(saleOrder.processing,saleOrder.id)'
+                    md-on-close='vm.changeOrderStatus(saleOrder.id)'
                     )
                       md-option(ng-repeat='state in vm.dictionary'
-                      ng-value="state"
+                      ng-value="state[0]"
                       aria-label='state'
                       )
-                        | {{state}}
+                        | {{state[1]}}
 
 
       md-table-pagination(
