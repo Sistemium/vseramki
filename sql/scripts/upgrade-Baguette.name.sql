@@ -1,5 +1,5 @@
 meta.defineEntity 'Baguette',
- 'code;lastName,name;borderWidth;isDeleted',
+ 'name;code;lastName,name;borderWidth;isDeleted',
  'Material,materialId;Brand,brandId,nullable;Colour,colourId,nullable;Surface,surfaceId,nullable'
 ;
 
