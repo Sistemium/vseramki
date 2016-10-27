@@ -1,8 +1,7 @@
 .no-padding(
 resize='saleOrderList'
-ng-style='{height: (saleOrderList.windowHeight - 140)+"px"}'
+style='height: {{ saleOrderList.windowHeight - saleOrderList.offsetTop - 10}}px'
 )
-
   md-virtual-repeat-container.clickable.scroll-y.height-100(
   md-top-index='vm.articlesListTopIndex'
   )
@@ -11,7 +10,8 @@ ng-style='{height: (saleOrderList.windowHeight - 140)+"px"}'
     ng-class="{'active ': vm.currentItem.id == saleOrder.id }"
     ng-click='vm.sideNavListItemClick(saleOrder)'
     )
-      div.md-padding
+
+      .md-padding
         span.gray №
         = ' '
         span {{saleOrder.ndoc}}
