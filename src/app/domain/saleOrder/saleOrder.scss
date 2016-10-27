@@ -12,3 +12,19 @@ state-bar.saleOrder {
     }
   }
 }
+
+.saleOrders {
+  .item {
+    padding: 5px;
+    margin: 0;
+    font-size: 14px;
+    min-height: 35px;
+    height: 35px;
+    cursor: pointer;
+    .gray {
+      text-align: right;
+    }
+    border-bottom: $list-item-border;
+  }
+}
+
