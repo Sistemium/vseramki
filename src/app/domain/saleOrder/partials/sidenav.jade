@@ -8,7 +8,7 @@ style='height: {{ saleOrderList.windowHeight - saleOrderList.offsetTop - 10}}px'
     .item(
     md-virtual-repeat='saleOrder in vm.saleOrders'
     ng-class="{'active ': vm.currentItem.id == saleOrder.id }"
-    ng-click='vm.sideNavListItemClick(saleOrder)'
+    ng-click='vm.sideNavListItemClick($event, saleOrder)'
     )
 
       .md-padding
