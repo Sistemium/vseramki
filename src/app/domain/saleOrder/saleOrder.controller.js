@@ -13,11 +13,13 @@
       };
     });
 
-  function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper, ToastHelper) {
+  function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper, ToastHelper, $timeout) {
 
     var vm = ControllerHelper.setup(this, $scope, onStateChange);
 
     var SaleOrder = Schema.model('SaleOrder');
+
+    var lockOrdersScroll;
 
     _.assign(vm, {
       userId: _.get(AuthHelper.getUser(), 'id'),
@@ -25,6 +27,7 @@
       pagination: TableHelper.pagination(),
       onPaginate: TableHelper.setPagination,
       rootState: 'saleOrders',
+      articlesListTopIndex: false,
       dictionary: {
         submitted: ['submitted', 'Оформлен'],
         accepted: ['accepted', 'Принят'],
@@ -32,9 +35,10 @@
         done: ['done', 'Выполнен']
       },
       blockMdSelect: false,
-      sideNavListItemClick: goToOrder,
+      sideNavListItemClick,
       goToOrder: onClickWithPrevent(goToOrder),
-      printOrder,
+      editClick: goToEdit,
+      printClick,
       goToEdit,
       changeOrderStatus
     });
@@ -45,7 +49,9 @@
 
     SaleOrder.bindAll({}, $scope, 'vm.saleOrders');
 
+
     loadData();
+
 
     /*
      Functions
@@ -55,12 +61,16 @@
 
       vm.currentItem = _.get(toParams, 'id') &&
         SaleOrder.find(toParams.id)
-          .then(item => vm.currentItem = item);
+          .then(item => {
+            vm.currentItem = item;
+            scrollToIndex(vm.currentItem.id);
+            lockOrdersScroll = false;
+          });
 
     }
 
     function goToOrder(item) {
-      $state.go('saleOrders.info', {id: item.id})
+      $state.go('saleOrders.info', {id: item.id});
     }
 
     function loadData() {
@@ -73,7 +83,7 @@
       }
     }
 
-    function printOrder() {
+    function printClick() {
       window.print();
     }
 
@@ -86,9 +96,30 @@
       }
     }
 
+    function scrollToIndex() {
+
+      var id = vm.id;
+
+      // TODO substitute timeout
+
+      if (id && !lockOrdersScroll) {
+        $timeout(function () {
+          vm.articlesListTopIndex = _.findIndex(vm.saleOrders, {'id': id});
+        }, 200);
+      }
+    }
+
+    function sideNavListItemClick(event, item) {
+
+      $state.go('saleOrders.info', {id: item.id})
+        .then(()=> {
+          event ? lockOrdersScroll = true : lockOrdersScroll = false;
+        });
+    }
 
     function goToEdit() {
       if ($state.params.id) {
+        lockOrdersScroll = false;
         $state.go('saleOrders.info.edit');
       }
     }
