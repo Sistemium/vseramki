@@ -1,4 +1,5 @@
 'use strict';
+/* global XLSX:false */
 
 (function () {
 
@@ -17,6 +18,7 @@
       'yaMap',
       'ui.mask',
       'angularMoment'
-    ]);
+    ])
+    .constant('XLSX',XLSX);
 
 })();
