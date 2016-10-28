@@ -1,0 +1,30 @@
+md-table-container.scroll-y.md-whiteframe-1dp(
+ng-if='vm.data'
+resize='importData'
+ng-style='{"max-height": (importData.windowHeight - importData.offsetTop)+"px"}'
+)
+
+  table(md-table)
+
+    thead(md-head md-order='filterBy')
+      th(
+      md-column
+      md-order-by='index'
+      ) №
+      th(
+      md-column
+      ng-repeat='col in vm.columns track by col.name'
+      md-order-by='{{col.name}}'
+      ) {{ col.title }}
+
+    tbody(md-body)
+
+      tr(
+      md-row
+      ng-repeat='row in vm.data|orderBy: filterBy track by row.index'
+      )
+        td(md-cell) {{row.index}}
+        td(
+        md-cell
+        ng-repeat='col in vm.columns track by col.name'
+        ) {{row[col.name]}}
