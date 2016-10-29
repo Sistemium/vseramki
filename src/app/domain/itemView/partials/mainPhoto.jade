@@ -18,7 +18,7 @@ layout-align='space-between center'
     )
     img(
     ng-if='!vm.currentImageLoading'
-    ng-src='{{vm.currentImage.smallSrc}}'
+    ng-src='{{vm.currentImage.smallSrc || "/images/placeholder.png"}}'
     ng-click='vm.previewClick()'
     )
     span(flex)

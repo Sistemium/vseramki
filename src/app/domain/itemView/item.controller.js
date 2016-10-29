@@ -60,7 +60,9 @@
       // addFrame: () => $state.go('catalogue.' + $state.current.name.split('.')[1] + '.create'),
       deleteClick,
 
-      previewClick: () => $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
+      previewClick: () => {
+        vm.images.length && $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
+      }
 
     }, stateFilter);
 
@@ -175,9 +177,7 @@
 
     function mergeImages() {
       vm.images = _.union(vm.articleImages, vm.baguetteImages);
-      if (vm.images.length) {
-        setPreviewImage(_.first(vm.images));
-      }
+      setPreviewImage(_.first(vm.images));
     }
 
     function imageClick(item) {
@@ -246,6 +246,8 @@
           .then(() => vm.currentImageLoading === newImg.id && (vm.currentImage = newImg))
           .finally(() => vm.currentImageLoading === newImg.id && (vm.currentImageLoading = false));
 
+      } else {
+        vm.currentImageLoading = vm.currentImage = false;
       }
     }
 

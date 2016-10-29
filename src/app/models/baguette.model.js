@@ -62,6 +62,11 @@
 
       methods: {
 
+        activePhoto: function () {
+          var photo = _.get(this, 'images[0]');
+          return photo ? photo.thumbnailSrc : '/images/placeholder.png';
+        },
+
         stringName: function () {
 
           var names = [

@@ -72,7 +72,7 @@
 
         activePhoto: function () {
           var photo = _.get(this, 'images[0]') || _.get(this, 'baguette.images[0]');
-          return photo ? photo.thumbnailSrc : '/images/question_mark.png';
+          return photo ? photo.thumbnailSrc : '/images/placeholder.png';
         },
 
         discountedPrice: function (total) {
