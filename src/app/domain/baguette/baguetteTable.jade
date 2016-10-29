@@ -28,7 +28,7 @@
           ng-click='vm.editBaguette(bag, $event)'
           )
             td(md-cell)
-              img.thumbnail(ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}')
+              img.thumbnail(ng-src='{{bag.activePhoto()}}')
             td(md-cell) {{bag.code}}
             td.visible-xs(md-cell) {{bag.name}}
             td.hide-xs(md-cell) {{bag.brand.name}}
