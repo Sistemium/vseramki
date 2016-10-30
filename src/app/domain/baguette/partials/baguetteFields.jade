@@ -4,11 +4,26 @@ md-input-container
   type='text'
   ng-model='vm.baguette.lastName'
   name='lastName'
-  input-clear='black'
+  input-clear
   input-clear-value='null'
   autocomplete='off'
   )
   div(ng-messages="vm.attrsForm.lastName.$error")
+    div(ng-message="required") Поле не может быть пустым
+
+md-input-container
+  label Код 1С
+    =' '
+    span.required-field-asterisk *
+  input(
+  required type='text'
+  ng-model='vm.baguette.codeExternal'
+  name='codeExternal'
+  input-clear
+  input-clear-value='null'
+  autocomplete='off'
+  )
+  div(ng-messages="vm.attrsForm.codeExternal.$error")
     div(ng-message="required") Поле не может быть пустым
 
 md-input-container
@@ -19,7 +34,7 @@ md-input-container
   required type='text'
   ng-model='vm.baguette.code'
   name='code'
-  input-clear='black'
+  input-clear
   input-clear-value='null'
   autocomplete='off'
   )
@@ -34,7 +49,7 @@ md-input-container
   required type='number' step='1' min='1'
   ng-model='vm.baguette.borderWidth'
   name='baguetteWidth'
-  input-clear='black'
+  input-clear
   input-clear-value='null'
   autocomplete='off'
   )
