@@ -14,7 +14,7 @@ md-content#scroll-main.ui-view
 
           md-card-content.clickable
             img.thumbnail(
-            ng-src='{{bag.images[0].thumbnailSrc || "/images/question_mark.png"}}'
+            ng-src='{{bag.activePhoto()}}'
             alt='Baguette {{$index}}'
             )
 
