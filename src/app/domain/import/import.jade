@@ -1,26 +1,59 @@
-.import
-  form(name='xlsxUpload' layout='column' layout-margin ng-if='!vm.data')
+state-bar.import(bar-title='{{vm.title}}')
+  md-button.md-button.md-raised(
+  ng-if='vm.readyToImport'
+  ng-click='vm.cancelLoadDataClick($event)'
+  ) Отмена
+  md-button.md-button.pink-button.md-raised(
+  ng-if='vm.readyToImport'
+  ng-click='vm.loadDataClick($event)'
+  ) Загрузить
+  md-button.md-button.pink-button.md-raised(
+  ng-if='vm.doneImport'
+  ng-click='vm.doneClick($event)'
+  ) Готово
+
+
+md-progress-linear(ng-if='vm.progress' ng-value='vm.progress.value' md-mode='determinate')
+
+.import.scroll-y(
+resize='import'
+ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
+layout-margin
+)
+  form(name='vm.xlsxUploadForm' layout='column' ng-if='!vm.data' ng-hide='vm.busyReading')
+
+    .messages(ng-messages='vm.xlsxUploadForm.files.$error')
+      .alert(ng-message='mimetype') Неверный формат файла
+
     lf-ng-md-file-input(
     name='files'
+    required
     lf-files='vm.files'
     lf-required='true'
     lf-maxcount='1'
     lf-filesize='5MB'
     lf-totalsize='5MB'
-    lf-mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    lf-browse-label = 'Выбор файла'
-    lf-drag-and-drop-label = 'Перетащите файл сюда'
-    lf-remove-label ='Удалить'
+    lf-mimetype='{{vm.mimeTypeRe}}'
+    accept='{{vm.mimeTypeRe}}'
+    lf-browse-label='Выбор файла'
+    lf-drag-and-drop-label='Перетащите файл сюда'
+    lf-remove-label='Удалить'
     lf-placeholder='Файл не выбран'
     lf-caption="{{vm.files.length > 1 ? 'Файлов выбрано: ' + vm.files.length  : '1 файл выбран'}} "
     drag
     preview
     )
-    md-button.md-raised.button-upload(
-    ng-click='vm.startButtonClick()'
-    ng-if='vm.files.length'
-    aria-label='Start upload'
-    ) Загрузить данные
+
+  section.busy(ng-if="vm.busyReading" layout="column" layout-align="center center")
+    h2 Чтение файла ...
+    md-progress-circular(md-diameter="200" md-mode="indeterminate")
+
+  h3#results(ng-if='vm.doneImport')
+    .result Загрузка завершена
+    .result(ng-repeat="(key, value) in vm.doneImport")
+      label {{ vm.labels[key] }}:
+      = ' '
+      span.value {{ value }}
 
   ng-include(src="'app/domain/import/partials/importedDataTable.html'")
+

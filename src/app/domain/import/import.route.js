@@ -12,7 +12,7 @@
     stateHelperProvider
       .state({
         name: 'import',
-        url: '/import',
+        url: '/import/:model',
         templateUrl: 'app/domain/import/import.html',
         controller: 'ImportController',
         controllerAs: 'vm',
