@@ -1,6 +1,11 @@
 @import "../../styles/_vars";
 
-.import {
+#import {
+
+  > * {
+    margin: $margin-default;
+  }
+
   .result {
     display: inline-block;
     margin-right: 1em;
@@ -8,4 +13,5 @@
       color: $gray;
     }
   }
+
 }

@@ -15,10 +15,9 @@ state-bar.import(bar-title='{{vm.title}}')
 
 md-progress-linear(ng-if='vm.progress' ng-value='vm.progress.value' md-mode='determinate')
 
-.import.scroll-y(
+#import.scroll-y(
 resize='import'
 ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
-layout-margin
 )
   form(name='vm.xlsxUploadForm' layout='column' ng-if='!vm.data' ng-hide='vm.busyReading')
 
@@ -55,5 +54,5 @@ layout-margin
       = ' '
       span.value {{ value }}
 
-  ng-include(src="'app/domain/import/partials/importedDataTable.html'")
+  div(ng-include="'app/domain/import/partials/importedDataTable.html'")
 
