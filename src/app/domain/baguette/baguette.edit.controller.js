@@ -47,7 +47,7 @@
 
     if (vm.id) {
       Baguette.find(vm.id)
-        .then(function (baguette) {
+        .then(baguette => {
           vm.baguette = baguette;
           vm.saveLabel = 'Сохранить';
           initBaguetteColours();
