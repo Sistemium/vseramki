@@ -25,6 +25,7 @@ meta.defineType 'processing:CODE';
 meta.defineType 'multiType:SHORT';
 
 meta.defineType 'isDeleted:BOOL';
+meta.defineType 'isValid:BOOL';
 
 -- Entities
 
@@ -61,7 +62,7 @@ meta.defineEntity 'Surface',
 ;
 
 meta.defineEntity 'Baguette',
- 'name;code;lastName,name;borderWidth;isDeleted',
+ 'name;code;codeExternal,code;lastName,name,,nullable;borderWidth;isDeleted;isValid;nameExternal,name,,nullable',
  'Material,materialId;Brand,brandId,nullable;Colour,colourId,nullable;Surface,surfaceId,nullable'
 ;
 
