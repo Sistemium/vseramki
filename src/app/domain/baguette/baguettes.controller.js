@@ -28,6 +28,8 @@
       ]
     };
 
+    var lastSearch = true;
+
     _.assign(vm, {
 
       filteredBaguettes: [],
@@ -43,9 +45,8 @@
 
       resetFilters: () => vm.search = '',
       resetCheckedBaguette: () => vm.selected = [],
-      editBaguette: item => {
-        $state.go('.edit', {id: item.id});
-      }
+      editBaguette: item => $state.go('.edit', {id: item.id}),
+      fileUploadClick: () => $state.go('import', {model: 'Baguette'})
 
     });
 
@@ -100,11 +101,12 @@
       }
 
       if (/\.edit$/.test(toState.name)) {
-        Baguette.find(toParams.id)
+        return Baguette.find(toParams.id)
           .then(function (item) {
             vm.currentItem = item;
+            scrollToIndex();
+            lockArticlesScroll = false;
           });
-        scrollToIndex();
       } else {
         vm.currentItem = false;
       }
@@ -122,8 +124,15 @@
         });
       }
 
-      scrollToIndex();
       setChunks(chunkSize);
+
+      if (!vm.ready || lastSearch === search) {
+        return
+      }
+
+      lastSearch = search;
+
+      scrollToIndex();
 
     }
 
@@ -189,8 +198,7 @@
       var newState = $state.current.name;
       newState = newState.replace(/\.(edit|create)$/, '') + '.edit';
       lockArticlesScroll = true;
-      $state.go(newState, {id: bag.id})
-        .then(()=> lockArticlesScroll = false);
+      $state.go(newState, {id: bag.id});
     }
   }
 
