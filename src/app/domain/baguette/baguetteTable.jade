@@ -30,12 +30,14 @@
             td(md-cell)
               img.thumbnail(ng-src='{{bag.activePhoto()}}')
             td(md-cell) {{bag.code}}
-            td.visible-xs(md-cell) {{bag.name}}
-            td.hide-xs(md-cell) {{bag.brand.name}}
-            td.hide-xs(md-cell) {{bag.colour.name}}
-            td.hide-xs(md-cell) {{bag.surface.name}}
-            td.hide-xs(md-cell) {{bag.lastName}}
-            td.hide-xs.hide-sm(md-cell)
+            td(md-cell ng-class="{'visible-xs': bag.isValid}" ng-attr-colspan="{{!bag.isValid && 5}}")
+              span {{bag.name}}
+              .warning(ng-if='!bag.isValid') Скрыт
+            td.hide-xs(md-cell ng-if='bag.isValid') {{bag.brand.name}}
+            td.hide-xs(md-cell ng-if='bag.isValid') {{bag.colour.name}}
+            td.hide-xs(md-cell ng-if='bag.isValid') {{bag.surface.name}}
+            td.hide-xs(md-cell ng-if='bag.isValid') {{bag.lastName}}
+            td.hide-xs.hide-sm(md-cell ng-if='bag.isValid')
               div(ng-repeat='bc in bag.colours track by bc.id') {{ bc.colour.name }}
             td.hide-xs.hide-sm(md-cell) {{bag.borderWidth}}
 

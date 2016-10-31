@@ -2,7 +2,7 @@
 
 (function () {
 
-  const keys = ['brandId', 'colourId', 'materialId', 'surfaceId', 'lastName', 'code'];
+  const keys = ['brandId', 'colourId', 'materialId', 'surfaceId', 'lastName', 'code', 'isValid'];
 
   function BaguetteEditController(Schema, $scope, $state, Helpers, $q) {
 
@@ -28,14 +28,14 @@
       cancelChanges,
       save,
       baguetteColourRemoveClick,
+      visibilityOffClick: setIsValid(true),
+      visibilityClick: setIsValid(false),
 
       addAPhotoClick: ImageHelper.mdDialogHelper(
-        function (imsImg) {
-          BaguetteImage.create(
-            angular.extend(imsImg, {
-              baguetteId: vm.baguette.id
-            }));
-        })
+        imsImg => BaguetteImage.create(
+          _.assign(imsImg, {
+            baguetteId: vm.baguette.id
+          })))
 
     });
 
@@ -88,7 +88,14 @@
 
      */
 
+    function setIsValid(to) {
+      return () => vm.baguette.isValid = to;
+    }
+
     function refreshName() {
+      if (!vm.baguette.isValid) {
+        return;
+      }
       vm.baguette.name = vm.baguette.stringName();
     }
 

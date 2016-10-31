@@ -13,6 +13,12 @@
       .flex
 
       .buttons.margin-left(ng-if='vm.isAdmin')
+        state-bar-button.admin-button(
+        title='Завершить оформление'
+        icon='{{vm.currentItem.isValid ? "visibility" : "visibility_off"}}'
+        ng-if='vm.currentItem'
+        ng-class='{ warning: !vm.currentItem.isValid }'
+        )
         state-bar-button.admin-button(title='Импорт из Excel' icon='file_upload' ng-show='!vm.currentItem')
         state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Удалить багет' icon='delete' ng-show='vm.currentItem')

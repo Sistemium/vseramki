@@ -28,8 +28,6 @@
       ]
     };
 
-    var lastSearch = true;
-
     _.assign(vm, {
 
       filteredBaguettes: [],
@@ -125,13 +123,6 @@
       }
 
       setChunks(chunkSize);
-
-      if (!vm.ready || lastSearch === search) {
-        return
-      }
-
-      lastSearch = search;
-
       scrollToIndex();
 
     }

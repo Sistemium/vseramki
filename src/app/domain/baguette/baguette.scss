@@ -45,6 +45,14 @@
       text-align: right;
     }
     border-bottom: $list-item-border;
+
+    position: relative;
+    .gray small {
+      position: absolute;
+      bottom: 5px;
+      right: 5px
+    }
+
   }
 
   .repeated-group-item {
