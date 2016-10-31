@@ -41,12 +41,10 @@ md-input-container
 
 md-input-container
   label Название 1С
-  input(
-  type='text'
+  textarea(
+  md-maxlength="200" rows="2"
   ng-model='vm.baguette.nameExternal'
   name='nameExternal'
-  input-clear
-  input-clear-value='null'
   autocomplete='off'
   )
 
