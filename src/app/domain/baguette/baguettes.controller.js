@@ -117,8 +117,11 @@
         vm.filteredBaguettes = vm.baguettes;
       } else {
         var re = new RegExp(_.escapeRegExp(search), 'ig');
-        vm.filteredBaguettes = filter(vm.baguettes, (value) => {
-          return re.test(value.name) || re.test(value.code) || value.id === search;
+        vm.filteredBaguettes = filter(vm.baguettes, baguette => {
+          if (search === 'invalid') {
+            return !baguette.isValid;
+          }
+          return re.test(baguette.name) || re.test(baguette.code) || baguette.id === search;
         });
       }
 
