@@ -19,6 +19,7 @@ md-progress-linear(ng-if='vm.progress' ng-value='vm.progress.value' md-mode='det
 resize='import'
 ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
 )
+
   form(name='vm.xlsxUploadForm' layout='column' ng-if='!vm.data' ng-hide='vm.busyReading')
 
     .messages(ng-messages='vm.xlsxUploadForm.files.$error')
@@ -27,13 +28,12 @@ ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
     lf-ng-md-file-input(
     name='files'
     required
+    lf-api='vm.filesApi'
     lf-files='vm.files'
     lf-required='true'
     lf-maxcount='1'
     lf-filesize='5MB'
     lf-totalsize='5MB'
-    lf-mimetype='{{vm.mimeTypeRe}}'
-    accept='{{vm.mimeTypeRe}}'
     lf-browse-label='Выбор файла'
     lf-drag-and-drop-label='Перетащите файл сюда'
     lf-remove-label='Удалить'

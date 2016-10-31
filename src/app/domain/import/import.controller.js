@@ -21,7 +21,7 @@
         hasErrors: 'С ошибками'
       },
 
-      mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream',
       doneClick: () => $state.go('baguettes')
 
     });
@@ -73,11 +73,22 @@
     $scope.$watch('vm.xlsxUploadForm.$valid', isValid => {
       if (isValid && vm.files.length === 1) {
         vm.busyReading = xlsReadClick()
-          .catch(err => {ToastHelper.error(angular.toJSON(err))})
-          .then(() => {
+          .catch(err => {
+            vm.filesApi.removeAll();
+            ToastHelper.error(angular.toJson(err));
+            return false;
+          })
+          .then(res => {
             vm.busyReading = false;
-            vm.readyToImport = true;
+            vm.readyToImport = !!res;
           });
+      }
+    });
+
+    $scope.$watch('vm.xlsxUploadForm.$error.filesize', error => {
+      if (error) {
+        ToastHelper.error('Файл слишком большой');
+        vm.filesApi.removeAll();
       }
     });
 
@@ -87,9 +98,8 @@
 
     function cancelLoadDataClick() {
       vm.data = false;
-      vm.files = false;
-      _.result(vm, 'xlsxUploadForm.$setPristine');
-      _.result(vm, 'xlsxUploadForm.$setUntouched');
+      vm.readyToImport = false;
+      vm.filesApi.removeAll();
     }
 
     function loadDataClick() {
@@ -185,6 +195,9 @@
 
             var data = e.target.result;
             var res = XLSX.read(data, {type: 'binary'});
+            if (!_.get(res,'SheetNames.length')) {
+              return reject('Неизвестный формат файла');
+            }
             var xlsxData = XLSX.utils.make_json(res.Sheets[res.SheetNames[0]]);
 
             vm.columns = _.map(columns, (col) => {
@@ -206,7 +219,7 @@
             resolve(vm.data);
 
           } catch (e) {
-            reject(e);
+            reject('Не удалось прочитать файл');
           }
 
         };
