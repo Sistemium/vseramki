@@ -41,6 +41,16 @@ table.md-table {
     background-color: $toolbar-background-color;;
   }
 
+  .warning {
+    background-color: $vr-yellow-color;
+    color: $black-font-color;
+    border-radius: 3px;
+    display: inline-block;
+    text-wrap: none;
+    margin: 0 $margin-default-half;
+    padding: $margin-default-half;
+  }
+
 }
 
 
