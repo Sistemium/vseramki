@@ -57,7 +57,7 @@
     _.each(columns, column => {
       columnTranslation[column.label] = {
         name: column.name,
-        parser: value => (column.parser || _.identity)(value) || column.defaultValue
+        parser: value => (column.parser || _.trim)(value) || column.defaultValue
       };
     });
 
@@ -144,8 +144,12 @@
     function saveItem(item) {
 
       item.materialId = _.get(_.first(Material.filter({
-        name: item.materialName
-      })), 'id') || null;
+          where: {
+            name: {
+              likei: item.materialName
+            }
+          }
+        })), 'id') || null;
 
       var baguette = _.first(Baguette.filter({
         codeExternal: item.codeExternal
@@ -153,7 +157,8 @@
 
       if (!baguette) {
         baguette = Baguette.createInstance({
-          name: item.nameExternal
+          name: item.nameExternal,
+          isValid: false
         });
       }
 
