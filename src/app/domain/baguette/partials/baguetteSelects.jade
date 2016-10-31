@@ -27,3 +27,17 @@ model-name='Material'
 options='vm.materials'
 required-field='true'
 )
+
+md-input-container
+  label Комментарий
+  input(
+  type='text'
+  ng-model='vm.baguette.lastName'
+  name='lastName'
+  input-clear
+  input-clear-value='null'
+  autocomplete='off'
+  )
+  div(ng-messages="vm.attrsForm.lastName.$error")
+    div(ng-message="required") Поле не может быть пустым
+

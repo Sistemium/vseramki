@@ -1,30 +1,4 @@
 md-input-container
-  label Комментарий
-  input(
-  type='text'
-  ng-model='vm.baguette.lastName'
-  name='lastName'
-  input-clear
-  input-clear-value='null'
-  autocomplete='off'
-  )
-  div(ng-messages="vm.attrsForm.lastName.$error")
-    div(ng-message="required") Поле не может быть пустым
-
-md-input-container
-  label Код 1С
-  input(
-  type='text'
-  ng-model='vm.baguette.codeExternal'
-  name='codeExternal'
-  input-clear
-  input-clear-value='null'
-  autocomplete='off'
-  )
-  div(ng-messages="vm.attrsForm.codeExternal.$error")
-    div(ng-message="required") Поле не может быть пустым
-
-md-input-container
   label Артикул
     =' '
     span.required-field-asterisk *
@@ -53,6 +27,28 @@ md-input-container
   )
   div(ng-messages="vm.attrsForm.baguetteWidth.$error")
     div(ng-message="required") Поле не может быть пустым
+
+md-input-container
+  label Код 1С
+  input(
+  type='text'
+  ng-model='vm.baguette.codeExternal'
+  name='codeExternal'
+  input-clear
+  input-clear-value='null'
+  autocomplete='off'
+  )
+
+md-input-container
+  label Название 1С
+  input(
+  type='text'
+  ng-model='vm.baguette.nameExternal'
+  name='nameExternal'
+  input-clear
+  input-clear-value='null'
+  autocomplete='off'
+  )
 
 searchable-select.no-margin(
 placeholder='Дополнительные цвета'
