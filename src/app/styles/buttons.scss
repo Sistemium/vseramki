@@ -250,6 +250,17 @@ md-fab-actions, .viewport {
     min-height: 40px;
   }
 
+  .warning & {
+    background-color: $vr-yellow-color;
+  }
+
+  .warning &:not([disabled]):hover {
+    &, &.admin-button{
+      background-color: darken($vr-yellow-color, 10);
+    }
+  }
+
+
 }
 
 a {
