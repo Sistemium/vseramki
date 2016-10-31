@@ -21,7 +21,7 @@
         hasErrors: 'С ошибками'
       },
 
-      mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/octet-stream',
+      // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       doneClick: () => $state.go('baguettes')
 
     });
@@ -55,6 +55,9 @@
     var columnTranslation = {};
 
     _.each(columns, column => {
+      if (_.isUndefined(column.defaultValue)) {
+        column.defaultValue = null;
+      }
       columnTranslation[column.label] = {
         name: column.name,
         parser: value => (column.parser || _.trim)(value) || column.defaultValue
