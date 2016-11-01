@@ -4,7 +4,7 @@
 
   function ImportController(XLSX, $timeout, $q, Schema, $scope, ToastHelper, $state) {
 
-    var {Baguette, Material} = Schema.models();
+    var {Baguette, Material, Brand} = Schema.models();
     var vm = this;
 
     _.assign(vm, {
@@ -49,6 +49,30 @@
         name: 'materialName',
         label: 'Материал',
         ref: 'materialId'
+      }, {
+        name: 'brandName',
+        label: 'Бренд',
+        ref: 'brandId',
+        compute: item => {
+
+          var name = item['Наименование'];
+          if (!name) {
+            return null;
+          }
+
+          var re = /"(.+)"/;
+          var res = _.last(name.match(re));
+
+          if (res) {
+            return res;
+          }
+
+          re = / ([А-Я][а-я]+) /;
+          res = _.last(name.match(re));
+
+          return res;
+
+        }
       }
     ];
 
@@ -58,9 +82,13 @@
       if (_.isUndefined(column.defaultValue)) {
         column.defaultValue = null;
       }
+      var parser = column.parser || _.trim;
       columnTranslation[column.label] = {
         name: column.name,
-        parser: value => (column.parser || _.trim)(value) || column.defaultValue
+        compute: row => {
+          var res = column.compute ? column.compute(row) : parser(row[column.label]);
+          return res || column.defaultValue;
+        }
       };
     });
 
@@ -94,6 +122,8 @@
         vm.filesApi.removeAll();
       }
     });
+
+    Brand.bindAll({}, $scope, 'vm.brands');
 
     /*
      Functions
@@ -164,6 +194,14 @@
           }
         })), 'id') || null;
 
+      item.brandId = item.brandName && _.get(_.first(Brand.filter({
+          where: {
+            name: {
+              likei: item.brandName
+            }
+          }
+        })), 'id') || null;
+
       var baguette = _.first(Baguette.filter({
         codeExternal: item.codeExternal
       }));
@@ -212,8 +250,8 @@
                 index: idx + 1
               };
 
-              _.each(columnTranslation, (val, key) => {
-                res[val.name] = val.parser(row[key]);
+              _.each(columnTranslation, (val) => {
+                res[val.name] = val.compute(row);
               });
 
               return res;
