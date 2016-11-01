@@ -9,7 +9,7 @@
         thead(md-head md-order='filterBy')
           th(md-column) Фото
           th(md-column md-order-by='brand.code') Артикул
-          th.visible-xs(md-column md-order-by='name') Наименование
+          th.hide-md.hide-sm(md-column md-order-by='name') Наименование
           th.hide-xs(md-column md-order-by='brand.name') Бренд
           th.hide-xs(md-column md-order-by='colour.name') Цвет
           th.hide-xs(md-column md-order-by='surface.name') Поверхность
@@ -30,14 +30,14 @@
             td(md-cell)
               img.thumbnail(ng-src='{{bag.activePhoto()}}')
             td(md-cell) {{bag.code}}
-            td(md-cell ng-class="{'visible-xs': bag.isValid}" ng-attr-colspan="{{!bag.isValid && 5}}")
+            td.hide-md.hide-sm(md-cell)
               span {{bag.name}}
-              .warning(ng-if='!bag.isValid') Скрыт
-            td.hide-xs(md-cell ng-if='bag.isValid') {{bag.brand.name}}
-            td.hide-xs(md-cell ng-if='bag.isValid') {{bag.colour.name}}
-            td.hide-xs(md-cell ng-if='bag.isValid') {{bag.surface.name}}
-            td.hide-xs(md-cell ng-if='bag.isValid') {{bag.lastName}}
-            td.hide-xs.hide-sm(md-cell ng-if='bag.isValid')
+              .warning(ng-if='!bag.isValid') !
+            td.hide-xs(md-cell) {{bag.brand.name}}
+            td.hide-xs(md-cell) {{bag.colour.name}}
+            td.hide-xs(md-cell) {{bag.surface.name}}
+            td.hide-xs(md-cell) {{bag.lastName}}
+            td.hide-xs.hide-sm(md-cell)
               div(ng-repeat='bc in bag.colours track by bc.id') {{ bc.colour.name }}
             td.hide-xs.hide-sm(md-cell) {{bag.borderWidth}}
 
