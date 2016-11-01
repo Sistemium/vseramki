@@ -39,7 +39,8 @@
         label: 'Наименование'
       }, {
         name: 'code',
-        label: 'Артикул'
+        label: 'Артикул',
+        replace: false
       }, {
         name: 'borderWidth',
         label: 'Ширина багета',
@@ -53,6 +54,7 @@
         name: 'brandName',
         label: 'Бренд',
         ref: 'brandId',
+        replace: false,
         compute: item => {
 
           var name = item['Наименование'];
@@ -92,7 +94,11 @@
       };
     });
 
-    var validFields = _.map(columns, column => column.ref || column.name);
+    var validFields = _.map(columns, column => {
+      return {
+        name: column.ref || column.name, replace: !! column.replace
+      }
+    });
 
     vm.busy = Baguette.findAll();
 
@@ -213,7 +219,11 @@
         });
       }
 
-      _.assign(baguette, _.pick(item, validFields));
+      _.each(validFields, field => {
+        if (field.replace || !baguette[field.name]) {
+          baguette[field.name] = item[field.name];
+        }
+      });
 
       if (baguette.id && !Baguette.hasChanges(baguette)) {
         return $q.resolve()
