@@ -1,19 +1,18 @@
-//TODO styles
-md-dialog.login-dialog(aria-label='Login' style='border-radius: 5px 5px 5px !important; width: 35%')
+md-dialog.login-dialog(aria-label='Login')
   form(ng-cloak='')
-    md-toolbar(style='background-color:#f3f4f6; border-radius: 5px; min-height: 50px !important; max-height: 50px !important')
+    md-toolbar.login-dialog-toolbar
       .md-toolbar-tools
-        h2(style='color: black') Вход
+        h2.black-header Вход
         span(flex)
         md-button.md-fab.md-mini.micro-square.md-margin(ng-click='vm.hide()')
           i.material-icons.mini clear
         span
     md-dialog-content
       .md-dialog-content
-        p(style='text-align: justify') Пожалуйста, зарегистрируйтесь/авторизируйтесь или продолжайте оформление без регистрации/авторизации.
-        p Регистрация на сайте дает расширенный функционал при оформлении и работе с заказами.
+        p.justify-text Пожалуйста, зарегистрируйтесь/авторизируйтесь или продолжайте оформление без регистрации/авторизации.
+        p.justify-text Регистрация на сайте дает расширенный функционал при оформлении и работе с заказами.
 
-    md-dialog-actions(layout='row' layout-xs='column' layout-align-xs='center')
+    md-dialog-actions(layout='column' layout-gt-lg='row' layout-align='center')
 
       md-button.tool-button.dialog-button(ng-click="vm.answer('checkout')" )
         | Продолжить без регистрации
