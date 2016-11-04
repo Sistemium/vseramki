@@ -74,3 +74,33 @@
   }
 
 }
+
+md-dialog {
+
+  &.login-dialog {
+    border-radius: 5px 5px 5px;
+    width: 35%;
+    height: auto;
+  }
+
+  .login-dialog-toolbar {
+    background-color: #f3f4f6;
+    border-radius: 5px;
+    min-height: 50px !important;
+    max-height: 50px !important;
+  }
+
+  .black-header {
+    color: black;
+  }
+
+  .justify-text {
+    text-align: justify;
+  }
+
+  md-dialog-actions {
+    padding-left: 0;
+  }
+
+}
+
