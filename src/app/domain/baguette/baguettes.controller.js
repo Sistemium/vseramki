@@ -2,7 +2,7 @@
 
 (function () {
 
-  function BaguettesController(Schema, $filter, AuthHelper, $scope, $q, $state, Helpers) {
+  function BaguettesController(Schema, $filter, AuthHelper, $scope, $q, $state, Helpers, ExportExcel) {
 
     const filter = $filter('filter');
 
@@ -44,7 +44,10 @@
       resetFilters: () => vm.search = '',
       resetCheckedBaguette: () => vm.selected = [],
       editBaguette: item => $state.go('.edit', {id: item.id}),
-      fileUploadClick: () => $state.go('import', {model: 'Baguette'})
+      fileUploadClick: () => $state.go('import', {model: 'Baguette'}),
+      fileDownloadClick: () => {
+        ExportExcel.exportTableToExcel();
+      }
 
     });
 
