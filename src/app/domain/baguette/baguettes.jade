@@ -19,6 +19,7 @@
         ng-if='vm.currentItem'
         ng-class='{ warning: !vm.currentItem.isValid }'
         )
+        state-bar-button.admin-button(title='Экспорт в Excel' icon='file_download' ng-show='!vm.currentItem && (vm.currentState == "table")')
         state-bar-button.admin-button(title='Импорт из Excel' icon='file_upload' ng-show='!vm.currentItem')
         state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Удалить багет' icon='delete' ng-show='vm.currentItem')
@@ -26,6 +27,7 @@
 
   section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
     md-progress-circular(md-diameter="200" md-mode="indeterminate")
+
 
   div(layout='row' ng-if="vm.ready")
 
@@ -39,3 +41,4 @@
     )
 
     .ui-view(flex)
+
