@@ -2,7 +2,7 @@
 
 (function () {
 
-  function ExportExcel(moment, XLSX) {
+  function ExportExcel(moment, XLSX, FileSaver) {
 
 
     function getDataToWrite() {
@@ -85,7 +85,7 @@
         this.Sheets = {};
       }
 
-      function sheetFromArrayOfArrays(data, opts) {
+      function sheetFromArrayOfArrays(data) {
         var ws = {};
         var range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0}};
         for (var R = 0; R != data.length; ++R) {
@@ -112,13 +112,6 @@
         return ws;
       }
 
-      function s2ab(s) {
-        var buf = new ArrayBuffer(s.length);
-        var view = new Uint8Array(buf);
-        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
-        return buf;
-      }
-
 
       /* add ranges to worksheet */
       ws['!merges'] = ranges;
@@ -131,7 +124,7 @@
 
       var fileName = moment().format('l') + '.xlsx';
 
-      saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), fileName)
+      FileSaver.saveAs(new Blob([FileSaver.s2ab(wbout)], {type: 'application/octet-stream'}), fileName);
     }
 
 
