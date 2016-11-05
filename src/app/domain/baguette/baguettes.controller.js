@@ -2,15 +2,15 @@
 
 (function () {
 
-  function BaguettesController(Schema, $filter, AuthHelper, $scope, $q, $state, Helpers, ExportExcel) {
+  function BaguettesController(Schema, $filter, $scope, $q, $state, Helpers, ExportExcel) {
 
     const filter = $filter('filter');
 
-    var {VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper} = Helpers;
+    var {VSHelper, ToastHelper, AlertHelper, ControllerHelper} = Helpers;
 
     var vm = ControllerHelper.setup(this, $scope, onStateChange)
-      .use(TableHelper)
-      .use(AuthHelper);
+      .use(Helpers.TableHelper)
+      .use(Helpers.AuthHelper);
 
     var {
       Brand,
@@ -30,7 +30,7 @@
       ]
     };
 
-    _.assign(vm, {
+    vm.use({
 
       filteredBaguettes: [],
       rootState: 'baguettes',
