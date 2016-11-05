@@ -9,7 +9,8 @@
     var {VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper} = Helpers;
 
     var vm = ControllerHelper.setup(this, $scope, onStateChange)
-      .use(TableHelper);
+      .use(TableHelper)
+      .use(AuthHelper);
 
     var {
       Brand,
@@ -34,7 +35,6 @@
       filteredBaguettes: [],
       rootState: 'baguettes',
       selected: [],
-      isAdmin: AuthHelper.isAdmin(),
 
       deleteClick,
       addClick,

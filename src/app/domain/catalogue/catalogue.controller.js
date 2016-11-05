@@ -4,7 +4,9 @@
 
   function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper) {
 
-    var vm = ControllerHelper.setup(this, $scope, onStateChange);
+    var vm = ControllerHelper.setup(this, $scope, onStateChange)
+      .use(TableHelper)
+      .use(AuthHelper);
 
     var {
       Article,
@@ -31,10 +33,6 @@
       filterLength: false,
       selected: [],
       lockArticlesScroll: false,
-
-      pagination: TableHelper.pagination($scope),
-      isAdmin: AuthHelper.isAdmin(),
-      onPaginate: TableHelper.setPagination,
 
       plusOne,
       minusOne,
