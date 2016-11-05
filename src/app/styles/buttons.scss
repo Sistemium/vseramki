@@ -95,6 +95,11 @@ button .label {
     cursor: not-allowed;
   }
 
+  &.pink-button.md-focused {
+    background-color: $md-fab-hover;
+  }
+
+
   &.micro-fab:not([disabled]):hover,
   &.mini-fab:not([disabled]):hover {
     background-color: $md-fab-hover;
@@ -111,7 +116,6 @@ button .label {
   }
 
 }
-
 
 .pink-button-fab {
   width: 40px;
@@ -267,3 +271,5 @@ a {
   text-decoration: none;
   color: #404040;
 }
+
+

@@ -2,7 +2,7 @@
 
 (function () {
 
-  function CartController($scope, $state, Schema, Helpers, $q, ToastHelper) {
+  function CartController($scope, $state, Schema, Helpers, $q, ToastHelper, $mdDialog) {
 
     var vm = this;
     var {AlertHelper} = Helpers;
@@ -25,6 +25,8 @@
       saleOrder: null,
       emailPattern: User.meta.emailPattern,
 
+      answer,
+      checkout,
       clearCart,
       clearItem,
       saveItem,
@@ -34,7 +36,8 @@
       onSubmit: saveSaleOrder,
       hasChanges,
       cancelChanges,
-      save
+      save,
+      hide: () => $mdDialog.hide()
 
     });
 
@@ -240,6 +243,34 @@
       SaleOrder.save(vm.saleOrder);
     }
 
+    function checkout(event) {
+
+      if (authUser) {
+        $state.go('checkout');
+      } else {
+        showAdvanced(event);
+      }
+
+    }
+
+    function showAdvanced(ev) {
+
+      $mdDialog.show({
+        controller: CartController,
+        controllerAs: 'vm',
+        templateUrl: 'app/domain/cart/checkout/checkoutDialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: true,
+        fullscreen: true
+      })
+
+    }
+
+    function answer(answer) {
+      $state.go(answer);
+      vm.hide();
+    }
 
   }
 

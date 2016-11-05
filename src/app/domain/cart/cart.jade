@@ -4,7 +4,7 @@ bar-title='Заказ'
   div(layout='row')
     md-button.md-button.pink-button.md-raised(
     ng-if='vm.data.length'
-    ui-sref='checkout'
+    ng-click='vm.checkout($event)'
     ) Оформить заказ
 
 .cart.scroll-y(resize='cart' ng-style='{height: (cart.windowHeight - cart.offsetTop - 61)+"px"}')

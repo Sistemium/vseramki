@@ -3,8 +3,8 @@
   state-bar(
   bar-title='Заказы'
   )
-    md-button.md-raised(ng-click='vm.goToEdit()' ng-if='vm.id && (vm.currentState !== "edit")') Редактировать
-    md-button.md-raised(ng-click='vm.printOrder()' ng-if='vm.id') Печать заказа
+    state-bar-button.default-button(title='Редактировать' icon='edit' ng-show='vm.id && (vm.currentState !== "edit")')
+    state-bar-button.default-button(title='Печать заказа' icon='print' ng-show='vm.id')
 
   div(layout='row')
 

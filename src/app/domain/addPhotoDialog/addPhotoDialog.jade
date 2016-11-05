@@ -5,6 +5,7 @@ md-dialog.photo-dialog(aria-label='Add photo')
       span(flex)
       md-button(ng-click='vm.hide()').md-fab.md-mini.micro-square
         i.material-icons.mini clear
+      span
   md-dialog-content
     .md-dialog-content
       form(name='pictureUpload' layout='column')
@@ -39,4 +40,3 @@ md-dialog.photo-dialog(aria-label='Add photo')
         #progress
           md-progress-linear(ng-show='vm.busy' value='{{vm.progressPercent}}' md-mode='determinate')
           md-progress-linear(md-mode="query" ng-show='vm.busy && vm.progressPercent >= 100')
-

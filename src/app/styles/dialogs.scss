@@ -1,7 +1,29 @@
 @media (max-width: 959px) {
+
   md-dialog.md-dialog-fullscreen {
     min-height: 50%;
     min-width: 90%;
     border-radius: 0;
   }
+
+}
+
+@media (max-width: 10000px) and (min-width: 331px) {
+
+  md-dialog.login-dialog {
+    min-height: 45%;
+    min-width: 300px;
+    border-radius: 0;
+  }
+
+}
+
+@media (max-width: 330px) {
+
+  md-dialog.login-dialog {
+    min-height: 45%;
+    min-width: 270px;
+    border-radius: 0;
+  }
+
 }

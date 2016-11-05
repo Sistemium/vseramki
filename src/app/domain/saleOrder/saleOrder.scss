@@ -26,5 +26,16 @@ state-bar.saleOrder {
     }
     border-bottom: $list-item-border;
   }
+
+  input[disabled="disabled"] {
+    color: black;
+    cursor: not-allowed;
+  }
+
+  textarea[disabled="disabled"] {
+    color: black;
+    cursor: not-allowed;
+  }
+
 }
 
