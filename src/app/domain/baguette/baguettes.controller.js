@@ -8,7 +8,8 @@
 
     var {VSHelper, ToastHelper, AlertHelper, TableHelper, ControllerHelper} = Helpers;
 
-    var vm = ControllerHelper.setup(this, $scope, onStateChange);
+    var vm = ControllerHelper.setup(this, $scope, onStateChange)
+      .use(TableHelper);
 
     var {
       Brand,
@@ -33,8 +34,6 @@
       filteredBaguettes: [],
       rootState: 'baguettes',
       selected: [],
-      pagination: TableHelper.pagination(),
-      onPaginate: TableHelper.setPagination,
       isAdmin: AuthHelper.isAdmin(),
 
       deleteClick,
