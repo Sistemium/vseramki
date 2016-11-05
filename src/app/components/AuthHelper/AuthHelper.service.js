@@ -45,7 +45,14 @@
 
     }
 
+    function use(controller) {
+      _.assign(controller, {
+        isAdmin: isAdmin()
+      });
+    }
+
     return {
+      use,
       isAdmin,
       hasUser,
       userRoles: () => currentUserRoles,
