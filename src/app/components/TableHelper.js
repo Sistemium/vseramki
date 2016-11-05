@@ -29,9 +29,17 @@
       localStorageService.set('pagination.limit', limit);
     }
 
+    function setup(controller) {
+      _.assign(controller, {
+        pagination: pagination(),
+        onPaginate: setPagination
+      });
+    }
+
     return {
       pagination,
-      setPagination
+      setPagination,
+      setup
     };
 
   }
