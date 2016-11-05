@@ -4,6 +4,25 @@
 
   function ControllerHelper() {
 
+    return {
+      setup
+    };
+
+    function use(helper) {
+
+      var me = this;
+
+      if (!helper) return me;
+
+      if (_.isFunction(helper.setup)) {
+        helper.setup(me);
+        return me;
+      }
+
+      return _.assign(me, helper);
+
+    }
+
     function setup(vm, $scope, callback) {
 
       var re = new RegExp(`${vm.rootState}\.([^\.]+)`);
@@ -39,13 +58,10 @@
 
       return _.assign(vm,{
         //stateBarButtonClick: event => $scope.$broadcast('stateBarButtonClick', event)
+        use
       });
 
     }
-
-    return {
-      setup
-    };
 
   }
 
