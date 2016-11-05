@@ -4,11 +4,8 @@
 
   angular
     .module('vseramki')
-    .run(Baguette)
-    .service('Baguette',function(Schema){
-      return Schema.model('Baguette');
-    })
-  ;
+    .service('Baguette', Baguette)
+    .run(Baguette => Baguette);
 
   function Baguette(Schema, Entity) {
 
