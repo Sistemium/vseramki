@@ -7,7 +7,7 @@
     .service('Baguette', Baguette)
     .run(Baguette => Baguette);
 
-  function Baguette(Schema, Entity) {
+  function Baguette(Schema, Entity, ExportConfig) {
 
     return Schema.register({
 
@@ -18,6 +18,10 @@
       },
 
       name: 'Baguette',
+
+      meta: {
+        exportConfig: ExportConfig.Baguette
+      },
 
       relations: {
 
