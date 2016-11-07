@@ -67,6 +67,11 @@
 
     }
 
+    function Workbook() {
+      if (!(this instanceof Workbook)) return new Workbook();
+      this.SheetNames = [];
+      this.Sheets = {};
+    }
 
     function exportTableToExcel() {
 
@@ -79,12 +84,6 @@
 
       var wb = new Workbook(), ws = sheetFromArrayOfArrays(data);
 
-      function Workbook() {
-        if (!(this instanceof Workbook)) return new Workbook();
-        this.SheetNames = [];
-        this.Sheets = {};
-      }
-
       function sheetFromArrayOfArrays(data) {
         var ws = {};
         var range = {s: {c: 10000000, r: 10000000}, e: {c: 0, r: 0}};
@@ -95,19 +94,23 @@
             if (range.e.r < R) range.e.r = R;
             if (range.e.c < C) range.e.c = C;
             var cell = {v: data[R][C]};
+            if (R===0) {
+              cell.s = {font: {bold: true}, alignment: {horizontal: 'center'}};
+            }
             if (cell.v == null) continue;
             var cell_ref = XLSX.utils.encode_cell({c: C, r: R});
             if (typeof cell.v === 'number') cell.t = 'n';
             else if (typeof cell.v === 'boolean') cell.t = 'b';
-            else if (cell.v instanceof Date) {
-              cell.t = 'n';
-              cell.z = XLSX.SSF._table[14];
-              cell.v = datenum(cell.v);
-            }
+            // else if (cell.v instanceof Date) {
+            //   cell.t = 'n';
+            //   cell.z = XLSX.SSF._table[14];
+            //   cell.v = datenum(cell.v);
+            // }
             else cell.t = 's';
             ws[cell_ref] = cell;
           }
         }
+
         if (range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
         return ws;
       }
@@ -126,9 +129,86 @@
       FileSaver.saveWorkBookAs(wbOut, fileName);
     }
 
+    function setCell(ws, cell, ref) {
+      ws[XLSX.utils.encode_cell(ref)] = cell;
+    }
+
+    function worksheetFromArrayWithConfig(data, config) {
+      var ws = {};
+
+      var wsCols = [];
+
+      _.each(config, (col, idx) => {
+
+        var cell = {
+          v: col.title,
+          t: 's',
+          s: {
+            font: {bold: true},
+            alignment: {horizontal: 'center'}
+          }
+        };
+
+        setCell(ws, cell, {c: idx, r: 0});
+
+      });
+
+      _.each(config, (col, colIdx) => {
+
+        var maxLength = col.title.length;
+
+        _.each(data, (row, rowIdx) => {
+
+          var val = _.get(row, col.property);
+
+          if (val === null || _.isUndefined(val)) return;
+
+          var cell = {
+            v: val,
+            t: _.isNumber(val) ? 'n' : 's'
+          };
+
+          maxLength = _.max([maxLength, val.toString().length]);
+
+          setCell(ws, cell, {c: colIdx, r: rowIdx + 1});
+
+        });
+
+        wsCols.push({
+          wch: maxLength + 2
+        });
+
+      });
+
+      var range = {e: {c: config.length - 1, r: data.length}, s: {c: 0, r: 0}};
+
+      ws['!cols'] = wsCols;
+      ws['!ref'] = XLSX.utils.encode_range(range);
+
+      return ws;
+
+    }
+
+    function exportArrayWithConfig(data, config, name) {
+
+      var wb = new Workbook();
+
+      name = name || 'Таблица';
+
+      wb.SheetNames.push(name);
+      wb.Sheets[name] = worksheetFromArrayWithConfig(data, config);
+
+      var wbOut = XLSX.write(wb, {bookType: 'xlsx', bookSST: false, type: 'binary'});
+      var fileName = name + '.xlsx';
+
+      FileSaver.saveWorkBookAs(wbOut, fileName);
+
+    }
+
 
     return {
-      exportTableToExcel
+      exportTableToExcel,
+      exportArrayWithConfig
     }
 
   }
