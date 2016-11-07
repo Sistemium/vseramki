@@ -6,7 +6,7 @@
   )
     md-table-container(ng-if='vm.baguettes.length')
       table(md-table)
-        thead(md-head md-order='filterBy')
+        thead(md-head md-order='vm.orderBy')
           th(md-column) Фото
           th(md-column md-order-by='code') Артикул
           th.hide-md.hide-sm(md-column md-order-by='name') Наименование
@@ -20,7 +20,7 @@
           tr(
           md-row
           ng-repeat='bag in vm.filteredBaguettes ' +
-          '| orderBy: filterBy ' +
+          '| orderBy: vm.orderBy ' +
           '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
           ' track by bag.id'
           md-select='bag'

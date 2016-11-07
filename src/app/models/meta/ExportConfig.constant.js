@@ -15,10 +15,10 @@
           property: 'code'
         },{
           title: 'Материал',
-          property: 'baguette.name'
+          property: 'material.name'
         },{
           title: 'Ширина багета',
-          property: 'baguetteWidth',
+          property: 'borderWidth',
           type: 'number'
         }
       ],

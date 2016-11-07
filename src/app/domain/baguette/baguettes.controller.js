@@ -5,6 +5,7 @@
   function BaguettesController(Schema, $filter, $scope, $q, $state, Helpers, ExportExcel) {
 
     const filter = $filter('filter');
+    const orderBy = $filter('orderBy');
 
     var {VSHelper, ToastHelper, AlertHelper, ControllerHelper} = Helpers;
 
@@ -45,7 +46,8 @@
       editBaguette: item => $state.go('.edit', {id: item.id}),
       fileUploadClick: () => $state.go('import', {model: 'Baguette'}),
       fileDownloadClick: () => {
-        ExportExcel.exportTableToExcel();
+        var baguettes = orderBy(vm.filteredBaguettes, vm.orderBy);
+        ExportExcel.exportArrayWithConfig(baguettes, Baguette.meta.exportConfig, 'Багеты');
       }
 
     });
