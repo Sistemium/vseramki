@@ -120,11 +120,10 @@
       wb.SheetNames.push(ws_name);
       wb.Sheets[ws_name] = ws;
 
-      var wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: false, type: 'binary'});
-
+      var wbOut = XLSX.write(wb, {bookType: 'xlsx', bookSST: false, type: 'binary'});
       var fileName = moment().format('l') + '.xlsx';
 
-      FileSaver.saveAs(new Blob([FileSaver.s2ab(wbout)], {type: 'application/octet-stream'}), fileName);
+      FileSaver.saveWorkBookAs(wbOut, fileName);
     }
 
 

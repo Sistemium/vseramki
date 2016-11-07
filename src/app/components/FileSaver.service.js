@@ -1,14 +1,15 @@
 'use strict';
 
-/* global ArrayBuffer:false Uint8Array:false */
+/* global ArrayBuffer:false Uint8Array:false saveAs:false */
 
 (function () {
 
-  function FileSaver($window) {
+  function FileSaver() {
 
     return {
-      saveAs: $window.saveAs,
-      s2ab
+      saveWorkBookAs: (wb, name) => {
+        return saveAs(new Blob([s2ab(wb)], {type: 'application/octet-stream'}), name);
+      }
     };
 
     function s2ab(s) {
