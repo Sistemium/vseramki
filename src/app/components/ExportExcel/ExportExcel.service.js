@@ -101,11 +101,11 @@
             var cell_ref = XLSX.utils.encode_cell({c: C, r: R});
             if (typeof cell.v === 'number') cell.t = 'n';
             else if (typeof cell.v === 'boolean') cell.t = 'b';
-            // else if (cell.v instanceof Date) {
-            //   cell.t = 'n';
-            //   cell.z = XLSX.SSF._table[14];
-            //   cell.v = datenum(cell.v);
-            // }
+            else if (cell.v instanceof Date) {
+              cell.t = 'n';
+              cell.z = XLSX.SSF._table[14];
+              cell.v = datenum(cell.v);
+            }
             else cell.t = 's';
             ws[cell_ref] = cell;
           }
@@ -131,6 +131,12 @@
 
     function setCell(ws, cell, ref) {
       ws[XLSX.utils.encode_cell(ref)] = cell;
+    }
+
+    function datenum(v, date1904) {
+      if (date1904) v += 1462;
+      var epoch = Date.parse(v);
+      return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
     }
 
     function worksheetFromArrayWithConfig(data, config) {
