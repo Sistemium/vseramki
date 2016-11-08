@@ -301,6 +301,24 @@
       vm.hide();
     }
 
+    function changeOrderStatus(id) {
+
+      if (SaleOrder.hasChanges(id)) {
+        vm.blockMdSelect = true;
+        SaleOrder.save(id)
+          .then(()=> ToastHelper.success('Статус изменен')
+            .then(() => {
+              vm.blockMdSelect = false;
+            }))
+          .catch(() => {
+            ToastHelper.error('Статус не изменен').then(()=> {
+              SaleOrder.revert(id);
+              vm.blockMdSelect = false;
+            });
+          });
+      }
+    }
+
   }
 
   angular
