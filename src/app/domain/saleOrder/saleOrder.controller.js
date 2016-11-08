@@ -4,14 +4,7 @@
 
   angular
     .module('vseramki')
-    .controller('SaleOrderController', SaleOrderController)
-    .filter('translate', function () {
-      var dictionary = {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'};
-
-      return function (word) {
-        return _.get(dictionary, word) || word;
-      };
-    });
+    .controller('SaleOrderController', SaleOrderController);
 
   function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper, ToastHelper, $timeout) {
 
