@@ -30,7 +30,6 @@
               th(md-column md-order-by='contactName') Контактное лицо
               th(md-column md-order-by='phone') Телефон
               th(md-column md-order-by='shipTo') Адрес
-              th(md-column md-order-by='processing') Состояние
             tbody.clickable(md-body)
               tr(
               md-row
@@ -45,23 +44,6 @@
                 td(md-cell) {{saleOrder.contactName}}
                 td(md-cell) {{saleOrder.phone}}
                 td(md-cell) {{saleOrder.shipTo}}
-                td(md-cell)
-
-                  p(ng-show='!vm.isAdmin') {{saleOrder.processing | translate}}
-
-                  md-input-container(ng-show='vm.isAdmin')
-                    md-select(
-                    ng-disabled='vm.blockMdSelect'
-                    ng-model='saleOrder.processing'
-                    aria-label='$index state'
-                    md-on-close='vm.changeOrderStatus(saleOrder.id)'
-                    )
-                      md-option(ng-repeat='state in vm.dictionary'
-                      ng-value="state[0]"
-                      aria-label='state'
-                      )
-                        | {{state[1]}}
-
 
       md-table-pagination(
       md-limit='vm.pagination.query.limit',
