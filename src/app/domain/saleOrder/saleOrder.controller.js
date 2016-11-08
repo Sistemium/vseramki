@@ -15,6 +15,7 @@
     var lockOrdersScroll;
 
     _.assign(vm, {
+      showEditButtons: false,
       userId: _.get(AuthHelper.getUser(), 'id'),
       isAdmin: AuthHelper.isAdmin(),
       pagination: TableHelper.pagination(),
@@ -33,7 +34,10 @@
       editClick: goToEdit,
       printClick,
       goToEdit,
-      changeOrderStatus
+      arrowBackClick,
+      closeClick
+      //checkClick
+
     });
 
     /*
