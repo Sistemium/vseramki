@@ -231,19 +231,22 @@
         })
         .then(()=> {
 
-          User.find(authUser.id).then(function (user) {
-            var userObject = user;
-            vm.userEmptyFieldKeys.forEach(function (key) {
-              var keyDup = key;
-              if (keyDup === 'address') {
-                keyDup = 'shipTo';
-              }
-              userObject[key] = vm.saleOrder[keyDup];
+          if (authUser) {
+            User.find(authUser.id).then(function (user) {
+              var userObject = user;
+              vm.userEmptyFieldKeys.forEach(function (key) {
+                var keyDup = key;
+                if (keyDup === 'address') {
+                  keyDup = 'shipTo';
+                }
+                userObject[key] = vm.saleOrder[keyDup];
+              });
+              User.save(userObject).catch(function (err) {
+                console.error(err);
+              });
             });
-            User.save(userObject).catch(function (err) {
-              console.error(err);
-            });
-          });
+          }
+
 
           Cart.destroyAll()
             .then(() => {
@@ -253,7 +256,7 @@
                   vm.busy = false;
                 });
             });
-        });
+        })
 
     }
 
