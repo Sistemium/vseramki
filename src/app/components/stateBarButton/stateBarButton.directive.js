@@ -11,7 +11,8 @@
       scope: {
         icon: '@',
         title: '@',
-        cls: '@class'
+        cls: '@class',
+        disabledIf: '=?'
       },
 
       controller: function ($scope) {
