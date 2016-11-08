@@ -25,6 +25,13 @@
       id: $state.params.id,
       saleOrder: null,
       emailPattern: User.meta.emailPattern,
+      isAdmin: AuthHelper.isAdmin(),
+      dictionary: {
+        submitted: ['submitted', 'Оформлен'],
+        accepted: ['accepted', 'Принят'],
+        delivery: ['delivery', 'Доставка'],
+        done: ['done', 'Выполнен']
+      },
 
       answer,
       checkout,
