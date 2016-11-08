@@ -87,6 +87,16 @@
       window.print();
     }
 
+    function closeClick() {
+      SaleOrder.revert(vm.currentItem.id);
+    }
+
+    //function checkClick() {
+    //  SaleOrder.save(vm.currentItem).then(() => {
+    //    ToastHelper.success('Изменено')
+    //  });
+    //}
+
     function onClickWithPrevent(fn) {
       return function (item, event) {
         if (_.get(event, 'defaultPrevented')) {
