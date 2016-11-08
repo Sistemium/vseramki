@@ -46,11 +46,17 @@
       cancelChanges,
       save,
       changeOrderStatus,
+
       checkClick: () => {
-        SaleOrder.save(vm.currentItem).then(() => {
+        SaleOrder.save(vm.saleOrder).then(() => {
           ToastHelper.success('Изменено')
         });
       },
+
+      closeClick: () => {
+        SaleOrder.revert(vm.saleOrder.id);
+      },
+
       hide: () => $mdDialog.hide()
 
     });

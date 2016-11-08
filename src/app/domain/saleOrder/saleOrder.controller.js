@@ -35,9 +35,6 @@
       printClick,
       goToEdit,
       arrowBackClick,
-      closeClick
-      //checkClick
-
     });
 
     /*
@@ -56,17 +53,6 @@
     $scope.$on('saleOrderFormState', (ev, data) => {
       vm.saleOrderForm = data;
     });
-
-    //$scope.$watch('vm.currentItem', function () {
-    //
-    //  if (vm.currentState === 'edit') {
-    //    vm.showEditButtons = SaleOrder.hasChanges(vm.currentItem);
-    //  } else {
-    //    vm.showEditButtons = false;
-    //  }
-    //
-    //}, true);
-
 
     /*
      Functions
@@ -101,16 +87,6 @@
     function printClick() {
       window.print();
     }
-
-    function closeClick() {
-      SaleOrder.revert(vm.currentItem.id);
-    }
-
-    //function checkClick() {
-    //  SaleOrder.save(vm.currentItem).then(() => {
-    //    ToastHelper.success('Изменено')
-    //  });
-    //}
 
     function onClickWithPrevent(fn) {
       return function (item, event) {
