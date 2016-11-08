@@ -112,6 +112,16 @@
       saleOrderId: vm.id
     }, $scope, 'vm.data', refreshPrice);
 
+
+    $scope.$watch(() => {
+      return {
+        invalid: _.get(vm, 'attrsForm.$invalid'),
+        dirty: _.get(vm, 'attrsForm.$dirty')
+      }
+    }, (state) => {
+      $scope.$emit('saleOrderFormState', state);
+    }, true);
+
     /*
 
      Functions
@@ -188,7 +198,9 @@
       saveItem();
     }
 
+
     function saveSaleOrder() {
+
       vm.busy = true;
       vm.saleOrder.processing = 'submitted';
 
