@@ -49,12 +49,16 @@
 
       checkClick: () => {
         SaleOrder.save(vm.saleOrder).then(() => {
-          ToastHelper.success('Изменено')
+          ToastHelper.success('Изменено');
+          _.result(vm, 'attrsForm.$setUntouched');
+          _.result(vm, 'attrsForm.$setPristine');
         });
       },
 
       closeClick: () => {
         SaleOrder.revert(vm.saleOrder.id);
+        _.result(vm, 'attrsForm.$setUntouched');
+        _.result(vm, 'attrsForm.$setPristine');
       },
 
       hide: () => $mdDialog.hide()
