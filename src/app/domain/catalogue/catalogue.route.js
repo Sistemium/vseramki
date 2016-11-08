@@ -18,7 +18,10 @@
         url: '/create',
         templateUrl: 'app/domain/addFrame/editFrame.html',
         controller: 'AddFrameController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          needRoles: 'admin'
+        }
       },
 
       {
@@ -34,7 +37,10 @@
             url: '/edit',
             templateUrl: 'app/domain/addFrame/editFrame.html',
             controller: 'AddFrameController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            data: {
+              needRoles: 'admin'
+            }
           }
 
         ]
@@ -49,6 +55,10 @@
         controller: 'CatalogueController',
         controllerAs: 'vm',
         defaultChild: 'tiles',
+
+        data: {
+          title: 'Каталог'
+        },
 
         children: [
           {
