@@ -3,8 +3,16 @@
   state-bar(
   bar-title='Заказы'
   )
-    state-bar-button.default-button(title='Редактировать' icon='edit' ng-show='vm.id && (vm.currentState !== "edit")')
-    state-bar-button.default-button(title='Печать заказа' icon='print' ng-show='vm.id')
+    div(ng-if='vm.id' layout='row')
+      state-bar-button.default-button(title='Назад' icon='arrow_back' ng-show='vm.currentState == "edit"')
+
+      div(ng-show='vm.saleOrderForm.dirty' ng-if='vm.currentState==="edit"')
+        state-bar-button.default-button.no-margin-right(title='Отменить изменения' icon='close')
+        state-bar-button.default-button(title='Сохранить изменения' icon='check' disabled-if='vm.saleOrderForm.invalid')
+
+      state-bar-button.default-button(title='Редактировать' icon='edit' ng-show='vm.currentState !== "edit"')
+      state-bar-button.default-button(title='Печать заказа' icon='print' ng-show='vm.currentState !== "edit"')
+
 
   div(layout='row')
 
