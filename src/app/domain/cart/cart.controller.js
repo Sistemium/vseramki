@@ -2,9 +2,10 @@
 
 (function () {
 
-  function CartController($scope, $state, Schema, Helpers, $q, ToastHelper, $mdDialog) {
+  function CartController($scope, $state, Schema, Helpers, $q, ToastHelper, $mdDialog, AuthHelper, ControllerHelper) {
 
-    var vm = this;
+    var vm = ControllerHelper.setup(this, $scope);
+
     var {AlertHelper} = Helpers;
 
     var {
