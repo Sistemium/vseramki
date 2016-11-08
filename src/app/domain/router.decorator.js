@@ -2,7 +2,7 @@
 
 (function () {
 
-  function RouterDecorator($rootScope, $state, localStorageService, Entity) {
+  function RouterDecorator($rootScope, $state, localStorageService, Entity, $window) {
 
     var entityLoading;
 
@@ -50,6 +50,10 @@
           localStorageService.set(toState.parent.name + '.mode', mode[0]);
         }
       }
+
+      var title = _.get(toState, 'data.title');
+
+      $window.document.title = title ? `Все рамки - ${title}` : 'Все рамки';
 
     });
   }
