@@ -45,6 +45,12 @@
       hasChanges,
       cancelChanges,
       save,
+      changeOrderStatus,
+      checkClick: () => {
+        SaleOrder.save(vm.currentItem).then(() => {
+          ToastHelper.success('Изменено')
+        });
+      },
       hide: () => $mdDialog.hide()
 
     });
