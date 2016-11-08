@@ -96,6 +96,10 @@
       }
     }
 
+    function arrowBackClick() {
+      $state.go('^')
+    }
+
     function scrollToIndex() {
 
       var id = vm.id;
