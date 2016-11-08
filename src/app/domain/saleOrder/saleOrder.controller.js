@@ -49,6 +49,24 @@
 
     loadData();
 
+    /*
+     Watch
+     */
+
+    $scope.$on('saleOrderFormState', (ev, data) => {
+      vm.saleOrderForm = data;
+    });
+
+    //$scope.$watch('vm.currentItem', function () {
+    //
+    //  if (vm.currentState === 'edit') {
+    //    vm.showEditButtons = SaleOrder.hasChanges(vm.currentItem);
+    //  } else {
+    //    vm.showEditButtons = false;
+    //  }
+    //
+    //}, true);
+
 
     /*
      Functions
