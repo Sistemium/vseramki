@@ -14,7 +14,10 @@
       .state({
         name: 'delivery',
         url: '/delivery',
-        templateUrl: 'app/domain/delivery/delivery.html'
+        templateUrl: 'app/domain/delivery/delivery.html',
+        data: {
+          title: 'Доставка'
+        }
       });
   }
 

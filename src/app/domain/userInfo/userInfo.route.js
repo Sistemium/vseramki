@@ -17,7 +17,8 @@
         controller: 'UserInfoController',
         controllerAs: 'vm',
         data: {
-          needRoles: true
+          needRoles: true,
+          title: 'Профиль'
         }
       });
   }

@@ -19,6 +19,7 @@
 
         data: {
           needRoles: 'admin',
+          title: 'Словари',
           options
         },
 

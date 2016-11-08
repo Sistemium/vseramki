@@ -35,6 +35,7 @@
         defaultChild: 'table',
 
         data: {
+          title: 'Багеты',
           needRoles: 'admin'
         },
 

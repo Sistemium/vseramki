@@ -19,7 +19,8 @@
         controllerAs: 'vm',
 
         data: {
-          needRoles: true
+          needRoles: true,
+          title: 'Заказы'
         },
 
         children: [{
