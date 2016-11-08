@@ -37,5 +37,18 @@ state-bar.saleOrder {
     cursor: not-allowed;
   }
 
+  state-bar-button .no-margin-right {
+    margin-right: 0;
+  }
+
 }
 
+.sub-toolbar {
+
+  height: 45px;
+
+  md-select {
+    margin-bottom: 3px;
+  }
+
+}
