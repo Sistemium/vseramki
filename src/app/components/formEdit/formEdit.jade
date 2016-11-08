@@ -5,7 +5,8 @@
 form(name="vm.attrsForm" ng-transclude='fields' autocomplete='off' ng-submit='vm.onSubmit()')
 
 .text-center.margin-top-bottom(
-ng-if='vm.hasChanges()'
+ng-if='vm$.showButtons'
+ng-show='vm.hasChanges()'
 layout='column' layout-align='start'
 layout-gt-xs='row' layout-align-gt-xs='center center'
 )
