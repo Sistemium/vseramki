@@ -159,6 +159,11 @@
 
     }
 
+    function makeFormDirty() {
+      _.result(vm, 'attrsForm.$setUntouched');
+      _.result(vm, 'attrsForm.$setPristine');
+    }
+
     function refreshPrice() {
       if (vm.id) {
         vm.saleOrder && vm.saleOrder.recalcTotals(vm);
