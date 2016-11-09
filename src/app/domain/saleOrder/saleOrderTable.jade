@@ -4,15 +4,27 @@
   bar-title='Заказы'
   )
     div(ng-if='vm.id' layout='row')
-      state-bar-button.default-button(title='Назад' icon='arrow_back' ng-show='vm.currentState == "edit"')
+      //state-bar-button.default-button(title='Назад' icon='arrow_back' ng-show='vm.currentState == "edit"')
 
-      div(ng-show='vm.saleOrderForm.dirty' ng-if='vm.currentState==="edit"')
-        state-bar-button.default-button.no-margin-right(title='Отменить изменения' icon='close')
-        state-bar-button.default-button(title='Сохранить изменения' icon='check' disabled-if='vm.saleOrderForm.invalid')
+      div(ng-if='vm.currentState==="edit"' style='padding: 2px')
+        state-bar-button.default-button.no-margin-right(
+        title='Отменить изменения'
+        icon='close'
+        ng-show='vm.saleOrderForm.dirty'
+        icon-xs='true'
+        )
+        state-bar-button.important-button(
+        title='{{vm.saleOrderForm.dirty ? "Сохранить" : "Готово"}}'
+        icon='check'
+        disabled-if='vm.saleOrderForm.invalid'
+        icon-xs='true'
+        )
+        state-bar-button.default-button(
+        title='Отменить заказ' icon='delete'
+        )
 
       state-bar-button.default-button(title='Редактировать' icon='edit' ng-show='vm.currentState !== "edit"')
       state-bar-button.default-button(title='Печать заказа' icon='print' ng-show='vm.currentState !== "edit"')
-
 
   div(layout='row')
 
