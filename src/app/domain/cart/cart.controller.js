@@ -57,8 +57,19 @@
 
       closeClick: () => {
         SaleOrder.revert(vm.saleOrder.id);
-        _.result(vm, 'attrsForm.$setUntouched');
-        _.result(vm, 'attrsForm.$setPristine');
+        makeFormDirty();
+      },
+
+      deleteClick: () => {
+
+        AlertHelper.showConfirm('', 'Отменить заказ?')
+          .then(() => {
+
+            //TODO delete salerOrderPositions
+            SaleOrder.destroy(vm.saleOrder.id);
+            $state.go('saleOrders');
+          });
+
       },
 
       hide: () => $mdDialog.hide()
@@ -140,6 +151,9 @@
           .then(saleOrder => {
             vm.saleOrder = saleOrder;
             return SaleOrder.loadRelations(saleOrder);
+          })
+          .catch(() => {
+            $state.go('^');
           });
       } else {
         vm.saleOrder = SaleOrder.createInstance({
