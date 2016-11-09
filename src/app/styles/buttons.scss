@@ -87,7 +87,7 @@ button .label {
     color: white;
   }
 
-  &.pink-button:hover:not([disabled]) {
+  &.pink-button:hover:not([disabled]), &.important-button:hover:not([disabled]) {
     background-color: $md-fab-hover;
   }
 
