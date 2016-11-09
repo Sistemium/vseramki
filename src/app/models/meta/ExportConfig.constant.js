@@ -31,7 +31,7 @@
           property: 'surface.name'
         }, {
           title: 'Код',
-          property: 'code'
+          property: 'codeExternal'
         }
       ],
 
