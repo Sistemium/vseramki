@@ -1,23 +1,24 @@
-.md-whiteframe-1dp.sub-toolbar(layout='row' layout-align='center center' flex)
+// Status Toolbar
+//.md-whiteframe-1dp.sub-toolbar(layout='row' layout-align='center center' flex ng-if='vm.saleOrder')
+//
+//  h3.gray Статус:
+//  h3(ng-if='!vm.isAdmin') {{vm.saleOrder.processing | translate}}
+//
+//  md-input-container
+//    md-select(
+//    ng-disabled='vm.blockMdSelect'
+//    ng-if='vm.saleOrder && vm.isAdmin'
+//    ng-model='vm.saleOrder.processing'
+//    aria-label='$index state'
+//    md-on-close='vm.changeOrderStatus(vm.saleOrder.id)'
+//    )
+//      md-option(ng-repeat='state in vm.dictionary'
+//      ng-value="state[0]"
+//      aria-label='state'
+//      )
+//        | {{state[1]}}
 
-  h3.gray Статус:
-  h3(ng-if='!vm.isAdmin') {{vm.saleOrder.processing | translate}}
-
-  md-input-container
-    md-select(
-    ng-disabled='vm.blockMdSelect'
-    ng-if='vm.saleOrder && vm.isAdmin'
-    ng-model='vm.saleOrder.processing'
-    aria-label='$index state'
-    md-on-close='vm.changeOrderStatus(vm.saleOrder.id)'
-    )
-      md-option(ng-repeat='state in vm.dictionary'
-      ng-value="state[0]"
-      aria-label='state'
-      )
-        | {{state[1]}}
-
-.scroll-y.saleOrder(resize='saleOrder' ng-style='{height: (saleOrder.windowHeight - saleOrder.offsetTop - 1)+"px"}')
+.scroll-y.saleOrder(resize='saleOrder' ng-style='{height: (saleOrder.windowHeight - saleOrder.offsetTop - 1)+"px"}' ng-if='vm.saleOrder')
 
   form-edit(vm="vm" item="vm.saleOrder" form-title="" name-field='' show-buttons='false')
     form-fields.wide.print-layout-row.print-layout-align-space-around-start(
