@@ -12,7 +12,8 @@
         icon: '@',
         title: '@',
         cls: '@class',
-        disabledIf: '=?'
+        disabledIf: '=?',
+        iconXs: '=?'
       },
 
       controller: function ($scope) {
@@ -21,9 +22,12 @@
 
         _.assign(vm, {
           onClick: event => {
-            $scope.$emit('stateBarButtonClick', event, true);
-          }
+            $scope.$emit('stateBarButtonClick', event, $scope.icon, true);
+          },
+          iconXs: $scope.iconXs === true
         });
+
+        vm.buttonCls = vm.iconXs && 'hide-gt-xs';
 
       },
 
