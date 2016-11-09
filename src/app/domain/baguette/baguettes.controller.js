@@ -19,7 +19,7 @@
       Colour,
       BaguetteImage,
       Baguette
-      } = Schema.models();
+    } = Schema.models();
 
     var chunkSize;
     var unbindBaguettes;
@@ -125,7 +125,10 @@
           if (search === 'invalid') {
             return !baguette.isValid;
           }
-          return re.test(baguette.name) || re.test(baguette.code) || baguette.id === search;
+          return re.test(baguette.name)
+            || re.test(baguette.code)
+            || re.test(baguette.codeExternal)
+            || baguette.id === search;
         });
       }
 
