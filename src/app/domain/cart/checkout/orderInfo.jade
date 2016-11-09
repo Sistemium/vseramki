@@ -9,6 +9,25 @@ h3(ng-show='vm.saleOrder.id')
   span {{vm.saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
 
 .property-list-container
+
+  .property
+    .property-label Статус:
+    .property-value.bold
+      md-input-container(ng-if='vm.saleOrder && vm.isAdmin')
+        md-select(
+        ng-disabled='vm.blockMdSelect'
+        ng-model='vm.saleOrder.processing'
+        aria-label='$index state'
+        md-on-close='vm.changeOrderStatus(vm.saleOrder.id)'
+        )
+          md-option(ng-repeat='state in vm.dictionary'
+          ng-value="state[0]"
+          aria-label='state'
+          )
+            | {{state[1]}}
+
+      p(ng-if='vm.saleOrder && !vm.isAdmin') {{vm.saleOrder.processing | translate}}
+
   .property
     .property-label Всего позиций:
     .property-value {{ vm.cartItems | number:0 }}
