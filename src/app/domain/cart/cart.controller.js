@@ -2,11 +2,12 @@
 
 (function () {
 
-  function CartController($scope, $state, Schema, Helpers, $q, ToastHelper, $mdDialog, AuthHelper, ControllerHelper) {
+  function CartController($scope, $state, Schema, Helpers, $q, $mdDialog) {
 
-    var vm = ControllerHelper.setup(this, $scope);
+    const {AlertHelper, ToastHelper, ControllerHelper, AuthHelper} = Helpers;
 
-    var {AlertHelper} = Helpers;
+    var vm = ControllerHelper.setup(this, $scope, onStateChange)
+      .use(AuthHelper);
 
     var {
       Article,
@@ -17,15 +18,14 @@
       SaleOrder,
       SaleOrderPosition,
       User
-      } = Schema.models();
+    } = Schema.models();
 
-
-    _.assign(vm, {
+    vm.use({
 
       id: $state.params.id,
       saleOrder: null,
       emailPattern: User.meta.emailPattern,
-      isAdmin: AuthHelper.isAdmin(),
+
       dictionary: {
         submitted: ['submitted', 'Оформлен'],
         accepted: ['accepted', 'Принят'],
@@ -66,7 +66,7 @@
     });
 
     var PositionsModel = vm.id ? SaleOrderPosition : Cart;
-    var authUser = Helpers.AuthHelper.getUser();
+    var authUser = AuthHelper.getUser();
 
     /*
 
@@ -111,13 +111,6 @@
 
      */
 
-    $scope.$on('$destroy', $scope.$on('$stateChangeSuccess', (event, toState) => {
-
-      vm.editMode = !(_.last((toState.name.split('.'))) != 'edit');
-
-    }));
-
-
     PositionsModel.bindAll({
       saleOrderId: vm.id
     }, $scope, 'vm.data', refreshPrice);
@@ -157,6 +150,12 @@
           shipTo: user.address
         });
       }
+
+    }
+
+    function onStateChange(toState) {
+
+      vm.editMode = !(_.last((toState.name.split('.'))) != 'edit');
 
     }
 
