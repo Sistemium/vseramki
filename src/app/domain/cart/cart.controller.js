@@ -48,11 +48,19 @@
       changeOrderStatus,
 
       checkClick: () => {
-        SaleOrder.save(vm.saleOrder).then(() => {
-          ToastHelper.success('Изменено');
-          _.result(vm, 'attrsForm.$setUntouched');
-          _.result(vm, 'attrsForm.$setPristine');
-        });
+
+        var isFormDirty = _.get(vm, 'attrsForm.$dirty');
+
+        if (isFormDirty) {
+          SaleOrder.save(vm.saleOrder).then(() => {
+            ToastHelper.success('Изменено');
+            makeFormDirty();
+            $state.go('^');
+          });
+        } else {
+          $state.go('^');
+        }
+
       },
 
       closeClick: () => {
