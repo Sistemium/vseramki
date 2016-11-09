@@ -153,9 +153,9 @@
 
     }
 
-    function onStateChange(toState) {
+    function onStateChange() {
 
-      vm.editMode = !(_.last((toState.name.split('.'))) != 'edit');
+      vm.editMode = vm.currentState === 'edit';
 
     }
 
