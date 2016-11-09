@@ -42,11 +42,11 @@
 
       });
 
-      var stateBarButtonClickSubscription = $scope.$on('stateBarButtonClick', (scopeEvent, domEvent, isFromChild) => {
+      var stateBarButtonClickSubscription = $scope.$on('stateBarButtonClick', (scopeEvent, domEvent, icon, isFromChild) => {
         if (isFromChild) {
-          $scope.$broadcast('stateBarButtonClick', domEvent);
+          $scope.$broadcast('stateBarButtonClick', domEvent, icon);
         } else {
-          var fn = _.get(vm, `${_.camelCase(domEvent.target.textContent)}Click`);
+          var fn = _.get(vm, `${_.camelCase(icon)}Click`);
           _.isFunction(fn) && fn(domEvent);
         }
       });
