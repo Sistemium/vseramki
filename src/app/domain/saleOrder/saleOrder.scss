@@ -13,6 +13,18 @@ state-bar.saleOrder {
   }
 }
 
+.saleOrder .property-value {
+  md-input-container {
+
+    margin-bottom: 1px;
+
+    md-select {
+      margin-bottom: 3px;
+    }
+
+  }
+}
+
 .saleOrders {
   .item {
     padding: 5px;
@@ -47,8 +59,8 @@ div .sub-toolbar {
 
   height: 45px;
 
-  md-select {
-    margin-bottom: 3px;
-  }
+  //md-select {
+  //  margin-bottom: 3px;
+  //}
 
 }
