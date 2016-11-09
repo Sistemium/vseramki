@@ -30,7 +30,7 @@
           title: 'Поверхность',
           property: 'surface.name'
         }, {
-          title: 'Код 1С',
+          title: 'Код',
           property: 'code'
         }
       ],
