@@ -34,7 +34,7 @@
       editClick: goToEdit,
       printClick,
       goToEdit,
-      arrowBackClick,
+      arrowBackClick
     });
 
     /*
