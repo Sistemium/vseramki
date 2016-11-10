@@ -39,14 +39,14 @@ state-bar.saleOrder {
     border-bottom: $list-item-border;
   }
 
-  input[disabled="disabled"] {
+  input[disabled], [disabled] input,
+  textarea[disabled], [disabled] textarea {
     color: black;
     cursor: not-allowed;
   }
 
-  textarea[disabled="disabled"] {
-    color: black;
-    cursor: not-allowed;
+  [disabled] md-input-container label .required-field-asterisk {
+    display: none;
   }
 
   state-bar-button .no-margin-right {
