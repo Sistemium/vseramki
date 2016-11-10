@@ -128,8 +128,8 @@
           return re.test(baguette.name)
             || re.test(baguette.code)
             || re.test(baguette.codeExternal)
-            || re.test(_.get(baguette,'material.name'))
-            || re.test(_.get(baguette,'colour.name'))
+            || re.test(_.get(baguette, 'material.name'))
+            || re.test(_.get(baguette, 'colour.name'))
             || baguette.id === search;
         });
       }
