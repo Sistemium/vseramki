@@ -1,6 +1,6 @@
 h3 Информация для доставки
 
-.form-controls(layout='column' layout-align='start')
+fieldset.form-controls(layout='column' layout-align='start' ng-disabled="!vm.editMode")
 
   md-input-container(md-no-float)
     label Контактное лицо
@@ -12,7 +12,6 @@ h3 Информация для доставки
     placeholder
     autocomplete='off'
     required
-    ng-disabled="!vm.editMode"
     )
     div(ng-messages="vm.attrsForm.name.$error")
       div(ng-message="required") Поле не может быть пустым
@@ -30,7 +29,6 @@ h3 Информация для доставки
     ui-mask-placeholder-char="_"
     required
     autocomplete='off'
-    ng-disabled="!vm.editMode"
     )
 
   md-input-container(md-no-float)
@@ -43,7 +41,6 @@ h3 Информация для доставки
     placeholder
     ng-pattern='vm.emailPattern'
     autocomplete='off'
-    ng-disabled = "!vm.editMode"
     )
     div(ng-messages="vm.attrsForm.email.$error")
       div(ng-message="pattern") Неверный формат ввода
@@ -58,7 +55,6 @@ h3 Информация для доставки
     placeholder
     autocomplete='off'
     required
-    ng-disabled = "!vm.editMode"
     )
 
   md-input-container
@@ -68,6 +64,5 @@ h3 Информация для доставки
     ng-model='vm.saleOrder.comment'
     name='shippingComment'
     autocomplete='off'
-    ng-disabled = "!vm.editMode"
     placeholder
     )
