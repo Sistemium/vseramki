@@ -4,7 +4,7 @@ ng-if='vm.data.length'
 
   table(md-table)
 
-    thead(md-head md-order='orderBy')
+    thead(md-head md-order='vm.orderBy')
       th(
       md-column
       md-order-by='index'
@@ -22,7 +22,7 @@ ng-if='vm.data.length'
 
       tr(
       md-row
-      ng-repeat='row in vm.data|orderBy: orderBy track by row.index'
+      ng-repeat='row in vm.data|orderBy: vm.orderBy track by row.index'
       )
         td(md-cell) {{row.index}}
         td(
