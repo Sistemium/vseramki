@@ -50,4 +50,14 @@
     margin: 1cm;
   }
 
+  .md-select-value {
+
+    border-bottom: none;
+
+    .md-select-icon {
+      display: none;
+    }
+
+  }
+
 }
