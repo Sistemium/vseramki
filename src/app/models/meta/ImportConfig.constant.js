@@ -4,7 +4,7 @@
 
   angular
     .module('vseramki')
-    .constant('ExportConfig', {
+    .constant('ImportConfig', {
 
       Baguette: [
         {
