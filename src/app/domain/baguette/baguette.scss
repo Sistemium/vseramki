@@ -5,17 +5,17 @@
   .state-bar {
     .md-toolbar-tools {
       span.flex {
-        //display: none;
+        display: none;
       }
       ng-transclude {
-        //flex: 1;
+        flex: 1;
       }
       md-input-container {
         margin-left: 15px;
       }
     }
     #searcher {
-      max-width: 160px;
+      //max-width: 160px;
       font-size: 16px;
     }
   }
