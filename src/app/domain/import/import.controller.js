@@ -2,7 +2,7 @@
 
 (function () {
 
-  function ImportController(XLSX, $timeout, $q, Schema, $scope, ToastHelper, $state) {
+  function ImportController(ImportExcel, $timeout, $q, Schema, $scope, ToastHelper, $state) {
 
     var {Baguette, Material, Brand} = Schema.models();
     var vm = this;
@@ -11,9 +11,6 @@
 
       title: `Загрузка ${Baguette.labels.ofMany} из файла`,
       data: null,
-      xlsReadClick,
-      loadDataClick,
-      cancelLoadDataClick,
 
       labels: {
         imported: 'Обновлено',
@@ -21,8 +18,15 @@
         hasErrors: 'С ошибками'
       },
 
+      loadDataClick,
+      cancelLoadDataClick,
+      doneClick,
+
       // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      doneClick: () => $state.go('baguettes')
+
+      tableHeaderRemoveClick: function (column) {
+        _.remove(vm.columns, {name: column.name});
+      }
 
     });
 
@@ -78,28 +82,6 @@
       }
     ];
 
-    var columnTranslation = {};
-
-    _.each(columns, column => {
-      if (_.isUndefined(column.defaultValue)) {
-        column.defaultValue = null;
-      }
-      var parser = column.parser || _.trim;
-      columnTranslation[column.label] = {
-        name: column.name,
-        compute: row => {
-          var res = column.compute ? column.compute(row) : parser(row[column.label]);
-          return res || column.defaultValue;
-        }
-      };
-    });
-
-    var validFields = _.map(columns, column => {
-      return {
-        name: column.ref || column.name, replace: !! column.replace
-      }
-    });
-
     vm.busy = Baguette.findAll();
 
 
@@ -109,7 +91,7 @@
 
     $scope.$watch('vm.xlsxUploadForm.$valid', isValid => {
       if (isValid && vm.files.length === 1) {
-        vm.busyReading = xlsReadClick()
+        vm.busyReading = ImportExcel.readFile(_.first(vm.files), columns)
           .catch(err => {
             vm.filesApi.removeAll();
             ToastHelper.error(angular.toJson(err));
@@ -118,6 +100,8 @@
           .then(res => {
             vm.busyReading = false;
             vm.readyToImport = !!res;
+            vm.data = res;
+            vm.columns = _.clone(columns);
           });
       }
     });
@@ -131,9 +115,14 @@
 
     Brand.bindAll({}, $scope, 'vm.brands');
 
+
     /*
      Functions
      */
+
+    function doneClick () {
+      $state.go('baguettes');
+    }
 
     function cancelLoadDataClick() {
       vm.data = false;
@@ -158,9 +147,16 @@
         ignored: 0
       };
 
+      var validFields = _.map(vm.columns, column => {
+        return {
+          name: column.ref || column.name,
+          replace: column.replace !== false
+        }
+      });
+
       function importItem () {
         var item = vm.data.pop();
-        return saveItem(item)
+        return saveItem(item, validFields)
           .then(res => {
             if (res) {
               results.imported ++;
@@ -190,7 +186,7 @@
 
     }
 
-    function saveItem(item) {
+    function saveItem(item, validFields) {
 
       item.materialId = _.get(_.first(Material.filter({
           where: {
@@ -230,55 +226,6 @@
       }
 
       return Baguette.create(baguette);
-
-    }
-
-    function xlsReadClick() {
-
-      return $q((resolve, reject) => {
-
-        var file = _.first(vm.files);
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-
-          try {
-
-            var data = e.target.result;
-            var res = XLSX.read(data, {type: 'binary'});
-            if (!_.get(res,'SheetNames.length')) {
-              return reject('Неизвестный формат файла');
-            }
-            var xlsxData = XLSX.utils.make_json(res.Sheets[res.SheetNames[0]]);
-
-            vm.columns = _.map(columns, (col) => {
-              return {name: col.name, title: col.label};
-            });
-
-            vm.data = _.map(xlsxData, (row, idx) => {
-              var res = {
-                index: idx + 1
-              };
-
-              _.each(columnTranslation, (val) => {
-                res[val.name] = val.compute(row);
-              });
-
-              return res;
-            });
-
-            resolve(vm.data);
-
-          } catch (e) {
-            reject('Не удалось прочитать файл');
-          }
-
-        };
-
-        $timeout(100)
-          .then(()=>reader.readAsBinaryString(file.lfFile));
-
-      });
 
     }
 

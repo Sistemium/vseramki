@@ -12,8 +12,10 @@ ng-if='vm.data.length'
       th(
       ng-repeat='col in vm.columns track by col.name'
       md-column
-      md-order-by='{{col.name}}'
-      ) {{ col.title }}
+      )
+        span(ng-click='vm.tableHeaderClick(col, $event)') {{ col.label }}
+        = ' '
+        a(ng-click='vm.tableHeaderRemoveClick(col, $event)' href) x
       th(ng-if='vm.doneImport' md-column) Ошибка
 
     tbody(md-body)
