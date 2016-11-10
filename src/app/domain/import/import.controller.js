@@ -2,9 +2,11 @@
 
 (function () {
 
-  function ImportController(ImportExcel, $timeout, $q, Schema, $scope, ToastHelper, $state) {
+  function ImportController(ImportExcel, $timeout, $q, Schema, $scope, ToastHelper, $state, ExportConfig) {
 
     var {Baguette, Material, Brand} = Schema.models();
+    var columns = ExportConfig.Baguette;
+
     var vm = this;
 
     _.assign(vm, {
@@ -21,12 +23,10 @@
       loadDataClick,
       cancelLoadDataClick,
       doneClick,
+      tableHeaderRemoveClick
 
       // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 
-      tableHeaderRemoveClick: function (column) {
-        _.remove(vm.columns, {name: column.name});
-      }
 
     });
 
@@ -34,53 +34,6 @@
      Init
      */
 
-    var columns = [
-      {
-        name: 'codeExternal',
-        label: 'Код'
-      }, {
-        name: 'nameExternal',
-        label: 'Наименование'
-      }, {
-        name: 'code',
-        label: 'Артикул',
-        replace: false
-      }, {
-        name: 'borderWidth',
-        label: 'Ширина багета',
-        parser: parseInt,
-        defaultValue: 0
-      }, {
-        name: 'materialName',
-        label: 'Материал',
-        ref: 'materialId'
-      }, {
-        name: 'brandName',
-        label: 'Бренд',
-        ref: 'brandId',
-        replace: false,
-        compute: item => {
-
-          var name = item['Наименование'];
-          if (!name) {
-            return null;
-          }
-
-          var re = /"(.+)"/;
-          var res = _.last(name.match(re));
-
-          if (res) {
-            return res;
-          }
-
-          re = / ([А-Я][а-я]+) /;
-          res = _.last(name.match(re));
-
-          return res;
-
-        }
-      }
-    ];
 
     vm.busy = Baguette.findAll();
 
@@ -128,6 +81,10 @@
       vm.data = false;
       vm.readyToImport = false;
       vm.filesApi.removeAll();
+    }
+
+    function tableHeaderRemoveClick(column) {
+      _.remove(vm.columns, {name: column.name});
     }
 
     function loadDataClick() {
