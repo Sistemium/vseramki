@@ -66,8 +66,6 @@
       }
     });
 
-    Brand.bindAll({}, $scope, 'vm.brands');
-
 
     /*
      Functions
@@ -111,6 +109,8 @@
         }
       });
 
+      var saveItem = saveBaguetteItem;
+
       function importItem () {
         var item = vm.data.pop();
         return saveItem(item, validFields)
@@ -143,7 +143,7 @@
 
     }
 
-    function saveItem(item, validFields) {
+    function saveBaguetteItem(item, validFields) {
 
       item.materialId = _.get(_.first(Material.filter({
           where: {
