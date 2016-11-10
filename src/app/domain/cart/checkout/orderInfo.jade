@@ -15,7 +15,7 @@ h3(ng-show='vm.saleOrder.id')
     .property-value.bold
       md-input-container(ng-if='vm.saleOrder && vm.isAdmin')
         md-select(
-        ng-disabled='vm.blockMdSelect'
+        ng-disabled='vm.blockMdSelect || vm.editMode'
         ng-model='vm.saleOrder.processing'
         aria-label='$index state'
         md-on-close='vm.changeOrderStatus(vm.saleOrder.id)'
