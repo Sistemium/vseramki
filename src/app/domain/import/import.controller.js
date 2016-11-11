@@ -72,7 +72,7 @@
      Functions
      */
 
-    function doneClick () {
+    function doneClick() {
       $state.go('baguettes');
     }
 
@@ -114,14 +114,14 @@
 
       var saveItem = saveBaguetteItem;
 
-      function importItem () {
+      function importItem() {
         var item = vm.data.pop();
         return saveItem(item, validFields)
           .then(res => {
             if (res) {
-              results.imported ++;
+              results.imported++;
             } else {
-              results.ignored ++;
+              results.ignored++;
             }
           })
           .catch(err => {
