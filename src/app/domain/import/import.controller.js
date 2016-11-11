@@ -2,33 +2,34 @@
 
 (function () {
 
-  function ImportController(ImportExcel, $timeout, $q, Schema, $scope, ToastHelper, $state, ExportConfig) {
+  function ImportController($timeout, $q, Schema, $scope, $state, Helpers) {
 
-    var {Baguette, Material, Brand} = Schema.models();
-    var columns = ExportConfig.Baguette;
+    const {ImportExcel, ToastHelper, ImportConfig, ControllerHelper} = Helpers;
+    const {Baguette, Material, Brand} = Schema.models();
 
-    var vm = this;
+    var columns = ImportConfig.Baguette;
 
-    _.assign(vm, {
+    var vm = ControllerHelper.setup(this, $scope)
+      .use({
 
-      title: `Загрузка ${Baguette.labels.ofMany} из файла`,
-      data: null,
+        title: `Загрузка ${Baguette.labels.ofMany} из файла`,
+        data: null,
 
-      labels: {
-        imported: 'Обновлено',
-        ignored: 'Без изменений',
-        hasErrors: 'С ошибками'
-      },
+        labels: {
+          imported: 'Обновлено',
+          ignored: 'Без изменений',
+          hasErrors: 'С ошибками'
+        },
 
-      loadDataClick,
-      cancelLoadDataClick,
-      doneClick,
-      tableHeaderRemoveClick
+        loadDataClick,
+        cancelLoadDataClick,
+        doneClick,
+        tableHeaderRemoveClick
 
-      // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 
 
-    });
+      });
 
     /*
      Init
@@ -50,12 +51,12 @@
             ToastHelper.error(angular.toJson(err));
             return false;
           })
-          .then(res => {
-            vm.busyReading = false;
-            vm.readyToImport = !!res;
-            vm.data = res;
-            vm.columns = _.clone(columns);
-          });
+          .then(res => vm.use({
+            busyReading: false,
+            readyToImport: !!res,
+            data: res,
+            columns: _.clone(columns)
+          }));
       }
     });
 
@@ -76,9 +77,11 @@
     }
 
     function cancelLoadDataClick() {
-      vm.data = false;
-      vm.readyToImport = false;
-      vm.filesApi.removeAll();
+      vm.use({
+        data: false,
+        readyToImport: false
+      })
+        .filesApi.removeAll();
     }
 
     function tableHeaderRemoveClick(column) {
