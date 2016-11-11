@@ -112,3 +112,24 @@ i.search-label {
 fieldset {
   border: none;
 }
+
+.notable-disabled {
+
+  input[disabled], [disabled] input,
+  textarea[disabled], [disabled] textarea,
+  md-select[disabled] md-select-value, [disabled] md-select md-select-value {
+    color: black;
+    cursor: not-allowed;
+  }
+
+  md-select[disabled], [disabled] md-select {
+    .md-select-icon {
+      display: none;
+    }
+  }
+
+  [disabled] md-input-container label .required-field-asterisk {
+    display: none;
+  }
+
+}

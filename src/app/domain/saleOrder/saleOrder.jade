@@ -20,7 +20,7 @@
 
 .scroll-y.saleOrder(resize='saleOrder' ng-style='{height: (saleOrder.windowHeight - saleOrder.offsetTop - 1)+"px"}' ng-if='vm.saleOrder')
 
-  form-edit(vm="vm" item="vm.saleOrder" form-title="" name-field='' show-buttons='false')
+  form-edit.notable-disabled(vm="vm" item="vm.saleOrder" form-title="" name-field='' show-buttons='false')
     form-fields.wide.print-layout-row.print-layout-align-space-around-start(
     layout='column' layout-align='center'
     layout-gt-sm='row'
