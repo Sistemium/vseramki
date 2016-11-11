@@ -2,7 +2,7 @@
 
 (function () {
 
-  function CartController($scope, $state, Schema, Helpers, $q, $mdDialog) {
+  function CartController($scope, $state, Schema, Helpers, $q, $mdDialog, localStorageService) {
 
     const {AlertHelper, ToastHelper, ControllerHelper, AuthHelper} = Helpers;
 
@@ -28,7 +28,6 @@
 
       processingDictionary: _.sortBy(_.map(SaleOrder.meta.dictionary.processing, (label, status) => {return {label, status}}), 'label'),
 
-      answer,
       checkout,
       clearCart,
       clearItem,
@@ -41,6 +40,9 @@
       cancelChanges,
       save,
       changeOrderStatus,
+
+      offerLoginReject,
+      offerLoginAccept,
 
       checkClick: () => {
 
@@ -308,12 +310,12 @@
       if (authUser) {
         $state.go('checkout');
       } else {
-        showAdvanced(event);
+        offerLogin(event);
       }
 
     }
 
-    function showAdvanced(ev) {
+    function offerLogin(ev) {
 
       $mdDialog.show({
         controller: CartController,
@@ -325,6 +327,14 @@
         fullscreen: true
       })
 
+    }
+
+    function offerLoginReject() {
+      answer('checkout');
+    }
+
+    function offerLoginAccept() {
+      answer('login');
     }
 
     function answer(answer) {

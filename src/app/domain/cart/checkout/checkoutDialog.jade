@@ -14,8 +14,8 @@ md-dialog.login-dialog(aria-label='Login')
 
     md-dialog-actions(layout='column' layout-gt-lg='row' layout-align='center')
 
-      md-button.tool-button.dialog-button(ng-click="vm.answer('checkout')" )
+      md-button.tool-button.dialog-button(ng-click="vm.offerLoginReject()" )
         | Продолжить без регистрации
 
-      md-button.pink-button.dialog-button(ng-click="vm.answer('login')")
+      md-button.pink-button.dialog-button(ng-click="vm.offerLoginAccept()")
         | Зарегистрироваться
