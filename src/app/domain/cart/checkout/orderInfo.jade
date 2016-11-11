@@ -13,20 +13,18 @@ h3(ng-show='vm.saleOrder.id')
   .property
     .property-label Статус:
     .property-value.bold
-      md-input-container(ng-if='vm.saleOrder && vm.isAdmin')
+      md-input-container(ng-if='vm.saleOrder')
         md-select(
-        ng-disabled='vm.blockMdSelect || vm.editMode'
+        ng-disabled='!vm.isAdmin || vm.blockMdSelect || vm.editMode'
         ng-model='vm.saleOrder.processing'
         aria-label='$index state'
         md-on-close='vm.changeOrderStatus(vm.saleOrder.id)'
         )
-          md-option(ng-repeat='state in vm.dictionary'
-          ng-value="state[0]"
-          aria-label='state'
+          md-option(ng-repeat='state in vm.processingDictionary track by state.status'
+          ng-value="state.status"
+          aria-label='label'
           )
-            | {{state[1]}}
-
-      p(ng-if='vm.saleOrder && !vm.isAdmin') {{vm.saleOrder.processing | translate}}
+            | {{state.label}}
 
   .property
     .property-label Всего позиций:

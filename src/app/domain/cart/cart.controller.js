@@ -26,12 +26,7 @@
       saleOrder: null,
       emailPattern: User.meta.emailPattern,
 
-      dictionary: {
-        submitted: ['submitted', 'Оформлен'],
-        accepted: ['accepted', 'Принят'],
-        delivery: ['delivery', 'Доставка'],
-        done: ['done', 'Выполнен']
-      },
+      processingDictionary: _.sortBy(_.map(SaleOrder.meta.dictionary.processing, (label, status) => {return {label, status}}), 'label'),
 
       answer,
       checkout,
@@ -359,14 +354,7 @@
 
   angular
     .module('vseramki')
-    .controller('CartController', CartController)
-    .filter('translate', function () {
-      var dictionary = {submitted: 'Оформлен', accepted: 'Принят', delivery: 'Доставка', done: 'Выполнен'};
-
-      return function (word) {
-        return _.get(dictionary, word) || word;
-      };
-    });
+    .controller('CartController', CartController);
 
 
 }());

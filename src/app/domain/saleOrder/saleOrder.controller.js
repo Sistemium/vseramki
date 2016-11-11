@@ -22,12 +22,6 @@
       onPaginate: TableHelper.setPagination,
       rootState: 'saleOrders',
       articlesListTopIndex: false,
-      dictionary: {
-        submitted: ['submitted', 'Оформлен'],
-        accepted: ['accepted', 'Принят'],
-        delivery: ['delivery', 'Доставка'],
-        done: ['done', 'Выполнен']
-      },
       blockMdSelect: false,
       sideNavListItemClick,
       goToOrder: onClickWithPrevent(goToOrder),
