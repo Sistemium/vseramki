@@ -17,8 +17,8 @@
         ng-if='vm.currentItem'
         ng-class='{ warning: !vm.currentItem.isValid }'
         )
-        state-bar-button.admin-button(hide-xs title='Экспорт в Excel' icon='file_upload' ng-show='vm.isRootState')
-        state-bar-button.admin-button(hide-xs title='Импорт из Excel' icon='file_download' ng-show='!vm.currentItem')
+        state-bar-button.admin-button(hide-xs title='Скачать таблицу Excel' icon='file_download' ng-show='vm.isRootState')
+        state-bar-button.admin-button(hide-xs title='Импорт из таблицы Excel' icon='file_upload' ng-show='!vm.currentItem')
         state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Удалить багет' icon='delete' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Добавить багет' icon='add')
