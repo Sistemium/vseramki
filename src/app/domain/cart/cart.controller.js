@@ -334,6 +334,8 @@
     }
 
     function offerLoginAccept() {
+      //TODO: check this afterLoginRedirectTo after login
+      localStorageService.set('afterLoginRedirectTo', 'checkout');
       answer('login');
     }
 
