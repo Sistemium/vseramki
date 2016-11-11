@@ -8,6 +8,17 @@
 
   function SaleOrder(Schema) {
 
+    var processingDictionary = {
+      submitted: 'Оформлен',
+      accepted: 'Принят',
+      delivery: 'Доставка',
+      done: 'Выполнен'
+    };
+
+    function processingLabel (processing) {
+      return processingDictionary[processing];
+    }
+
     var model = Schema.register({
 
       name: 'SaleOrder',
@@ -33,6 +44,16 @@
           234: 'заказа',
           567890: 'заказов'
         }
+      },
+
+      meta: {
+        dictionary: {
+          processing: processingDictionary
+        }
+      },
+
+      computed: {
+        processingLabel: ['processing', processingLabel]
       },
 
       methods: {
