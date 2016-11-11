@@ -45,7 +45,8 @@
         md-table-container(ng-if='vm.saleOrders')
           table(md-table)
             thead(md-head md-order='filterBy')
-              th(md-column md-order-by='ndoc') ID
+              th(md-column md-order-by='ndoc') №
+              th(md-column md-order-by='processing') Статус
               th(md-column md-order-by='cts') Дата
               th(md-column md-order-by='contactName') Контактное лицо
               th(md-column md-order-by='phone') Телефон
@@ -60,6 +61,7 @@
               ng-click='vm.goToOrder(saleOrder, $event)'
               )
                 td(md-cell) {{saleOrder.ndoc}}
+                td(md-cell) {{saleOrder.processingLabel}}
                 td(md-cell) {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
                 td(md-cell) {{saleOrder.contactName}}
                 td(md-cell) {{saleOrder.phone}}
