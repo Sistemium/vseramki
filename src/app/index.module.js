@@ -18,7 +18,6 @@
       'yaMap',
       'ui.mask',
       'angularMoment'
-    ])
-    .constant('XLSX',XLSX);
+    ]);
 
 })();

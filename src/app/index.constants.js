@@ -8,11 +8,13 @@
   var authUrl = 'https://oauth.it';
   // authUrl = localDev ? 'http://localhost:9080' :  authUrl;
 
-  angular
-    .module('vseramki')
+  angular.module('vseramki')
+
     .constant('moment', moment)
+    .constant('XLSX',XLSX)
 
     .constant('saaAppConfig', {
+      ims: 'http://localhost:8080/api/image',
       loginState: 'login',
       authUrl: authUrl,
       authApiUrl: authUrl + '/api/',
