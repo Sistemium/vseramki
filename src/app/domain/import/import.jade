@@ -4,7 +4,7 @@ state-bar.import(bar-title='{{vm.title}}')
   ng-click='vm.cancelLoadDataClick($event)'
   ) Отмена
   md-button.md-button.pink-button.md-raised(
-  ng-if='vm.readyToImport'
+  ng-if='vm.readyToImport && vm.modifiedBaguette.length'
   ng-click='vm.loadDataClick($event)'
   ) Загрузить
   md-button.md-button.pink-button.md-raised(
@@ -55,4 +55,3 @@ ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
       span.value {{ value }}
 
   div(ng-include="'app/domain/import/partials/importedDataTable.html'")
-
