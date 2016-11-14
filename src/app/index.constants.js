@@ -14,7 +14,7 @@
     .constant('XLSX',XLSX)
 
     .constant('saaAppConfig', {
-      ims: 'http://localhost:8080/api/image',
+      // ims: 'http://localhost:8080/api/image',
       loginState: 'login',
       authUrl: authUrl,
       authApiUrl: authUrl + '/api/',
