@@ -1,0 +1,6 @@
+@import "_vars";
+
+.warning, td.warning, table.md-table td.warning {
+  color: $vr-red-color;
+  font-weight: bold;
+}
