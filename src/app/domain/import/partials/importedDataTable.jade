@@ -1,14 +1,27 @@
 md-table-container.md-whiteframe-1dp(
-ng-if='vm.data.length'
+ng-if='vm.data.length || vm.modifiedBaguette.length'
 )
 
-  table(md-table)
+  h3 Без изменений: {{ vm.data.length - vm.modifiedBaguette.length | number:0 }}
 
+  table(md-table ng-if='vm.modifiedBaguette.length')
+    h3 Измененные записи: {{(vm.modifiedBaguette.length)}}
     thead(md-head md-order='vm.orderBy')
+
+      th(
+      md-column
+      ) Удалить
+
+      th(
+      md-column
+      md-order-by='diff'
+      ) Статус
+
       th(
       md-column
       md-order-by='index'
       ) №
+
       th(
       ng-repeat='col in vm.columns track by col.name'
       md-column
@@ -16,17 +29,31 @@ ng-if='vm.data.length'
         span(ng-click='vm.tableHeaderClick(col, $event)') {{ col.label }}
         = ' '
         a(ng-click='vm.tableHeaderRemoveClick(col, $event)' href) x
-      th(ng-if='vm.doneImport' md-column) Ошибка
+
+      th(ng-show='vm.doneImport' md-column) Ошибка
 
     tbody(md-body)
 
       tr(
       md-row
-      ng-repeat='row in vm.data|orderBy: vm.orderBy track by row.index'
+      ng-repeat='row in vm.modifiedBaguette | orderBy: vm.orderBy track by row.index'
       )
-        td(md-cell) {{row.index}}
+
+        td(md-cell)
+          md-button.button-cust-fab(ng-click='vm.tableRowRemoveClick(row)')
+            i.material-icons clear
+
+        td(md-cell)
+          i.material-icons.baguette-status-icon {{row.diff ? 'edit' : 'new_releases'}}
+
+        td(md-cell)
+          | {{row.index}}
+
         td(
         md-cell
         ng-repeat='col in vm.columns track by col.name'
-        ) {{row[col.name]}}
+        )
+          div(ng-class='{warning: col.ref && row.importData[col.name] && !row.importData[col.ref]}') {{row.importData[col.name]}}
+          del.gray(ng-if='::row.diff[col.name]') {{ row.instance[col.name] }}
+
         td(md-cell) {{row.error | json}}
