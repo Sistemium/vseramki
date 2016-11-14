@@ -1,6 +1,6 @@
 (function () {
 
-  function AddPhotoDialogController($mdDialog, Upload, $q, $state, $scope, $timeout) {
+  function AddPhotoDialogController($mdDialog, Upload, $q, $state, saaAppConfig, $timeout) {
 
     var vm = this;
     var folder;
@@ -54,7 +54,7 @@
           promises.push($q(function (resolve, reject) {
 
             Upload.upload({
-              url: 'https://api.sistemium.com/ims/vr',
+              url: saaAppConfig.ims || 'https://api.sistemium.com/ims/vr',
               data: {
                 file: file,
                 folder: folder
