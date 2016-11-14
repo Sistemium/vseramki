@@ -2,34 +2,35 @@
 
 (function () {
 
-  function ImportController($timeout, $q, Schema, $scope, $state, Helpers) {
+  function ImportController(ImportExcel, $timeout, $q, Schema, $scope, ToastHelper, $state, ImportConfig) {
 
-    const {ImportExcel, ToastHelper, ImportConfig, ControllerHelper} = Helpers;
-    const {Baguette, Material, Brand} = Schema.models();
-
+    var {Baguette, Material, Brand} = Schema.models();
     var columns = ImportConfig.Baguette;
+    var vm = this;
 
-    var vm = ControllerHelper.setup(this, $scope)
-      .use({
+    _.assign(vm, {
 
-        title: `Загрузка ${Baguette.labels.ofMany} из файла`,
-        data: null,
+      title: `Загрузка ${Baguette.labels.ofMany} из файла`,
+      data: null,
+      modifiedBaguette: [],
+      selected: [],
 
-        labels: {
-          imported: 'Обновлено',
-          ignored: 'Без изменений',
-          hasErrors: 'С ошибками'
-        },
+      labels: {
+        imported: 'Обновлено',
+        ignored: 'Без изменений',
+        hasErrors: 'С ошибками'
+      },
 
-        loadDataClick,
-        cancelLoadDataClick,
-        doneClick,
-        tableHeaderRemoveClick
+      loadDataClick,
+      cancelLoadDataClick,
+      doneClick,
+      tableHeaderRemoveClick,
+      tableRowRemoveClick
 
-        // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 
 
-      });
+    });
 
     /*
      Init
@@ -51,12 +52,14 @@
             ToastHelper.error(angular.toJson(err));
             return false;
           })
-          .then(res => vm.use({
-            busyReading: false,
-            readyToImport: !!res,
-            data: res,
-            columns: _.clone(columns)
-          }));
+          .then(res => {
+
+            vm.busyReading = false;
+            vm.readyToImport = !!res;
+            vm.data = res;
+            vm.columns = _.clone(columns);
+
+          });
       }
     });
 
@@ -67,21 +70,110 @@
       }
     });
 
+    $scope.$watch('vm.columns.length', () => {
+      if (vm.data) {
+        checkForNewBaguette();
+      }
+    });
 
     /*
      Functions
      */
+
+    function tableRowRemoveClick(row) {
+      _.remove(vm.modifiedBaguette, row);
+    }
+
+    function checkForNewBaguette() {
+
+      var validFields = _.map(vm.columns, column => {
+        return {
+          name: column.ref || column.name,
+          replace: column.replace !== false
+        }
+      });
+
+      vm.modifiedBaguette = [];
+
+      _.each(vm.data, function (elem, index) {
+
+        setBaguetteRefs(elem);
+
+        var baguette = elem.codeExternal && _.first(Baguette.filter({
+            codeExternal: elem.codeExternal
+          }));
+
+        if (baguette) {
+
+          var diff = {};
+
+          _.each(validFields, field => {
+            if (field.replace && baguette[field.name] !== elem[field.name]) {
+              diff[field.name] = true;
+            } else {
+              elem[field.name] = baguette[field.name];
+            }
+          });
+
+          if (Object.keys(diff).length) {
+            vm.modifiedBaguette.push({
+              importData: elem,
+              diff: diff,
+              instance: baguette,
+              index
+            });
+          }
+
+        } else {
+
+          baguette = Baguette.createInstance({
+            name: elem.nameExternal,
+            isValid: false
+          });
+
+          vm.modifiedBaguette.push({
+            importData: elem,
+            instance: baguette,
+            index
+          });
+
+        }
+
+        diff = {};
+
+      });
+
+    }
+
+    function setBaguetteRefs(item) {
+
+      item.materialId = item.materialName && _.get(_.first(Material.filter({
+          where: {
+            name: {
+              likei: item.materialName
+            }
+          }
+        })), 'id') || null;
+
+      item.brandId = item.brandName && _.get(_.first(Brand.filter({
+          where: {
+            name: {
+              likei: item.brandName
+            }
+          }
+        })), 'id') || null;
+
+    }
 
     function doneClick() {
       $state.go('baguettes');
     }
 
     function cancelLoadDataClick() {
-      vm.use({
-        data: false,
-        readyToImport: false
-      })
-        .filesApi.removeAll();
+      _.remove(vm.modifiedBaguette);
+      vm.data = false;
+      vm.readyToImport = false;
+      vm.filesApi.removeAll();
     }
 
     function tableHeaderRemoveClick(column) {
@@ -105,24 +197,28 @@
         ignored: 0
       };
 
-      var validFields = _.map(vm.columns, column => {
-        return {
-          name: column.ref || column.name,
-          replace: column.replace !== false
-        }
-      });
-
       var saveItem = saveBaguetteItem;
 
       function importItem() {
-        var item = vm.data.pop();
-        return saveItem(item, validFields)
+        var item = vm.modifiedBaguette.pop();
+
+        if (!item) {
+          vm.progress = false;
+          vm.data = errors;
+          results.hasErrors = errors.length;
+          vm.doneImport = results;
+          return;
+        }
+
+        return saveItem(item)
           .then(res => {
+
             if (res) {
               results.imported++;
             } else {
               results.ignored++;
             }
+
           })
           .catch(err => {
             errors.push(_.assign(item, {
@@ -131,13 +227,6 @@
           })
           .then(() => {
             vm.progress.value = Math.round(++value / total * 100);
-            if (value === total) {
-              vm.progress = false;
-              vm.data = errors;
-              results.hasErrors = errors.length;
-              vm.doneImport = results;
-              return;
-            }
             $timeout().then(importItem);
           });
       }
@@ -146,49 +235,16 @@
 
     }
 
-    function saveBaguetteItem(item, validFields) {
+    function saveBaguetteItem(item) {
 
-      item.materialId = _.get(_.first(Material.filter({
-          where: {
-            name: {
-              likei: item.materialName
-            }
-          }
-        })), 'id') || null;
-
-      item.brandId = item.brandName && _.get(_.first(Brand.filter({
-          where: {
-            name: {
-              likei: item.brandName
-            }
-          }
-        })), 'id') || null;
-
-      var baguette = _.first(Baguette.filter({
-        codeExternal: item.codeExternal
-      }));
-
-      if (!baguette) {
-        baguette = Baguette.createInstance({
-          name: item.nameExternal,
-          isValid: false
-        });
-      }
-
-      _.each(validFields, field => {
-        if (field.replace || !baguette[field.name]) {
-          baguette[field.name] = item[field.name];
-        }
+      // _.assign(item.instance, item.importData);
+      _.each(columns, column => {
+        var name = column.ref || column.name;
+        item.instance[name] = item.importData[name];
       });
-
-      if (baguette.id && !Baguette.hasChanges(baguette)) {
-        return $q.resolve()
-      }
-
-      return Baguette.create(baguette);
+      return Baguette.create(item.instance);
 
     }
-
 
   }
 
