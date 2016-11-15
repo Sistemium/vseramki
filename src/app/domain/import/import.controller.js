@@ -2,15 +2,19 @@
 
 (function () {
 
-  function ImportController(ImportExcel, $timeout, $q, Schema, $scope, ToastHelper, $state, ImportConfig) {
+  function ImportController(ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig) {
 
     var {Baguette, Material, Brand} = Schema.models();
-    var columns = ImportConfig.Baguette;
     var vm = this;
+
+    var modelName = $state.params.model;
+    var model = Schema.model(modelName);
+    var importConfig = ImportConfig[modelName];
+    var columns = importConfig.columns;
 
     _.assign(vm, {
 
-      title: `Загрузка ${Baguette.labels.ofMany} из файла`,
+      title: `Загрузка ${model.labels.ofMany} из файла`,
       data: null,
       modifiedData: [],
       selected: [],
@@ -37,7 +41,7 @@
      */
 
 
-    vm.busy = Baguette.findAll();
+    vm.busy = model.findAll();
 
 
     /*
@@ -72,7 +76,7 @@
 
     $scope.$watch('vm.columns.length', () => {
       if (vm.data) {
-        checkForNewBaguette();
+        setModifiedData();
       }
     });
 
@@ -84,7 +88,7 @@
       _.remove(vm.modifiedData, row);
     }
 
-    function checkForNewBaguette() {
+    function setModifiedData() {
 
       var validFields = _.map(vm.columns, column => {
         return {
@@ -166,12 +170,12 @@
     }
 
     function doneClick() {
-      $state.go('baguettes');
+      $state.go(importConfig.doneSref);
     }
 
     function cancelLoadDataClick() {
-      console.log(Baguette);
-      console.error(vm);
+      // console.log(Baguette);
+      // console.error(vm);
       _.remove(vm.modifiedData);
       vm.data = false;
       vm.readyToImport = false;
@@ -244,7 +248,7 @@
         var name = column.ref || column.name;
         item.instance[name] = item.importData[name];
       });
-      return Baguette.create(item.instance);
+      return model.create(item.instance);
 
     }
 
