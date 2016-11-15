@@ -61,6 +61,6 @@ ng-if='vm.data.length || vm.modifiedData.length'
         ng-repeat='col in vm.columns track by col.name'
         )
           div(ng-class='{warning: col.ref && row.importData[col.name] && !row.importData[col.ref]}') {{row.importData[col.name]}}
-          del.gray(ng-if='::row.diff[col.name]') {{ row.instance[col.name] }}
+          del.gray(ng-if='::row.diff[col.name]') {{ vm._get(row.instance,col.name) }}
 
         td(md-cell) {{row.error | json}}
