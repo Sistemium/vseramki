@@ -18,24 +18,23 @@
       label: 'Ширина багета',
       parser: parseInt,
       defaultValue: 0
-
     }, {
       name: 'colour.name',
+      model: 'Colour',
       label: 'Цвет',
       ref: 'colourId'
     }, {
       name: 'surface.name',
+      model: 'Surface',
       label: 'Поверхность',
       ref: 'surfaceId'
     }, {
-
-    }, {
-      name: 'materialName',
+      name: 'material.name',
       model: 'Material',
       label: 'Материал',
       ref: 'materialId'
     }, {
-      name: 'brandName',
+      name: 'brand.name',
       model: 'Brand',
       label: 'Бренд',
       ref: 'brandId',
