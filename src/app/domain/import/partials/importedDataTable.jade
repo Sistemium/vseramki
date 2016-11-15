@@ -2,7 +2,14 @@ md-table-container.md-whiteframe-1dp(
 ng-if='vm.data.length || vm.modifiedData.length'
 )
 
-  h3 Без изменений: {{ vm.data.length - vm.modifiedData.length | number:0 }}
+  div(layout='row' layout-align='space around' ng-if='!vm.progress && !vm.doneImport')
+
+    h3 Всего записей: {{ vm.data.length }}
+    h3 Новых записей: {{vm.recordData.newRecord}}
+    h3 Измененных записей: {{vm.recordData.modifiedRecord}}
+    h3 Без изменений: {{ vm.recordData.notModified }}
+
+  h3(ng-if='vm.progress' layout='row' layout-align='center center') Обработано {{vm.data.length  - vm.modifiedData.length}} из {{vm.data.length}} записей
 
   table(md-table ng-if='vm.modifiedData.length')
     h3 Измененные записи: {{(vm.modifiedData.length)}}
