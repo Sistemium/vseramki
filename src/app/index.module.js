@@ -1,5 +1,4 @@
 'use strict';
-/* global XLSX:false */
 
 (function () {
 

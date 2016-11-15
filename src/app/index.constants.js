@@ -1,6 +1,5 @@
 'use strict';
-/* global moment:false */
-
+/* global moment:false XLSX:false */
 (function() {
 
   var localDev = !!location.port;
