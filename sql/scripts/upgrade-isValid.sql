@@ -6,7 +6,7 @@ meta.defineEntity 'Baguette',
 ;
 
 alter table vr2.Baguette add codeExternal SHORT;
-create unique index XK_Baguette_codeExternal on vr2.Baguette (codeExternal);
+create index XK_Baguette_codeExternal on vr2.Baguette (codeExternal);
 
 alter table vr2.Baguette add isValid BOOL null default 0;
 alter table vr2.Baguette modify isValid not null;
