@@ -18,6 +18,10 @@
       data: null,
       modifiedData: [],
       selected: [],
+      recordData: {
+        newRecord: 0,
+        modifiedRecord: 0,
+      },
 
       labels: {
         imported: 'Обновлено',
@@ -93,7 +97,8 @@
       var validFields = _.map(vm.columns, column => {
         return {
           name: column.ref || column.name,
-          replace: column.replace !== false
+          replace: column.replace !== false,
+          model: column.name
         }
       });
 
@@ -101,7 +106,7 @@
 
       _.each(vm.data, function (elem, index) {
 
-        setBaguetteRefs(elem);
+        setBaguetteRefs(elem, _.filter(validFields, 'model'));
 
         var baguette = elem.codeExternal && _.first(Baguette.filter({
             codeExternal: elem.codeExternal
@@ -120,6 +125,9 @@
           });
 
           if (Object.keys(diff).length) {
+
+            vm.recordData.newRecord++;
+
             vm.modifiedData.push({
               importData: elem,
               diff: diff,
@@ -129,6 +137,8 @@
           }
 
         } else {
+
+          vm.recordData.modifiedRecord++;
 
           baguette = Baguette.createInstance({
             name: elem.nameExternal,
@@ -146,6 +156,8 @@
         diff = {};
 
       });
+
+      vm.recordData.notModified = vm.data.length - vm.recordData.modifiedRecord - vm.recordData.newRecord;
 
     }
 
@@ -174,12 +186,18 @@
     }
 
     function cancelLoadDataClick() {
-      // console.log(Baguette);
-      // console.error(vm);
+
       _.remove(vm.modifiedData);
+      _.remove(vm.columns);
+
       vm.data = false;
       vm.readyToImport = false;
       vm.filesApi.removeAll();
+
+      _.each(vm.recordData, function (val, key) {
+        vm.recordData[key] = 0
+      })
+
     }
 
     function tableHeaderRemoveClick(column) {
