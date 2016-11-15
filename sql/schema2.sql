@@ -9,7 +9,7 @@ util.setUserOption 'asamium.default.domain', 'vr2';
 -- Types
 
 meta.defineType 'name:STRING';
-meta.defineType 'code:SHORT';
+meta.defineType 'code:MEDIUM';
 meta.defineType 'packageRel:INT';
 meta.defineType 'borderWidth:INT';
 meta.defineType 'pieceWeight:WEIGHT';
