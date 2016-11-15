@@ -1,11 +1,11 @@
 md-table-container.md-whiteframe-1dp(
-ng-if='vm.data.length || vm.modifiedBaguette.length'
+ng-if='vm.data.length || vm.modifiedData.length'
 )
 
-  h3 Без изменений: {{ vm.data.length - vm.modifiedBaguette.length | number:0 }}
+  h3 Без изменений: {{ vm.data.length - vm.modifiedData.length | number:0 }}
 
-  table(md-table ng-if='vm.modifiedBaguette.length')
-    h3 Измененные записи: {{(vm.modifiedBaguette.length)}}
+  table(md-table ng-if='vm.modifiedData.length')
+    h3 Измененные записи: {{(vm.modifiedData.length)}}
     thead(md-head md-order='vm.orderBy')
 
       th(
@@ -36,7 +36,7 @@ ng-if='vm.data.length || vm.modifiedBaguette.length'
 
       tr(
       md-row
-      ng-repeat='row in vm.modifiedBaguette | orderBy: vm.orderBy track by row.index'
+      ng-repeat='row in vm.modifiedData | orderBy: vm.orderBy track by row.index'
       )
 
         td(md-cell)
@@ -44,7 +44,7 @@ ng-if='vm.data.length || vm.modifiedBaguette.length'
             i.material-icons clear
 
         td(md-cell)
-          i.material-icons.baguette-status-icon {{row.diff ? 'edit' : 'new_releases'}}
+          i.material-icons.import-status-icon {{row.diff ? 'edit' : 'new_releases'}}
 
         td(md-cell)
           | {{row.index}}

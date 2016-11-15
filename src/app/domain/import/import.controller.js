@@ -12,7 +12,7 @@
 
       title: `Загрузка ${Baguette.labels.ofMany} из файла`,
       data: null,
-      modifiedBaguette: [],
+      modifiedData: [],
       selected: [],
 
       labels: {
@@ -81,7 +81,7 @@
      */
 
     function tableRowRemoveClick(row) {
-      _.remove(vm.modifiedBaguette, row);
+      _.remove(vm.modifiedData, row);
     }
 
     function checkForNewBaguette() {
@@ -93,7 +93,7 @@
         }
       });
 
-      vm.modifiedBaguette = [];
+      vm.modifiedData = [];
 
       _.each(vm.data, function (elem, index) {
 
@@ -116,7 +116,7 @@
           });
 
           if (Object.keys(diff).length) {
-            vm.modifiedBaguette.push({
+            vm.modifiedData.push({
               importData: elem,
               diff: diff,
               instance: baguette,
@@ -131,7 +131,7 @@
             isValid: false
           });
 
-          vm.modifiedBaguette.push({
+          vm.modifiedData.push({
             importData: elem,
             instance: baguette,
             index
@@ -170,7 +170,9 @@
     }
 
     function cancelLoadDataClick() {
-      _.remove(vm.modifiedBaguette);
+      console.log(Baguette);
+      console.error(vm);
+      _.remove(vm.modifiedData);
       vm.data = false;
       vm.readyToImport = false;
       vm.filesApi.removeAll();
@@ -200,11 +202,11 @@
       var saveItem = saveBaguetteItem;
 
       function importItem() {
-        var item = vm.modifiedBaguette.pop();
+        var item = vm.modifiedData.pop();
 
         if (!item) {
           vm.progress = false;
-          vm.data = errors;
+          vm.modifiedData = errors;
           results.hasErrors = errors.length;
           vm.doneImport = results;
           return;
