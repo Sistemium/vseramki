@@ -4,7 +4,6 @@
 
   function ImportController(ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig) {
 
-    var {Baguette, Material, Brand} = Schema.models();
     var vm = this;
 
     var modelName = $state.params.model;
@@ -20,8 +19,10 @@
       selected: [],
       recordData: {
         newRecord: 0,
-        modifiedRecord: 0,
+        modifiedRecord: 0
       },
+
+      _get: _.get,
 
       labels: {
         imported: 'Обновлено',
@@ -96,9 +97,11 @@
 
       var validFields = _.map(vm.columns, column => {
         return {
-          name: column.ref || column.name,
+          id: column.ref || column.name,
+          name: column.name,
           replace: column.replace !== false,
-          model: column.name
+          model: column.model,
+          ref: column.ref
         }
       });
 
@@ -106,9 +109,9 @@
 
       _.each(vm.data, function (elem, index) {
 
-        setBaguetteRefs(elem, _.filter(validFields, 'model'));
+        setModelRefs(elem, _.filter(validFields, 'ref'));
 
-        var baguette = elem.codeExternal && _.first(Baguette.filter({
+        var baguette = elem.codeExternal && _.first(model.filter({
             codeExternal: elem.codeExternal
           }));
 
@@ -117,16 +120,16 @@
           var diff = {};
 
           _.each(validFields, field => {
-            if (field.replace && baguette[field.name] !== elem[field.name]) {
+            if (field.replace && baguette[field.id] !== elem[field.id]) {
               diff[field.name] = true;
             } else {
-              elem[field.name] = baguette[field.name];
+              elem[field.id] = baguette[field.id];
             }
           });
 
           if (Object.keys(diff).length) {
 
-            vm.recordData.newRecord++;
+            vm.recordData.modifiedRecord++;
 
             vm.modifiedData.push({
               importData: elem,
@@ -138,9 +141,9 @@
 
         } else {
 
-          vm.recordData.modifiedRecord++;
+          vm.recordData.newRecord++;
 
-          baguette = Baguette.createInstance({
+          baguette = model.createInstance({
             name: elem.nameExternal,
             isValid: false
           });
@@ -161,23 +164,21 @@
 
     }
 
-    function setBaguetteRefs(item) {
+    function setModelRefs(item, config) {
 
-      item.materialId = item.materialName && _.get(_.first(Material.filter({
-          where: {
-            name: {
-              likei: item.materialName
-            }
-          }
-        })), 'id') || null;
+      _.each(config, function (val) {
 
-      item.brandId = item.brandName && _.get(_.first(Brand.filter({
-          where: {
-            name: {
-              likei: item.brandName
+        var model = Schema.model(val.model);
+
+        item[val.ref] = item[val.name] && _.get(_.first(model.filter({
+            where: {
+              name: {
+                likei: item[val.name]
+              }
             }
-          }
-        })), 'id') || null;
+          })), 'id') || null;
+
+      });
 
     }
 
@@ -221,7 +222,7 @@
         ignored: 0
       };
 
-      var saveItem = saveBaguetteItem;
+      var saveItem = saveModelItem;
 
       function importItem() {
         var item = vm.modifiedData.pop();
@@ -259,7 +260,7 @@
 
     }
 
-    function saveBaguetteItem(item) {
+    function saveModelItem(item) {
 
       // _.assign(item.instance, item.importData);
       _.each(columns, column => {
