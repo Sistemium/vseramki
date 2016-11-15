@@ -47,7 +47,7 @@ ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
     h2 Чтение файла ...
     md-progress-circular(md-diameter="200" md-mode="indeterminate")
 
-  h3#results(ng-if='vm.doneImport')
+  h3#results(ng-if='vm.doneImport' layout-align='center center' layout='row')
     .result Загрузка завершена
     .result(ng-repeat="(key, value) in vm.doneImport")
       label {{ vm.labels[key] }}:
