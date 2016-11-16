@@ -111,19 +111,19 @@
 
         setModelRefs(elem, _.filter(validFields, 'ref'));
 
-        var baguette = elem.codeExternal && _.first(model.filter({
+        var instance = elem.codeExternal && _.first(model.filter({
             codeExternal: elem.codeExternal
           }));
 
-        if (baguette) {
+        if (instance) {
 
           var diff = {};
 
           _.each(validFields, field => {
-            if (field.replace && baguette[field.id] !== elem[field.id]) {
-              diff[field.name] = true;
+            if (field.replace && instance[field.id] !== elem[field.id]) {
+              diff[field.name] = _.get(instance, field.name) || '(пусто)';
             } else {
-              elem[field.id] = baguette[field.id];
+              elem[field.id] = instance[field.id];
             }
           });
 
@@ -134,7 +134,7 @@
             vm.modifiedData.push({
               importData: elem,
               diff: diff,
-              instance: baguette,
+              instance: instance,
               index
             });
           }
@@ -143,14 +143,14 @@
 
           vm.recordData.newRecord++;
 
-          baguette = model.createInstance({
+          instance = model.createInstance({
             name: elem.nameExternal,
             isValid: false
           });
 
           vm.modifiedData.push({
             importData: elem,
-            instance: baguette,
+            instance: instance,
             index
           });
 
