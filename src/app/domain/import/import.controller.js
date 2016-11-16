@@ -101,6 +101,10 @@
       });
 
       vm.modifiedData = [];
+      vm.recordData = {
+        newRecord: 0,
+        modifiedRecord: 0
+      };
 
       _.each(vm.data, function (elem, index) {
 
