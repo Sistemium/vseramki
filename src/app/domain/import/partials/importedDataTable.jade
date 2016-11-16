@@ -1,5 +1,5 @@
 md-table-container.md-whiteframe-1dp(
-ng-if='vm.data.length || vm.modifiedData.length'
+ng-if='!vm.busyReading && vm.data'
 )
 
   div(layout='row' layout-align='space around' ng-if='!vm.progress && !vm.doneImport')
