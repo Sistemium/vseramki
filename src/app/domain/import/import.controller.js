@@ -188,8 +188,8 @@
 
     function cancelLoadDataClick() {
 
-      _.remove(vm.modifiedData);
-      _.remove(vm.columns);
+      vm.modifiedData = false;
+      vm.columns = false;
 
       vm.data = false;
       vm.readyToImport = false;
