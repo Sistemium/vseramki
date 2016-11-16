@@ -58,7 +58,6 @@
           })
           .then(res => {
 
-            vm.busyReading = false;
             vm.readyToImport = !!res;
             vm.data = res;
             vm.columns = _.clone(columns);
@@ -75,9 +74,13 @@
     });
 
     $scope.$watch('vm.columns.length', () => {
-      if (vm.data) {
-        setModifiedData();
-      }
+      vm.busyMessage = 'Проверка данных ...';
+      $timeout().then(()=> {
+        if (vm.data) {
+          setModifiedData();
+        }
+        vm.busyReading = false;
+      })
     });
 
     /*
