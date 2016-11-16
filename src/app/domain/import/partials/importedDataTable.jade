@@ -9,7 +9,8 @@ ng-if='!vm.busyReading && vm.data'
     h3 Измененных записей: {{vm.recordData.modifiedRecord}}
     h3 Без изменений: {{ vm.recordData.notModified }}
 
-  h3(ng-if='vm.progress' layout='row' layout-align='center center') Обработано {{vm.data.length  - vm.modifiedData.length}} из {{vm.data.length}} записей
+  h3(ng-if='vm.progress' layout='row' layout-align='center center')
+    | Обработано {{vm.data.length  - vm.modifiedData.length}} из {{vm.data.length}} записей
 
   table(md-table ng-if='vm.modifiedData.length')
     thead(md-head md-order='vm.orderBy')
@@ -60,7 +61,11 @@ ng-if='!vm.busyReading && vm.data'
         md-cell
         ng-repeat='col in vm.columns track by col.name'
         )
-          div(ng-class='{warning: col.ref && row.importData[col.name] && !row.importData[col.ref]}') {{row.importData[col.name]}}
-          del.gray(ng-if='::row.diff[col.name]') {{ vm._get(row.instance,col.name) }}
+          div(
+          ng-class='{warning: col.ref && row.importData[col.name] && !row.importData[col.ref]}'
+          ng-click='vm.addPropertyClick(row, $event)'
+          ) {{row.importData[col.name]}}
+          .gray
+            del(ng-if='::row.diff[col.name]' ) {{ ::row.diff[col.name] }}
 
         td(md-cell) {{row.error | json}}
