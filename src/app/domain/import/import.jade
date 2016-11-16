@@ -44,7 +44,7 @@ ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
     )
 
   section.busy(ng-if="vm.busyReading" layout="column" layout-align="center center")
-    h2 Чтение файла ...
+    h2 {{ vm.busyMessage }}
     md-progress-circular(md-diameter="200" md-mode="indeterminate")
 
   h3#results(ng-if='vm.doneImport' layout-align='center center' layout='row')
