@@ -17,12 +17,7 @@
       data: null,
       modifiedData: [],
       selected: [],
-      recordData: {
-        newRecord: 0,
-        modifiedRecord: 0
-      },
-
-      _get: _.get,
+      recordData: {},
 
       labels: {
         imported: 'Обновлено',
