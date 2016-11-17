@@ -127,6 +127,7 @@
 
     function tableRowRemoveClick(row) {
       _.remove(vm.modifiedData, row);
+      vm.recordData.ommitedRecord++;
     }
 
     function setModifiedData() {
@@ -144,7 +145,8 @@
       vm.modifiedData = [];
       vm.recordData = {
         newRecord: 0,
-        modifiedRecord: 0
+        modifiedRecord: 0,
+        ommitedRecord: 0
       };
 
       _.each(vm.data, function (elem, index) {
