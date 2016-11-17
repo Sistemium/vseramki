@@ -249,7 +249,7 @@
 
     function loadDataClick() {
 
-      var total = vm.data.length;
+      var total = vm.modifiedData.length;
       var value = 0;
 
       vm.readyToImport = false;
