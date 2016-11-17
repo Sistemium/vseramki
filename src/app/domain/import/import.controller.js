@@ -2,7 +2,7 @@
 
 (function () {
 
-  function ImportController(ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig) {
+  function ImportController(ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig, AlertHelper) {
 
     var vm = this;
 
@@ -29,10 +29,10 @@
       cancelLoadDataClick,
       doneClick,
       tableHeaderRemoveClick,
-      tableRowRemoveClick
+      tableRowRemoveClick,
+      addPropertyClick
 
       // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-
 
     });
 
@@ -87,6 +87,43 @@
     /*
      Functions
      */
+
+
+    function addPropertyClick(col, row, ev) {
+
+      var validFields = _.filter(vm.columns, 'ref');
+      var isValidColumn = _.findKey(validFields, {'model': col.model});
+
+      // var test = ['Material', 'Surface', 'Colour', 'Brand'];
+      // var isValidColumn = _.indexOf(test, col.model);
+      //console.log(isValidColumn, 'isValidColumn');
+
+      if (isValidColumn >= 0) {
+        var propertyName = (row.importData[col.name]);
+        var model = Schema.model(col.model);
+
+        var isExistingProperty = !!_.get(_.first(model.filter({
+            where: {
+              name: {
+                likei: propertyName
+              }
+            }
+          })), 'id') || false;
+
+
+        if (!isExistingProperty) {
+          AlertHelper.showConfirm(ev, `Добавить ${col.label.toLowerCase()} "${propertyName}" ?`)
+            .then(function () {
+              model.create({name: propertyName}).then(()=> {
+                ToastHelper.success('Добавлено');
+                setModifiedData();
+              })
+            });
+        }
+
+      }
+
+    }
 
     function tableRowRemoveClick(row) {
       _.remove(vm.modifiedData, row);
