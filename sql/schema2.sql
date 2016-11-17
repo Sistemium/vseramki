@@ -81,7 +81,7 @@ meta.defineEntity 'Article',
   + 'lowPrice,price,,nullable;highPrice,price,,nullable;'
   + 'multiType,,,nullable;'
   + 'isDeleted',
- 'Baguette,baguetteId;FrameSize,frameSizeId;'
+ 'Baguette,baguetteId,nullable;FrameSize,frameSizeId,nullable;'
  + 'Screening,screeningId,nullable;BackMount,backMountId,nullable'
 ;
 
