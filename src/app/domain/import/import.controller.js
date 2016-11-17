@@ -162,7 +162,7 @@
           var diff = {};
 
           _.each(validFields, field => {
-            if (field.replace && instance[field.id] !== elem[field.id]) {
+            if ((field.replace || !instance[field.id]) && instance[field.id] !== elem[field.id]) {
               diff[field.name] = _.get(instance, field.name) || '(пусто)';
             } else {
               elem[field.id] = instance[field.id];
