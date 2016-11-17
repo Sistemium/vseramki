@@ -4,6 +4,10 @@
 
   function ImportExcel(XLSX, $q, $timeout) {
 
+    function defaultParser(val) {
+      return _.upperFirst(_.trim(val));
+    }
+
     function readFile(file, columns) {
 
       var columnTranslation = {};
@@ -14,7 +18,7 @@
           column.defaultValue = null;
         }
 
-        var parser = column.parser || _.trim;
+        var parser = column.parser || defaultParser;
 
         columnTranslation[column.label] = {
           name: column.name,

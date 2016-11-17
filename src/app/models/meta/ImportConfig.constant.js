@@ -56,7 +56,7 @@
         re = / ([А-Я][а-я]+) /;
         res = _.last(name.match(re));
 
-        return res;
+        return _.upperFirst(res);
 
       }
     }
