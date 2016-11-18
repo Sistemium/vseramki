@@ -9,7 +9,7 @@
     var modelName = $state.params.model;
     var model = Schema.model(modelName);
     var importConfig = ImportConfig[modelName];
-    var columns = importConfig.columns;
+    var columns = importConfig[modelName + 'Columns'];
 
     _.assign(vm, {
 
