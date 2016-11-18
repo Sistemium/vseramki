@@ -20,12 +20,24 @@ bar-title='Каталог'
         = ' '
         span.value {{ vm.cartTotal | number:2}}&nbsp;₽
 
-    .buttons(ng-if='vm.isAdmin && vm.currentState==="item"')
-      state-bar-button.admin-button(title='Редактировать рамку' icon='edit')
-      state-bar-button.admin-button(title='Удалить рамку' icon='delete')
-      state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo')
-    .buttons(ng-if='vm.isAdmin && vm.currentState !== "create"')
+    div(ng-if='vm.isAdmin' layout='row')
       state-bar-button.admin-button(title='Добавить рамку' icon='add')
+      .buttons(ng-if='vm.currentState === "item"')
+        state-bar-button.admin-button(title='Редактировать рамку' icon='edit')
+        state-bar-button.admin-button(title='Удалить рамку' icon='delete')
+        state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo')
+      .buttons(ng-if='vm.currentState == "create"')
+        state-bar-button.admin-button(hide-xs title='Скачать таблицу Excel' icon='file_download')
+        state-bar-button.admin-button(hide-xs title='Импорт из таблицы Excel' icon='file_upload')
+
+    //.buttons(ng-if='vm.isAdmin && vm.currentState==="item"')
+    //  state-bar-button.admin-button(title='Редактировать рамку' icon='edit')
+    //  state-bar-button.admin-button(title='Удалить рамку' icon='delete')
+    //  state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo')
+    //.buttons(ng-if='vm.isAdmin && vm.currentState !== "create"')
+    //  state-bar-button.admin-button(title='Добавить рамку' icon='add')
+    //  state-bar-button.admin-button(hide-xs title='Скачать таблицу Excel' icon='file_download')
+    //  state-bar-button.admin-button(hide-xs title='Импорт из таблицы Excel' icon='file_upload')
 
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
