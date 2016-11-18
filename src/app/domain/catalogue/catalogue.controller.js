@@ -45,7 +45,15 @@
       resetFilters,
       delCurrFilter,
       addClick,
-      sideNavListItemClick: sideNavListItemClick
+      sideNavListItemClick: sideNavListItemClick,
+
+      fileDownloadClick: function () {
+        console.log('You ve clicked import button');
+        //var articles = orderBy(vm.filteredBaguettes, vm.orderBy);
+        //ExportExcel.exportArrayWithConfig(articles, Article.meta.exportConfig, 'Рамки');
+      },
+
+      fileUploadClick: () => $state.go('import', {model: 'Article'})
 
     });
 
