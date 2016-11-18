@@ -2,7 +2,7 @@
 
 (function () {
 
-  var columns = [
+  var BaguetteColumns = [
     {
       name: 'codeExternal',
       label: 'Код'
@@ -62,13 +62,102 @@
     }
   ];
 
+  var ArticleColumns = [
+
+    {
+      name: 'codeExternal',
+      label: 'Код'
+    }, {
+      name: 'name',
+      label: 'Наименование',
+    }, {
+      name: 'nameExternal',
+      label: 'Наименование (код 1С)',
+      compute: item => {
+        return item['Наименование']
+      }
+    }, {
+      name: 'frameSize.name',
+      model: 'FrameSize',
+      label: 'Размер',
+      ref: 'frameSizeId',
+      compute: item => {
+
+        var frameSize = item['Размер'];
+        var formattedFrameSize;
+
+        if (!frameSize) {
+          return null;
+        } else {
+          var splitters = ['х', ' ', '*'];
+          _.each(splitters, function (splitter) {
+            var splittedVal = frameSize.split(splitter);
+            if (splittedVal.length == 2) {
+              formattedFrameSize = splittedVal[0] + 'x' + splittedVal[1];
+              return false;
+            }
+          });
+          return formattedFrameSize || frameSize;
+        }
+
+      }
+    }, {
+      name: 'packageRel',
+      label: 'Мин. коробка',
+      parser: parseInt
+    }, {
+      name: 'pieceWeight',
+      label: 'Вес ед., кг',
+      parser: parseFloat
+    }, {
+      name: 'screening.name',
+      model: 'Screening',
+      label: 'Прозрачная вставка',
+      ref: 'screeningId'
+    }, {
+      name: 'material.name',
+      model: 'Material',
+      label: 'Материал',
+      ref: 'materialId'
+    }, {
+      name: 'backMount.name',
+      model: 'BackMount',
+      label: 'Крепление задника',
+      ref: 'backMountId'
+    }, {
+      name: 'brand.name',
+      model: 'Brand',
+      label: 'Бренд',
+      ref: 'brandId'
+    }, {
+      name: 'colour.name',
+      model: 'Colour',
+      label: 'Цвет',
+      ref: 'colourId'
+    }, {
+      name: 'highPrice',
+      label: 'Мел_Опт_Цена',
+      parser: parseFloat
+    }, {
+      name: 'lowPrice',
+      label: 'Спец_Цена',
+      parser: parseFloat
+    }
+
+  ];
+
   angular
     .module('vseramki')
     .constant('ImportConfig', {
 
       Baguette: {
-        columns,
+        BaguetteColumns,
         doneSref: 'baguettes'
+      },
+
+      Article: {
+        ArticleColumns,
+        doneSref: 'catalogue'
       }
 
     });
