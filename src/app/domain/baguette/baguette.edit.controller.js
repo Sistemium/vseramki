@@ -193,6 +193,8 @@
     }
 
     function save() {
+      //TODO baguette.name
+      vm.baguette.name = '';
       return Baguette.create(vm.baguette)
         .then(baguette => {
 
