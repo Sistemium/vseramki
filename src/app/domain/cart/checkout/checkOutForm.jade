@@ -1,17 +1,22 @@
-h3 Контактные данные
+h3 Информация для доставки
 
-.form-controls(layout='column' layout-align='start center')
+.form-controls(layout='column' layout-align='start' ng-class="{'lock-screen': vm.busy }")
 
   md-input-container
     label Телефон
       =' '
       span.required-field-asterisk *
     input(
+    autocomplete='off'
     type='text'
-    ng-model='vm.checkout.phone'
+    ng-model='vm.saleOrder.phone'
+    ui-mask="+7(999) 999-9999"
+    placeholder=''
+    ui-mask-placeholder
+    ui-mask-placeholder-char="_"
     required
     name='shippingPhone'
-    input-clear='black'
+    input-clear
     )
     div(ng-messages="checkoutForm.shippingPhone.$error")
       div(ng-message="required") Поле не может быть пустым
@@ -21,25 +26,31 @@ h3 Контактные данные
       =' '
       span.required-field-asterisk *
     input(
+    autocomplete='off'
     type='text'
-    ng-model='vm.checkout.email'
+    ng-model='vm.saleOrder.email'
+    ng-pattern='vm.emailPattern'
     required
     name='shippingEmail'
-    input-clear='black'
+    placeholder=''
+    input-clear
     )
     div(ng-messages="checkoutForm.shippingEmail.$error")
       div(ng-message="required") Поле не может быть пустым
+      div(ng-message="pattern") Неверный формат ввода
 
   md-input-container
     label Контактное лицо
       =' '
       span.required-field-asterisk *
     input(
+    autocomplete='off'
     type='text'
-    ng-model='vm.checkout.contact'
+    ng-model='vm.saleOrder.contactName'
     required
     name='shippingPerson'
-    input-clear='black'
+    placeholder=''
+    input-clear
     )
     div(ng-messages="checkoutForm.shippingPerson.$error")
       div(ng-message="required") Поле не может быть пустым
@@ -49,11 +60,13 @@ h3 Контактные данные
       =' '
       span.required-field-asterisk *
     input(
+    autocomplete='off'
     type='text'
-    ng-model='vm.checkout.address'
+    ng-model='vm.saleOrder.shipTo'
     required
+    placeholder=''
     name='shippingAddress'
-    input-clear='black'
+    input-clear
     )
     div(ng-messages="checkoutForm.shippingAddress.$error")
       div(ng-message="required") Поле не может быть пустым
@@ -62,12 +75,18 @@ h3 Контактные данные
     label Комментарий
     textarea(
     md-maxlength="200" rows="7"
-    ng-model='vm.checkout.comment'
+    ng-model='vm.saleOrder.comment'
     name='shippingComment'
+    autocomplete='off'
+    input-clear
+    placeholder=''
     )
 
 .text-center
   md-button.width-100.no-margin.md-button.pink-button(
   type='submit'
-  ng-disabled='checkoutForm.$invalid'
+  ng-if='!vm.id'
+  ng-disabled='checkoutForm.$invalid || vm.busy'
   ) Завершить оформление
+
+  md-progress-linear(ng-if='vm.busy' md-diameter='200' md-mode='indeterminate')

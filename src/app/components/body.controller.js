@@ -2,11 +2,17 @@
 
 (function () {
 
-  angular.module('vseramki')
-    .controller('BodyController', bodyController);
+  function BodyController (saUserAgent) {
+    var vm = this;
+    _.assign(vm, {
 
-  function bodyController () {
-   
+      os: saUserAgent.os,
+      cls: saUserAgent.cls
+
+    });
   }
+
+  angular.module('vseramki')
+    .controller('BodyController', BodyController);
 
 })();

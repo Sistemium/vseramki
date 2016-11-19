@@ -15,9 +15,12 @@
         url: '/profile',
         templateUrl: 'app/domain/userInfo/userInfo.html',
         controller: 'UserInfoController',
-        controllerAs: 'vm'
-      })
-    ;
+        controllerAs: 'vm',
+        data: {
+          needRoles: true,
+          title: 'Профиль'
+        }
+      });
   }
 
 }());

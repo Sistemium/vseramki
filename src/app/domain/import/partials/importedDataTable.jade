@@ -1,0 +1,72 @@
+md-table-container.md-whiteframe-1dp(
+ng-if='!vm.busyReading && vm.data'
+)
+
+  div(layout='row' layout-align='space around' ng-if='!vm.progress && !vm.doneImport')
+
+    h3 Всего записей: {{ vm.data.length }}
+    h3 Новых записей: {{vm.recordData.newRecord}}
+    h3 Измененных записей: {{vm.recordData.modifiedRecord}}
+    h3 Без изменений: {{ vm.recordData.notModified }}
+    h3(ng-show='vm.recordData.ommitedRecord') Пропущено: {{ vm.recordData.ommitedRecord }}
+
+  h3(ng-if='vm.progress' layout='row' layout-align='center center')
+    | Обработано {{vm.recordData.newRecord - vm.modifiedData.length}} из {{vm.recordData.newRecord - vm.recordData.ommitedRecord}} записей
+
+  table(md-table ng-if='vm.modifiedData.length')
+    thead(md-head md-order='vm.orderBy')
+
+      th(
+      md-column
+      ) Удалить
+
+      th(
+      md-column
+      md-order-by='diff'
+      ) Статус
+
+      th(
+      md-column
+      md-order-by='index'
+      ) №
+
+      th(
+      ng-repeat='col in vm.columns track by col.name'
+      md-column
+      )
+        span(ng-click='vm.tableHeaderClick(col, $event)') {{ col.label }}
+        = ' '
+        a(ng-click='vm.tableHeaderRemoveClick(col, $event)' href) x
+
+      th(ng-show='vm.doneImport' md-column) Ошибка
+
+    tbody(md-body)
+
+      tr(
+      md-row
+      ng-repeat='row in vm.modifiedData | orderBy: vm.orderBy track by row.index'
+      )
+
+        td(md-cell)
+          md-button.button-cust-fab(ng-click='vm.tableRowRemoveClick(row)')
+            i.material-icons clear
+
+        td(md-cell ng-class='{"import-status-icon": !row.diff}')
+          i.material-icons(title="{{row.diff ? 'Измененная запись' : 'Новая запись'}}") {{row.diff ? 'edit' : 'new_releases'}}
+          | {{row.diff.length}}
+
+        td(md-cell)
+          | {{row.index + 1}}
+
+        td(
+        md-cell
+        ng-repeat='col in vm.columns track by col.name'
+        )
+          div(
+          ng-class='{"warning clickable": col.ref && row.importData[col.name] && !row.importData[col.ref]}'
+          ng-click='vm.addPropertyClick(col, row, $event)'
+          ) {{row.importData[col.name]}}
+          .gray
+            del(ng-if='::row.diff[col.name]' ) {{ ::row.diff[col.name] }}
+
+        td(md-cell) {{row.error | json}}

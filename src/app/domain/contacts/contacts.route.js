@@ -15,7 +15,10 @@
         url: '/info',
         templateUrl: 'app/domain/contacts/contacts.html',
         controller: 'СontactsController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          title: 'Контакты'
+        }
       });
   }
 

@@ -1,0 +1,21 @@
+.no-padding(
+resize='saleOrderList'
+style='height: {{ saleOrderList.windowHeight - saleOrderList.offsetTop - 10}}px'
+)
+  md-virtual-repeat-container.clickable.scroll-y.height-100(
+  md-top-index='vm.articlesListTopIndex'
+  )
+    .item(
+    md-virtual-repeat='saleOrder in vm.saleOrders'
+    ng-class="{'active ': vm.currentItem.id == saleOrder.id }"
+    ng-click='vm.sideNavListItemClick($event, saleOrder)'
+    )
+
+      .md-padding
+        span.gray №
+        = ' '
+        span {{saleOrder.ndoc}}
+        = ' '
+        span.gray от
+        = ' '
+        span {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}

@@ -1,0 +1,56 @@
+state-bar.saleOrder {
+  span.flex {
+    flex: 0;
+    padding: 5px;
+  }
+}
+
+.saleOrder, #checkout {
+  h3 + .form-controls {
+    md-input-container:first-child {
+      margin-top: 20px;
+    }
+  }
+}
+
+.saleOrder .property-value {
+  md-input-container {
+
+    margin-bottom: 1px;
+
+    md-select {
+      margin-bottom: 3px;
+    }
+
+  }
+}
+
+.saleOrders {
+  .item {
+    padding: 5px;
+    margin: 0;
+    font-size: 14px;
+    min-height: 35px;
+    height: 35px;
+    cursor: pointer;
+    .gray {
+      text-align: right;
+    }
+    border-bottom: $list-item-border;
+  }
+
+  state-bar-button .no-margin-right {
+    margin-right: 0;
+  }
+
+}
+
+div .sub-toolbar {
+
+  height: 45px;
+
+  //md-select {
+  //  margin-bottom: 3px;
+  //}
+
+}

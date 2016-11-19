@@ -1,0 +1,7 @@
+md-button.md-fab.md-mini.md-icon-button(
+title='{{title}}' ng-click='vm.onClick($event)' ng-class='[cls, vm.buttonCls]' ng-disabled='disabledIf'
+)
+  i.material-icons {{icon}}
+
+md-button.md-raised(ng-if='vm.iconXs' hide-xs title='{{title}}' ng-click='vm.onClick($event)' ng-class='cls' ng-disabled='disabledIf')
+  | {{title}}

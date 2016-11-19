@@ -10,13 +10,18 @@
 
     return Schema.register({
 
+      labels: {
+        plural: 'Поверхности',
+        what: 'поверхность'
+      },
+
       name: 'Surface',
 
       relations: {
         hasMany: {
           Baguette: {
             localField: 'baguettes',
-            foreignKey: 'baguetteId'
+            foreignKey: 'surfaceId'
           }
         }
       }

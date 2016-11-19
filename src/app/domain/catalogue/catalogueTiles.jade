@@ -1,30 +1,33 @@
-md-content.ui-view#scroll-main(
-resize='tiles'
-ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
-)
-  md-virtual-repeat-container.height-100
+md-content#scroll-main.ui-view
+
+  md-virtual-repeat-container.scroll-y.height-100(
+  resize='tiles'
+  ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
+  md-top-index='vm.topIndex'
+  )
     .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
-      .repeated-group-item(ng-repeat='article in row' flex)
+      .repeated-group-item(ng-repeat='article in row track by $index' flex)
         md-card(layout='column' layout-align='space-between center')
-          md-card-content.catalogue-tile(ng-click='vm.gotoItemView(article, $event)')
+          md-card-content.clickable(ng-click='vm.gotoItemView(article, $event)')
             .md-card-corner
-              label арт {{ article.code }}
+              label {{ article.code }}
             md-card-header
               img.thumbnail(ng-src='{{article.activePhoto()}}')
-            h4.text-center.margin-top-bottom.title
-              div "{{ ::article.brand.name }}" {{ ::article.frameSize.name }} {{ ::article.colour.name }}
+            h5.name
+              frame-name.title(article='article')
               small.gray {{ ::article.multiTypeName() }}
             //md-card-title.md-margin
               md-card-title-text
                 .md-subhead.text-center {{ article.name }}
             .flex
-            .md-margin
-              .md-title.text-center.text-nowrap
+            .md-margin.price
+              .prices(ng-if='article.highPrice')
                 span(ng-class='{"strike-through gray": vm.cartHasDiscount}') {{ article.highPrice }} ₽
                 span(ng-if='vm.cartHasDiscount') &nbsp; {{ article.discountedPrice(vm.cartSubTotal) }} ₽
+              .alert(ng-if='!article.highPrice') Цены не установлены
 
           md-card-actions(ng-if='article.inCart')
-            .div-order-info.space-children-em(layout='row' layout-align="start center")
+            .div-order-info.space-children-em(layout='row' layout-align="center center")
 
               p Заказано:
 
@@ -46,12 +49,9 @@ ng-style='{ height: (tiles.windowHeight - tiles.offsetTop) + "px" }'
 
                 md-button.micro-fab(ng-click='vm.plusOne(article)') +
 
-          md-card-actions(ng-if='!article.inCart')
-            md-button.md-fab.md-mini.md-icon-button(
+          md-card-actions.not-in-cart(ng-if='article.highPrice && !article.inCart')
+            md-button.md-fab.md-mini.md-icon-button.default-button(
             aria-label="Добавить в корзину"
             ng-click="vm.addToCart(article)"
             )
               i.material-icons add_shopping_cart
-
-
-

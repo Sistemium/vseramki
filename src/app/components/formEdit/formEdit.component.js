@@ -11,9 +11,11 @@
       },
 
       bindings: {
-        title: '@',
+        formTitle: '@',
         item: '=',
-        vm: '='
+        vm: '=',
+        nameField: '@',
+        showButtons: '=?'
       },
 
       /** @ngInject */
@@ -22,6 +24,8 @@
         var vm$ = this;
 
         _.assign(vm$, {
+          nameField: vm$.nameField !== '' && 'name',
+          showButtons: vm$.showButtons !== false
         });
 
         $scope.vm = vm$.vm;

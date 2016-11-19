@@ -1,4 +1,6 @@
-.property-list.md-whiteframe-1dp
+.alert(ng-if='!vm.prices') Цены не установлены
+
+.property-list.md-whiteframe-1dp(ng-if='vm.prices')
   h3.header Цена
     small.gray &nbsp; (от общей суммы заказа)
   .property-list-container
@@ -10,10 +12,11 @@
       .property-value {{ prc.value | number: 2 }} ₽
 
 md-button.md-raised.action-button.pink-button(
-ng-click='vm.addToCart(vm.article)'
-ng-if='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
+ng-click='vm.addToCart()'
+ng-if='vm.prices && !vm.article.inCart'
 )
   | {{'Добавить к заказу'}}
+
 .property-list.md-whiteframe-1dp.flex-5-4(ng-if='vm.article.inCart')
   h3.header
     md-button.md-raised.md-mini.micro-square(
@@ -26,7 +29,7 @@ ng-if='!vm.article.inCart && (vm.article.highPrice || vm.article.lowPrice)'
       .property-label Количество:
       .property-value.no-margin.plus-minus(layout-align='start center' layout='row')
         md-button.micro-fab(ng-click='vm.minusOne(vm.article)') -
-        md-input-container
+        md-input-container#cartCountInput
           input.item-count-input(
           aria-label="Количество"
           ng-model='vm.article.inCart.count'

@@ -52,17 +52,54 @@
   }
 }
 
-#checkout {
+#checkout, .saleOrder {
+
+  .lock-screen {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
   md-input-container {
     margin-top: 0;
   }
 
   #orderTable md-table-container {
-    margin: 20px auto;
+    margin: 0 auto 20px;
     @media screen {
       max-width: 600px;
     }
+
+    padding: 0 10px;
+
+  }
+
+}
+
+md-dialog {
+
+  &.login-dialog {
+    border-radius: 5px 5px 5px;
+    width: 35%;
+    height: auto;
+  }
+
+  .login-dialog-toolbar {
+    background-color: #f3f4f6;
+    border-radius: 5px;
+    min-height: 50px !important;
+    max-height: 50px !important;
+  }
+
+  .black-header {
+    color: black;
+  }
+
+  .justify-text {
+    text-align: justify;
+  }
+
+  md-dialog-actions {
+    padding-left: 0;
   }
 
 }

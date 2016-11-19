@@ -5,7 +5,7 @@
   angular.module('vseramki')
     .directive('inputClear', inputClear);
 
-  function inputClear($compile) {
+  function inputClear($compile, $timeout) {
     return {
 
       restrict: 'A',
@@ -29,7 +29,8 @@
 
         scope.clearModel = function () {
           _.set(scope.$parent, attrs.ngModel, scope.inputClearValue);
-          angular.element(element).focus();
+          $timeout()
+            .then(()=>angular.element(element).focus());
         };
 
       }

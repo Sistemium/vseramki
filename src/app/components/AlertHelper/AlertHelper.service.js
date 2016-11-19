@@ -7,7 +7,7 @@
     function showConfirm(ev, question) {
 
       var confirm = $mdDialog.confirm()
-        .title(question || 'Подтвердить удаление элемента?')
+        .title(question || 'Действительно удалить эту запись?')
         .textContent('')
         .ariaLabel('Confirm Modal')
         .targetEvent(ev)

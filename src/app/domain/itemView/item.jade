@@ -21,10 +21,3 @@ ng-style='{height: (catalogueItem.windowHeight - catalogueItem.offsetTop) + "px"
 
     span(flex)
 
-  .fixed-bottom-right.admin-buttons(layout='column' ng-show='vm.isAdmin')
-    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.editFrame()')
-      i.material-icons edit
-    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.deleteFrame($event)')
-      i.material-icons delete
-    md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.showImageDialog($event)')
-      i.material-icons add_a_photo

@@ -1,0 +1,54 @@
+@import "../../styles/_vars";
+
+.dictionary {
+
+  busy-linear {
+    height: 5px;
+    display: block;
+  }
+
+  md-table-container {
+    position: relative;
+    top: -5px;
+    margin-bottom: -5px;
+  }
+
+  div {
+    md-fab-speed-dial {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-top: 8px;
+
+      md-fab-trigger > .md-button {
+        min-width: 120px;
+      }
+    }
+
+    md-fab-actions > .md-button {
+      margin-top: 10px
+    }
+  }
+
+  @media (min-width: $layout-breakpoint-xs) {
+    div {
+      .shown-tight {
+        display: none;
+      }
+    }
+  }
+
+  .md-icon-button {
+    color: $gray;
+  }
+
+  tr.default {
+    > td, .md-icon-button {
+      color: $primary-button-background-color;
+      font-weight: bold;
+      //color: white;
+    }
+  }
+
+}
+

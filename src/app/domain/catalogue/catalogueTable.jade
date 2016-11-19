@@ -1,6 +1,6 @@
 .ui-view
 
-  #scroll-main(
+  #scroll-main.scroll-y(
   resize='catalogueTable'
   ng-style='{height: (catalogueTable.windowHeight - catalogueTable.offsetTop - 57)+"px"}'
   )
@@ -8,37 +8,40 @@
       table(md-table)
         thead(md-head md-order='filterBy')
           th.hide-sm.hide-xs(md-column) Фото
+          th.hide-sm.hide-xs(md-column md-order-by='code') Артикул
           th(md-column md-order-by='brand.name') Бренд
           th(md-column md-order-by='frameSize.name') Размер
           th(md-column md-order-by='colour.name') Цвет
           th.hide-sm.hide-xs(md-column md-order-by='lowPrice') Цена опт
           th(md-column md-order-by='highPrice') Цена розн.
-          th.hide-sm.hide-xs(md-column md-order-by='packageRel') Шт. в кор.
           th(md-column md-order-by='inCart.count') Заказ, шт.
           //th(md-column md-order-by='pieceWeight') Вес (кг.)
 
         tbody.clickable(md-body)
           tr(
           md-row
-          ng-repeat='article in vm.articles |orderBy: filterBy track by article.id'
+          ng-repeat='article in vm.articles ' +
+          '| orderBy: filterBy ' +
+          '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+          ' track by article.id'
           md-select='article'
           md-select-id='id'
           ng-click='vm.gotoItemView(article, $event)'
           )
             td.hide-sm.hide-xs(md-cell)
               img.thumbnail(ng-src='{{article.activePhoto()}}')
+            td.hide-sm.hide-xs(md-cell) {{article.code}}
             td(md-cell) {{article.brand.name}}
             td(md-cell) {{article.frameSize.name}}
             td(md-cell) {{article.colour.name}}
             td.hide-sm.hide-xs(md-cell) {{article.lowPrice}}
             td(md-cell) {{article.highPrice}}
-            td.hide-sm.hide-xs(md-cell) {{article.packageRel}}
             td.prevent-clicks(md-cell)
 
-              md-button.mini-fab(
+              md-button.mini-fab.default-button(
               aria-label="Добавить в корзину"
               ng-click="vm.addToCart(article)"
-              ng-if='!article.inCart'
+              ng-if='article.highPrice && !article.inCart'
               )
                 i.material-icons add_shopping_cart
 

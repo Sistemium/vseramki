@@ -45,10 +45,18 @@
 
     }
 
+    function setup(controller) {
+      _.assign(controller, {
+        isAdmin: isAdmin()
+      });
+    }
+
     return {
+      setup,
       isAdmin,
       hasUser,
-      userRoles: () => currentUserRoles
+      userRoles: () => currentUserRoles,
+      getUser: () => currentUser
     }
 
   }

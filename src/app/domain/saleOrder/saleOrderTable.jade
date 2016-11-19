@@ -1,0 +1,80 @@
+.saleOrders
+
+  state-bar(
+  bar-title='Заказы'
+  )
+    div(ng-if='vm.id' layout='row')
+      //state-bar-button.default-button(title='Назад' icon='arrow_back' ng-show='vm.currentState == "edit"')
+
+      div(ng-if='vm.currentState==="edit"' style='padding: 2px')
+        state-bar-button.default-button.no-margin-right(
+        title='Отменить изменения'
+        icon='close'
+        ng-show='vm.saleOrderForm.dirty'
+        icon-xs='true'
+        )
+        state-bar-button.important-button(
+        title='{{vm.saleOrderForm.dirty ? "Сохранить" : "Готово"}}'
+        icon='check'
+        disabled-if='vm.saleOrderForm.invalid'
+        icon-xs='true'
+        )
+        state-bar-button.default-button(
+        title='Отменить заказ' icon='delete'
+        )
+
+      state-bar-button.default-button(title='Редактировать' icon='edit' ng-show='vm.currentState !== "edit"')
+      state-bar-button.default-button(title='Печать заказа' icon='print' ng-show='vm.currentState !== "edit"')
+
+  div(layout='row')
+
+    md-sidenav.md-sidenav-left.md-whiteframe-1dp(
+    layout-padding
+    md-component-id="left-nav"
+    md-is-locked-open="$mdMedia('gt-xs')"
+    md-is-open='vm.isSideNavOpen'
+    ng-include="'app/domain/saleOrder/partials/sidenav.html'"
+    ng-if='!vm.isRootState'
+    )
+
+    .flex.ui-view
+      .scroll-y(
+      resize='orders'
+      ng-style="{height: (orders.windowHeight - orders.offsetTop - 57) + 'px'}"
+      )
+        md-table-container(ng-if='vm.saleOrders')
+          table(md-table)
+            thead(md-head md-order='filterBy')
+              th(md-column md-order-by='ndoc') №
+              th(md-column md-order-by='processing') Статус
+              th(md-column md-order-by='cts') Дата
+              th(md-column md-order-by='contactName') Контактное лицо
+              th(md-column md-order-by='phone') Телефон
+              th(md-column md-order-by='shipTo') Адрес
+            tbody.clickable(md-body)
+              tr(
+              md-row
+              ng-repeat='saleOrder in vm.saleOrders' +
+              '| orderBy: filterBy ' +
+              '| limitTo: vm.pagination.query.limit : (vm.pagination.query.page - 1) * vm.pagination.query.limit' +
+              ' track by saleOrder.id'
+              ng-click='vm.goToOrder(saleOrder, $event)'
+              )
+                td(md-cell) {{saleOrder.ndoc}}
+                td(md-cell) {{saleOrder.processingLabel}}
+                td(md-cell) {{saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
+                td(md-cell) {{saleOrder.contactName}}
+                td(md-cell) {{saleOrder.phone}}
+                td(md-cell) {{saleOrder.shipTo}}
+
+      md-table-pagination(
+      md-limit='vm.pagination.query.limit',
+      md-label='{{vm.pagination.labels}}',
+      md-limit-options='vm.pagination.limitOptions',
+      md-page='vm.pagination.query.page',
+      md-total='{{vm.saleOrders.length}}',
+      md-page-select='!vm.useMobile',
+      md-boundary-links='!vm.useMobile'
+      md-on-paginate='vm.onPaginate'
+      )
+

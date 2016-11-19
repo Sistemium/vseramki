@@ -44,3 +44,7 @@ alter table vr2.Article drop manufacturerId;
 alter table vr2.Article drop foreign key passePartout;
 alter table vr2.Article drop passePartoutId;
 ;
+
+alter table vr2.Baguette drop foreign key colour;
+alter table vr2.Baguette modify colourId null;
+alter table vr2.Baguette add foreign key (colourId) references vr2.Colour;

@@ -1,10 +1,10 @@
 state-bar(
-title='Заказ'
+bar-title='Заказ'
 )
   div(layout='row')
     md-button.md-button.pink-button.md-raised(
     ng-if='vm.data.length'
-    ui-sref='checkout'
+    ng-click='vm.checkout($event)'
     ) Оформить заказ
 
 .cart.scroll-y(resize='cart' ng-style='{height: (cart.windowHeight - cart.offsetTop - 61)+"px"}')
@@ -27,10 +27,11 @@ title='Заказ'
   md-button.md-button.md-fab.md-mini.md-icon-button.default-button(
   ng-if='vm.data.length'
   ng-click='vm.clearCart($event)'
+  title='Отменить заказ'
   )
     i.material-icons remove_shopping_cart
   span(flex)
-  div(layout='column')
+  div(layout='column' ng-if='vm.data.length')
     p.no-margin.text-right
       span Итого к оплате:
       = ' '

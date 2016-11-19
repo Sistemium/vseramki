@@ -1,0 +1,68 @@
+h3 Информация для доставки
+
+fieldset.form-controls(layout='column' layout-align='start' ng-disabled="!vm.editMode")
+
+  md-input-container(md-no-float)
+    label Контактное лицо
+      =' '
+      span.required-field-asterisk *
+    input(
+    ng-model='vm.saleOrder.contactName'
+    name='name'
+    placeholder
+    autocomplete='off'
+    required
+    )
+    div(ng-messages="vm.attrsForm.name.$error")
+      div(ng-message="required") Поле не может быть пустым
+
+  md-input-container(md-no-float)
+    label Телефон
+      =' '
+      span.required-field-asterisk *
+    input(
+    ng-model='vm.saleOrder.phone'
+    name='phone'
+    ui-mask="+7(999) 999-9999"
+    placeholder
+    ui-mask-placeholder
+    ui-mask-placeholder-char="_"
+    required
+    autocomplete='off'
+    )
+
+  md-input-container(md-no-float)
+    label E-mail
+      =' '
+      span.required-field-asterisk *
+    input(
+    ng-model='vm.saleOrder.email'
+    name='email'
+    placeholder
+    ng-pattern='vm.emailPattern'
+    autocomplete='off'
+    )
+    div(ng-messages="vm.attrsForm.email.$error")
+      div(ng-message="pattern") Неверный формат ввода
+
+  md-input-container(md-no-float)
+    label Адрес доставки
+      =' '
+      span.required-field-asterisk *
+    input(
+    ng-model='vm.saleOrder.shipTo'
+    name='address'
+    placeholder
+    autocomplete='off'
+    required
+    )
+
+  md-input-container
+    label Комментарий
+    textarea(
+    md-maxlength="200" rows="7"
+    ng-model='vm.saleOrder.comment'
+    name='shippingComment'
+    autocomplete='off'
+    placeholder
+    )

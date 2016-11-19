@@ -9,7 +9,7 @@ util.setUserOption 'asamium.default.domain', 'vr2';
 -- Types
 
 meta.defineType 'name:STRING';
-meta.defineType 'code:SHORT';
+meta.defineType 'code:MEDIUM';
 meta.defineType 'packageRel:INT';
 meta.defineType 'borderWidth:INT';
 meta.defineType 'pieceWeight:WEIGHT';
@@ -18,8 +18,14 @@ meta.defineType 'width:INT';
 meta.defineType 'price:PRICE4';
 meta.defineType 'length:INT';
 meta.defineType 'src:STRING';
+meta.defineType 'date:DATE';
+meta.defineType 'count:INT';
+meta.defineType 'comment:STRING,,nullable';
+meta.defineType 'processing:CODE';
+meta.defineType 'multiType:SHORT';
 
 meta.defineType 'isDeleted:BOOL';
+meta.defineType 'isValid:BOOL';
 
 -- Entities
 
@@ -56,7 +62,7 @@ meta.defineEntity 'Surface',
 ;
 
 meta.defineEntity 'Baguette',
- 'code;lastName,name;borderWidth;isDeleted',
+ 'name;code;codeExternal,code;lastName,name,,nullable;borderWidth;isDeleted;isValid;nameExternal,name,,nullable',
  'Material,materialId;Brand,brandId,nullable;Colour,colourId,nullable;Surface,surfaceId,nullable'
 ;
 
@@ -73,9 +79,10 @@ meta.defineEntity 'Manufacturer',
 meta.defineEntity 'Article',
  'name;code,code,,nullable;packageRel;pieceWeight,pieceWeight,,nullable;'
   + 'lowPrice,price,,nullable;highPrice,price,,nullable;'
+  + 'multiType,,,nullable;'
   + 'isDeleted',
- 'Baguette,baguetteId,nullable;FrameSize,frameSizeId;'
-  + 'Screening,screeningId,nullable;BackMount,backMountId,nullable'
+ 'Baguette,baguetteId,nullable;FrameSize,frameSizeId,nullable;'
+ + 'Screening,screeningId,nullable;BackMount,backMountId,nullable'
 ;
 
 meta.defineEntity 'ArticleImage',
@@ -86,6 +93,11 @@ meta.defineEntity 'ArticleImage',
 meta.defineEntity 'BaguetteImage',
   'thumbnailSrc,src;smallSrc,src;largeSrc,src;isDeleted',
   'Baguette,baguetteId'
+;
+
+meta.defineEntity 'ArticleFrameSize',
+ 'count,,1;isDeleted',
+ 'Article,articleId;FrameSize,frameSizeId;'
 ;
 
 -- Tables
@@ -126,10 +138,6 @@ meta.createTable 'BackMount',
   @forceDrop = 1
 ;
 
-meta.createTable 'PassePartout',
-  @forceDrop = 1
-;
-
 meta.createTable 'Manufacturer',
   @forceDrop = 1
 ;
@@ -146,4 +154,46 @@ meta.createTable 'BaguetteImage',
   @forceDrop = 1
 ;
 
-alter table vr.Baguette add unique (brandId,materialId,colourId);
+meta.createTable 'ArticleFrameSize',
+  @forceDrop = 1
+;
+
+drop table if exists [vr2].[Entity];
+
+create table [vr2].[Entity] (
+   id ID,
+   [xid] CODE not null,
+   [options] TEXT null,
+   ts TS,
+   cts CTS,
+   primary key(id),
+   unique(xid)
+);
+
+
+meta.defineEntity 'User',
+ 'name;email,name,,nullable;phone,name,,nullable;address,name,,nullable;isDeleted'
+;
+
+meta.createTable 'User',
+  @forceDrop = 1
+;
+
+meta.defineEntity 'SaleOrder',
+ 'shipDate,date,,nullable;comment;' +
+ 'contactName,name;shipTo,name;email,name;phone,name;processing;isDeleted',
+ 'User,creatorId,nullable'
+;
+
+meta.defineEntity 'SaleOrderPosition',
+ 'count;price;priceOrigin,price;isDeleted',
+ 'SaleOrder,saleOrderId;Article,articleId'
+;
+
+meta.createTable 'SaleOrder',
+  @forceDrop = 1
+;
+
+meta.createTable 'SaleOrderPosition',
+  @forceDrop = 1
+;

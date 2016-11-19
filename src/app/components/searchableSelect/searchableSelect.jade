@@ -1,23 +1,28 @@
 .searchable-select
   span.label(ng-if='vm.label') {{ vm.label }}
+  =' '
+  span(style='color: red' ng-if='vm.requiredField') *
   md-button.micro-square.md-mini.clear-button(ng-click="vm.model=null" ng-if='vm.model')
     i.material-icons.mini clear
+
   md-select(ng-model='vm.model' md-on-close="vm.onCloseFn()" aria-label='vm.label' ng-attr-placeholder='{{::vm.placeholder}}')
     md-select-header(layout='row' layout-align='center center' ng-if='vm.isSearchable')
       md-input-container(flex)
         label Поиск {{ vm.labelOf }}
         input(
-          elem-ready='vm.inputReady'
-          ng-model="vm.search.name"
-          type="text"
-          input-clear='black'
-          md-autofocus
+        elem-ready='vm.inputReady'
+        ng-model="vm.search.name"
+        ng-change='vm.onSearchChange(vm.search.name)'
+        type="text"
+        input-clear='black'
+        md-autofocus
         )
       div(ng-if='!vm.notAddable && vm.search.name')
 
         md-button.button-cust-fab(
-          ng-class='vm.addingMode ? "green-button-fab" : "yellow-button-fab"'
-          ng-click="vm.addClick($event)"
+        ng-show='vm.isValidToAdd'
+        ng-class='vm.addingMode ? "green-button-fab" : "yellow-button-fab"'
+        ng-click="vm.addClick($event)"
         )
           i.material-icons.md-fab add
 

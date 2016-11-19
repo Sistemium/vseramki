@@ -16,7 +16,10 @@
         notAddable: '=',
         labelOf: '@',
         searchable: '=',
-        placeholder: '@'
+        placeholder: '@',
+        pattern: '=',
+        formatter: '&',
+        requiredField: '='
       },
 
       controllerAs: 'vm',
@@ -29,6 +32,7 @@
 
     var vm = this;
     var el = $window.document.getElementsByClassName('toolbar-fixed-top');
+    var addPattern = vm.pattern || /.*/;
 
     if (!vm.labelOf) {
       vm.labelOf = `${_.lowerCase(vm.label)}а`;
@@ -38,13 +42,19 @@
 
       isSearchable: vm.searchable !== false,
       onCloseFn: () => vm.onClose(),
+      formatterFn: () => _.isFunction(vm.formatter()) ? vm.formatter() : defaultFormatter,
 
       inputReady,
       addClick,
       addAttrs,
-      showToast
+      showToast,
+      onSearchChange
 
     });
+
+    function onSearchChange(value) {
+      vm.isValidToAdd = addPattern.test(value);
+    }
 
     function addClick($event) {
       $event.stopPropagation();
@@ -68,7 +78,8 @@
         if (item.length) {
           vm.showToast('Такой атрибут уже сущетвует', false)
         } else {
-          var formattedAttr = vm.search.name.slice(0, 1).toUpperCase() + vm.search.name.slice(1).toLowerCase();
+
+          var formattedAttr = vm.formatterFn()(vm.search.name);
 
           foundModel.create({name: formattedAttr})
             .then(function (data) {
@@ -79,6 +90,10 @@
             });
         }
       });
+    }
+
+    function defaultFormatter(name) {
+      return _.upperFirst(name);
     }
 
     function showToast(resStr, status) {

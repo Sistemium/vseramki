@@ -1,7 +1,7 @@
 .header(layout='row' layout-align='center center')
 
-  md-input-container.no-margin(flex  layout='row')
-    i.material-icons.gray(style='margin-top: 5px; margin-right: 2px') search
+  md-input-container.no-margin(flex layout='row')
+    i.material-icons.search-label search
     label(for='articleSearcher')
     input#articleSearcher(type="search" ng-model="vm.search")
 
@@ -57,10 +57,16 @@ md-divider(ng-hide='vm.isRootState' style='margin-top: 8px')
 resize='articlesList'
 style='height: {{articlesList.windowHeight - articlesList.offsetTop - 20}}px'
 )
-  md-virtual-repeat-container.height-100.clickable(ng-if='!vm.isRootState')
+  md-virtual-repeat-container.clickable.scroll-y.height-100(
+  ng-if='!vm.isRootState'
+  md-top-index='vm.articlesListTopIndex'
+  )
     .item(
     md-virtual-repeat='frame in vm.articles'
-    ng-class="{'active' : vm.currentItemId == frame.id }"
-    ng-click='vm.changeFrame(frame)'
+    ng-class="{'active' : vm.id == frame.id }"
+    ng-click='vm.sideNavListItemClick(frame)'
     )
-      span {{frame.name}}
+      frame-name(article='frame')
+      small.gray(layout='row' layout-align='space-between center')
+        span {{ frame.secondName() }}
+        span {{ frame.code }}

@@ -118,3 +118,9 @@ md-dialog {
   -webkit-user-select: none;
   cursor: default;
 }
+
+.visible-xs {
+  @media (min-width: $layout-breakpoint-xs) {
+    display: none !important;
+  }
+}

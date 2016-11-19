@@ -5,7 +5,7 @@
   angular
     .module('vseramki')
     .service('Cart', Cart)
-  ;
+    .run(Cart => Cart.findAll());
 
   function Cart(Schema) {
 

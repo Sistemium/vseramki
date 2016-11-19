@@ -1,0 +1,91 @@
+state-bar.dictionary(bar-title='Словари')
+
+  md-fab-speed-dial.shown-tight.md-scale(md-direction='down')
+    md-fab-trigger
+      md-button.md-primary.admin-button(aria-label='Options menu'
+      md-ink-ripple='false'
+      ) {{ vm.option.labels.plural }}
+    md-fab-actions
+      md-button.md-raised.md-mini(
+      ng-repeat='dict in vm.options' align='center'
+      ng-click='vm.optionClick(dict)'
+      ng-class='{ "md-primary": dict.name === vm.option.name}'
+      ) {{ dict.labels.plural || dict.name }}
+
+.md-padding.dictionary(layout='row' layout-align='space-between start' layout-align-xs='space-around start')
+
+  md-sidenav(flex='nogrow' md-is-locked-open="$mdMedia('gt-xs')" class="md-sidenav-left")
+    div(ng-repeat='dict in vm.options' align='center')
+      md-button.default-button.md-raised.width-80(
+      style='width:80%'
+      ng-click='vm.optionClick(dict)'
+      ng-class='{ "md-primary": dict.name === vm.option.name}'
+      ) {{ dict.labels.plural || dict.name }}
+
+  span.hide-xs(flex='15')
+
+  #viewport(flex='60' flex-xs='100' flex-sm='80')
+
+    busy-linear(promise='vm.busy')
+    //md-progress-linear(md-mode="indeterminate")
+
+    md-table-container.scroll-y.md-whiteframe-1dp(
+    ng-if='vm.data'
+    resize='dictionary'
+    ng-style='{"max-height": (dictionary.windowHeight - dictionary.offsetTop - 5)+"px"}'
+    )
+
+      table(md-table)
+
+        thead(md-head md-order='filterBy')
+          th(
+          md-column
+          ng-repeat='col in vm.columns track by col.name'
+          md-order-by='{{col.name}}'
+          ) {{ col.title }}
+
+          th(
+          md-column
+          ng-repeat='rel in vm.relations track by rel.name'
+          ) {{ rel.title }}
+
+          th.col-remove(
+          md-column
+          ) Опции
+
+        tbody.clickable(md-body)
+
+          tr(
+          md-row
+          ng-repeat='row in vm.data|orderBy: filterBy track by row.id'
+          md-select='article'
+          md-select-id='id'
+          ng-class='{default: vm.modelDefaultId === row.id }'
+          )
+            td(
+            md-cell
+            ng-repeat='col in vm.columns track by col.name'
+            ng-click='vm.editCell($event, row, col)'
+            ) {{row[col.name]}}
+
+            td(
+            md-cell
+            ng-repeat='rel in vm.relations track by rel.name'
+            ) {{row[rel.name].length || ''}}
+
+            td(md-cell)
+              md-menu(md-offset='0 -7')
+                md-button.md-icon-button(aria-label='Open Options Menu', ng-click='$mdOpenMenu($event)')
+                  i.material-icons.clear-icon-size more_horiz
+                md-menu-content(width='2')
+
+                  md-menu-item
+                    md-button(ng-click='vm.deleteItem(row, $event)')
+                      span(md-menu-align-target) Удалить свойство
+
+                  md-menu-item
+                    md-button(ng-click='vm.defineFunction(row)')
+                      span(md-menu-align-target) {{ vm.modelDefaultId === row.id ? 'Убрать умолчание' : 'Использовать по умолчанию' }}
+
+  span.hide-xs(flex='15')
+

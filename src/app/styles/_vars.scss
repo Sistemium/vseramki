@@ -1,3 +1,4 @@
+$layout-breakpoint-xxs:    400px;
 $layout-breakpoint-xs:     600px !default;
 $layout-breakpoint-sm:     960px !default;
 $layout-breakpoint-md:     1280px !default;
@@ -31,6 +32,7 @@ $fab-button-hover-background-color: $md-fab-tool-hover;
 $fab-button-background-color: lighten($accent-background-color, 20%);
 
 $gray: gray;
+$black: rgba(0, 0, 0, 0.87);
 
 $default-button-hover: #DFDFDF;
 
@@ -44,3 +46,4 @@ $margin-default-half:  5px;
 
 $gray-borders-color: rgba(0,0,0,0.12);
 
+$list-item-border: solid 1px lighten(silver,15%);

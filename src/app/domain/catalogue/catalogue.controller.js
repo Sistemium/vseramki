@@ -2,9 +2,11 @@
 
 (function () {
 
-  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper) {
+  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper) {
 
-    var vm = this;
+    var vm = ControllerHelper.setup(this, $scope, onStateChange)
+      .use(TableHelper)
+      .use(AuthHelper);
 
     var {
       Article,
@@ -19,8 +21,9 @@
     } = Schema.models();
 
     var chunkSize = 3;
+    var lockArticlesScroll;
 
-    angular.extend(vm, {
+    _.assign(vm, {
 
       rootState: 'catalogue',
       rows: [],
@@ -29,10 +32,7 @@
       currentFilter: {},
       filterLength: false,
       selected: [],
-
-      pagination: TableHelper.pagination($scope),
-      isAdmin: AuthHelper.isAdmin(),
-      onPaginate: TableHelper.setPagination,
+      lockArticlesScroll: false,
 
       plusOne,
       minusOne,
@@ -44,14 +44,8 @@
       filterOptionClick,
       resetFilters,
       delCurrFilter,
-
-      changeView: to => $state.go(to),
-      goToCreateFrame,
-
-      changeFrame: function (frame) {
-        var newState = vm.currentState === 'create' ? '^.item' : $state.current.name;
-        $state.go(newState, {id: frame.id});
-      }
+      addClick,
+      sideNavListItemClick: sideNavListItemClick
 
     });
 
@@ -61,23 +55,7 @@
 
      */
 
-
     Cart.findAll();
-
-    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
-
-    Baguette.findAll().then(function (data) {
-      vm.baguette = data;
-    });
-
-    BaguetteImage.findAll().then(function (data) {
-      vm.baguetteImage = data;
-    });
-
-    ArticleImage.findAll({limit: 1000})
-      .then(function (data) {
-        vm.images = data;
-      });
 
     Article.findAll({limit: 1000})
       .then(() => {
@@ -86,7 +64,10 @@
           Colour.findAll(),
           Material.findAll(),
           FrameSize.findAll(),
-          Brand.findAll()
+          Brand.findAll(),
+          Baguette.findAll(),
+          BaguetteImage.findAll(),
+          ArticleImage.findAll()
         ]);
 
       })
@@ -105,19 +86,18 @@
 
     VSHelper.watchForGroupSize($scope, 300, 270, setChunks);
 
+    Cart.bindAll({}, $scope, 'vm.cart', recalcTotals);
+    // Baguette.bindAll({}, $scope, 'vm.baguette');
+    // BaguetteImage.bindAll({}, $scope, 'vm.baguetteImage');
+    // ArticleImage.bindAll({}, $scope, 'vm.images');
+
     $scope.$watch('vm.articleFilter', filterArticles);
 
     $scope.$watch('vm.search', () => {
       filterArticles();
     });
 
-    $scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-      vm.currentState = _.first($state.current.name.match(/[^\.]*$/));
-      vm.disableAddFrame = toState.url === '/add';
-      vm.isRootState = /^catalogue.(table|tiles)$/.test(toState.name);
-      vm.currentItemId = toParams.id;
-    });
-
+    $scope.$watch(() => Article.lastModified(), () => filterArticles());
 
     /*
 
@@ -125,10 +105,14 @@
 
      */
 
-    function goToCreateFrame (parent) {
+    function onStateChange() {
+      vm.id && scrollToIndex();
+    }
+
+    function addClick() {
 
       var re = new RegExp(`${vm.rootState}\.([^.]+)`);
-      var currentState = parent || _.last($state.current.name.match(re));
+      var currentState = _.last($state.current.name.match(re));
       $state.go(`${vm.rootState}.${currentState}.create`);
 
     }
@@ -152,11 +136,23 @@
       vm.rows = _.chunk(vm.articles, nv);
     }
 
+    function onArticleListChange() {
+      scrollToIndex();
+      setChunks(chunkSize);
+    }
+
+    function scrollToIndex() {
+      var id = vm.id;
+      if (!lockArticlesScroll && id) {
+        vm.articlesListTopIndex = _.findIndex(vm.articles, {'id': id});
+      }
+    }
+
     function rebind(filter) {
       if (vm.unbind) {
         vm.unbind();
       }
-      vm.unbind = Article.bindAll(filter, $scope, 'vm.articles', () => setChunks(chunkSize));
+      vm.unbind = Article.bindAll(filter, $scope, 'vm.articles', onArticleListChange);
     }
 
     function recalcTotals() {
@@ -272,6 +268,20 @@
       vm.currentFilter [field] = item;
       filterArticles();
 
+    }
+
+    function sideNavListItemClick(frame) {
+      var newState = $state.current.name;
+
+      if (vm.currentState === 'create') {
+        newState = '^.item';
+      } else if ($state.params.id === frame.id && $state.current.name.match(/edit/)) {
+        newState = '^'
+      }
+
+      lockArticlesScroll = true;
+      $state.go(newState, {id: frame.id})
+        .then(()=> lockArticlesScroll = false);
     }
 
   }

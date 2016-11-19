@@ -1,23 +1,32 @@
 state-bar.articles(
 root-state='catalogue'
-title='Каталог'
+bar-title='Каталог'
 )
-  .cart-totals(layout='column' sa-animate-on-change='vm.cartTotal' change-class="lite change-up" ng-if='!vm.isAdmin')
-    p.no-margin.text-right
-      span.gray Сумма заказа:
-      = ' '
-      span.bold(
-      style='min-width: 90px; display: inline-block; text-align: right;'
-      ) {{vm.cartSubTotal | number: 2}}&nbsp;₽
+  div(layout='row' layout-align='space-between center')
 
-    p.no-margin.text-right(ng-if='vm.cartDiscount')
-      span.gray К оплате со скидкой {{ vm.cartDiscount | number: 1 }}%:
-      = ' '
-      span.bold(style='min-width: 90px; display: inline-block; text-align: right;'
-      ) {{ vm.cartTotal | number:2}}&nbsp;₽
+    //md-button.md-fab.md-mini.md-icon-button.default-button(ng-click='vm.isSideNavOpen = !vm.isSideNavOpen')
+    //  i.material-icons search
+    //
+    //.flex
 
-  md-button.md-fab.md-mini.md-icon-button.admin-button(ng-click='vm.goToCreateFrame()' ng-if='vm.isAdmin')
-    i.material-icons add
+    .cart-totals(layout='column' sa-animate-on-change='vm.cartTotal' change-class="lite change-up" ng-if='!vm.isAdmin')
+      p
+        span.label Сумма заказа:
+        = ' '
+        span.value {{vm.cartSubTotal | number: 2}}&nbsp;₽
+
+      p(ng-if='vm.cartDiscount')
+        span.label К оплате со скидкой {{ vm.cartDiscount | number: 1 }}%:
+        = ' '
+        span.value {{ vm.cartTotal | number:2}}&nbsp;₽
+
+    .buttons(ng-if='vm.isAdmin && vm.currentState==="item"')
+      state-bar-button.admin-button(title='Редактировать рамку' icon='edit')
+      state-bar-button.admin-button(title='Удалить рамку' icon='delete')
+      state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo')
+    .buttons(ng-if='vm.isAdmin && vm.currentState !== "create"')
+      state-bar-button.admin-button(title='Добавить рамку' icon='add')
+
 
 section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
   md-progress-circular(md-diameter="200" md-mode="indeterminate")
@@ -25,7 +34,9 @@ section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
 md-content.articles(ng-if="vm.ready" layout="row" layout-align="center" )
 
   md-sidenav#sidenav-left.md-sidenav-left.md-whiteframe-1dp.margin-top-bottom(
-  layout-padding md-component-id="left-nav" md-is-locked-open="$mdMedia('gt-xs')"
+  layout-padding md-component-id="left-nav"
+  md-is-locked-open="$mdMedia('gt-xs')"
+  md-is-open='vm.isSideNavOpen'
   ng-include="'app/domain/catalogue/partials/sidenav.html'"
   )
 

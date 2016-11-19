@@ -13,7 +13,10 @@
         name: 'login',
         url: '/login?error',
         templateUrl: 'app/domain/auth/login.html',
-        controller: 'LoginController as vm'
+        controller: 'LoginController as vm',
+        data: {
+          title: 'Авторизация'
+        }
       })
     ;
   }

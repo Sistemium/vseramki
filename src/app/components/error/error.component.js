@@ -5,7 +5,7 @@
   angular.module('vseramki')
     .component('error', {
 
-      templateUrl: 'app/components/error/error.html',
+      //templateUrl: 'app/components/error/error.html',
 
       bindings: {
         errorText: '='
@@ -13,15 +13,16 @@
 
       controllerAs: 'vm',
 
-      controller: function () {
+      controller: function (ToastHelper, $state) {
 
         var vm = this;
 
-        vm.close = function () {
-          vm.hidden = true;
-        };
-
-        console.error(vm.errorText || 'No error');
+        if (vm.errorText) {
+          ToastHelper.error('Ошибка авторизации')
+            .then(function () {
+              $state.go('login', {}, {inherit: false});
+            })
+        }
 
       }
 

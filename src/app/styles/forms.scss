@@ -1,3 +1,5 @@
+@import "_vars";
+
 $input-wide-width: 300px;
 $input-normal-width: 250px;
 
@@ -8,7 +10,7 @@ form {
     padding-left: 0;
   }
 
-  &.wide .form-controls > *, .form-controls > .wide, .form-controls.wide > * {
+  .wide .form-controls > *, &.wide .form-controls > *, .form-controls > .wide, .form-controls.wide > * {
 
     width: $input-wide-width;
     min-width: $input-wide-width - 50;
@@ -27,6 +29,21 @@ form {
 
   md-chips {
     margin-bottom: 16px;
+  }
+
+  form-fields, .form-fields {
+    padding: 0 10px;
+
+    @media (max-width: $layout-breakpoint-xs - 1) {
+      .form-controls.layout-column, &.form-controls.layout-column {
+        md-input-container, searchable-select, md-chips {
+          width: 100%;
+          > input, * md-select {
+            width: 100%;
+          }
+        }
+      }
+    }
   }
 
   .form-controls {
@@ -83,4 +100,36 @@ div.alert {
   font-size: 15px;
   cursor: default;
   display: inline-block;
+}
+
+
+i.search-label {
+  color: $gray;
+  margin-top: 5px;
+  margin-right: 2px;
+}
+
+fieldset {
+  border: none;
+}
+
+.notable-disabled {
+
+  input[disabled], [disabled] input,
+  textarea[disabled], [disabled] textarea,
+  md-select[disabled] md-select-value, [disabled] md-select md-select-value {
+    color: black;
+    cursor: not-allowed;
+  }
+
+  md-select[disabled], [disabled] md-select {
+    .md-select-icon {
+      display: none;
+    }
+  }
+
+  [disabled] md-input-container label .required-field-asterisk {
+    display: none;
+  }
+
 }

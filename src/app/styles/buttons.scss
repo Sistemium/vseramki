@@ -73,7 +73,7 @@ button .label {
 
 .md-button, .md-button.md-raised {
 
-  &.default-button:hover:not([disabled]) {
+  &.default-button:hover:not([disabled]), &:hover:not([disabled]) {
     background-color: $default-button-hover;
   }
 
@@ -87,7 +87,7 @@ button .label {
     color: white;
   }
 
-  &.pink-button:hover:not([disabled]) {
+  &.pink-button:hover:not([disabled]), &.important-button:hover:not([disabled]) {
     background-color: $md-fab-hover;
   }
 
@@ -95,19 +95,26 @@ button .label {
     cursor: not-allowed;
   }
 
+  &.pink-button.md-focused {
+    background-color: $md-fab-hover;
+  }
+
+
   &.micro-fab:not([disabled]):hover,
   &.mini-fab:not([disabled]):hover {
     background-color: $md-fab-hover;
   }
 
+  &.admin-button {
+    background-color: #dfdfdf;
+    color: black;
+    min-width: 40px;
+    min-height: 40px;
+    &:not([disabled]):hover {
+      background-color: $admin-button-fab-color;
+    }
+  }
 
-}
-
-.admin-button {
-  background-color: #dfdfdf !important;
-  color: black !important;
-  min-width: 40px !important;
-  min-height: 40px !important;
 }
 
 .pink-button-fab {
@@ -159,7 +166,7 @@ button .label {
   min-height: 25px;
 
   &:active, &:hover {
-    background-color: $fab-button-hover-background-color !important;
+    background-color: $fab-button-hover-background-color;
   }
 }
 
@@ -198,11 +205,11 @@ button.micro-square, button.micro-square.md-fab, .md-button.micro-square.md-fab 
   cursor: pointer;
 }
 
-md-fab-actions {
+md-fab-actions, .viewport {
   .md-button.md-primary {
     &, &.md-raised {
       background-color: $vr-blue-color;
-      &:hover:not([disabled]) {
+      &:hover:not([disabled]), &.md-focused {
         background-color: $md-fab-tool-hover;
       }
     }
@@ -211,7 +218,7 @@ md-fab-actions {
 
 // Fab hovers
 
-.md-button.md-fab, .md-button.md-fab.md-icon-button {
+.md-button.md-fab, .md-button.md-fab.md-icon-button, .mini-fab {
 
   &:not([disabled]):hover {
     background-color: $md-fab-hover;
@@ -221,17 +228,48 @@ md-fab-actions {
     background-color: $fab-button-hover-background-color;
   }
 
-  &.default-button:not([disabled]):hover {
+  &.default-button:not([disabled]):hover, &.active:hover {
     background-color: $default-button-hover;
   }
 
   &.admin-button.md-mini:not([disabled]):hover {
-    background-color: $admin-button-fab-color;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.20);
+    color: $black;
+    background-color: lighten($admin-button-fab-color,15%);
   }
 
-  &.default-button {
+  &.default-button, &.active {
     background-color: $default-button-background-color;
     color: black;
   }
 
+  &.admin-button {
+    //background-color: #dfdfdf;
+    //color: black;
+    //box-shadow: none;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.16);
+    color: #606060;
+    background-color: #ffffff;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .warning & {
+    background-color: $vr-yellow-color;
+  }
+
+  .warning &:not([disabled]):hover {
+    &, &.admin-button{
+      background-color: darken($vr-yellow-color, 10);
+    }
+  }
+
+
 }
+
+a {
+  text-decoration: none;
+  color: #404040;
+}
+
+

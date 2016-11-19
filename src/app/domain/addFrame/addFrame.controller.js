@@ -30,7 +30,9 @@
       cancelChanges,
       addArticleFrameSize,
       articleFrameSizeDecrement,
-      articleFrameSizeIncrement
+      articleFrameSizeIncrement,
+      frameSizeNameFormatter: FrameSize.nameFormatter,
+      frameSizePattern: _.get(_.find(FrameSize.columns, {name: 'name'}), 'validators.ng-pattern')
 
     });
 
@@ -70,7 +72,6 @@
 
     $scope.$watch('vm.extraFrameSizeId', addArticleFrameSize);
     $scope.$watchGroup(['vm.frame.frameSizeId', 'vm.frame.baguetteId'], function (nv, ov) {
-
       if ((nv != ov) && hasChanges() && !reverted) {
         vm.checkAttrs();
       } else {
@@ -91,18 +92,18 @@
     function checkParams() {
       vm.paramsCheck = vm.frame.frameSizeId &&
         vm.frame.name &&
-        vm.frame.packageRel &&
+          // vm.frame.packageRel &&
         unique &&
-        vm.frame.highPrice &&
+          // vm.frame.highPrice &&
         (!vm.frame.multiType || _.find(vm.articleFrameSizes, afs => afs.count))
       ;
     }
 
     function hasChanges() {
       checkParams();
-      return !vm.id ? _.get(vm,'attrsForm.$dirty') :
-        Article.hasChanges(vm.id) ||
-        _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
+      return !vm.id ? _.get(vm, 'attrsForm.$dirty') :
+      Article.hasChanges(vm.id) ||
+      _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
     }
 
     function cancelChanges() {
@@ -146,7 +147,7 @@
         var afs = _.find(vm.articleFrameSizes, efs);
 
         if (afs) {
-          afs.count ++;
+          afs.count++;
         } else {
           afs = ArticleFrameSize.createInstance({
             frameSizeId: vm.extraFrameSizeId,
@@ -161,18 +162,18 @@
       }
     }
 
-    function save () {
+    function save() {
 
       Article.create(vm.frame)
         .then(article => {
-          return $q.all(_.map(vm.articleFrameSizes,afs => {
+          return $q.all(_.map(vm.articleFrameSizes, afs => {
 
             if (!vm.frame.multiType) {
               return afs.id ? ArticleFrameSize.destroy(afs.id) : $q.resolve();
             } else if (afs.id && !afs.count) {
               return ArticleFrameSize.destroy(afs.id);
             } else if (afs.count) {
-              return  (!afs.id || ArticleFrameSize.hasChanges(afs.id)) ?
+              return (!afs.id || ArticleFrameSize.hasChanges(afs.id)) ?
                 ArticleFrameSize.create(_.assign(afs, {articleId: article.id})) :
                 $q.resolve(afs);
             }
@@ -182,8 +183,12 @@
           }));
         })
         .then(function () {
-          clearForm();
           ToastHelper.success('Рамка сохранена');
+          if (!vm.id) {
+            $state.go('^.item.edit', {id: vm.frame.id});
+          } else {
+            clearForm();
+          }
         })
         .catch(() => ToastHelper.error('Ошибка. Рамка не сохранена'));
     }
@@ -194,6 +199,7 @@
       _.assign(params, {baguetteId: vm.frame.baguetteId}, {frameSizeId: vm.frame.frameSizeId});
 
       if (params.baguetteId && params.frameSizeId) {
+
         Article.findAll(params).then(function (data) {
 
           _.remove(data, {id: vm.id});
@@ -209,18 +215,21 @@
           checkParams();
 
         });
+      } else {
+        vm.attrsForm.$invalid = true;
+        vm.dupMessage = false;
       }
     }
 
-    function clearForm () {
+    function clearForm() {
       if (!vm.editState) {
         vm.frame = Article.createInstance();
       }
       vm.dupMessage = false;
       unique = true;
       initArticleFrameSizes();
-      _.result(vm,'attrsForm.$setUntouched');
-      _.result(vm,'attrsForm.$setPristine');
+      _.result(vm, 'attrsForm.$setUntouched');
+      _.result(vm, 'attrsForm.$setPristine');
       checkParams();
     }
 

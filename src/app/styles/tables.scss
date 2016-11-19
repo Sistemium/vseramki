@@ -13,6 +13,10 @@ table.md-table {
 
   th.md-column {
     text-align: center;
+    &.text-left {
+      text-align: left;
+    }
+  ;
   }
 
   td.md-cell {
@@ -27,6 +31,24 @@ table.md-table {
       text-align: right;
     }
 
+  }
+
+  .col-remove {
+    width: 60px;
+  }
+
+  .clickable .md-row:hover {
+    background-color: $toolbar-background-color;;
+  }
+
+  .warning {
+    background-color: $vr-yellow-color;
+    color: $black-font-color;
+    border-radius: 3px;
+    display: inline-block;
+    text-wrap: none;
+    margin: 0 $margin-default-half;
+    padding: $margin-default-half;
   }
 
 }
@@ -49,8 +71,10 @@ table.md-table {
 md-table-container {
   > h1, > h2, > h3 {
 
-    margin-right: $margin-default;
-    margin-left: $margin-default;
+    @media (min-width: $layout-breakpoint-xs) {
+      margin-right: $margin-default;
+      margin-left: $margin-default;
+    }
 
   }
 }

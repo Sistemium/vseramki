@@ -1,0 +1,43 @@
+searchable-select(
+label='Бренд'
+model='vm.baguette.brandId'
+model-name='Brand'
+options='vm.brands'
+)
+
+searchable-select(
+label='Цвет'
+model='vm.baguette.colourId'
+model-name='Colour'
+options='vm.colours'
+)
+
+searchable-select(
+label='Поверхность'
+label-of='Поверхности'
+model='vm.baguette.surfaceId'
+model-name='Surface'
+options='vm.surfaces'
+)
+
+searchable-select(
+label='Материал'
+model='vm.baguette.materialId'
+model-name='Material'
+options='vm.materials'
+required-field='true'
+)
+
+md-input-container
+  label Комментарий
+  input(
+  type='text'
+  ng-model='vm.baguette.lastName'
+  name='lastName'
+  input-clear
+  input-clear-value='null'
+  autocomplete='off'
+  )
+  div(ng-messages="vm.attrsForm.lastName.$error")
+    div(ng-message="required") Поле не может быть пустым
+

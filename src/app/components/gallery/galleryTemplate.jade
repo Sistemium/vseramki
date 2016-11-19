@@ -2,61 +2,8 @@
 .thumbnails(class='{{ baseClass }}', layout='row', layout-align='center center')
   .thumbnail(ng-repeat='i in images')
     a(href ng-click='vm.thumbnailClick(i, $index)' ng-mouseover='setHovered(i)')
-      img.thumb-image-fit-div(
+      img(
       ng-src='{{ i.thumbnailSrc }}'
       ng-class='{{ thumbClass }}'
       ng-attr-alt='Image {{ $index + 1 }}'
       )
-
-// On open image
-.ng-gallery-fullscreen.no-select(ng-if='opened' layout='row' layout-align='center center')
-
-  .left-right-chevron(flex layout='row' layout-align='start center' hide-xs)
-    .material-icons(ng-click='prevImage()') chevron_left
-
-  .main-view(flex='80' layout='column' layout-align='space-between center' flex-xs='100')
-
-    .window-controls(flex='10' layout='row' show-xs hide)
-      p.photo-counter {{index + 1}}/{{images.length}}
-      span(flex)
-      i.material-icons(ng-click='showAlert()' ng-if='isDeletable') delete
-      i.material-icons(ng-click='closeGallery()') close
-
-    // Photo div
-    .height-100(
-    layout='column'
-    layout-align='center center'
-    md-swipe-left='nextImage()'
-    md-swipe-right='prevImage()'
-    md-swipe-up='closeGallery()'
-    )
-      img.fullsize(
-      ondragstart='return false;'
-      ng-click='closeGallery()'
-      draggable='false'
-      ng-src='{{ img }}'
-      ng-if='!loading'
-      )
-      md-progress-circular(md-mode="indeterminate" md-diameter='170' ng-if='loading')
-
-    .image-info(flex='25' hide-xs)
-
-      p.photo-counter-gt-sm {{index + 1}}/{{images.length}}
-
-      .ng-gallery-content(unselectable='on', ng-show='opened')
-        .ng-thumbnails-wrapper
-          .ng-thumbnails
-            div(ng-repeat='i in images track by i.id')
-              img.thumb-image-fit-div.thumbnail-style(
-              draggable='false'
-              ng-src='{{ i.thumbnailSrc }}'
-              ng-class='{active : index === $index}'
-              ng-click='changeImage($index)'
-              )
-
-  .left-right-chevron(flex layout='row' layout-align='end center' hide-xs)
-    .material-icons(ng-click='nextImage()') chevron_right
-
-  .window-controls(hide-xs)
-    i.material-icons(ng-if='isDeletable' ng-click='showAlert($index)') delete
-    i.material-icons(ng-click='closeGallery()') close

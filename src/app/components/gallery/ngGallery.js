@@ -4,23 +4,7 @@
 
   angular.module('vseramki').directive('ngGallery', ngGallery);
 
-  function ngGallery($document, $timeout, $q, $templateCache, $window, $state, Schema) {
-
-    var el = $window.$;
-    var model;
-
-
-    if (/^cat/.test($state.current.name)) {
-      var ArticleImage = Schema.model('ArticleImage');
-      model = ArticleImage;
-
-    } else if (/^bag/.test($state.current.name)) {
-      var BaguetteImage = Schema.model('BaguetteImage');
-      model = BaguetteImage;
-
-    } else {
-      console.error('Unknown state');
-    }
+  function ngGallery($document, $timeout, $q, $templateRequest, $compile, ToastHelper) {
 
     var defaults = {
       baseClass: 'ng-gallery',
@@ -40,10 +24,6 @@
       scope.thumbClass = scope.thumbClass || defaults.thumbClass;
       scope.thumbsNum = scope.thumbsNum || 3; // should be odd
     }
-
-
-    // Set the default template
-    $templateCache.put('galleryTemplate.html');
 
     return {
       restrict: 'EA',
@@ -93,7 +73,7 @@
           scope.thumbsNum = 11;
         }
 
-        function querySelectorAll (q){
+        function querySelectorAll(q) {
           return element[0].querySelectorAll(q);
         }
 
@@ -106,6 +86,7 @@
 
         scope.thumb_wrapper_width = 0;
         scope.thumbs_width = 0;
+        scope.clickCount = 0;
 
         var loadImage = function (i) {
 
@@ -142,7 +123,10 @@
             smartScroll(scope.index);
           });
           scope.description = scope.images[i].id || '';
+          scope.confirmDelete = false;
         };
+
+        var fullscreenElement;
 
         //var defineClass = function (width, height) {
         //  scope.useWide = false, scope.useTall = false;
@@ -181,16 +165,19 @@
 
         scope.openGallery = function (i) {
 
+          $templateRequest('app/components/gallery/galleryFullscreen.html')
+            .then(function (html) {
+              var template = angular.element(html);
+              $body.append(template);
+              fullscreenElement = $compile(template)(scope);
+            });
+
           if (angular.isDefined(i)) {
             scope.index = i;
             showImage(scope.index);
           }
 
           scope.opened = true;
-
-          if (scope.hideOverflow) {
-            el('body').css({overflow: 'hidden'});
-          }
 
           $timeout(function () {
 
@@ -210,36 +197,34 @@
 
         scope.closeGallery = function () {
           scope.opened = false;
-          if (scope.hideOverflow) {
-            el('body').css({overflow: ''});
-          }
+          fullscreenElement.remove();
         };
 
-        scope.showAlert = function () {
-          // TODO: really show alert
-          // TODO: model can be ArticleImage or BaguetteImage
-          model.destroy(scope.images[scope.index]);
-          scope.closeGallery();
-        };
+        scope.deletePhoto = function () {
 
-        scope.deletePhoto = function (id, index) {
+          var imageModel = scope.images[scope.index];
 
-          console.log(id, index);
-
-          if (scope.images.length == 1) {
-            model.destroy(id);
-            scope.closeGallery();
-          } else if ((scope.index + 1) == scope.images.length) {
-            model.destroy(id);
-            scope.index = 0;
-            showImage(scope.index + 1);
+          if (imageModel) {
+            imageModel.DSDestroy()
+              .then(()=>{
+                scope.closeGallery();
+              })
+              .catch(err => {
+                scope.closeGallery();
+                ToastHelper.error('Не удалось удалить изображение');
+                console.error(err);
+              });
           } else {
-            model.destroy(id);
-            scope.index = index;
-            scope.changeImage(index);
-
+            console.error('ngGallery: Failed to initialize image model');
           }
 
+        };
+
+        scope.deleteClick = function () {
+          if (scope.confirmDelete) {
+            scope.deletePhoto();
+          }
+          scope.confirmDelete = !scope.confirmDelete;
         };
 
         $body.bind('keydown', function (event) {

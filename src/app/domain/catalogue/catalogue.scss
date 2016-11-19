@@ -1,15 +1,39 @@
 @import "../../styles/_vars";
 
+$card-thumbnail-size: 180px;
+
+frame-name {
+  display: block;
+  span {
+    margin-right: $margin-default-half;
+  }
+}
+
 .articles {
 
   .state-bar {
     .cart-totals {
       font-size: 14px;
+      margin-right: $margin-default-half;
+
+      p {
+        margin: 0;
+        text-align: right;
+        .label {
+          color: $gray;
+        }
+        .value {
+          min-width: 90px;
+          font-weight: bold;
+          display: inline-block;
+          text-align: right;
+        }
+      }
     }
 
     .view-mode-tool {
-      .header {
-        @media (max-width: $layout-breakpoint-xs) {
+      .options {
+        @media (max-width: $layout-breakpoint-xxs) {
           display: none;
         }
       }
@@ -41,6 +65,13 @@
       padding-left: 0;
     }
 
+    .item {
+      min-height: 35px;
+      .gray {
+        margin-top: 4px;
+      }
+      border-bottom: $list-item-border;
+    }
   }
 
   #scroll-main {
@@ -48,37 +79,63 @@
     margin-left: 0;
   }
 
+  .repeated-group {
+    height: 355px;
+    padding: 2px;
+  }
+
   .repeated-group-item {
     max-width: 284px;
-  }
-
-  .repeated-group {
-    padding: 2px;
-    margin: 2px;
-  }
-
-  .repeated-group-item {
     display: inline-block;
   }
 
   .item {
     padding: $margin-default-half;
-    margin: $margin-default-half 0;
   }
 
   md-card {
+
+    .not-in-cart {
+      margin-bottom: $margin-default-half;
+    }
+
     height: 340px;
+    position: relative;
 
     md-card-content {
       padding: 0;
+      width: 100%;
+      .name {
+        margin: $margin-default $margin-default-half;
+        text-align: center;
+      }
+      img {
+        max-width: $card-thumbnail-size;
+        max-height: $card-thumbnail-size;
+        height: $card-thumbnail-size;
+      }
+      .price {
+        text-align: center;
+        text-wrap: none;
+        .alert {
+          box-shadow: none;
+          background: none;
+          color: $vr-red-color;
+        }
+      }
     }
 
     md-card-actions {
       min-height: 40px !important;
+      position: absolute;
+      bottom: $margin-default-half;
+      width: 100%;
+      text-align: center;
+      margin: 0;
     }
 
     md-card-header {
-      padding: 6px;
+      padding: 0;
     }
 
     .title {

@@ -17,20 +17,20 @@
         };
       }
 
-      function setValues (newValue) {
+      function setValues(newValue) {
         _.assign(property, newValue);
       }
 
       var un = scope.$watch(getWindowDimensions, setValues, true);
 
-      function apply () {
+      function apply() {
         scope.$apply();
       }
 
       angular.element($window)
         .bind('resize', apply);
 
-      scope.$on('$destroy', ()=>{
+      scope.$on('$destroy', ()=> {
         un();
         angular.element($window)
           .unbind('resize', apply);

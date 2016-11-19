@@ -1,7 +1,9 @@
+@import "../../styles/_vars";
 
 .top-logo {
   max-height: 36px;
   cursor: pointer;
+  max-width: 100%;
 }
 
 @media (max-width: 449px) {
@@ -17,12 +19,10 @@ md-toolbar.toolbar-fixed-top.white-background {
 
 .toolbar-fixed-top {
 
-  //position: fixed;
-  top: 0;
-  z-index: 70;
+  z-index: 3;
 
-  & + * {
-    //margin-top: 64px;
+  .md-button.md-fab {
+    min-width: 40px;
   }
 
 }
@@ -36,16 +36,21 @@ body {
   overflow: hidden;
 }
 
-.tool-button {
+.tool-button, md-toolbar:not(.md-menu-toolbar) .md-button.tool-button:not(.md-raised) {
+  color: $black-font-color;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .26);
   background-color: rgb(250, 250, 250);
   &.md-button.md-primary {
     color: rgba(255, 255, 255, 0.87);
     background-color: $primary-button-background-color;
   }
-  &.md-button.md-primary:hover:not([disabled])  {
+  &.md-button.md-primary:hover:not([disabled]), &.md-button.md-primary.md-focused {
     background-color: $md-fab-tool-hover;
   }
+  &:hover:not([disabled]) {
+    background-color: $default-button-hover;
+  }
+
 }
 
 @media only screen and (min-width: 0) and (max-width: $layout-breakpoint-sm - 1) {
@@ -94,5 +99,21 @@ body {
       }
     }
 
+  }
+}
+
+@media (max-width: $layout-breakpoint-tight - 1) {
+  md-toolbar {
+    .hidden-tight {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: $layout-breakpoint-tight) {
+  md-toolbar {
+    .shown-tight {
+      display: none;
+    }
   }
 }

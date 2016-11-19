@@ -1,7 +1,17 @@
 @media print {
 
+  * {
+    box-shadow: none !important;
+  }
+
   .hidden-print {
     display: none;
+  }
+
+  div {
+    md-sidenav {
+      display: none !important;
+    }
   }
 
   .visible-print-inline {
@@ -32,6 +42,20 @@
       align-items: flex-start;
       -webkit-align-items: flex-start;
 
+    }
+
+  }
+
+  @page {
+    margin: 1cm;
+  }
+
+  .md-select-value {
+
+    border-bottom: none;
+
+    .md-select-icon {
+      display: none;
     }
 
   }

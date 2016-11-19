@@ -1,6 +1,31 @@
-h3 Сводка по заказу
+h3(ng-show='!vm.saleOrder.id') Сводка по заказу
+h3(ng-show='vm.saleOrder.id')
+  span.gray Заказ №
+  = ' '
+  span {{vm.saleOrder.ndoc}}
+  = ' '
+  span.gray от
+  = ' '
+  span {{vm.saleOrder.cts | amUtc | amLocal | amDateFormat:"DD/MM/YYYY HH:mm"}}
 
 .property-list-container
+
+  .property
+    .property-label Статус:
+    .property-value.bold
+      md-input-container(ng-if='vm.saleOrder')
+        md-select(
+        ng-disabled='!vm.isAdmin || vm.blockMdSelect || vm.editMode'
+        ng-model='vm.saleOrder.processing'
+        aria-label='$index state'
+        md-on-close='vm.changeOrderStatus(vm.saleOrder.id)'
+        )
+          md-option(ng-repeat='state in vm.processingDictionary track by state.status'
+          ng-value="state.status"
+          aria-label='label'
+          )
+            | {{state.label}}
+
   .property
     .property-label Всего позиций:
     .property-value {{ vm.cartItems | number:0 }}

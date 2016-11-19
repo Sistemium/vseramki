@@ -7,6 +7,9 @@ md-virtual-repeat-container {
   .item.active {
     background: $primary-button-background-color;
     color: white;
+    .gray {
+      color: white;
+    }
   }
 
   &.clickable .item:hover {

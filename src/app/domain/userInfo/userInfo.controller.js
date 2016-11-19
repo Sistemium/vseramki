@@ -7,23 +7,103 @@
     .controller('UserInfoController', UserInfoController)
   ;
 
-  function UserInfoController(AuthHelper, Auth) {
+  function UserInfoController(AuthHelper, Auth, Schema, $q, ToastHelper, $state, TableHelper, $scope) {
 
     var vm = this;
 
-    function setUser() {
-      AuthHelper.hasUser()
-        .then(function (user) {
-          vm.user = user;
-          vm.roles = AuthHelper.userRoles();
-        });
-    }
+    var User = Schema.model('User');
+    var SaleOrder = Schema.model('SaleOrder');
+
+    _.assign(vm, {
+      emailPattern: User.meta.emailPattern,
+      logout: Auth.logout,
+      pagination: TableHelper.pagination(),
+      onPaginate: TableHelper.setPagination,
+      rootState: 'order',
+      save,
+      hasChanges,
+      cancelChanges,
+      goToOrder,
+      goToOrders
+    });
+
+
+    /*
+     Init
+     */
 
     setUser();
 
-    angular.extend(vm, {
-      logout: Auth.logout
-    });
+
+    /*
+     Functions
+     */
+
+
+    function goToOrder(id) {
+      console.log(id);
+      $state.go('.', {id: id});
+    }
+
+    function goToOrders() {
+      $state.go('saleOrders')
+    }
+
+    function setUser() {
+      var authUser = AuthHelper.getUser();
+      vm.roles = AuthHelper.userRoles();
+
+      User.find(authUser.id)
+        .catch(err => {
+          if (err.status == 404) {
+            return User.create({
+              id: authUser.id,
+              name: authUser.name
+              //TODO: try to get email and phone from saProviderAccount
+            })
+          }
+          return $q.reject(err);
+        })
+        .then(user => {
+          vm.user = user;
+          vm.id = user.id;
+          getUserSaleOrders();
+        })
+        .catch(err => console.error(err));
+
+    }
+
+    function getUserSaleOrders() {
+      SaleOrder.findAll({creatorId: vm.user.id}).then(()=> {
+        SaleOrder.bindAll({}, $scope, 'vm.saleOrders', () => {
+          var count = _.get(vm.saleOrders, 'length');
+          vm.saleOrdersButton = count ? `${count} ${SaleOrder.labelOf(count)}` : null;
+        });
+      });
+    }
+
+    function save() {
+
+      _.assign(vm.user, {phone: vm.user.phone, email: vm.user.email});
+
+      User.save(vm.user).then(() => {
+        ToastHelper.success('Изменения сохранены');
+      }).catch(()=> {
+        ToastHelper.error('Ошибка');
+      });
+
+    }
+
+    function hasChanges() {
+      return vm.user && User.hasChanges(vm.user.id);
+    }
+
+    function cancelChanges() {
+      _.get(vm, 'user.id') && User.revert(vm.user.id);
+      _.result(vm, 'attrsForm.$setPristine');
+      _.result(vm, 'attrsForm.$setUntouched');
+    }
+
 
   }
 
