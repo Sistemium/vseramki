@@ -193,8 +193,12 @@
     }
 
     function save() {
+      
       //TODO baguette.name
-      vm.baguette.name = '';
+      if (!vm.baguette.isValid) {
+        vm.baguette.name = (_.get(vm.baguette, 'brand.name') || '') + ' ' + (_.get(vm.baguette, 'colour.name') || '') + ' ' + (_.get(vm.baguette, 'surface.name') || '');
+      }
+
       return Baguette.create(vm.baguette)
         .then(baguette => {
 
