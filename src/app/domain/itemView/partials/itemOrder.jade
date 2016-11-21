@@ -14,6 +14,7 @@
 md-button.md-raised.action-button.pink-button(
 ng-click='vm.addToCart()'
 ng-if='vm.prices && !vm.article.inCart'
+ng-disabled='!vm.article.isValid'
 )
   | {{'Добавить к заказу'}}
 
