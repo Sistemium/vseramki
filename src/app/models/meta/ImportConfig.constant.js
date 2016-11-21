@@ -136,12 +136,18 @@
       ref: 'colourId'
     }, {
       name: 'highPrice',
-      label: 'Мел_Опт_Цена',
-      parser: parseFloat
+      label: 'Розничная цена',
+      parser: parseFloat,
+      compute: item => {
+        return item['Мел_Опт_Цена']
+      }
     }, {
       name: 'lowPrice',
-      label: 'Спец_Цена',
-      parser: parseFloat
+      label: 'Оптовая цена',
+      parser: parseFloat,
+      compute: item => {
+        return item['Спец_Цена']
+      }
     }
 
   ];
