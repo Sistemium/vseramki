@@ -11,7 +11,7 @@ ng-if='!vm.busyReading && vm.data'
     h3(ng-show='vm.recordData.ommitedRecord') Пропущено: {{ vm.recordData.ommitedRecord }}
 
   h3(ng-if='vm.progress' layout='row' layout-align='center center')
-    | Обработано {{vm.recordData.newRecord - vm.modifiedData.length}} из {{vm.recordData.newRecord - vm.recordData.ommitedRecord}} записей
+    | Обработано {{vm.recordData.modifiedRecord + vm.recordData.newRecord - vm.modifiedData.length - vm.recordData.ommitedRecord}} из {{vm.data.length - vm.recordData.notModified - vm.recordData.ommitedRecord}} записей
 
   table(md-table ng-if='vm.modifiedData.length')
     thead(md-head md-order='vm.orderBy')
