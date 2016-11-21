@@ -2,7 +2,7 @@
 
 (function () {
 
-  function Article(Schema, Entity) {
+  function Article(Schema, Entity, ExportConfig) {
 
     const totalThreshold = 100000;
     const minThreshold = 10000;
@@ -68,6 +68,10 @@
         }
       },
 
+      meta: {
+        exportConfig: ExportConfig.Article
+      },
+
       methods: {
 
         activePhoto: function () {
@@ -101,11 +105,11 @@
           var fs = frameSizes || this.articleFrameSizes;
 
           return _.sortBy(_.filter(_.map(fs, afs => {
-              if (!afs.count) {
-                return '';
-              }
-              return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
-            })))
+            if (!afs.count) {
+              return '';
+            }
+            return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
+          })))
             .join(' + ');
 
         },
