@@ -137,16 +137,16 @@
     }, {
       name: 'highPrice',
       label: 'Розничная цена',
-      parser: parseFloat,
+      //parser: parseFloat,
       compute: item => {
-        return item['Мел_Опт_Цена']
+        return parseFloat(item['Мел_Опт_Цена']);
       }
     }, {
       name: 'lowPrice',
       label: 'Оптовая цена',
-      parser: parseFloat,
+      //parser: parseFloat,
       compute: item => {
-        return item['Спец_Цена']
+        return parseFloat(item['Спец_Цена']);
       }
     }
 
