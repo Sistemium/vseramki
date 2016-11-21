@@ -69,7 +69,7 @@
       label: 'Код'
     }, {
       name: 'name',
-      label: 'Наименование',
+      label: 'Наименование'
     }, {
       name: 'nameExternal',
       label: 'Наименование (код 1С)',
