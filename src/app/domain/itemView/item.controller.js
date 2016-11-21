@@ -34,7 +34,7 @@
       currentImageHover: {},
       addToCart: () => {
         Cart.addToCart(vm.article);
-        $mdMedia('gt-sm') || $timeout(()=>{
+        $mdMedia('gt-sm') || $timeout(()=> {
           $uiViewScroll(angular.element(document.getElementById('cartCountInput')));
         });
       },
@@ -62,6 +62,14 @@
 
       previewClick: () => {
         vm.images.length && $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
+      },
+
+      visibilityClick: ()=> {
+        setIsValid(false);
+      },
+
+      visibilityOffClick: ()=> {
+        setIsValid(true);
       }
 
     }, stateFilter);
@@ -115,6 +123,11 @@
      Functions
 
      */
+
+
+    function setIsValid(to) {
+      vm.article.isValid = to;
+    }
 
     function recalcTotals() {
       Cart.recalcTotals(vm);
@@ -255,7 +268,7 @@
 
       var newId = _.get(newImg, 'id');
 
-      if (!vm.currentImageLoading && newId === _.get(vm,'currentImage.id')) {
+      if (!vm.currentImageLoading && newId === _.get(vm, 'currentImage.id')) {
         return $scope.$broadcast('openGallery', {index: i});
       } else {
         setPreviewImage(newImg);
