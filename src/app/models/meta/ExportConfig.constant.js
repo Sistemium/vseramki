@@ -40,11 +40,11 @@
           title: 'Цвет',
           property: 'colour.name'
         }, {
-          title: 'Мел_Опт_Цена',
+          title: 'Розничная цена',
           property: 'highPrice',
           type: 'number'
         }, {
-          title: 'Спец_Цена',
+          title: 'Оптовая Цена',
           property: 'lowPrice',
           type: 'number'
         }
