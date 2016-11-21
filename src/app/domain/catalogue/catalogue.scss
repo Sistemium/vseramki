@@ -11,6 +11,10 @@ frame-name {
 
 .articles {
 
+  .is-valid-article {
+    background: $vr-yellow-color + 150%;
+  }
+
   .state-bar {
     .cart-totals {
       font-size: 14px;
