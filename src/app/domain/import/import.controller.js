@@ -311,6 +311,7 @@
       });
       return model.create(item.instance);
 
+      //cancelLoadDataClick();
     }
 
   }
