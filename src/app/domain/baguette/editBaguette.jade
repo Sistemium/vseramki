@@ -6,13 +6,9 @@ ng-style="{height: (edit.windowHeight - edit.offsetTop - 2) + 'px'}"
 
     form-fields.wide(layout='column' layout-align='space-between top' layout-gt-sm='row')
       .flex
-
       .form-controls(layout='column' layout-align='start center' ng-include="'app/domain/baguette/partials/baguetteSelects.html'")
-
       .flex
-
       .form-controls(layout='column' layout-align='start center' ng-include="'app/domain/baguette/partials/baguetteFields.html'")
-
       .flex
 
     form-footer(ng-if='vm.id')
@@ -24,7 +20,7 @@ ng-style="{height: (edit.windowHeight - edit.offsetTop - 2) + 'px'}"
 
       .text-center.margin-top#frames(ng-if='vm.baguette.articles.length')
         span
-          md-button.default-button(ui-sref='catalogue' disabled='disabled') Рамк{{vm.baguette.articles.length > 1 ? 'и' : 'а'}}:
+          md-button.default-button(ui-sref='catalogue' disabled='disabled' aria-label='Рамка') Рамк{{vm.baguette.articles.length > 1 ? 'и' : 'а'}}:
         = ' '
         span(ng-repeat='frame in vm.baguette.articles track by frame.id')
-          md-button.tool-button.default-button(ui-sref='catalogue({item: frame.id})') {{ frame.frameSize.name }}
+          md-button.tool-button.default-button(ui-sref='catalogue({item: frame.id})' aria-label='Размеры') {{ frame.frameSize.name }}
