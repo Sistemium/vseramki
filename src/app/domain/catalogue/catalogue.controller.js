@@ -2,7 +2,7 @@
 
 (function () {
 
-  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper) {
+  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper, ExportExcel) {
 
     var vm = ControllerHelper.setup(this, $scope, onStateChange)
       .use(TableHelper)
@@ -48,9 +48,8 @@
       sideNavListItemClick: sideNavListItemClick,
 
       fileDownloadClick: function () {
-        console.log('You ve clicked import button');
-        //var articles = orderBy(vm.filteredBaguettes, vm.orderBy);
-        //ExportExcel.exportArrayWithConfig(articles, Article.meta.exportConfig, 'Рамки');
+        var articles = vm.articles;
+        ExportExcel.exportArrayWithConfig(articles, Article.meta.exportConfig, 'Рамки');
       },
 
       fileUploadClick: () => $state.go('import', {model: 'Article'})
@@ -99,7 +98,6 @@
     // BaguetteImage.bindAll({}, $scope, 'vm.baguetteImage');
     // ArticleImage.bindAll({}, $scope, 'vm.images');
 
-    $scope.$watch('vm.articleFilter', filterArticles);
 
     $scope.$watch('vm.search', () => {
       filterArticles();
@@ -113,8 +111,21 @@
 
      */
 
-    function onStateChange() {
+    function onStateChange(toState, toParams) {
+
       vm.id && scrollToIndex();
+
+      if (/\.edit$/.test(toState.name)) {
+
+        return Article.find(toParams.id).then(function (item) {
+          vm.currentItem = item;
+          //scrollToIndex();
+          //lockArticlesScroll = false;
+        });
+      } else {
+        vm.currentItem = false;
+      }
+
     }
 
     function addClick() {
@@ -203,9 +214,15 @@
       } : {};
 
       if (vm.search) {
-        _.set(jsFilter, 'where.name', {
-          'likei': `%${vm.search}%`
-        });
+        if (vm.search == 'invalid') {
+          _.set(jsFilter, 'where.isValid', {
+            'likei': 'false'
+          });
+        } else {
+          _.set(jsFilter, 'where.name', {
+            'likei': `%${vm.search}%`
+          });
+        }
       }
       return jsFilter;
 
