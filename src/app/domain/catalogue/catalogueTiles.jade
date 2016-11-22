@@ -49,7 +49,7 @@ md-content#scroll-main.ui-view
 
                 md-button.micro-fab(ng-click='vm.plusOne(article)') +
 
-          md-card-actions.not-in-cart(ng-if='article.highPrice && !article.inCart')
+          md-card-actions.not-in-cart(ng-if='article.highPrice && !article.inCart && article.isValid')
             md-button.md-fab.md-mini.md-icon-button.default-button(
             aria-label="Добавить в корзину"
             ng-click="vm.addToCart(article)"
