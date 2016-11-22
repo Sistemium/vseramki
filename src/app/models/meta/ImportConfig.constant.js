@@ -115,25 +115,10 @@
       label: 'Прозрачная вставка',
       ref: 'screeningId'
     }, {
-      name: 'material.name',
-      model: 'Material',
-      label: 'Материал',
-      ref: 'materialId'
-    }, {
       name: 'backMount.name',
       model: 'BackMount',
       label: 'Крепление задника',
       ref: 'backMountId'
-    }, {
-      name: 'brand.name',
-      model: 'Brand',
-      label: 'Бренд',
-      ref: 'brandId'
-    }, {
-      name: 'colour.name',
-      model: 'Colour',
-      label: 'Цвет',
-      ref: 'colourId'
     }, {
       name: 'highPrice',
       label: 'Розничная цена',
