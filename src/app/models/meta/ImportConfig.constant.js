@@ -96,6 +96,14 @@
               formattedFrameSize = splittedVal[0] + 'x' + splittedVal[1];
               return false;
       }, {
+        // delete if not needed
+        name: 'code',
+        label: 'Артикул',
+        compute: item => {
+          var reg = /^\s+$/;
+          var isSpaceString = reg.test(item['Артикул']);
+          return isSpaceString ? null : item['Артикул'];
+      }, {
         name: 'frameSize.name',
         model: 'FrameSize',
         label: 'Размер',
