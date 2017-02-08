@@ -40,9 +40,7 @@
      Init
      */
 
-
     vm.busy = model.findAll();
-
 
     /*
      Listeners
@@ -59,9 +57,13 @@
           })
           .then(res => {
 
-            vm.readyToImport = !!res;
-            vm.data = res;
-            vm.columns = _.clone(columns);
+            if (res) {
+              vm.readyToImport = !!res;
+              vm.data = res;
+              vm.columns = _.clone(columns);
+            } else {
+              vm.busyReading = false;
+            }
 
           });
       }
