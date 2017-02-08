@@ -82,7 +82,7 @@
 
     $scope.$watch('vm.columns.length', () => {
       vm.busyMessage = 'Проверка данных ...';
-      $timeout().then(()=> {
+      $timeout().then(() => {
         if (vm.data) {
           setModifiedData();
         }
@@ -120,7 +120,7 @@
         if (!isExistingProperty) {
           AlertHelper.showConfirm(ev, `Добавить ${col.label.toLowerCase()} "${propertyName}" ?`)
             .then(function () {
-              model.create({name: propertyName}).then(()=> {
+              model.create({name: propertyName}).then(() => {
                 ToastHelper.success('Добавлено');
                 setModifiedData();
               })
@@ -138,7 +138,9 @@
 
     function setModifiedData() {
 
+
       var validFields = _.map(vm.columns, column => {
+
         return {
           id: column.ref || column.name,
           name: column.name,
@@ -146,6 +148,7 @@
           model: column.model,
           ref: column.ref
         }
+
       });
 
       vm.modifiedData = [];
@@ -314,10 +317,12 @@
     function saveModelItem(item) {
 
       // _.assign(item.instance, item.importData);
+
       _.each(columns, column => {
         var name = column.ref || column.name;
         item.instance[name] = item.importData[name];
       });
+
       return model.create(item.instance);
 
       //cancelLoadDataClick();
