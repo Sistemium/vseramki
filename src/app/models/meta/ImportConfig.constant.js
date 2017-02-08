@@ -96,8 +96,27 @@
               formattedFrameSize = splittedVal[0] + 'x' + splittedVal[1];
               return false;
             }
-          });
-          return formattedFrameSize || frameSize;
+
+          }
+
+          var formattedFrameSize = false;
+
+          if (!frameSize) {
+            return null;
+          } else {
+            var splitters = ['x', 'х', ' ', '*'];
+            _.each(splitters, function (splitter) {
+              var splittedVal = frameSize.split(splitter);
+
+              if (splittedVal[0] * splittedVal[1] > 0) {
+                formattedFrameSize = splittedVal[0] + 'x' + splittedVal[1];
+                return false;
+              }
+            });
+
+            return formattedFrameSize || frameSize;
+          }
+
         }
 
       }
