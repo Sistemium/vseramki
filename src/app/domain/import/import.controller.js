@@ -54,7 +54,7 @@
         vm.busyReading = ImportExcel.readFile(_.first(vm.files), columns)
           .catch(err => {
             vm.filesApi.removeAll();
-            ToastHelper.error(angular.toJson(err));
+            ToastHelper.error('Ошибка. ' + err);
             return false;
           })
           .then(res => {
