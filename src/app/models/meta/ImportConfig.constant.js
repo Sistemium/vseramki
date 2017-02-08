@@ -136,10 +136,83 @@
     }
 
   ];
+          var code = item['Артикул'];
+          var regexp = /^X?\d{1,}(?:\*?\d{1,})$/mi;
+          var rlkRegexp = /РЛК$/mi;
+          var baguetteCode;
 
   angular
     .module('vseramki')
     .constant('ImportConfig', {
+          if (code != false) {
+
+            var divided = code.split('-');
+
+            if (_.last(divided).length > 1) {
+
+              // Normalized Code endings:
+              // -X\d, -\d, -\d*\d
+
+              var isNormalizedCode = regexp.test(_.last(divided));
+
+              if (isNormalizedCode) {
+
+                if (divided.length > 1) {
+                  divided.pop();
+                  baguetteCode = divided.join('-');
+                } else {
+                  baguetteCode = divided[0];
+                }
+
+              } else {
+
+                var isRLK = rlkRegexp.test(divided[0]);
+
+                if (isRLK) {
+                  baguetteCode = divided[0].replace('РЛК', '');
+                } else {
+                  baguetteCode = divided[0];
+                }
+
+              }
+
+              //baguetteCode = divided.join('-');
+
+            } else {
+
+              divided.pop();
+              isNormalizedCode = regexp.test(_.last(divided));
+
+              if (isNormalizedCode) {
+                divided.pop();
+                baguetteCode = divided.join('-');
+              } else {
+                baguetteCode = divided.join('-');
+              }
+
+            }
+
+          } else {
+            baguetteCode = null
+          }
+
+
+          if (baguetteCode) {
+
+            var baguetteModel = Schema.model('Baguette');
+
+            return _.get(_.first(baguetteModel.filter({
+                where: {
+                  code: {
+                    likei: '%' + baguetteCode + '%'
+                  }
+                }
+              })), 'id') || null;
+          } else {
+            return null;
+          }
+
+        }
 
       Baguette: {
         BaguetteColumns,
