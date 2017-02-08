@@ -95,6 +95,25 @@
             if (splittedVal.length == 2) {
               formattedFrameSize = splittedVal[0] + 'x' + splittedVal[1];
               return false;
+      }, {
+        name: 'frameSize.name',
+        model: 'FrameSize',
+        label: 'Размер',
+        ref: 'frameSizeId',
+        compute: item => {
+
+          var frameSizeReg = /\d{2,4}(\*|\x|\х)\d{2,4}/g;
+          var frameSize = item['Размер'];
+
+          if (/^\s+$/.test(frameSize)) {
+
+            var fs = item['Наименование'].match(frameSizeReg);
+
+            if (fs) {
+              frameSize = fs[0]
+            }
+            else {
+              frameSize = false
             }
 
           }
