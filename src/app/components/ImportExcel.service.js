@@ -40,7 +40,7 @@
 
             var data = e.target.result;
             var res = XLSX.read(data, {type: 'binary'});
-            if (!_.get(res,'SheetNames.length')) {
+            if (!_.get(res, 'SheetNames.length')) {
               return reject('Неизвестный формат файла');
             }
             var xlsxData = XLSX.utils.make_json(res.Sheets[res.SheetNames[0]]);
@@ -51,6 +51,7 @@
               };
 
               _.each(columnTranslation, (val) => {
+
                 res[val.name] = val.compute(row);
               });
 
@@ -66,7 +67,7 @@
         };
 
         $timeout(100)
-          .then(()=>reader.readAsBinaryString(file.lfFile));
+          .then(() => reader.readAsBinaryString(file.lfFile));
 
       });
 
