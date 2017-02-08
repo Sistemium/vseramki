@@ -11,6 +11,10 @@
     var importConfig = ImportConfig[modelName];
     var columns = importConfig[modelName + 'Columns'];
 
+    var baguetteModel = Schema.model('Baguette');
+    baguetteModel.findAll({limit: 4000});
+
+
     _.assign(vm, {
 
       title: `Загрузка ${model.labels.ofMany} из файла`,
