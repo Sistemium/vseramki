@@ -63,9 +63,9 @@ ng-if='!vm.busyReading && vm.data'
         ng-repeat='col in vm.columns track by col.name'
         )
           div(
-          ng-class='{"warning clickable": col.ref && row.importData[col.name] && !row.importData[col.ref]}'
+          ng-class='{"warning clickable": col.ref && row.importData[col.name] && !row.importData[col.ref] && row.importData[col.name] != " "}'
           ng-click='vm.addPropertyClick(col, row, $event)'
-          ) {{row.importData[col.name]}}
+          ) {{col.name == 'baguetteId' ? (row.importData[col.name] ? '+' : '-') : row.importData[col.name]}}
           .gray
             del(ng-if='::row.diff[col.name]' ) {{ ::row.diff[col.name] }}
 
