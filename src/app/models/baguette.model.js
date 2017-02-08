@@ -74,11 +74,11 @@
             this.brand ? '"' + this.brand.name + '"' : this.code
           ];
 
-          if (this.colour){
+          if (this.colour) {
             names.push(this.colour.name.toLocaleLowerCase());
           }
 
-          if (this.surface){
+          if (this.surface) {
             names.push(this.surface.name.toLocaleLowerCase());
           }
 
