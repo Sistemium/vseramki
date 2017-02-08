@@ -66,7 +66,6 @@
 
     Article.findAll({limit: 1000})
       .then(() => {
-
         return $q.all([
           Colour.findAll(),
           Material.findAll(),
@@ -306,7 +305,7 @@
 
       lockArticlesScroll = true;
       $state.go(newState, {id: frame.id})
-        .then(()=> lockArticlesScroll = false);
+        .then(() => lockArticlesScroll = false);
     }
 
   }
