@@ -212,15 +212,18 @@
 
       _.each(config, function (val) {
 
-        var model = Schema.model(val.model);
+        if (val.name != 'baguetteId') {
 
-        item[val.ref] = item[val.name] && _.get(_.first(model.filter({
-            where: {
-              name: {
-                likei: item[val.name]
+          var model = Schema.model(val.model);
+
+          item[val.ref] = item[val.name] && _.get(_.first(model.filter({
+              where: {
+                name: {
+                  likei: item[val.name]
+                }
               }
-            }
-          })), 'id') || null;
+            })), 'id') || null;
+        }
 
       });
 
