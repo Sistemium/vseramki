@@ -27,7 +27,7 @@
 
     });
 
-    function afterMapInit () {
+    function afterMapInit() {
       vm.map.ready = true;
     }
 
