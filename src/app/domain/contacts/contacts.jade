@@ -14,7 +14,7 @@ ng-style='{height: (contacts.windowHeight - contacts.offsetTop)+"px"}'
 
     .flex
 
-    .property-list.md-whiteframe-1dp.ya-map-container#location
+    .property-list.md-whiteframe-1dp.ya-map-container#location(layout='column')
 
       h3.header Наш офис
 
@@ -38,9 +38,9 @@ ng-style='{height: (contacts.windowHeight - contacts.offsetTop)+"px"}'
         ya-source="vm.map.marker"
         )
 
-      .text-center(ng-if='!vm.map.ready')
+      .text-center(ng-if='!vm.map.ready' layout-align='center center' layout='column' flex='100')
         h3.gray Загрузка карты
-        md-progress-circular.margin-auto(md-diameter="300" md-mode="indeterminate")
+        md-progress-circular(md-diameter="100" md-mode="indeterminate")
 
     .flex
 
