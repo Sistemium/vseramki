@@ -73,15 +73,6 @@
         name: 'name',
         label: 'Наименование'
       }, {
-        // delete if not needed
-        name: 'code',
-        label: 'Артикул',
-        compute: item => {
-          var reg = /^\s+$/;
-          var isSpaceString = reg.test(item['Артикул']);
-          return isSpaceString ? null : item['Артикул'];
-        }
-      }, {
         name: 'nameExternal',
         label: 'Наименование (код 1С)',
         compute: item => {
@@ -148,7 +139,6 @@
         label: 'Багет',
         compute: item => {
 
-
           var code = item['Артикул'];
           var regexp = /^X?\d{1,}(?:\*?\d{1,})$/mi;
           var rlkRegexp = /РЛК$/mi;
@@ -205,7 +195,6 @@
           } else {
             baguetteCode = null
           }
-
 
           if (baguetteCode) {
 
