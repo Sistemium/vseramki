@@ -2,13 +2,19 @@ $searchable-select-label-color: rgba(0, 0, 0, 0.54);
 
 searchable-select {
 
+  .asteric {
+    color: red;
+    font-size: 12px;
+    margin-left: -1px;
+  }
+
   md-select {
     margin: 0;
   }
 
   .label {
     color: $searchable-select-label-color;
-    font-size: 12px;
+    font-size: 13px;
     padding-left: 3px;
   }
 
@@ -18,11 +24,15 @@ searchable-select {
 
   button.clear-button {
     color: $searchable-select-label-color;
-    bottom: -4px;
     left: -2px;
     margin: 0;
-    line-height: 15px;
-    height: 15px;
+    padding: 0;
+    line-height: 0;
+    height: 12px;
+
+    i {
+      font-size: 12px !important;
+    }
   }
 
   &.error .md-select-placeholder {
