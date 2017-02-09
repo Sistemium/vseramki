@@ -219,14 +219,14 @@
         ref: 'backMountId'
       }, {
         name: 'highPrice',
-        label: 'Розничная цена',
+        label: 'Розн. цена',
         //parser: parseFloat,
         compute: item => {
           return parseFloat(item['Мел_Опт_Цена']);
         }
       }, {
         name: 'lowPrice',
-        label: 'Оптовая цена',
+        label: 'Опт. цена',
         //parser: parseFloat,
         compute: item => {
           return parseFloat(item['Спец_Цена']);
