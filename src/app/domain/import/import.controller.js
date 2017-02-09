@@ -22,6 +22,7 @@
       modifiedData: [],
       selected: [],
       recordData: {},
+      files: [],
 
       labels: {
         imported: 'Обновлено',
@@ -51,6 +52,7 @@
      */
 
     $scope.$watch('vm.xlsxUploadForm.$valid', isValid => {
+
       if (isValid && vm.files.length === 1) {
         vm.busyMessage = 'Чтение файла ...';
         vm.busyReading = ImportExcel.readFile(_.first(vm.files), columns)
