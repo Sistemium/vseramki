@@ -2,7 +2,7 @@
 
 (function () {
 
-  function ImportController(ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig, AlertHelper) {
+  function ImportController(ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig, AlertHelper, $mdMedia) {
 
     var vm = this;
 
@@ -13,6 +13,10 @@
 
     var baguetteModel = Schema.model('Baguette');
     baguetteModel.findAll({limit: 4000});
+
+    // TODO: media query?
+
+    $scope.$mdMedia = $mdMedia;
 
 
     _.assign(vm, {
