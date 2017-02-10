@@ -115,8 +115,8 @@ frame-name {
       }
       img {
         max-width: $card-thumbnail-size;
-        max-height: $card-thumbnail-size;
-        height: $card-thumbnail-size;
+        max-height: $card-thumbnail-size - 10;
+        height: $card-thumbnail-size - 10;
       }
       .price {
         text-align: center;
