@@ -55,4 +55,27 @@ md-input-container
   div.custom-animation(ng-show="vm.attrsForm.lowPrice.$error.checkPrice")
     span.custom-warning Оптовая цена больше рыночной
 
+md-input-container
+  label Код 1С
+    //=' '
+    //span.required-field-asterisk *
+  input(
+  name='code'
+  type='text'
+  ng-model='vm.frame.nameExternal'
+  input-clear='black'
+  )
+
+md-input-container
+  label Наименование
+    //=' '
+    //span.required-field-asterisk *
+  input(
+  name='name'
+  type='text'
+  ng-model='vm.frame.name'
+  input-clear='black'
+  )
+
+
 input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')
