@@ -6,6 +6,10 @@
     margin: $margin-default;
   }
 
+  .md-virtual-repeat-container > .md-virtual-repeat-scroller > .md-virtual-repeat-offsetter {
+    overflow-x: scroll;
+  }
+
   .result {
     display: inline-block;
     margin-right: 1em;
@@ -19,3 +23,29 @@
   }
 
 }
+
+#import-buttons {
+
+  .md-button > i {
+    position: inherit;
+    top: 2px;
+    left: 1px;
+    font-weight: 600;
+  }
+
+  .round-button {
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 20px;
+  }
+
+  .round-button:last-of-type {
+    margin-right: 6px;
+  }
+
+  .round-button:first-of-type {
+    margin-right: 2px;
+  }
+
+}
+
