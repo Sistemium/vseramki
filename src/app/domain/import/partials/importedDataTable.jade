@@ -53,10 +53,9 @@ ng-if='!vm.busyReading && vm.data'
         th(ng-show='vm.doneImport' md-column) Ошибка
 
       tbody(md-body)
-        tr(
+        tr.tr-height-50(
         md-row
         md-virtual-repeat='row in vm.modifiedData'
-        style='height: 50px; min-height: 50px'
         )
 
           td(md-cell)
