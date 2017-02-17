@@ -76,7 +76,7 @@
         name: 'nameExternal',
         label: 'Наименование (код 1С)',
         compute: item => {
-          return item['Наименование']
+          return item['Артикул']
         }
       }, {
         name: 'frameSize.name',
