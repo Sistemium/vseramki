@@ -2,6 +2,10 @@
 
 #import {
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   > * {
     margin: $margin-default;
   }
@@ -25,6 +29,45 @@
   .tr-height-50 {
     height: 50px;
     min-height: 50px;
+  }
+
+  .properties-wrapper {
+    margin: 3px 14px;
+
+    & > div {
+      height: 30px;
+      overflow-x: scroll;
+
+      .prop-name {
+        font-weight: 600;
+      }
+
+      .prop-item {
+        background-color: $vr-yellow-color;
+        border-radius: 3px;
+        font-weight: 600;
+        margin: 0 3px;
+        padding: 5px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .prop-val {
+        white-space: nowrap;
+      }
+
+    }
+
+  }
+
+  .info {
+    margin: 10px 14px;
+    overflow: scroll;
+
+    & > h3 {
+      margin: 0 2px;
+    }
+
   }
 
 }
@@ -52,5 +95,29 @@
     margin-right: 2px;
   }
 
+}
+
+@media (max-width: 945px) and (min-width: 800px) {
+  #import {
+    .info > h3 {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 799px) and (min-width: 500px) {
+  #import {
+    .info > h3 {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 499px) {
+  #import {
+    .info > h3 {
+      font-size: 12px;
+    }
+  }
 }
 
