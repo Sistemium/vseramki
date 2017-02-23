@@ -2,7 +2,7 @@
 resize='edit'
 ng-style="{height: (edit.windowHeight - edit.offsetTop - 2) + 'px'}"
 )
-  p.duplicated-name(ng-if='!vm.frame.isValid') {{vm.copiedName}}
+
   form-edit(vm="vm" item="vm.frame" form-title="{{ vm.id ? '' : 'Новая рамка' }}")
     form-fields.wide(layout='column' layout-align='space-between top' layout-gt-sm='row')
       .flex
