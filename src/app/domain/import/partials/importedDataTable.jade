@@ -1,7 +1,16 @@
 md-table-container.md-whiteframe-1dp(
 ng-if='!vm.busyReading && vm.data'
 )
-  div(layout='row' layout-align='space-around center' ng-if='!vm.progress && !vm.doneImport')
+  .properties-wrapper(ng-hide='vm.doneImport || vm.progress || !vm.modifiedData.length')
+    div(ng-repeat='temp in vm.newProperties track by $index' layout='row' layout-align='start center' ng-if='temp.items.length')
+      span.prop-name {{temp.names[1]}}:
+      span(ng-repeat='item in temp.items track by $index')
+        .prop-item(
+        ng-click='vm.addPropertyClick(temp.names, item, $event)'
+        )
+          span.prop-val {{item}}
+
+  div.info(layout='row' layout-align='space-between center' ng-if='!vm.progress && !vm.doneImport')
 
     h3 Всего
       span(hide-xs) &nbsp;
