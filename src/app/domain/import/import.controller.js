@@ -27,6 +27,7 @@
       selected: [],
       recordData: {},
       files: [],
+      newProperties: [],
 
       labels: {
         imported: 'Обновлено',
@@ -39,7 +40,8 @@
       doneClick,
       tableHeaderRemoveClick,
       tableRowRemoveClick,
-      addPropertyClick
+      addPropertyClick,
+      findNewProperties
 
       // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 
@@ -71,6 +73,11 @@
               vm.readyToImport = !!res;
               vm.data = res;
               vm.columns = _.clone(columns);
+
+              if (vm.data.length) {
+                findNewProperties(vm.data);
+              }
+
             } else {
               vm.busyReading = false;
             }
@@ -103,34 +110,60 @@
 
     function addPropertyClick(col, row, ev) {
 
-      var validFields = _.filter(vm.columns, 'ref');
-      var isValidColumn = _.findKey(validFields, {'model': col.model});
+      var modelName;
+      var propertyLabel;
 
-      // var test = ['Material', 'Surface', 'Colour', 'Brand'];
-      // var isValidColumn = _.indexOf(test, col.model);
-      //console.log(isValidColumn, 'isValidColumn');
+
+      if (typeof(row) == 'object') {
+        modelName = col.model;
+        propertyLabel = col.label.toLowerCase();
+      } else {
+        modelName = col[0];
+        propertyLabel = col[1].toLowerCase();
+        var noIsExistingPropertyCheck = true;
+      }
+
+      var propertyValue = _.get(row.importData, [col.name]) || row;
+      var validFields = _.filter(vm.columns, 'ref');
+      var isValidColumn = _.findKey(validFields, {'model': modelName});
+
 
       if (isValidColumn >= 0) {
-        var propertyName = (row.importData[col.name]);
-        var model = Schema.model(col.model);
 
-        var isExistingProperty = !!_.get(_.first(model.filter({
-            where: {
-              name: {
-                likei: propertyName
+        var model = Schema.model(modelName);
+
+        if (!noIsExistingPropertyCheck) {
+          var isExistingProperty = !!_.get(_.first(model.filter({
+              where: {
+                name: {
+                  likei: propertyValue
+                }
               }
-            }
-          })), 'id') || false;
+            })), 'id') || false;
+        }
 
+        if (!isExistingProperty || noIsExistingPropertyCheck) {
 
-        if (!isExistingProperty) {
-          AlertHelper.showConfirm(ev, `Добавить ${col.label.toLowerCase()} "${propertyName}" ?`)
-            .then(function () {
-              model.create({name: propertyName}).then(() => {
-                ToastHelper.success('Добавлено');
-                setModifiedData();
-              })
-            });
+          AlertHelper.showConfirm(ev, `Добавить ${propertyLabel} "${propertyValue}" ?`)
+            .then(() => {
+              model.create({name: propertyValue})
+                .then((instance) => {
+                  if (instance) {
+                    ToastHelper.success('Добавлено');
+                    setModifiedData();
+                    var currentPropName = _.lowerFirst(modelName) + '.name';
+                    _.pull(vm.newProperties[currentPropName]['items'], propertyValue);
+                  }
+                })
+                .catch((err) => {
+                  if (err.status == 500) {
+                    ToastHelper.error('Ошибка сервера');
+                  } else {
+                    ToastHelper.error('Непредвиденная ошибка');
+                  }
+                })
+            })
+
         }
 
       }
@@ -218,6 +251,51 @@
       });
 
       vm.recordData.notModified = vm.data.length - vm.recordData.modifiedRecord - vm.recordData.newRecord;
+
+    }
+
+
+    function findNewProperties(data) {
+
+      var propsNamesRegexp = /^.+\.name$/im;
+      var propertyName = [];
+      var propertyData = {};
+
+
+      _.each(columns, function (column) {
+
+        if (propsNamesRegexp.test(column.name)) {
+          propertyName.push(column.name);
+          propertyData[column.name] = [];
+          propertyData[column.name].items = [];
+          propertyData[column.name].names = [column.model, column.label];
+        }
+      });
+
+      _.each(data, function (object) {
+        _.each(object, function (val, key) {
+          var idx = _.indexOf(propertyName, key);
+          if (idx >= 0 && val != null) {
+            var dup = propertyData[key].items.includes(val);
+            if (!dup) {
+              var model = Schema.model(propertyData[key].names[0]);
+              var isExistingValue = _.get(_.first(model.filter({
+                  where: {
+                    name: {
+                      likei: val
+                    }
+                  }
+                })), 'name') || false;
+              if (!isExistingValue) {
+                propertyData[key].items.push(val);
+              }
+
+            }
+          }
+        });
+      });
+
+      vm.newProperties = propertyData;
 
     }
 
