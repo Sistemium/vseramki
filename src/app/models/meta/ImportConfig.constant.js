@@ -68,16 +68,13 @@
 
       {
         name: 'codeExternal',
-        label: 'Код'
+        label: 'Код (1C)',
+        compute: item => {
+          return item['Код'];
+        }
       }, {
         name: 'name',
         label: 'Наименование'
-      }, {
-        name: 'nameExternal',
-        label: 'Наименование (код 1С)',
-        compute: item => {
-          return item['Артикул']
-        }
       }, {
         name: 'frameSize.name',
         model: 'FrameSize',
