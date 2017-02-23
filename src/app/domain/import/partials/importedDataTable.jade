@@ -15,17 +15,20 @@ ng-if='!vm.busyReading && vm.data'
     h3 Всего
       span(hide-xs) &nbsp;
       span(hide-xs) записей
-      |: {{ vm.data.length }}
+      | : {{ vm.data.length }}
     h3 Новых
       span(hide-xs) &nbsp;
       span(hide-xs) записей
-      |: {{vm.recordData.newRecord}}
+      | : {{vm.recordData.newRecord}}
     h3 Измененных
       span(hide-xs) &nbsp;
       span(hide-xs) записей
-      |: {{vm.recordData.modifiedRecord}}
-    h3 Без изменений: {{ vm.recordData.notModified }}
-    h3(ng-show='vm.recordData.ommitedRecord' style='display: block') Пропущено: {{ vm.recordData.ommitedRecord }}
+      | : {{vm.recordData.modifiedRecord}}
+    h3 Без
+      span &nbsp;
+      span изменений
+      | : {{ vm.recordData.notModified }}
+    h3(ng-show='vm.recordData.ommitedRecord') Пропущено: {{ vm.recordData.ommitedRecord }}
 
   h3(ng-if='vm.progress' layout='row' layout-align='center center')
     | Обработано {{vm.recordData.modifiedRecord + vm.recordData.newRecord - vm.modifiedData.length - vm.recordData.ommitedRecord}} из {{vm.data.length - vm.recordData.notModified - vm.recordData.ommitedRecord}} записей
