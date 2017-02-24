@@ -8,14 +8,17 @@
 
       Article: [
         {
-          title: 'Код',
-          property: 'code'
+          title: 'Код (1C)',
+          property: 'codeExternal'
         }, {
           title: 'Наименование',
           property: 'name'
         }, {
           title: 'Размер',
           property: 'frameSize.name'
+        }, {
+          title: 'Багет',
+          property: 'baguette.name'
         }, {
           title: 'Мин. коробка',
           property: 'packageRel',
