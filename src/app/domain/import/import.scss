@@ -36,10 +36,14 @@
 
     & > div {
       height: 30px;
-      overflow-x: scroll;
+
+      .prop-val-wrapper {
+        overflow-x: scroll;
+      }
 
       .prop-name {
         font-weight: 600;
+        margin-right: 5px;
       }
 
       .prop-item {
