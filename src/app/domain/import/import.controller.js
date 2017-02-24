@@ -2,7 +2,7 @@
 
 (function () {
 
-  function ImportController(ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig, AlertHelper, $mdMedia) {
+  function ImportController($q, ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig, AlertHelper, $mdMedia) {
 
     var vm = this;
 
@@ -41,7 +41,8 @@
       tableHeaderRemoveClick,
       tableRowRemoveClick,
       addPropertyClick,
-      findNewProperties
+      findNewProperties,
+      addAllProps,
 
       // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 
@@ -254,6 +255,36 @@
 
     }
 
+    function addAllProps(props, modelName) {
+
+      var model = Schema.model(modelName);
+      var promises = _.map(props, function (elem) {
+
+        return model.create({name: elem})
+          .then((instance) => {
+            if (instance) {
+              setModifiedData();
+              var currentPropName = _.lowerFirst(modelName) + '.name';
+              _.pull(vm.newProperties[currentPropName]['items'], elem);
+            }
+          })
+          .catch(() => {
+            return elem;
+          });
+
+      });
+
+      $q.all(promises)
+        .then(function (res) {
+          var failedToWrite = _.compact(res);
+          if (failedToWrite.length) {
+            ToastHelper.error('Ошибка. Не добавлено: ' + failedToWrite.join(', '));
+          } else {
+            ToastHelper.success('Элементы добавлены');
+          }
+        });
+
+    }
 
     function findNewProperties(data) {
 
