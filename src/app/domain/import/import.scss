@@ -44,6 +44,30 @@
       .prop-name {
         font-weight: 600;
         margin-right: 5px;
+        white-space: nowrap;
+      }
+
+      .badge {
+        cursor: pointer;
+        border-radius: 50%;
+        background: #ff3d56;
+        min-width: 15px;
+        min-height: 15px;
+        max-width: 15px;
+        max-height: 15px;
+        color: white;
+        padding: 2px;
+        font-size: 10px;
+        display: block;
+        top: -7px;
+        position: relative;
+        right: 6px;
+
+        span {
+          width: 50%;
+          display: table-cell;
+          text-align: center;
+        }
       }
 
       .prop-item {
