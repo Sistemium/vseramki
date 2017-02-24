@@ -3,7 +3,9 @@ ng-if='!vm.busyReading && vm.data'
 )
   .properties-wrapper(ng-hide='vm.doneImport || vm.progress || !vm.modifiedData.length')
     div(ng-repeat='temp in vm.newProperties track by $index' layout='row' layout-align='start center' ng-if='temp.items.length')
-      span.prop-name {{temp.names[1]}}:
+      span.prop-name {{temp.names[1]}}
+      div.badge(ng-click='vm.addAllProps(temp.items, temp.names[0])')
+        span {{ temp.items.length }}
       .prop-val-wrapper(layout='row')
         div(ng-repeat='item in temp.items track by $index')
           .prop-item(
