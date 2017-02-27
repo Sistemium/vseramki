@@ -326,6 +326,22 @@
         });
       });
 
+      _.forIn(propertyData, function (val, key) {
+
+        if (val.items.length == 0)
+          return;
+
+        if (key != 'frameSize.name') {
+          propertyData[key].items.sort();
+        } else {
+          val.items.sort(function (a, b) {
+            return a.split('x')[0] - b.split('x')[0] || a.split('x')[1] - b.split('x')[1]
+          });
+        }
+        
+      });
+
+
       vm.newProperties = propertyData;
 
     }
