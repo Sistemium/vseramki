@@ -51,21 +51,18 @@
         cursor: pointer;
         border-radius: 50%;
         background: #ff3d56;
-        min-width: 15px;
-        min-height: 15px;
-        max-width: 15px;
-        max-height: 15px;
+        min-width: 17px;
+        min-height: 17px;
         color: white;
         padding: 2px;
-        font-size: 10px;
-        display: block;
+        font-size: 9px;
         top: -7px;
         position: relative;
         right: 6px;
 
         span {
-          width: 50%;
-          display: table-cell;
+          padding-top: 1px;
+          width: 100%;
           text-align: center;
         }
       }
