@@ -42,7 +42,7 @@
       tableRowRemoveClick,
       addPropertyClick,
       findNewProperties,
-      addAllProps,
+      addAllProps
 
       // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 
