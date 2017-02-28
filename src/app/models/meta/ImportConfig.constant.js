@@ -7,14 +7,16 @@
     const BaguetteColumns = [
       {
         name: 'codeExternal',
-        label: 'Код'
+        label: 'Код',
+        required: true
       }, {
         name: 'nameExternal',
         label: 'Наименование'
       }, {
         name: 'code',
         label: 'Артикул',
-        replace: false
+        replace: false,
+        required: true
       }, {
         name: 'borderWidth',
         label: 'Ширина багета',
@@ -34,7 +36,8 @@
         name: 'material.name',
         model: 'Material',
         label: 'Материал',
-        ref: 'materialId'
+        ref: 'materialId',
+        required: true
       }, {
         name: 'brand.name',
         model: 'Brand',
@@ -69,17 +72,20 @@
       {
         name: 'codeExternal',
         label: 'Код (1C)',
+        required: true,
         compute: item => {
           return item['Код'];
         }
       }, {
         name: 'name',
-        label: 'Наименование'
+        label: 'Наименование',
+        required: true
       }, {
         name: 'frameSize.name',
         model: 'FrameSize',
         label: 'Размер',
         ref: 'frameSizeId',
+        required: true,
         compute: item => {
 
           var frameSizeReg = /\d{2,4}(\*|\x|\х)\d{2,4}/g;
