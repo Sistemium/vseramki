@@ -61,6 +61,9 @@ meta.defineEntity 'Surface',
  'name;isDeleted'
 ;
 
+
+--TODO: Material prop nullable
+
 meta.defineEntity 'Baguette',
  'name;code;codeExternal,code;lastName,name,,nullable;borderWidth;isDeleted;isValid;nameExternal,name,,nullable',
  'Material,materialId;Brand,brandId,nullable;Colour,colourId,nullable;Surface,surfaceId,nullable'
