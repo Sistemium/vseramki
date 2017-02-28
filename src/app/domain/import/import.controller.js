@@ -255,35 +255,37 @@
 
     }
 
-    function addAllProps(props, modelName) {
+    function addAllProps(props, modelName, ev) {
 
-      var model = Schema.model(modelName);
-      var promises = _.map(props, function (elem) {
+      AlertHelper.showConfirm(ev, `Добавить свойства?`)
+        .then(() => {
+          var model = Schema.model(modelName);
+          var promises = _.map(props, function (elem) {
 
-        return model.create({name: elem})
-          .then((instance) => {
-            if (instance) {
-              setModifiedData();
-              var currentPropName = _.lowerFirst(modelName) + '.name';
-              _.pull(vm.newProperties[currentPropName]['items'], elem);
-            }
-          })
-          .catch(() => {
-            return elem;
+            return model.create({name: elem})
+              .then((instance) => {
+                if (instance) {
+                  setModifiedData();
+                  var currentPropName = _.lowerFirst(modelName) + '.name';
+                  _.pull(vm.newProperties[currentPropName]['items'], elem);
+                }
+              })
+              .catch(() => {
+                return elem;
+              });
+
           });
 
-      });
-
-      $q.all(promises)
-        .then(function (res) {
-          var failedToWrite = _.compact(res);
-          if (failedToWrite.length) {
-            ToastHelper.error('Ошибка. Не добавлено: ' + failedToWrite.join(', '));
-          } else {
-            ToastHelper.success('Элементы добавлены');
-          }
+          $q.all(promises)
+            .then(function (res) {
+              var failedToWrite = _.compact(res);
+              if (failedToWrite.length) {
+                ToastHelper.error('Ошибка. Не добавлено: ' + failedToWrite.join(', '));
+              } else {
+                ToastHelper.success('Элементы добавлены');
+              }
+            });
         });
-
     }
 
     function findNewProperties(data) {
@@ -338,7 +340,7 @@
             return a.split('x')[0] - b.split('x')[0] || a.split('x')[1] - b.split('x')[1]
           });
         }
-        
+
       });
 
 
