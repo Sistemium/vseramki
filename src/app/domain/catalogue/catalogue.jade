@@ -28,7 +28,13 @@ bar-title='Каталог'
       ng-if='vm.currentItem'
       ng-class='{ warning: !vm.currentItem.isValid }'
       )
-      state-bar-button.admin-button(hide-xs title='Скачать таблицу Excel' icon='file_download' ng-show='vm.isRootState')
+      state-bar-button.admin-button(
+      hide-xs
+      title='Скачать таблицу Excel'
+      icon='file_download'
+      ng-show='vm.isRootState'
+      disabled-if='!vm.articles.length'
+      )
       state-bar-button.admin-button(hide-xs title='Импорт из таблицы Excel' icon='file_upload')
       state-bar-button.admin-button(title='Добавить рамку' icon='add')
       .buttons(ng-if='vm.currentState === "item"')
