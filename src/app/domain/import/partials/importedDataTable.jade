@@ -31,6 +31,12 @@ ng-if='!vm.busyReading && vm.data'
       span &nbsp;
       span изменений
       | : {{ vm.recordData.notModified }}
+    h3 Не
+      span &nbsp;
+      span валидных
+      | : {{vm.recordData.invalidRecord}}
+
+
     h3(ng-show='vm.recordData.ommitedRecord') Пропущено: {{ vm.recordData.ommitedRecord }}
 
   h3(ng-if='vm.progress' layout='row' layout-align='center center')
@@ -71,6 +77,7 @@ ng-if='!vm.busyReading && vm.data'
         tr.tr-height-50(
         md-row
         md-virtual-repeat='row in vm.modifiedData'
+        ng-class='{"invalid-props": !row.isValidProperties}'
         )
 
           td(md-cell)
