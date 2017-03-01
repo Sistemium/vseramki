@@ -172,8 +172,18 @@
     }
 
     function tableRowRemoveClick(row) {
+
       _.remove(vm.modifiedData, row);
+
+      if (row.diff) {
+        vm.recordData.modifiedRecord--;
+      }
+      else if (row.isValidProperties == false) {
+        vm.recordData.invalidRecord--;
+      }
+
       vm.recordData.ommitedRecord++;
+
     }
 
     function setModifiedData() {
