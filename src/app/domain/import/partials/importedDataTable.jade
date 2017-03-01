@@ -79,13 +79,14 @@ ng-if='!vm.busyReading && vm.data'
         md-virtual-repeat='row in vm.modifiedData'
         ng-class='{"invalid-props": !row.isValidProperties}'
         )
-
           td(md-cell)
             md-button.button-cust-fab(ng-click='vm.tableRowRemoveClick(row)')
               i.material-icons clear
 
           td(md-cell ng-class='{"import-status-icon": !row.diff}')
-            i.material-icons(title="{{row.diff ? 'Измененная запись' : 'Новая запись'}}") {{row.diff ? 'edit' : 'new_releases'}}
+            i.material-icons(
+            title="{{row.diff ? 'Измененная запись' : (row.notModified ? 'Неизмененная запись' : 'Новая запись')}}")
+              |{{row.diff ? 'edit' : (row.notModified ? 'cloud' : 'new_releases')}}
             | {{row.diff.length}}
 
           td(md-cell)

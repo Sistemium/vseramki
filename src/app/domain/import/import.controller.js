@@ -238,6 +238,16 @@
               instance: instance,
               index
             });
+          } else {
+            if (!isValid) {
+              vm.modifiedData.push({
+                isValidProperties: isValid,
+                importData: elem,
+                notModified: true,
+                instance: instance,
+                index
+              });
+            }
           }
 
         } else {
