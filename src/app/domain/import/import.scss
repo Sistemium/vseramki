@@ -6,6 +6,13 @@
     display: none;
   }
 
+  .invalid-props {
+    background: #F75D59;
+    & > * {
+      color: white;
+    }
+  }
+
   > * {
     margin: $margin-default;
   }
