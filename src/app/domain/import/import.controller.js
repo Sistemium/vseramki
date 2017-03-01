@@ -32,7 +32,8 @@
       labels: {
         imported: 'Обновлено',
         ignored: 'Без изменений',
-        hasErrors: 'С ошибками'
+        hasErrors: 'С ошибками',
+        ignoredNotValid: 'Валидация не пройдена'
       },
 
       loadDataClick,
@@ -108,7 +109,6 @@
      Functions
      */
 
-
     function addPropertyClick(col, row, ev) {
 
       var modelName;
@@ -171,8 +171,31 @@
 
     }
 
-    function tableRowRemoveClick(row) {
+    function checkValidFields(elem, propertiesToCheck) {
 
+      var isValid = true;
+
+      _.each(propertiesToCheck, function (property) {
+
+        if (_.get(property, 'name') == _.get(property, 'id')) {
+          isValid = !!elem[_.get(property, 'id')];
+        } else {
+          isValid = !!elem[_.get(property, 'id')] && (!!elem[_.get(property, 'name')] );
+        }
+
+        if (!isValid) {
+          vm.recordData.invalidRecord++;
+          return false;
+        }
+
+      });
+
+      return isValid
+
+    }
+
+
+    function tableRowRemoveClick(row) {
       _.remove(vm.modifiedData, row);
 
       if (row.diff) {
@@ -183,7 +206,6 @@
       }
 
       vm.recordData.ommitedRecord++;
-
     }
 
     function setModifiedData() {
@@ -196,16 +218,22 @@
           name: column.name,
           replace: column.replace !== false,
           model: column.model,
-          ref: column.ref
+          ref: column.ref,
+          required: column.required
         }
 
+      });
+
+      var propertiesToCheck = _.filter(validFields, function (elem) {
+        return elem.required;
       });
 
       vm.modifiedData = [];
       vm.recordData = {
         newRecord: 0,
         modifiedRecord: 0,
-        ommitedRecord: 0
+        ommitedRecord: 0,
+        invalidRecord: 0
       };
 
       _.each(vm.data, function (elem, index) {
@@ -228,11 +256,14 @@
             }
           });
 
+          var isValid = checkValidFields(elem, propertiesToCheck);
+
           if (Object.keys(diff).length) {
 
             vm.recordData.modifiedRecord++;
 
             vm.modifiedData.push({
+              isValidProperties: isValid,
               importData: elem,
               diff: diff,
               instance: instance,
@@ -254,12 +285,15 @@
 
           vm.recordData.newRecord++;
 
+          var isValid = checkValidFields(elem, propertiesToCheck);
+
           instance = model.createInstance({
             name: elem.nameExternal,
             isValid: false
           });
 
           vm.modifiedData.push({
+            isValidProperties: isValid,
             importData: elem,
             instance: instance,
             index
@@ -270,9 +304,7 @@
         diff = {};
 
       });
-
       vm.recordData.notModified = vm.data.length - vm.recordData.modifiedRecord - vm.recordData.newRecord;
-
     }
 
     function addAllProps(props, modelName, ev) {
@@ -313,7 +345,6 @@
       var propsNamesRegexp = /^.+\.name$/im;
       var propertyName = [];
       var propertyData = {};
-
 
       _.each(columns, function (column) {
 
@@ -362,7 +393,6 @@
         }
 
       });
-
 
       vm.newProperties = propertyData;
 
@@ -426,7 +456,8 @@
       var errors = [];
       var results = {
         imported: 0,
-        ignored: 0
+        ignored: 0,
+        ignoredNotValid: 0
       };
 
       var saveItem = saveModelItem;
@@ -442,25 +473,30 @@
           return;
         }
 
-        return saveItem(item)
-          .then(res => {
+        if (item.isValidProperties) {
+          return saveItem(item)
+            .then(res => {
+              if (res) {
+                results.imported++;
+              } else {
+                results.ignored++;
+              }
+            })
+            .catch(err => {
+              errors.push(_.assign(item, {
+                error: _.get(err, 'data.text') || err.data
+              }));
+            })
+            .then(() => {
+              vm.progress.value = Math.round(++value / total * 100);
+              $timeout().then(importItem);
+            });
+        } else {
+          results.ignoredNotValid++;
+          vm.progress.value = Math.round(++value / total * 100);
+          $timeout().then(importItem);
+        }
 
-            if (res) {
-              results.imported++;
-            } else {
-              results.ignored++;
-            }
-
-          })
-          .catch(err => {
-            errors.push(_.assign(item, {
-              error: _.get(err, 'data.text') || err.data
-            }));
-          })
-          .then(() => {
-            vm.progress.value = Math.round(++value / total * 100);
-            $timeout().then(importItem);
-          });
       }
 
       importItem();
@@ -469,16 +505,12 @@
 
     function saveModelItem(item) {
 
-      // _.assign(item.instance, item.importData);
-
       _.each(columns, column => {
         var name = column.ref || column.name;
         item.instance[name] = item.importData[name];
       });
 
       return model.create(item.instance);
-
-      //cancelLoadDataClick();
     }
 
   }
