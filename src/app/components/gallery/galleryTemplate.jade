@@ -1,5 +1,5 @@
 // Images thumbnail
-.thumbnails(class='{{ baseClass }}', layout='row', layout-align='center center')
+.thumbnails(class='{{ baseClass }}')
   .thumbnail(ng-repeat='i in images')
     a(href ng-click='vm.thumbnailClick(i, $index)' ng-mouseover='setHovered(i)')
       img(
