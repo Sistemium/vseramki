@@ -15,7 +15,7 @@ ng-style="{height: (edit.windowHeight - edit.offsetTop - 2) + 'px'}"
 
       md-divider.md-margin.hide-xs.hide-sm
 
-      .margin-top(layout='row' layout-align='center center')
+      .margin-top
         ng-gallery(images='vm.baguetteImages' thumbs-num='5' ng-if='vm.baguetteImages.length' is-deletable='true')
 
       .text-center.margin-top#frames(ng-if='vm.baguette.articles.length')
