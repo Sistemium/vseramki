@@ -256,7 +256,7 @@
             }
           });
 
-          var isValid = checkValidFields(elem, propertiesToCheck);
+          let isValid = checkValidFields(elem, propertiesToCheck);
 
           if (Object.keys(diff).length) {
 
@@ -285,7 +285,7 @@
 
           vm.recordData.newRecord++;
 
-          var isValid = checkValidFields(elem, propertiesToCheck);
+          let isValid = checkValidFields(elem, propertiesToCheck);
 
           instance = model.createInstance({
             name: elem.nameExternal,
