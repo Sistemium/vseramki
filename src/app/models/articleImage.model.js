@@ -19,7 +19,9 @@
             localKey: 'articleId'
           }
         }
-      }
+      },
+
+      watchChanges: false
 
       // thumbnailSrc, smallSrc, largeSrc
 

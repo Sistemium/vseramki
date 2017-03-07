@@ -17,6 +17,8 @@
 
       name: 'Article',
 
+      watchChanges: false,
+
       maxThreshold: () => totalThreshold,
       minThreshold: () => minThreshold,
 

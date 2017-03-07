@@ -19,6 +19,8 @@
 
       name: 'Baguette',
 
+      watchChanges: false,
+
       meta: {
         exportConfig: ExportConfig.Baguette
       },
