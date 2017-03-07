@@ -79,6 +79,7 @@
         required: true
       }, {
         name: 'name',
+        replace: false,
         compute: item => {
           return item['Наименование']
         }
