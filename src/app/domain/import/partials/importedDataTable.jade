@@ -64,7 +64,7 @@ ng-if='!vm.busyReading && vm.data'
         ) №
 
         th(
-        ng-repeat='col in vm.columns track by col.name'
+        ng-repeat='col in vm.columns | filter:{label: ""} track by col.name'
         md-column
         )
           span(ng-click='vm.tableHeaderClick(col, $event)') {{ col.label }}
@@ -94,7 +94,7 @@ ng-if='!vm.busyReading && vm.data'
 
           td(
           md-cell
-          ng-repeat='col in vm.columns'
+          ng-repeat='col in vm.columns | filter:{label: ""} track by col.name'
           )
             div(
             ng-class='{"warning clickable": col.ref && row.importData[col.name] && !row.importData[col.ref] && row.importData[col.name] != " "}'
