@@ -86,29 +86,29 @@
         vm.allArt = data;
       });
 
+    Article.bindOne(stateFilter.articleId, $scope, 'vm.article', () => {
 
-    Article.find($state.params.id)
-      .then(article => {
+      // vm.article = article;
 
-        vm.article = article;
+      if (vm.article) {
 
-        if (vm.article) {
+        setPrices();
 
-          setPrices();
+        var baguetteImageFilter = {
+          baguetteId: vm.article.baguetteId
+        };
 
-          var baguetteImageFilter = {
-            baguetteId: vm.article.baguetteId
-          };
+        ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', mergeImages);
+        BaguetteImage.bindAll(baguetteImageFilter, $scope, 'vm.baguetteImages', mergeImages);
 
-          ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', mergeImages);
-          BaguetteImage.bindAll(baguetteImageFilter, $scope, 'vm.baguetteImages', mergeImages);
+        ArticleImage.findAll(stateFilter);
+        BaguetteImage.findAll(baguetteImageFilter);
 
-          ArticleImage.findAll(stateFilter);
-          BaguetteImage.findAll(baguetteImageFilter);
+      }
 
-        }
+    });
 
-      });
+    Article.find(stateFilter.articleId);
 
     /*
 
