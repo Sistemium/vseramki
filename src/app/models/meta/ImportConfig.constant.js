@@ -71,15 +71,17 @@
 
       {
         name: 'codeExternal',
-        label: 'Код (1C)',
-        required: true,
-        compute: item => {
-          return item['Код'];
-        }
+        label: 'Код',
+        required: true
       }, {
-        name: 'name',
+        name: 'nameExternal',
         label: 'Наименование',
         required: true
+      }, {
+        name: 'name',
+        compute: item => {
+          return item['Наименование']
+        }
       }, {
         name: 'frameSize.name',
         model: 'FrameSize',
