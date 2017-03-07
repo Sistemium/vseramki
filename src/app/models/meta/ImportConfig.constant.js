@@ -225,14 +225,14 @@
         label: 'Розн. цена',
         //parser: parseFloat,
         compute: item => {
-          return parseFloat(item['Мел_Опт_Цена']);
+          return _.round(parseFloat(item['Мел_Опт_Цена']),2);
         }
       }, {
         name: 'lowPrice',
         label: 'Опт. цена',
         //parser: parseFloat,
         compute: item => {
-          return parseFloat(item['Спец_Цена']);
+          return _.round(parseFloat(item['Спец_Цена']),2);
         }
       }
     ];
