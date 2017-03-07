@@ -23,7 +23,7 @@ bar-title='Каталог'
 
     div(ng-if='vm.isAdmin' layout='row')
       state-bar-button.admin-button(
-      title='Завершить оформление'
+      ng-attr-title='{{vm.currentItem.isValid ? "Скрыть от пользователей" : "Показать пользователям"}}'
       icon='{{vm.currentItem.isValid ? "visibility" : "visibility_off"}}'
       ng-if='vm.currentItem'
       ng-class='{ warning: !vm.currentItem.isValid }'

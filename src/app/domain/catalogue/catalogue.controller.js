@@ -114,7 +114,7 @@
 
       vm.id && scrollToIndex();
 
-      if (/\.edit$/.test(toState.name)) {
+      if (toParams.id) {
 
         return Article.find(toParams.id).then(function (item) {
           vm.currentItem = item;
