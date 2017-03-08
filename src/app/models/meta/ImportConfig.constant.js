@@ -154,6 +154,7 @@
         model: 'Baguette',
         ref: 'baguetteId',
         label: 'Багет',
+        required: true,
         compute: item => {
 
           let code = item['Артикул'];
