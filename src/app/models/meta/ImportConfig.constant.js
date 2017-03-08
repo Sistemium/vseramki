@@ -250,12 +250,14 @@
 
       Baguette: {
         BaguetteColumns,
-        doneSref: 'baguettes'
+        doneSref: 'baguettes',
+        primaryKey: 'codeExternal'
       },
 
       Article: {
         ArticleColumns,
-        doneSref: 'catalogue'
+        doneSref: 'catalogue',
+        primaryKey: 'codeExternal'
       }
 
     }

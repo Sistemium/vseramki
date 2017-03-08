@@ -227,6 +227,8 @@
       var propertiesToCheck = _.filter(validFields, function (elem) {
         return elem.required;
       });
+      const primaryKey = importConfig.primaryKey;
+      const primaryKeyFilter = {};
 
       vm.modifiedData = [];
       vm.recordData = {
@@ -239,10 +241,9 @@
       _.each(vm.data, function (elem, index) {
 
         setModelRefs(elem, _.filter(validFields, 'ref'));
+        primaryKeyFilter[primaryKey] = elem[primaryKey];
 
-        var instance = elem.codeExternal && _.first(model.filter({
-            codeExternal: elem.codeExternal
-          }));
+        let instance = elem[primaryKey] && _.first(model.filter(primaryKeyFilter));
 
         if (instance) {
 
