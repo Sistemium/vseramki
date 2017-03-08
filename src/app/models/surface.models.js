@@ -12,7 +12,8 @@
 
       labels: {
         plural: 'Поверхности',
-        what: 'поверхность'
+        what: 'поверхность',
+        gender: 'female'
       },
 
       name: 'Surface',
