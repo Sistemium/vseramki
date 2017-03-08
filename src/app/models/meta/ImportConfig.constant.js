@@ -8,7 +8,8 @@
       {
         name: 'codeExternal',
         label: 'Код',
-        required: true
+        required: true,
+        parser: _.trim
       }, {
         name: 'nameExternal',
         label: 'Наименование'
@@ -78,7 +79,8 @@
       {
         name: 'codeExternal',
         label: 'Код',
-        required: true
+        required: true,
+        parser: _.trim
       }, {
         name: 'nameExternal',
         label: 'Наименование',
