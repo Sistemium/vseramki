@@ -12,7 +12,8 @@
         parser: _.trim
       }, {
         name: 'nameExternal',
-        label: 'Наименование'
+        label: 'Наименование',
+        required: true
       }, {
         name: 'name',
         replace: false,
@@ -22,8 +23,7 @@
       }, {
         name: 'code',
         label: 'Артикул',
-        replace: false,
-        required: true
+        replace: false
       }, {
         name: 'borderWidth',
         label: 'Ширина багета',
