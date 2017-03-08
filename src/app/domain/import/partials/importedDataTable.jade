@@ -2,14 +2,14 @@ md-table-container.md-whiteframe-1dp(
 ng-if='!vm.busyReading && vm.data'
 )
   .properties-wrapper(ng-hide='vm.doneImport || vm.progress || !vm.modifiedData.length')
-    div(ng-repeat='temp in vm.newProperties track by $index' layout='row' layout-align='start center' ng-if='temp.items.length')
-      span.prop-name {{temp.names[1]}}
-      div.badge(ng-click='vm.addAllProps(temp.items, temp.names[0], $event)' layout='row' layout-align='center center')
-        span {{ temp.items.length }}
+    div(ng-repeat='prop in vm.newProperties track by $index' layout='row' layout-align='start center' ng-if='prop.items.length')
+      span.prop-name {{ prop.label }}
+      .badge(ng-click='vm.addAllNewPropertiesClick(prop, $event)' layout='row' layout-align='center center')
+        span {{ prop.items.length }} нов{{ (prop.items.length % 10 === 1 && prop.items.length %100 !== 11) ? (prop.model.labels.gender === 'female' ? 'ая' : 'ый') : 'ых' }}
       .prop-val-wrapper(layout='row')
-        div(ng-repeat='item in temp.items track by $index')
+        div(ng-repeat='item in prop.items track by $index')
           .prop-item(
-          ng-click='vm.addPropertyClick(temp.names, item, $event)'
+          ng-click='vm.addPropertyClick(prop.name, item, $event)'
           )
             span.prop-val {{item}}
 
