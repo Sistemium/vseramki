@@ -7,7 +7,7 @@
   }
 
   .invalid-props {
-    background: #F75D59;
+    background: lighten($fab-button-background-color, 15%);
     & > * {
       color: white;
     }
@@ -57,16 +57,17 @@
 
       .badge {
         cursor: pointer;
-        border-radius: 50%;
-        background: #ff3d56;
+        border-radius: 6px;
+        background: $fab-button-background-color;
         min-width: 17px;
         min-height: 17px;
         color: white;
-        padding: 2px;
+        padding: 2px 8px;
         font-size: 9px;
         top: -7px;
         position: relative;
-        right: 6px;
+        right: 2px;
+        flex-shrink: 0;
 
         span {
           padding-top: 1px;
@@ -96,11 +97,9 @@
   .info {
     margin: 10px 14px;
     overflow: scroll;
-
-    & > h3 {
-      margin: 0 2px;
+    h3 {
+      white-space: nowrap;
     }
-
   }
 
 }
