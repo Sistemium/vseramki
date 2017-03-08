@@ -175,7 +175,8 @@
           replace: column.replace !== false,
           model: column.model,
           ref: column.ref,
-          required: column.required
+          required: column.required,
+          searchBy: _.first(column.name.match(/[^.]+$/))
         }
 
       });
@@ -371,18 +372,12 @@
 
       _.each(config, function (val) {
 
-        if (val.name != 'baguetteId') {
+        const model = Schema.model(val.model);
+        const searchBy = {};
 
-          var model = Schema.model(val.model);
+        searchBy[val.searchBy] = {likei: item[val.name]};
 
-          item[val.ref] = item[val.name] && _.get(_.first(model.filter({
-              where: {
-                name: {
-                  likei: item[val.name]
-                }
-              }
-            })), 'id') || null;
-        }
+        item[val.ref] = item[val.name] && _.get(_.first(model.filter({where: searchBy})), 'id') || null;
 
       });
 
