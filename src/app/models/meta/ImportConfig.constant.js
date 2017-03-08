@@ -4,6 +4,8 @@
 
   function ImportConfigFN(Schema) {
 
+    const baguetteModel = Schema.model('Baguette');
+
     const BaguetteColumns = [
       {
         name: 'codeExternal',
@@ -148,82 +150,33 @@
         label: 'Прозрачная вставка',
         ref: 'screeningId'
       }, {
-        name: 'baguetteId',
+        name: 'baguette.codeExternal',
         model: 'Baguette',
+        ref: 'baguetteId',
         label: 'Багет',
         compute: item => {
 
-          var code = item['Артикул'];
-          var regexp = /^X?\d{1,}(?:\*?\d{1,})$/mi;
-          var rlkRegexp = /РЛК$/mi;
-          var baguetteCode;
+          let code = item['Артикул'];
 
-          if (code != false) {
+          if (!code) return;
 
-            var divided = code.split('-');
+          let match = code.match(/(.+)-\d{4}$/i);
 
-            if (_.last(divided).length > 1) {
+          let baguetteCode = _.last(match);
 
-              // Normalized Code endings:
-              // -X\d, -\d, -\d*\d
+          if (!baguetteCode) return;
 
-              var isNormalizedCode = regexp.test(_.last(divided));
-
-              if (isNormalizedCode) {
-
-                if (divided.length > 1) {
-                  divided.pop();
-                  baguetteCode = divided.join('-');
-                } else {
-                  baguetteCode = divided[0];
-                }
-
-              } else {
-
-                var isRLK = rlkRegexp.test(divided[0]);
-
-                if (isRLK) {
-                  baguetteCode = divided[0].replace('РЛК', '');
-                } else {
-                  baguetteCode = divided[0];
-                }
-
+          let baguettes = baguetteModel.filter({
+            where: {
+              code: {
+                likei: baguetteCode
               }
-
-              //baguetteCode = divided.join('-');
-
-            } else {
-
-              divided.pop();
-              isNormalizedCode = regexp.test(_.last(divided));
-
-              if (isNormalizedCode) {
-                divided.pop();
-                baguetteCode = divided.join('-');
-              } else {
-                baguetteCode = divided.join('-');
-              }
-
             }
+          });
 
-          } else {
-            baguetteCode = null
-          }
+          if (baguettes.length !== 1) return;
 
-          if (baguetteCode) {
-
-            var baguetteModel = Schema.model('Baguette');
-
-            return _.get(_.first(baguetteModel.filter({
-                where: {
-                  code: {
-                    likei: '%' + baguetteCode + '%'
-                  }
-                }
-              })), 'id') || null;
-          } else {
-            return null;
-          }
+          return _.get(baguettes[0], 'codeExternal');
 
         }
       }, {
