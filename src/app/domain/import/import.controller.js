@@ -33,7 +33,7 @@
         imported: 'Обновлено',
         ignored: 'Без изменений',
         hasErrors: 'С ошибками',
-        ignoredNotValid: 'Валидация не пройдена'
+        ignoredNotValid: 'Некорректных'
       },
 
       loadDataClick,
@@ -110,6 +110,7 @@
 
       if (!property) return;
 
+      const model = property.model;
 
       let title = `${property.label} "${propertyValue}"`;
 
@@ -161,13 +162,12 @@
         vm.recordData.invalidRecord--;
       }
 
-      vm.recordData.ommitedRecord++;
+      vm.recordData.omittedRecord++;
     }
 
     function setModifiedData() {
 
-
-      var validFields = _.map(vm.columns, column => {
+      const validFields = _.map(vm.columns, column => {
 
         return {
           id: column.ref || column.name,
@@ -180,9 +180,9 @@
 
       });
 
-      var propertiesToCheck = _.filter(validFields, function (elem) {
-        return elem.required;
-      });
+      const requiredProperties = _.filter(validFields, 'required');
+      const refFields = _.filter(validFields, 'ref');
+
       const primaryKey = importConfig.primaryKey;
       const primaryKeyFilter = {};
 
@@ -190,63 +190,76 @@
       vm.recordData = {
         newRecord: 0,
         modifiedRecord: 0,
-        ommitedRecord: 0,
+        omittedRecord: 0,
         invalidRecord: 0
       };
 
       _.each(vm.data, function (elem, index) {
 
-        setModelRefs(elem, _.filter(validFields, 'ref'));
+        setModelRefs(elem, refFields);
+
         primaryKeyFilter[primaryKey] = elem[primaryKey];
 
         let instance = elem[primaryKey] && _.first(model.filter(primaryKeyFilter));
 
         if (instance) {
 
-          var diff = {};
+          let diff = {};
 
           _.each(validFields, field => {
-            if ((field.replace || !instance[field.id]) && instance[field.id] !== elem[field.id]) {
+
+            let currentValue = instance[field.id];
+            let importValue = elem[field.id];
+
+            if ((field.replace || !currentValue) && importValue && importValue !== currentValue) {
               diff[field.name] = _.get(instance, field.name) || '(пусто)';
             } else {
-              elem[field.id] = instance[field.id];
+              elem[field.id] = currentValue;
+              if (field.ref) {
+                elem[field.name] = _.get(instance, field.name);
+              }
             }
+
           });
 
-          let isValid = checkValidFields(elem, propertiesToCheck);
+          let isValid = checkValidFields(elem, requiredProperties);
+
+          let res = {
+            isValidProperties: isValid,
+            importData: elem,
+            instance: instance,
+            index
+          };
 
           if (Object.keys(diff).length) {
-
             vm.recordData.modifiedRecord++;
-
-            vm.modifiedData.push({
-              isValidProperties: isValid,
-              importData: elem,
-              diff: diff,
-              instance: instance,
-              index
-            });
+            res.diff = diff;
+          } else if (!isValid) {
+            res.notModified = true;
           } else {
-            if (!isValid) {
-              vm.modifiedData.push({
-                isValidProperties: isValid,
-                importData: elem,
-                notModified: true,
-                instance: instance,
-                index
-              });
-            }
+            return;
           }
+
+          vm.modifiedData.push(res);
 
         } else {
 
           vm.recordData.newRecord++;
 
-          let isValid = checkValidFields(elem, propertiesToCheck);
-
           instance = model.createInstance({
             isValid: false
           });
+
+          _.each(instance, (value, key) => {
+            let field = _.find(validFields, {id: key});
+            if (!field || !value) return;
+            elem[key] = value;
+            if (field.ref) {
+              elem[field.name] = _.get(instance, field.name);
+            }
+          });
+
+          let isValid = checkValidFields(elem, requiredProperties);
 
           vm.modifiedData.push({
             isValidProperties: isValid,
@@ -257,10 +270,12 @@
 
         }
 
-        diff = {};
-
       });
+
       vm.recordData.notModified = vm.data.length - vm.recordData.modifiedRecord - vm.recordData.newRecord;
+
+      findNewProperties(vm.modifiedData);
+
     }
 
     function addAllNewPropertiesClick(property, ev) {
@@ -404,7 +419,8 @@
       vm.readyToImport = false;
 
       vm.progress = {
-        value: 0
+        value: 0,
+        total: total
       };
 
       var errors = [];
