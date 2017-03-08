@@ -13,6 +13,12 @@
         name: 'nameExternal',
         label: 'Наименование'
       }, {
+        name: 'name',
+        replace: false,
+        compute: item => {
+          return item['Наименование']
+        }
+      }, {
         name: 'code',
         label: 'Артикул',
         replace: false,

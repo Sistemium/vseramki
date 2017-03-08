@@ -288,7 +288,6 @@
           let isValid = checkValidFields(elem, propertiesToCheck);
 
           instance = model.createInstance({
-            name: elem.nameExternal,
             isValid: false
           });
 
