@@ -43,7 +43,7 @@
       tableRowRemoveClick,
       addPropertyClick,
       findNewProperties,
-      addAllProps
+      addAllNewPropertiesClick
 
       // mimeTypeRe: 'application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 
@@ -75,11 +75,6 @@
               vm.readyToImport = !!res;
               vm.data = res;
               vm.columns = _.clone(columns);
-
-              if (vm.data.length) {
-                findNewProperties(vm.data);
-              }
-
             } else {
               vm.busyReading = false;
             }
@@ -109,65 +104,26 @@
      Functions
      */
 
-    function addPropertyClick(col, row, ev) {
+    function addPropertyClick(name, propertyValue, ev) {
 
-      var modelName;
-      var propertyLabel;
+      const property = _.get(_.get(vm.newPropertiesByName, name), propertyValue);
 
-
-      if (typeof(row) == 'object') {
-        modelName = col.model;
-        propertyLabel = col.label.toLowerCase();
-      } else {
-        modelName = col[0];
-        propertyLabel = col[1].toLowerCase();
-        var noIsExistingPropertyCheck = true;
-      }
-
-      var propertyValue = _.get(row.importData, [col.name]) || row;
-      var validFields = _.filter(vm.columns, 'ref');
-      var isValidColumn = _.findKey(validFields, {'model': modelName});
+      if (!property) return;
 
 
-      if (isValidColumn >= 0) {
+      let title = `${property.label} "${propertyValue}"`;
 
-        var model = Schema.model(modelName);
-
-        if (!noIsExistingPropertyCheck) {
-          var isExistingProperty = !!_.get(_.first(model.filter({
-              where: {
-                name: {
-                  likei: propertyValue
-                }
-              }
-            })), 'id') || false;
-        }
-
-        if (!isExistingProperty || noIsExistingPropertyCheck) {
-
-          AlertHelper.showConfirm(ev, `Добавить ${propertyLabel} "${propertyValue}" ?`)
+      AlertHelper.showConfirm(ev, `Добавить ${title} ?`)
+        .then(() => {
+          model.create({name: propertyValue})
             .then(() => {
-              model.create({name: propertyValue})
-                .then((instance) => {
-                  if (instance) {
-                    ToastHelper.success('Добавлено');
-                    setModifiedData();
-                    var currentPropName = _.lowerFirst(modelName) + '.name';
-                    _.pull(vm.newProperties[currentPropName]['items'], propertyValue);
-                  }
-                })
-                .catch((err) => {
-                  if (err.status == 500) {
-                    ToastHelper.error('Ошибка сервера');
-                  } else {
-                    ToastHelper.error('Непредвиденная ошибка');
-                  }
-                })
+              ToastHelper.success(`Добавлено ${title}`);
+              setModifiedData();
             })
-
-        }
-
-      }
+            .catch(err => {
+                ToastHelper.error(err.status == 500 ? 'Ошибка сервера' : 'Непредвиденная ошибка');
+            })
+        });
 
     }
 
@@ -307,94 +263,92 @@
       vm.recordData.notModified = vm.data.length - vm.recordData.modifiedRecord - vm.recordData.newRecord;
     }
 
-    function addAllProps(props, modelName, ev) {
+    function addAllNewPropertiesClick(property, ev) {
 
-      AlertHelper.showConfirm(ev, `Добавить свойства?`)
+      AlertHelper.showConfirm(ev, `Добавить все новые значения в "${property.label}" ?`)
         .then(() => {
-          var model = Schema.model(modelName);
-          var promises = _.map(props, function (elem) {
 
-            return model.create({name: elem})
-              .then((instance) => {
-                if (instance) {
-                  setModifiedData();
-                  var currentPropName = _.lowerFirst(modelName) + '.name';
-                  _.pull(vm.newProperties[currentPropName]['items'], elem);
-                }
+          const model = property.model;
+
+          let promises = _.map(property.items, name => {
+
+            return model.create({name})
+              .then(() => {
+                return {success: name};
               })
               .catch(() => {
-                return elem;
+                return {error: name};
               });
 
           });
 
           $q.all(promises)
-            .then(function (res) {
-              var failedToWrite = _.compact(res);
-              if (failedToWrite.length) {
-                ToastHelper.error('Ошибка. Не добавлено: ' + failedToWrite.join(', '));
-              } else {
-                ToastHelper.success('Элементы добавлены');
+            .then(res => {
+
+              let errors = _.filter(res, 'error');
+              let successes = _.filter(res, 'success');
+
+              if (errors.length) {
+                ToastHelper.error(`Ошибка! Не добавлено: "${errors.join('", "')}"`);
               }
+
+              if (successes.length) {
+                ToastHelper.success(`Добавлены новые значения в "${property.label}" (${successes.length} шт.)`);
+              }
+
+              setModifiedData();
+
             });
+
         });
     }
 
     function findNewProperties(data) {
 
-      var propsNamesRegexp = /^.+\.name$/im;
-      var propertyName = [];
-      var propertyData = {};
+      let refColumns = _.filter(columns, 'ref');
+      let properties= {};
+      let refNames = _.map(refColumns, 'name');
 
-      _.each(columns, function (column) {
+      _.each(refColumns, column => {
 
-        if (propsNamesRegexp.test(column.name)) {
-          propertyName.push(column.name);
-          propertyData[column.name] = [];
-          propertyData[column.name].items = [];
-          propertyData[column.name].names = [column.model, column.label];
-        }
+        properties[column.name] = {
+          items: [],
+          model: Schema.model(column.model),
+          label: column.label,
+          ref: column.ref,
+          name: column.name
+        };
+
       });
 
-      _.each(data, function (object) {
-        _.each(object, function (val, key) {
-          var idx = _.indexOf(propertyName, key);
-          if (idx >= 0 && val != null) {
-            var dup = propertyData[key].items.includes(val);
-            if (!dup) {
-              var model = Schema.model(propertyData[key].names[0]);
-              var isExistingValue = _.get(_.first(model.filter({
-                  where: {
-                    name: {
-                      likei: val
-                    }
-                  }
-                })), 'name') || false;
-              if (!isExistingValue) {
-                propertyData[key].items.push(val);
-              }
+      _.each(data, item => {
 
-            }
-          }
+        _.each(_.pick(item.importData, refNames), (val, key) => {
+
+          let property = properties[key];
+
+          if (_.includes(property.items, val)) return;
+
+          let isNotExistingValue = val && item.importData[property.ref] === null;
+
+          if (isNotExistingValue) property.items.push(val);
+
         });
-      });
-
-      _.forIn(propertyData, function (val, key) {
-
-        if (val.items.length == 0)
-          return;
-
-        if (key != 'frameSize.name') {
-          propertyData[key].items.sort();
-        } else {
-          val.items.sort(function (a, b) {
-            return a.split('x')[0] - b.split('x')[0] || a.split('x')[1] - b.split('x')[1]
-          });
-        }
 
       });
 
-      vm.newProperties = propertyData;
+      _.each(properties, property => {
+          property.items.sort(property.model.sorter);
+      });
+
+      vm.newProperties = _.filter(properties, 'items.length');
+      vm.newPropertiesByName = {};
+
+      _.each(vm.newProperties, property => {
+        let index = {};
+        _.each(property.items, item => index[item] = property);
+        vm.newPropertiesByName [property.name] = index;
+      });
 
     }
 
