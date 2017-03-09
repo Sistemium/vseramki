@@ -158,7 +158,18 @@
 
   angular
     .module('vseramki')
-    .service('Article', Article);
+    .service('Article', Article)
+    .run((Article, AuthHelper) => {
+
+      let hasUser = AuthHelper.hasUser();
+
+      if (hasUser) {
+        hasUser.then(() => {
+          Article.findAll({limit:3000});
+        });
+      }
+
+    });
 
 
 }());

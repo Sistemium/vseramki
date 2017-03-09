@@ -64,7 +64,7 @@
 
     Cart.findAll();
 
-    Article.findAll({limit: 1000})
+    Article.findAll({limit: 3000})
       .then(() => {
         return $q.all([
           Colour.findAll(),
