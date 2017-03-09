@@ -6,6 +6,9 @@
     .module('vseramki')
     .config(config)
     .service('DEBUG', DEBUG)
+    .config($locationProvider => {
+      $locationProvider.hashPrefix('');
+    })
   ;
 
   function config($logProvider, $mdThemingProvider, localStorageServiceProvider) {
