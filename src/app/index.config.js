@@ -15,6 +15,7 @@
     // define themes for material
     $mdThemingProvider.theme('success-toast');
     $mdThemingProvider.theme('fail-toast');
+    $mdThemingProvider.theme('warn-toast');
 
     localStorageServiceProvider
       .setPrefix('ls');
