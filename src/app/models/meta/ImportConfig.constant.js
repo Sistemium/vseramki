@@ -190,7 +190,7 @@
         label: 'Розн. цена',
         //parser: parseFloat,
         compute: item => {
-          return _.round(parseFloat(item['Мел_Опт_Цена']),2);
+          return _.round(parseFloat(item['Мел_Опт_Цена']) || parseFloat(item['Спец_Цена']) * 1.15, 2);
         }
       }, {
         name: 'lowPrice',
