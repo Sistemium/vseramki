@@ -30,6 +30,7 @@ md-input-container
     //span.required-field-asterisk *
   input(
   step='0.1'
+  ng-step='0.01'
   type='number'
   ng-model='vm.frame.highPrice'
   min='0'
@@ -48,6 +49,7 @@ md-input-container
   type='number'
   ng-model='vm.frame.lowPrice'
   step='0.1'
+  ng-step='0.01'
   min='0'
   input-clear='black'
   check-price="{{vm.frame.highPrice}}"
