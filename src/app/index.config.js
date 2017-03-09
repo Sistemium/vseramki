@@ -9,6 +9,9 @@
     .config($locationProvider => {
       $locationProvider.hashPrefix('');
     })
+    .config($compileProvider => {
+      $compileProvider.preAssignBindingsEnabled(true);
+    })
   ;
 
   function config($logProvider, $mdThemingProvider, localStorageServiceProvider) {
