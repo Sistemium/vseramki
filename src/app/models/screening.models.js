@@ -16,7 +16,8 @@
 
       labels: {
         plural: 'Вставки',
-        what: 'вставку'
+        what: 'вставку',
+        gender: 'female'
       },
 
       name: 'Screening',

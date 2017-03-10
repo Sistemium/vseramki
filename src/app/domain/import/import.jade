@@ -1,16 +1,26 @@
 state-bar.import(bar-title='{{vm.title}}')
-  md-button.md-button.md-raised(
-  ng-if='vm.readyToImport'
-  ng-click='vm.cancelLoadDataClick($event)'
-  ) Отмена
-  md-button.md-button.pink-button.md-raised(
-  ng-if='vm.readyToImport && vm.modifiedData.length'
-  ng-click='vm.loadDataClick($event)'
-  ) Загрузить
-  md-button.md-button.pink-button.md-raised(
-  ng-if='vm.doneImport'
-  ng-click='vm.doneClick($event)'
-  ) Готово
+  div#import-buttons(layout='row')
+
+    md-button.md-button.md-raised(
+    ng-if='vm.readyToImport'
+    ng-click='vm.cancelLoadDataClick($event)'
+    ng-class='{"round-button": $mdMedia("xs")}'
+    )
+      span(hide-xs) Отмена
+      i.material-icons.mini(show-xs hide) clear
+
+    md-button.md-button.pink-button.md-raised(
+    ng-if='vm.readyToImport && vm.modifiedData.length'
+    ng-click='vm.loadDataClick($event)'
+    ng-class='{"round-button": $mdMedia("xs")}'
+    )
+      span(hide-xs) Загрузить
+      i.material-icons.mini(show-xs hide) check
+
+    md-button.md-button.pink-button.md-raised(
+    ng-if='vm.doneImport'
+    ng-click='vm.doneClick($event)'
+    ) Готово
 
 
 md-progress-linear(ng-if='vm.progress' ng-value='vm.progress.value' md-mode='determinate')
@@ -45,7 +55,7 @@ ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
 
   section.busy(ng-if="vm.busyReading" layout="column" layout-align="center center")
     h2 {{ vm.busyMessage }}
-    md-progress-circular(md-diameter="200" md-mode="indeterminate")
+    md-progress-circular(md-diameter="100" md-mode="indeterminate")
 
   h3#results(ng-if='vm.doneImport' layout-align='center center' layout='row')
     .result Загрузка завершена

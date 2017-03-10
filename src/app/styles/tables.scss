@@ -8,26 +8,34 @@ tr {
   height: 50px;
 }
 
-
 table.md-table {
 
   th.md-column {
+
     text-align: center;
+
     &.text-left {
       text-align: left;
     }
-  ;
+
+    & > md-icon {
+      width: 19px;
+      height: 19px;
+      min-width: 19px;
+      min-height: 19px;
+    }
+
   }
 
   td.md-cell {
 
     text-align: center;
 
-    &.text-left{
+    &.text-left {
       text-align: left;
     }
 
-    &.text-right{
+    &.text-right {
       text-align: right;
     }
 
@@ -52,7 +60,6 @@ table.md-table {
   }
 
 }
-
 
 table.md-table {
 

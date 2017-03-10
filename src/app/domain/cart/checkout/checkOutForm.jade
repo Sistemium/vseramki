@@ -74,7 +74,7 @@ h3 Информация для доставки
   md-input-container
     label Комментарий
     textarea(
-    md-maxlength="200" rows="7"
+    md-maxlength="200" rows="2"
     ng-model='vm.saleOrder.comment'
     name='shippingComment'
     autocomplete='off'
@@ -89,4 +89,4 @@ h3 Информация для доставки
   ng-disabled='checkoutForm.$invalid || vm.busy'
   ) Завершить оформление
 
-  md-progress-linear(ng-if='vm.busy' md-diameter='200' md-mode='indeterminate')
+  md-progress-linear(ng-if='vm.busy' md-mode='indeterminate')

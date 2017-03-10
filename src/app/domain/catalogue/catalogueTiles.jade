@@ -7,7 +7,7 @@ md-content#scroll-main.ui-view
   )
     .repeated-group(md-virtual-repeat='row in vm.rows' layout='row' layout-align='center center')
       .repeated-group-item(ng-repeat='article in row track by $index' flex)
-        md-card(layout='column' layout-align='space-between center')
+        md-card(layout='column' layout-align='space-between center' ng-class='{"is-valid-article": !article.isValid && vm.isAdmin}')
           md-card-content.clickable(ng-click='vm.gotoItemView(article, $event)')
             .md-card-corner
               label {{ article.code }}
@@ -49,7 +49,7 @@ md-content#scroll-main.ui-view
 
                 md-button.micro-fab(ng-click='vm.plusOne(article)') +
 
-          md-card-actions.not-in-cart(ng-if='article.highPrice && !article.inCart')
+          md-card-actions.not-in-cart(ng-if='article.highPrice && !article.inCart && article.isValid')
             md-button.md-fab.md-mini.md-icon-button.default-button(
             aria-label="Добавить в корзину"
             ng-click="vm.addToCart(article)"

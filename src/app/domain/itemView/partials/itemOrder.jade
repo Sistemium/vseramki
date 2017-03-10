@@ -14,8 +14,8 @@
 md-button.md-raised.action-button.pink-button(
 ng-click='vm.addToCart()'
 ng-if='vm.prices && !vm.article.inCart'
-)
-  | {{'Добавить к заказу'}}
+ng-disabled='!vm.article.isValid'
+) {{vm.article.isValid ? 'Добавить к заказу' : 'Скрыто от пользователей'}}
 
 .property-list.md-whiteframe-1dp.flex-5-4(ng-if='vm.article.inCart')
   h3.header

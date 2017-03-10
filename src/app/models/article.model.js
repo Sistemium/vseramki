@@ -2,7 +2,7 @@
 
 (function () {
 
-  function Article(Schema, Entity) {
+  function Article(Schema, Entity, ExportConfig) {
 
     const totalThreshold = 100000;
     const minThreshold = 10000;
@@ -16,6 +16,8 @@
       },
 
       name: 'Article',
+
+      watchChanges: false,
 
       maxThreshold: () => totalThreshold,
       minThreshold: () => minThreshold,
@@ -68,6 +70,10 @@
         }
       },
 
+      meta: {
+        exportConfig: ExportConfig.Article
+      },
+
       methods: {
 
         activePhoto: function () {
@@ -101,11 +107,11 @@
           var fs = frameSizes || this.articleFrameSizes;
 
           return _.sortBy(_.filter(_.map(fs, afs => {
-              if (!afs.count) {
-                return '';
-              }
-              return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
-            })))
+            if (!afs.count) {
+              return '';
+            }
+            return (afs.count > 1 ? `${afs.count}*` : '') + afs.frameSize.name;
+          })))
             .join(' + ');
 
         },
@@ -152,7 +158,18 @@
 
   angular
     .module('vseramki')
-    .service('Article', Article);
+    .service('Article', Article)
+    .run((Article, AuthHelper) => {
+
+      let hasUser = AuthHelper.hasUser();
+
+      if (hasUser) {
+        hasUser.then(() => {
+          Article.findAll({limit:3000});
+        });
+      }
+
+    });
 
 
 }());

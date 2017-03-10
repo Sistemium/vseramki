@@ -6,6 +6,12 @@
     .module('vseramki')
     .config(config)
     .service('DEBUG', DEBUG)
+    .config($locationProvider => {
+      $locationProvider.hashPrefix('');
+    })
+    .config($compileProvider => {
+      $compileProvider.preAssignBindingsEnabled(true);
+    })
   ;
 
   function config($logProvider, $mdThemingProvider, localStorageServiceProvider) {
@@ -15,6 +21,7 @@
     // define themes for material
     $mdThemingProvider.theme('success-toast');
     $mdThemingProvider.theme('fail-toast');
+    $mdThemingProvider.theme('warn-toast');
 
     localStorageServiceProvider
       .setPrefix('ls');

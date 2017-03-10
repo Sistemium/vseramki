@@ -2,8 +2,23 @@
 
 #import {
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .invalid-props {
+    background: lighten($fab-button-background-color, 15%);
+    & > * {
+      color: white;
+    }
+  }
+
   > * {
     margin: $margin-default;
+  }
+
+  .md-virtual-repeat-container > .md-virtual-repeat-scroller > .md-virtual-repeat-offsetter {
+    overflow-x: scroll;
   }
 
   .result {
@@ -16,6 +31,125 @@
 
   .import-status-icon {
     color: $vr-yellow-color;
+    cursor: default;
+  }
+
+  .tr-height-50 {
+    height: 50px;
+    min-height: 50px;
+  }
+
+  .properties-wrapper {
+    margin: 3px 14px;
+
+    & > div {
+      height: 30px;
+
+      .prop-val-wrapper {
+        overflow-x: scroll;
+      }
+
+      .prop-name {
+        font-weight: 600;
+        margin-right: 5px;
+        white-space: nowrap;
+      }
+
+      .badge {
+        cursor: pointer;
+        border-radius: 6px;
+        background: $fab-button-background-color;
+        min-width: 17px;
+        min-height: 17px;
+        color: white;
+        padding: 2px 8px;
+        font-size: 9px;
+        top: -7px;
+        position: relative;
+        right: 2px;
+        flex-shrink: 0;
+
+        span {
+          padding-top: 1px;
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      .prop-item {
+        background-color: $vr-yellow-color;
+        border-radius: 3px;
+        font-weight: 600;
+        margin: 0 3px;
+        padding: 5px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .prop-val {
+        white-space: nowrap;
+      }
+
+    }
+
+  }
+
+  .info {
+    margin: 10px 14px;
+    overflow: scroll;
+    h3 {
+      white-space: nowrap;
+    }
   }
 
 }
+
+#import-buttons {
+
+  .md-button > i {
+    position: inherit;
+    top: 2px;
+    left: 1px;
+    font-weight: 600;
+  }
+
+  .round-button {
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 20px;
+  }
+
+  .round-button:last-of-type {
+    margin-right: 6px;
+  }
+
+  .round-button:first-of-type {
+    margin-right: 2px;
+  }
+
+}
+
+@media (max-width: 945px) and (min-width: 800px) {
+  #import {
+    .info > h3 {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 799px) and (min-width: 500px) {
+  #import {
+    .info > h3 {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 499px) {
+  #import {
+    .info > h3 {
+      font-size: 12px;
+    }
+  }
+}
+

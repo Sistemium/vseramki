@@ -10,21 +10,27 @@
         label(for='searcher')
         input#searcher(type="search" ng-model="vm.search" input-clear='black')
 
-      .buttons.margin-left(ng-if='vm.isAdmin')
+      div(ng-if='vm.isAdmin' layout='row')
         state-bar-button.admin-button(
         title='Завершить оформление'
         icon='{{vm.currentItem.isValid ? "visibility" : "visibility_off"}}'
         ng-if='vm.currentItem'
         ng-class='{ warning: !vm.currentItem.isValid }'
         )
-        state-bar-button.admin-button(hide-xs title='Скачать таблицу Excel' icon='file_download' ng-show='vm.isRootState')
+        state-bar-button.admin-button(
+        hide-xs
+        title='Скачать таблицу Excel'
+        icon='file_download'
+        ng-show='vm.isRootState'
+        disabled-if='!vm.baguettes.length || !vm.filteredBaguettes.length'
+        )
         state-bar-button.admin-button(hide-xs title='Импорт из таблицы Excel' icon='file_upload' ng-show='!vm.currentItem')
         state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Удалить багет' icon='delete' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Добавить багет' icon='add')
 
   section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
-    md-progress-circular(md-diameter="200" md-mode="indeterminate")
+    md-progress-circular(md-diameter="100" md-mode="indeterminate")
 
 
   div(layout='row' ng-if="vm.ready")

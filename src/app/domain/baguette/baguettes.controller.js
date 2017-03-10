@@ -116,7 +116,6 @@
     }
 
     function setFiltered(search) {
-
       if (!search) {
         vm.filteredBaguettes = vm.baguettes;
       } else {
@@ -172,7 +171,7 @@
           var itemIndex = _.findIndex(vm.filteredBaguettes, item);
           var q = _.isArray(item)
               ? $q.all(_.map(item, itm => Baguette.destroy(itm)))
-              : Baguette.destroy(item).then(()=> {
+              : Baguette.destroy(item).then(() => {
               var newItem = _.get(vm.filteredBaguettes, (itemIndex || 2) - 1);
               if (newItem) {
                 $state.go('.', {id: newItem.id});
@@ -181,7 +180,7 @@
               }
             })
             ;
-          q.then(()=> {
+          q.then(() => {
             ToastHelper.success('Багет удален');
           }, () => {
             ToastHelper.error('Ошибка. Не удалось удалить');

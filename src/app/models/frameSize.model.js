@@ -54,6 +54,10 @@
 
       nameFormatter: function(name) {
         return _.replace(name,'х','x');
+      },
+
+      sorter: function (a, b) {
+        return a.split('x')[0] - b.split('x')[0] || a.split('x')[1] - b.split('x')[1];
       }
 
     });

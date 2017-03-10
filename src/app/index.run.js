@@ -6,6 +6,7 @@
   angular
     .module('vseramki')
     .run(runBlock)
+    .run(makeMeasureDigest)
     .run(function(amMoment) {
       amMoment.changeLocale('ru');
     });
@@ -30,6 +31,21 @@
 
     $log.debug('runBlock end');
 
+  }
+
+  /** @ngInject */
+  function performancer($rootScope) {
+    var a = performance.now();
+    $rootScope.$apply();
+    console.log('Digest length:', Math.round(performance.now() - a));
+  }
+
+  /** @ngInject */
+  function makeMeasureDigest($window) {
+    $window.measureDigest = () =>
+      angular.element($window.document.querySelector('[ng-app]'))
+        .injector()
+        .invoke(performancer);
   }
 
 })();

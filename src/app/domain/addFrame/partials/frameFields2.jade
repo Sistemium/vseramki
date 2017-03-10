@@ -16,10 +16,10 @@ md-input-container
 md-input-container
   label Вес (кг.)
   input(
-  step='0.1'
+  step='0.001'
   type='number'
   ng-model='vm.frame.pieceWeight'
-  min='0.1'
+  min='0.001'
   name='pieceWeight'
   input-clear='black'
   )
@@ -29,7 +29,8 @@ md-input-container
     //=' '
     //span.required-field-asterisk *
   input(
-  step='1'
+  step='0.1'
+  ng-step='0.01'
   type='number'
   ng-model='vm.frame.highPrice'
   min='0'
@@ -47,12 +48,33 @@ md-input-container
   name='lowPrice'
   type='number'
   ng-model='vm.frame.lowPrice'
-  step='1'
+  step='0.1'
+  ng-step='0.01'
   min='0'
   input-clear='black'
   check-price="{{vm.frame.highPrice}}"
   )
   div.custom-animation(ng-show="vm.attrsForm.lowPrice.$error.checkPrice")
     span.custom-warning Оптовая цена больше рыночной
+
+md-input-container
+  label Код 1С
+    //=' '
+    //span.required-field-asterisk *
+  input(
+  name='code'
+  type='text'
+  ng-model='vm.frame.codeExternal'
+  input-clear='black'
+  )
+
+md-input-container
+  label Наименование 1C
+  input(
+  name='name'
+  type='text'
+  ng-model='vm.frame.nameExternal'
+  )
+
 
 input(type='hidden' ng-model='paramsCheck' ng-required='!vm.paramsCheck')

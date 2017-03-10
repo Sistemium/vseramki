@@ -1,7 +1,7 @@
 .searchable-select
   span.label(ng-if='vm.label') {{ vm.label }}
   =' '
-  span(style='color: red' ng-if='vm.requiredField') *
+  span.asteric(ng-if='vm.requiredField') *
   md-button.micro-square.md-mini.clear-button(ng-click="vm.model=null" ng-if='vm.model')
     i.material-icons.mini clear
 

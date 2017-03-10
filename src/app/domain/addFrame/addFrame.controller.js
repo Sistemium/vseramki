@@ -44,6 +44,7 @@
       Article.find(vm.id)
         .then(function (frame) {
           vm.frame = frame;
+          vm.copiedName = frame.nameExternal;
           initArticleFrameSizes();
         });
 
@@ -92,9 +93,9 @@
     function checkParams() {
       vm.paramsCheck = vm.frame.frameSizeId &&
         vm.frame.name &&
-          // vm.frame.packageRel &&
+        // vm.frame.packageRel &&
         unique &&
-          // vm.frame.highPrice &&
+        // vm.frame.highPrice &&
         (!vm.frame.multiType || _.find(vm.articleFrameSizes, afs => afs.count))
       ;
     }

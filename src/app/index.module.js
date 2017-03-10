@@ -16,7 +16,8 @@
       'ui.bootstrap.position',
       'yaMap',
       'ui.mask',
-      'angularMoment'
+      'angularMoment',
+      'ng-appcache'
     ]);
 
 })();

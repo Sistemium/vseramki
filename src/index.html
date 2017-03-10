@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="vseramki">
+<html ng-app="vseramki" data-manifest="app.manifest">
   <head>
     <meta charset="utf-8">
     <title>Все рамки</title>
@@ -29,12 +29,12 @@
 
     <!--section layout-fill ng-cloak-->
 
-      <md-content id="root-md-content" layout-fill>
+      <md-content id="root-md-content" layout-fill class="md-no-flicker">
         <acme-navbar></acme-navbar>
         <div class="root viewport" ui-view>
           <div layout="column" layout-align="center center">
             <h1>Загрузка</h1>
-            <md-progress-circular md-diameter="300" md-mode="indeterminate"></md-progress-circular>
+            <md-progress-circular md-diameter="100" md-mode="indeterminate"></md-progress-circular>
           </div>
         </div>
       </md-content>

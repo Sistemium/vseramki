@@ -19,7 +19,9 @@
             localKey: 'baguetteId'
           }
         }
-      }
+      },
+
+      watchChanges: false
 
     });
 

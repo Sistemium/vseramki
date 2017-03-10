@@ -6,6 +6,7 @@ require('sistemium-gulp')
       ui: {
         port: 3005
       },
+      reloadOnRestart: false,
       ghostMode: false
     },
     build: {

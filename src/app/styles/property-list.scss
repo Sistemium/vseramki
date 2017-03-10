@@ -34,6 +34,16 @@
 
 }
 
+.contacts {
+  .ya-map-container {
+    .property-list-container {
+      .property:last-of-type {
+        border-bottom: solid 1px silver;
+      }
+    }
+  }
+}
+
 .property-list, .property-list-container {
 
   .property {

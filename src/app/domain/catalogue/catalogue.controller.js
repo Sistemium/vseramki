@@ -2,7 +2,7 @@
 
 (function () {
 
-  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper) {
+  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper, ExportExcel) {
 
     var vm = ControllerHelper.setup(this, $scope, onStateChange)
       .use(TableHelper)
@@ -45,7 +45,14 @@
       resetFilters,
       delCurrFilter,
       addClick,
-      sideNavListItemClick: sideNavListItemClick
+      sideNavListItemClick: sideNavListItemClick,
+
+      fileDownloadClick: function () {
+        var articles = vm.articles;
+        ExportExcel.exportArrayWithConfig(articles, Article.meta.exportConfig, 'Рамки');
+      },
+
+      fileUploadClick: () => $state.go('import', {model: 'Article'})
 
     });
 
@@ -57,9 +64,8 @@
 
     Cart.findAll();
 
-    Article.findAll({limit: 1000})
+    Article.findAll({limit: 3000})
       .then(() => {
-
         return $q.all([
           Colour.findAll(),
           Material.findAll(),
@@ -91,7 +97,6 @@
     // BaguetteImage.bindAll({}, $scope, 'vm.baguetteImage');
     // ArticleImage.bindAll({}, $scope, 'vm.images');
 
-    $scope.$watch('vm.articleFilter', filterArticles);
 
     $scope.$watch('vm.search', () => {
       filterArticles();
@@ -105,8 +110,21 @@
 
      */
 
-    function onStateChange() {
+    function onStateChange(toState, toParams) {
+
       vm.id && scrollToIndex();
+
+      if (toParams.id) {
+
+        return Article.find(toParams.id).then(function (item) {
+          vm.currentItem = item;
+          //scrollToIndex();
+          //lockArticlesScroll = false;
+        });
+      } else {
+        vm.currentItem = false;
+      }
+
     }
 
     function addClick() {
@@ -195,9 +213,15 @@
       } : {};
 
       if (vm.search) {
-        _.set(jsFilter, 'where.name', {
-          'likei': `%${vm.search}%`
-        });
+        if (vm.search == 'invalid') {
+          _.set(jsFilter, 'where.isValid', {
+            'likei': 'false'
+          });
+        } else {
+          _.set(jsFilter, 'where.name', {
+            'likei': `%${vm.search}%`
+          });
+        }
       }
       return jsFilter;
 
@@ -281,7 +305,7 @@
 
       lockArticlesScroll = true;
       $state.go(newState, {id: frame.id})
-        .then(()=> lockArticlesScroll = false);
+        .then(() => lockArticlesScroll = false);
     }
 
   }

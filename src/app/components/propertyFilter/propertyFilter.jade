@@ -8,7 +8,7 @@ md-menu(md-offset='20 0')
 
   md-button.no-margin(
   aria-label='{{vm.propertyName}} menu'
-  ng-click='$mdOpenMenu($event)'
+  ng-click='$mdMenu.open($event)'
   )
     span.label {{vm.propertyLabel}}:
     = ' '
