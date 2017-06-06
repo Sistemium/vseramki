@@ -39,6 +39,7 @@
       addToCart: Cart.addToCart,
       gotoItemView: onClickWithPrevent(gotoItemView),
 
+      onEnter,
       onBlur,
       onCartChange,
       filterOptionClick,
@@ -109,6 +110,10 @@
      Functions
 
      */
+
+    function onEnter() {
+      $state.go('^');
+    }
 
     function onStateChange(toState, toParams) {
 

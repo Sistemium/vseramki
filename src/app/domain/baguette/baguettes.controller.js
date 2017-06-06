@@ -37,6 +37,7 @@
       rootState: 'baguettes',
       selected: [],
 
+      onEnter,
       deleteClick,
       addClick,
       sideNavListItemClick: changeBaguette,
@@ -95,6 +96,10 @@
      Functions
 
      */
+
+    function onEnter() {
+      $state.go('^');
+    }
 
     function onStateChange(toState, toParams) {
 
