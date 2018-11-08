@@ -2,8 +2,8 @@
 
   function AddPhotoDialogController($mdDialog, Upload, $q, $state, saaAppConfig, $timeout) {
 
-    var vm = this;
-    var folder;
+    const vm = this;
+    let folder;
 
     angular.extend(vm, {
 
@@ -24,13 +24,13 @@
 
     function uploadFiles() {
 
-      var promises = [];
-      var operations = [];
+      const promises = [];
+      const operations = [];
 
       function setProgress() {
 
-        var total = 0;
-        var loaded = 0;
+        let total = 0;
+        let loaded = 0;
 
         _.each(operations, function (operation) {
           total += operation.total;
@@ -43,11 +43,11 @@
 
       _.each(vm.files, function (f) {
 
-        var file = f.lfFile;  // for lf-ng-md-file-input. use  var file = files[i] for ng-file-upload
+        const file = f.lfFile;  // for lf-ng-md-file-input. use  const file = files[i] for ng-file-upload
 
         if (!file.$error) {
 
-          var operation = {};
+          const operation = {};
 
           operations.push(operation);
 

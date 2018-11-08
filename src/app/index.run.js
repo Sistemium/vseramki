@@ -35,7 +35,7 @@
 
   /** @ngInject */
   function performancer($rootScope) {
-    var a = performance.now();
+    const a = performance.now();
     $rootScope.$apply();
     console.log('Digest length:', Math.round(performance.now() - a));
   }

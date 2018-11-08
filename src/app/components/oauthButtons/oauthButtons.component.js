@@ -16,12 +16,12 @@
 
   function oauthButtonsController ($window, saaAppConfig) {
 
-    var vm = this;
+    const vm = this;
 
     _.assign(vm, {
 
       loginOauth: function (url) {
-        var href = saaAppConfig.authUrl + '/auth/' + url;
+        let href = saaAppConfig.authUrl + '/auth/' + url;
         href += '?redirect_uri=' + saaAppConfig.redirect_uri + '&orgAppId=' + saaAppConfig.orgAppId;
         $window.location.href = href;
       }

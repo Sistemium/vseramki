@@ -6,10 +6,10 @@
 
     return (scope, element, attrs) => {
 
-      var property = attrs.resize ? (scope[attrs.resize] = {}) : scope;
+      const property = attrs.resize ? (scope[attrs.resize] = {}) : scope;
 
       function getWindowDimensions() {
-        var offset = $uibPosition.offset(element);
+        const offset = $uibPosition.offset(element);
         return {
           windowHeight: $window.innerHeight,
           windowWidth: $window.innerWidth,
@@ -21,7 +21,7 @@
         _.assign(property, newValue);
       }
 
-      var un = scope.$watch(getWindowDimensions, setValues, true);
+      const un = scope.$watch(getWindowDimensions, setValues, true);
 
       function apply() {
         scope.$apply();

@@ -7,7 +7,7 @@
 
   function LoginController($stateParams) {
 
-    var vm = this;
+    const vm = this;
 
     vm.buttons = [
       {

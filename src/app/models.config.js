@@ -2,7 +2,7 @@
 
 (function () {
 
-  var basePath = window.localStorage.getItem('JSData.BasePath')
+  const basePath = window.localStorage.getItem('JSData.BasePath')
     || location.protocol === 'https:' && '/api/'
     || 'https://api.sistemium.com/v4d/vr2/';
 
@@ -13,12 +13,12 @@
 
       labelOf: function (count) {
 
-        var labels = this.labels.count;
+        const labels = this.labels.count;
 
         if (_.inRange(count % 100, 9, 21)) {
           return labels['567890'];
         } else {
-          var digit = count % 10;
+          const digit = count % 10;
           if (digit === 1) {
             return labels['1'];
           } else if (_.inRange(digit, 2, 5)) {
@@ -59,7 +59,7 @@
     .factory('Schema', Schema)
 
     .run(function (DS, $window) {
-      var adapter = new $window.DSLocalStorageAdapter();
+      const adapter = new $window.DSLocalStorageAdapter();
       DS.registerAdapter('localStorage', adapter);
     });
 

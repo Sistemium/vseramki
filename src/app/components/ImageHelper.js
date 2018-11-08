@@ -9,10 +9,10 @@
 
   function ImageHelper($mdMedia, $window, $mdDialog, $rootScope, $q, $timeout) {
 
-    var body2 = $window.document.getElementsByClassName('for-md-dialog');
-    var customFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
+    const body2 = $window.document.getElementsByClassName('for-md-dialog');
+    let customFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
-    var un = $rootScope.$watch(function () {
+    const un = $rootScope.$watch(function () {
       return $mdMedia('xs') || $mdMedia('sm');
     }, function (wantsFullScreen) {
       customFullScreen = (wantsFullScreen === true);
@@ -23,15 +23,15 @@
     function loadImage(src) {
       return $q((resolve, reject) => {
 
-        var image = new Image();
-        var startedAt = new Date();
+        const image = new Image();
+        const startedAt = new Date();
 
         image.onload = function () {
           if (this.complete === false || this.naturalWidth === 0) {
             reject();
           }
 
-          var since = startedAt - new Date() + MIN_LOADING;
+          const since = startedAt - new Date() + MIN_LOADING;
           $timeout(since > 0 ? since : 0)
             .then(()=>resolve(image));
         };
@@ -49,7 +49,7 @@
 
     function imsResponseHelper(data) {
 
-      var pictures = _.get(data, 'data.pictures');
+      const pictures = _.get(data, 'data.pictures');
 
       if (!pictures) {
         console.error('Unexpected IMS response', data);

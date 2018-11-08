@@ -2,10 +2,10 @@
 
   function routerAuth($state, AuthHelper, $rootScope) {
 
-    var loggedIn;
-    var loggingIn;
+    let loggedIn;
+    let loggingIn;
 
-    var trt = $rootScope.$on('$stateChangeStart', function (event, to, toParams) {
+    const trt = $rootScope.$on('$stateChangeStart', function (event, to, toParams) {
 
       function checkRoles() {
 

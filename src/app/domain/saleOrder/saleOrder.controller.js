@@ -8,11 +8,11 @@
 
   function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper, ToastHelper, $timeout) {
 
-    var vm = ControllerHelper.setup(this, $scope, onStateChange);
+    const vm = ControllerHelper.setup(this, $scope, onStateChange);
 
-    var SaleOrder = Schema.model('SaleOrder');
+    const SaleOrder = Schema.model('SaleOrder');
 
-    var lockOrdersScroll;
+    let lockOrdersScroll;
 
     _.assign(vm, {
       showEditButtons: false,
@@ -97,7 +97,7 @@
 
     function scrollToIndex() {
 
-      var id = vm.id;
+      const id = vm.id;
 
       // TODO substitute timeout
 

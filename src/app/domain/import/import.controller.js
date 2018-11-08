@@ -4,14 +4,14 @@
 
   function ImportController($q, ImportExcel, $timeout, Schema, $scope, ToastHelper, $state, ImportConfig, AlertHelper, $mdMedia) {
 
-    var vm = this;
+    const vm = this;
 
-    var modelName = $state.params.model;
-    var model = Schema.model(modelName);
-    var importConfig = ImportConfig[modelName];
-    var columns = importConfig[modelName + 'Columns'];
+    const modelName = $state.params.model;
+    const model = Schema.model(modelName);
+    const importConfig = ImportConfig[modelName];
+    const columns = importConfig[modelName + 'Columns'];
 
-    var baguetteModel = Schema.model('Baguette');
+    const baguetteModel = Schema.model('Baguette');
     baguetteModel.findAll({limit: 4000});
 
     // TODO: media query?
@@ -130,7 +130,7 @@
 
     function checkValidFields(elem, propertiesToCheck) {
 
-      var isValid = true;
+      let isValid = true;
 
       _.each(propertiesToCheck, function (property) {
 
@@ -408,8 +408,8 @@
 
     function loadDataClick() {
 
-      var total = vm.modifiedData.length;
-      var value = 0;
+      const total = vm.modifiedData.length;
+      let value = 0;
 
       vm.readyToImport = false;
 
@@ -418,17 +418,17 @@
         total: total
       };
 
-      var errors = [];
-      var results = {
+      const errors = [];
+      const results = {
         imported: 0,
         ignored: 0,
         ignoredNotValid: 0
       };
 
-      var saveItem = saveModelItem;
+      const saveItem = saveModelItem;
 
       function importItem() {
-        var item = vm.modifiedData.pop();
+        const item = vm.modifiedData.pop();
 
         if (!item) {
           vm.progress = false;
@@ -471,7 +471,7 @@
     function saveModelItem(item) {
 
       _.each(columns, column => {
-        var name = column.ref || column.name;
+        const name = column.ref || column.name;
         item.instance[name] = item.importData[name];
       });
 

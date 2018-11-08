@@ -9,10 +9,10 @@
 
   function UserInfoController(AuthHelper, Auth, Schema, $q, ToastHelper, $state, TableHelper, $scope) {
 
-    var vm = this;
+    const vm = this;
 
-    var User = Schema.model('User');
-    var SaleOrder = Schema.model('SaleOrder');
+    const User = Schema.model('User');
+    const SaleOrder = Schema.model('SaleOrder');
 
     _.assign(vm, {
       emailPattern: User.meta.emailPattern,
@@ -50,7 +50,7 @@
     }
 
     function setUser() {
-      var authUser = AuthHelper.getUser();
+      const authUser = AuthHelper.getUser();
       vm.roles = AuthHelper.userRoles();
 
       User.find(authUser.id)
@@ -76,7 +76,7 @@
     function getUserSaleOrders() {
       SaleOrder.findAll({creatorId: vm.user.id}).then(()=> {
         SaleOrder.bindAll({}, $scope, 'vm.saleOrders', () => {
-          var count = _.get(vm.saleOrders, 'length');
+          const count = _.get(vm.saleOrders, 'length');
           vm.saleOrdersButton = count ? `${count} ${SaleOrder.labelOf(count)}` : null;
         });
       });

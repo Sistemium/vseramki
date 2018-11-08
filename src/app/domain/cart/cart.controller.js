@@ -6,10 +6,10 @@
 
     const {AlertHelper, ToastHelper, ControllerHelper, AuthHelper} = Helpers;
 
-    var vm = ControllerHelper.setup(this, $scope, onStateChange)
+    const vm = ControllerHelper.setup(this, $scope, onStateChange)
       .use(AuthHelper);
 
-    var {
+    const {
       Article,
       ArticleImage,
       Baguette,
@@ -46,7 +46,7 @@
 
       checkClick: () => {
 
-        var isFormDirty = _.get(vm, 'attrsForm.$dirty');
+        const isFormDirty = _.get(vm, 'attrsForm.$dirty');
 
         if (isFormDirty) {
           SaleOrder.save(vm.saleOrder).then(() => {
@@ -81,8 +81,8 @@
 
     });
 
-    var PositionsModel = vm.id ? SaleOrderPosition : Cart;
-    var authUser = AuthHelper.getUser();
+    const PositionsModel = vm.id ? SaleOrderPosition : Cart;
+    const authUser = AuthHelper.getUser();
 
     /*
 
@@ -244,7 +244,7 @@
             return;
           }
 
-          var positions = _.map(vm.data, cartItem => {
+          const positions = _.map(vm.data, cartItem => {
             return SaleOrderPosition.create({
               saleOrderId: saleOrder.id,
               articleId: cartItem.articleId,
@@ -266,9 +266,9 @@
 
           if (authUser) {
             User.find(authUser.id).then(function (user) {
-              var userObject = user;
+              const userObject = user;
               vm.userEmptyFieldKeys.forEach(function (key) {
-                var keyDup = key;
+                let keyDup = key;
                 if (keyDup === 'address') {
                   keyDup = 'shipTo';
                 }

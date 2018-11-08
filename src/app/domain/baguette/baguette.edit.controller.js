@@ -6,10 +6,10 @@
 
   function BaguetteEditController(Schema, $scope, $state, Helpers, $q) {
 
-    var {ImageHelper, ToastHelper, ControllerHelper} = Helpers;
-    var {Brand, Baguette, Material, Colour, BaguetteImage, BaguetteColour, Surface} = Schema.models();
+    const {ImageHelper, ToastHelper, ControllerHelper} = Helpers;
+    const {Brand, Baguette, Material, Colour, BaguetteImage, BaguetteColour, Surface} = Schema.models();
 
-    var vm = ControllerHelper.setup(this, $scope);
+    const vm = ControllerHelper.setup(this, $scope);
 
     _.assign(vm, {
 
@@ -124,9 +124,9 @@
     function addBaguetteColour() {
       if (vm.extraBaguetteColourId) {
 
-        var colourId = {colourId: vm.extraBaguetteColourId};
+        const colourId = {colourId: vm.extraBaguetteColourId};
 
-        var isDuplicate = _.find(vm.baguetteColours, colourId);
+        const isDuplicate = _.find(vm.baguetteColours, colourId);
 
         if (!isDuplicate) {
           vm.baguetteColours.push(BaguetteColour.createInstance({
@@ -170,7 +170,7 @@
 
       refreshName();
 
-      var filter = {};
+      const filter = {};
 
       _.each(keys, key => filter[key] = vm.baguette[key] || null);
 
@@ -193,7 +193,7 @@
     }
 
     function save() {
-      
+
       //TODO baguette.name
       if (!vm.baguette.isValid) {
         vm.baguette.name = (_.get(vm.baguette, 'brand.name') || '') + ' ' + (_.get(vm.baguette, 'colour.name') || '') + ' ' + (_.get(vm.baguette, 'surface.name') || '');

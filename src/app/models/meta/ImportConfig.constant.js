@@ -55,13 +55,13 @@
         replace: false,
         compute: item => {
 
-          var name = item['Наименование'];
+          const name = item['Наименование'];
           if (!name) {
             return null;
           }
 
-          var re = /"(.+)"/;
-          var res = _.last(name.match(re));
+          let re = /"(.+)"/;
+          let res = _.last(name.match(re));
 
           if (res) {
             return res;
@@ -101,12 +101,12 @@
         required: true,
         compute: item => {
 
-          var frameSizeReg = /\d{2,4}(\*|\x|\х)\d{2,4}/g;
-          var frameSize = item['Размер'];
+          const frameSizeReg = /\d{2,4}(\*|\x|\х)\d{2,4}/g;
+          let frameSize = item['Размер'];
 
           if (/^\s+$/.test(frameSize)) {
 
-            var fs = item['Наименование'].match(frameSizeReg);
+            const fs = item['Наименование'].match(frameSizeReg);
 
             if (fs) {
               frameSize = fs[0]
@@ -117,14 +117,14 @@
 
           }
 
-          var formattedFrameSize = false;
+          let formattedFrameSize = false;
 
           if (!frameSize) {
             return null;
           } else {
-            var splitters = ['x', 'х', ' ', '*'];
+            const splitters = ['x', 'х', ' ', '*'];
             _.each(splitters, function (splitter) {
-              var splittedVal = frameSize.split(splitter);
+              const splittedVal = frameSize.split(splitter);
 
               if (splittedVal[0] * splittedVal[1] > 0) {
                 formattedFrameSize = splittedVal[0] + 'x' + splittedVal[1];
