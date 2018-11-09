@@ -12,8 +12,8 @@
   function DictionaryController($scope, $q, $state, Schema, AuthHelper, AlertHelper, $mdEditDialog, Entity, ToastHelper) {
 
 
-    var vm = this;
-    var unbind;
+    const vm = this;
+    let unbind;
 
 
     _.assign(vm, {
@@ -59,7 +59,7 @@
 
       event.stopPropagation();
 
-      var editDialog = {
+      const editDialog = {
         modelValue: row[column.name],
         placeholder: column.title,
 
@@ -93,7 +93,7 @@
       $state.go('dictionary.' + item.name);
       vm.option = item;
 
-      var model = Schema.model(item.name);
+      const model = Schema.model(item.name);
 
       model.findAll().then(function () {
         vm.modelDefaultId = Entity.getDefault(item.name);
@@ -109,7 +109,7 @@
 
       vm.columns = model.columns || DEFAULT_COLUMNS;
       vm.relations = _.map(_.filter(model.relationList, {type: 'hasMany'}), rel => {
-        var model = Schema.model(rel.relation);
+        const model = Schema.model(rel.relation);
         model.findAll();
         return {
           name: rel.localField,
@@ -120,7 +120,7 @@
     }
 
     function deleteItem(item, $event) {
-      var name = vm.model.name;
+      const name = vm.model.name;
       AlertHelper.showConfirm($event, `Удалить ${vm.option.labels.what} "${item.name}"?`)
         .then(() => vm.busy = Entity.find(name, {bypassCache: true})
           .then(() => Entity.getDefault(name) === item.id && Entity.setDefault(name, null))
@@ -130,7 +130,7 @@
 
     function makeDefault(item) {
 
-      var name = vm.model.name;
+      const name = vm.model.name;
       Entity.setDefault(vm.model.name, item.id)
         .then(() => {
           if (vm.model.name === name) {
@@ -147,7 +147,7 @@
     }
 
     function deleteDefault() {
-      var id = _.last($state.current.name.match(/dictionary\.([^.]+)/));
+      const id = _.last($state.current.name.match(/dictionary\.([^.]+)/));
       Entity.setDefault(id, null).then(()=> {
         vm.modelDefaultId = Entity.getDefault(id);
       });

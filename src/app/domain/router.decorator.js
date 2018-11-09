@@ -4,9 +4,9 @@
 
   function RouterDecorator($rootScope, $state, localStorageService, Entity, $window) {
 
-    var entityLoading;
+    let entityLoading;
 
-    var ensureEntityLoad = $rootScope.$on('$stateChangeStart', (event, to, params) => {
+    const ensureEntityLoad = $rootScope.$on('$stateChangeStart', (event, to, params) => {
 
       event.preventDefault();
 
@@ -40,7 +40,7 @@
 
     $rootScope.$on('$stateChangeSuccess', (event, toState) => {
 
-      var parentDefaultChild = _.get(toState,'parent.defaultChild');
+      const parentDefaultChild = _.get(toState,'parent.defaultChild');
 
       if (parentDefaultChild) {
 
@@ -51,7 +51,7 @@
         }
       }
 
-      var title = _.get(toState, 'data.title');
+      const title = _.get(toState, 'data.title');
 
       $window.document.title = title ? `Все рамки - ${title}` : 'Все рамки';
 

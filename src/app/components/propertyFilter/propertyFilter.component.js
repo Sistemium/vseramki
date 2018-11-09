@@ -20,7 +20,7 @@
 
       controller: function () {
 
-        var vm = this;
+        const vm = this;
 
         _.assign(vm, {
 

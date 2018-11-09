@@ -13,9 +13,9 @@
 
       link: function (scope, elem, attrs, ctrl) {
 
-        var validate = function (lowPrice) {
+        const validate = function (lowPrice) {
 
-          var highPrice = attrs.checkPrice;
+          const highPrice = attrs.checkPrice;
 
           if (!lowPrice || !highPrice) {
             ctrl.$setValidity('checkPrice', true);

@@ -30,9 +30,9 @@
 
   function searchableSelectController(Schema, $mdSelect, $mdToast, $window) {
 
-    var vm = this;
-    var el = $window.document.getElementsByClassName('toolbar-fixed-top');
-    var addPattern = vm.pattern || /.*/;
+    const vm = this;
+    const el = $window.document.getElementsByClassName('toolbar-fixed-top');
+    const addPattern = vm.pattern || /.*/;
 
     if (!vm.labelOf) {
       vm.labelOf = `${_.lowerCase(vm.label)}а`;
@@ -73,13 +73,13 @@
     }
 
     function addAttrs() {
-      var foundModel = (Schema.model(vm.modelName));
+      const foundModel = (Schema.model(vm.modelName));
       foundModel.findAll({name: vm.search.name}, {bypassCache: true}).then(function (item) {
         if (item.length) {
           vm.showToast('Такой атрибут уже сущетвует', false)
         } else {
 
-          var formattedAttr = vm.formatterFn()(vm.search.name);
+          const formattedAttr = vm.formatterFn()(vm.search.name);
 
           foundModel.create({name: formattedAttr})
             .then(function (data) {
@@ -98,13 +98,7 @@
 
     function showToast(resStr, status) {
 
-      var theme;
-
-      if (status) {
-        theme = 'success-toast';
-      } else {
-        theme = 'fail-toast';
-      }
+      const theme = status ? 'success-toast' : 'fail-toast';
 
       $mdToast.show(
         $mdToast.simple()

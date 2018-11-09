@@ -11,7 +11,7 @@
 
   function routerConfig(stateHelperProvider) {
 
-    var children = [
+    const children = [
 
       {
         name: 'create',

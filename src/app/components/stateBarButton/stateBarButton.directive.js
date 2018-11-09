@@ -18,7 +18,7 @@
 
       controller: function ($scope) {
 
-        var vm = this;
+        const vm = this;
 
         _.assign(vm, {
           onClick: event => {

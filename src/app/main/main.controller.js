@@ -8,8 +8,8 @@
 
   function MainController(toastr, Auth, $state, $timeout) {
 
-    var vm = this;
-    var accessToken = $state.params ['access-token'];
+    const vm = this;
+    const accessToken = $state.params ['access-token'];
 
     _.assign(vm, {});
 

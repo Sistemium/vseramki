@@ -8,7 +8,7 @@
 
   function Entity(Schema) {
 
-    var model = Schema.register({
+    const model = Schema.register({
 
       name: 'Entity',
 

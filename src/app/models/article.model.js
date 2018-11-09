@@ -77,13 +77,13 @@
       methods: {
 
         activePhoto: function () {
-          var photo = _.get(this, 'images[0]') || _.get(this, 'baguette.images[0]');
+          const photo = _.get(this, 'images[0]') || _.get(this, 'baguette.images[0]');
           return photo ? photo.thumbnailSrc : '/images/placeholder.png';
         },
 
         discountedPrice: function (total) {
 
-          var useTotal = total < totalThreshold ? total : totalThreshold;
+          const useTotal = total < totalThreshold ? total : totalThreshold;
 
           if (!this.lowPrice || useTotal <= minThreshold) {
             return this.highPrice;
@@ -104,7 +104,7 @@
 
         articleFrameSizesName: function (frameSizes) {
 
-          var fs = frameSizes || this.articleFrameSizes;
+          const fs = frameSizes || this.articleFrameSizes;
 
           return _.sortBy(_.filter(_.map(fs, afs => {
             if (!afs.count) {
@@ -121,18 +121,18 @@
         },
 
         secondName: function () {
-          var name = this.multiTypeName();
+          const name = this.multiTypeName();
 
           return name ? `${this.multiTypeName()} (${this.articleFrameSizesName()})` : '';
         },
 
         stringName: function (frameSizes) {
 
-          var baguette = this.baguette;
+          const baguette = this.baguette;
 
-          var brandName = _.get(baguette, 'brand.name');
+          const brandName = _.get(baguette, 'brand.name');
 
-          var res = brandName ? '' : 'Рамка';
+          let res = brandName ? '' : 'Рамка';
           res += ` ${_.get(baguette, 'name') || ''} ${_.get(this, 'frameSize.name') || ''}`;
 
           if (this.multiType) {

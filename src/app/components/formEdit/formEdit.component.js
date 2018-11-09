@@ -21,7 +21,7 @@
       /** @ngInject */
       controller: function ($scope) {
 
-        var vm$ = this;
+        const vm$ = this;
 
         _.assign(vm$, {
           nameField: vm$.nameField !== '' && 'name',

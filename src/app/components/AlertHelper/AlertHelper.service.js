@@ -6,7 +6,7 @@
 
     function showConfirm(ev, question) {
 
-      var confirm = $mdDialog.confirm()
+      const confirm = $mdDialog.confirm()
         .title(question || 'Действительно удалить эту запись?')
         .textContent('')
         .ariaLabel('Confirm Modal')

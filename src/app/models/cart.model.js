@@ -9,10 +9,10 @@
 
   function Cart(Schema) {
 
-    var totalThreshold = 100000;
-    var minThreshold = 10000;
+    const totalThreshold = 100000;
+    const minThreshold = 10000;
 
-    var model = Schema.register({
+    const model = Schema.register({
 
       name: 'Cart',
       relations: {
@@ -26,7 +26,7 @@
 
       methods: {
         cost: function (total) {
-          var useTotal = total < totalThreshold ? total : totalThreshold;
+          let useTotal = total < totalThreshold ? total : totalThreshold;
 
           if (useTotal <= minThreshold) {
             useTotal = 0;
@@ -40,14 +40,14 @@
 
       recalcTotals: function (vm) {
 
-        var items = model.getAll();
+        const items = model.getAll();
 
         vm.cartSubTotal = model.orderSubTotal();
         vm.cartTotal = model.orderTotal();
         vm.cartItems = items.length;
         vm.cartHasDiscount = (vm.cartSubTotal > vm.cartTotal);
         vm.cartDiscount = (1 - vm.cartTotal / vm.cartSubTotal) * 100;
-        vm.cartTotalCount = _.sumBy(items,'count');
+        vm.cartTotalCount = _.sumBy(items, 'count');
       },
 
       orderSubTotal: function (items) {
@@ -57,14 +57,14 @@
 
       orderTotal: function (items) {
         items = items || model.getAll();
-        var subTotal = model.orderSubTotal(items);
+        const subTotal = model.orderSubTotal(items);
 
         return _.sumBy(items, item => item.count ? item.cost(subTotal) : 0);
       },
 
       addToCart: function (article) {
 
-        var inCart = article.inCart;
+        let {inCart} = article;
 
         if (inCart) {
           inCart.count++;

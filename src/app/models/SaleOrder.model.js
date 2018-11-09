@@ -8,7 +8,7 @@
 
   function SaleOrder(Schema) {
 
-    var processingDictionary = {
+    const processingDictionary = {
       submitted: 'Оформлен',
       accepted: 'Принят',
       delivery: 'Доставка',
@@ -19,7 +19,7 @@
       return processingDictionary[processing];
     }
 
-    var model = Schema.register({
+    const model = Schema.register({
 
       name: 'SaleOrder',
 
@@ -65,16 +65,16 @@
         },
 
         orderTotal: function () {
-          var items = this.positions;
-          var subTotal = this.orderSubTotal(items);
+          const items = this.positions;
+          const subTotal = this.orderSubTotal(items);
 
           return _.sumBy(items, item => item.count ? item.cost(subTotal) : 0);
         },
 
         recalcTotals: function (vm) {
 
-          var model = this;
-          var items = model.positions;
+          const model = this;
+          const items = model.positions;
 
           // FIXME copy-pasted
           vm.cartSubTotal = model.orderSubTotal();

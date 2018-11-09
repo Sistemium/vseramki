@@ -1,23 +1,23 @@
 'use strict';
 
-var path = require('path');
-var conf = require('./gulp/conf');
+const path = require('path');
+const conf = require('./gulp/conf');
 
-var _ = require('lodash');
-var wiredep = require('wiredep');
+const _ = require('lodash');
+const wiredep = require('wiredep');
 
-var pathSrcHtml = [
+const pathSrcHtml = [
   path.join(conf.paths.tmp, '/serve/**/*.html'),
   path.join(conf.paths.src, '/**/*.html')
 ];
 
 function listFiles() {
-  var wiredepOptions = _.extend({}, conf.wiredep, {
+  const wiredepOptions = _.extend({}, conf.wiredep, {
     dependencies: true,
     devDependencies: true
   });
 
-  var patterns = wiredep(wiredepOptions).js
+  const patterns = wiredep(wiredepOptions).js
     .concat([
       path.join(conf.paths.src, '/app/**/*.module.js'),
       path.join(conf.paths.src, '/app/**/*.js'),
@@ -26,7 +26,7 @@ function listFiles() {
     ])
     .concat(pathSrcHtml);
 
-  var files = patterns.map(function(pattern) {
+  const files = patterns.map(function(pattern) {
     return {
       pattern: pattern
     };
@@ -42,7 +42,7 @@ function listFiles() {
 
 module.exports = function(config) {
 
-  var configuration = {
+  const configuration = {
     files: listFiles(),
 
     singleRun: true,

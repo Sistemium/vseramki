@@ -7,7 +7,7 @@
 
   function Auth (saAuth, saaAppConfig) {
 
-    var config = {
+    const config = {
       authUrl: saaAppConfig.authUrl,
       loadRoles: true
     };

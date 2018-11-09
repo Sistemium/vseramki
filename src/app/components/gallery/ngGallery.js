@@ -6,13 +6,13 @@
 
   function ngGallery($document, $timeout, $q, $templateRequest, $compile, ToastHelper) {
 
-    var defaults = {
+    const defaults = {
       baseClass: 'ng-gallery',
       thumbClass: 'ng-thumb',
       templateUrl: 'app/components/gallery/galleryTemplate.html'
     };
 
-    var keys_codes = {
+    const keys_codes = {
       enter: 13,
       esc: 27,
       left: 37,
@@ -41,7 +41,7 @@
         '$scope',
         function ($scope) {
 
-          var vm = this;
+          const vm = this;
 
           $scope.$on('openGallery', function (e, args) {
             $scope.openGallery(args.index);
@@ -49,7 +49,7 @@
 
           vm.thumbnailClick = function (img, index) {
 
-            var fn = $scope.thumbnailClickFn() || $scope.openGallery;
+            const fn = $scope.thumbnailClickFn() || $scope.openGallery;
 
             if (_.isFunction(fn)) {
               fn(index, img);
@@ -77,9 +77,9 @@
           return element[0].querySelectorAll(q);
         }
 
-        var $body = $document.find('body');
-        var $thumbwrapper;// = angular.element(querySelectorAll('.ng-thumbnails-wrapper'));
-        var $thumbnails;// = angular.element(querySelectorAll('.ng-thumbnails'));
+        const $body = $document.find('body');
+        let $thumbwrapper;// = angular.element(querySelectorAll('.ng-thumbnails-wrapper'));
+        let $thumbnails;// = angular.element(querySelectorAll('.ng-thumbnails'));
 
         scope.index = 0;
         scope.opened = false;
@@ -88,10 +88,10 @@
         scope.thumbs_width = 0;
         scope.clickCount = 0;
 
-        var loadImage = function (i) {
+        const loadImage = function (i) {
 
-          var deferred = $q.defer();
-          var image = new Image();
+          const deferred = $q.defer();
+          const image = new Image();
 
           image.onload = function () {
             scope.loading = false;
@@ -115,7 +115,7 @@
           return deferred.promise;
         };
 
-        var showImage = function (i) {
+        const showImage = function (i) {
           loadImage(scope.index).then(function (resp) {
             //defineClass(_.get(resp, 'naturalWidth'), _.get(resp, 'naturalHeight'));
             scope.img = resp.src;
@@ -126,9 +126,9 @@
           scope.confirmDelete = false;
         };
 
-        var fullscreenElement;
+        let fullscreenElement;
 
-        //var defineClass = function (width, height) {
+        //const defineClass = function (width, height) {
         //  scope.useWide = false, scope.useTall = false;
         //  width >= height ? scope.useWide = true : scope.useTall = true;
         //};
@@ -167,7 +167,7 @@
 
           $templateRequest('app/components/gallery/galleryFullscreen.html')
             .then(function (html) {
-              var template = angular.element(html);
+              const template = angular.element(html);
               $body.append(template);
               fullscreenElement = $compile(template)(scope);
             });
@@ -184,10 +184,10 @@
             $thumbwrapper = angular.element(querySelectorAll('.ng-thumbnails-wrapper'));
             $thumbnails = angular.element(querySelectorAll('.ng-thumbnails'));
 
-            var calculatedWidth = calculateThumbsWidth();
+            const calculatedWidth = calculateThumbsWidth();
             scope.thumbs_width = calculatedWidth.width;
             //Add 1px, otherwise some browsers move the last image into a new line
-            var thumbnailsWidth = calculatedWidth.width + 1;
+            const thumbnailsWidth = calculatedWidth.width + 1;
             $thumbnails.css({width: thumbnailsWidth + 'px'});
             $thumbwrapper.css({width: calculatedWidth.visible_width + 'px'});
             smartScroll(scope.index);
@@ -202,7 +202,7 @@
 
         scope.deletePhoto = function () {
 
-          var imageModel = scope.images[scope.index];
+          const imageModel = scope.images[scope.index];
 
           if (imageModel) {
             imageModel.DSDestroy()
@@ -231,7 +231,7 @@
           if (!scope.opened) {
             return;
           }
-          var which = event.which;
+          const which = event.which;
           if (which === keys_codes.esc) {
             scope.closeGallery();
           } else if (which === keys_codes.right || which === keys_codes.enter) {
@@ -243,10 +243,10 @@
           scope.$apply();
         });
 
-        var calculateThumbsWidth = function () {
+        const calculateThumbsWidth = function () {
 
-          var width = 0;
-          var visible_width = 0;
+          let width = 0;
+          let visible_width = 0;
 
           angular.forEach($thumbnails.find('img'), function (thumb) {
             width += thumb.clientWidth;
@@ -261,14 +261,14 @@
           };
         };
 
-        var smartScroll = function (index) {
+        let smartScroll = function (index) {
           $timeout(function () {
 
             if (!_.first($thumbwrapper)) {
               return;
             }
 
-            var len = scope.images.length,
+            let len = scope.images.length,
               width = scope.thumbs_width,
               item_scroll = parseInt(width / len, 10),
               i = index + 1,

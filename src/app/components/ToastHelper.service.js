@@ -6,8 +6,8 @@
 
     function showToast(resStr, status) {
 
-      var parent = $window.document.getElementsByClassName('toolbar-fixed-top');
-      var theme = 'success-toast';
+      const parent = $window.document.getElementsByClassName('toolbar-fixed-top');
+      let theme = 'success-toast';
 
       if (!status) {
         theme = 'fail-toast';

@@ -15,7 +15,7 @@
 
       controller: function (ToastHelper, $state) {
 
-        var vm = this;
+        const vm = this;
 
         if (vm.errorText) {
           ToastHelper.error('Ошибка авторизации')

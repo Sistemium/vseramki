@@ -13,7 +13,7 @@
       /** @ngInject */
       controller: function ($q, $scope) {
 
-        var vm = this;
+        const vm = this;
 
         $scope.$watch('vm.promise', promise => {
           vm.busy = () => vm.busy = false;

@@ -19,7 +19,7 @@
       /** @ngInject */
       controller: function ($state, $scope, AuthHelper) {
 
-        var vm = this;
+        const vm = this;
 
         _.assign(vm, {
 
@@ -38,7 +38,7 @@
 
         function onStateChange(toState) {
 
-          var re = new RegExp(`${vm.rootState}\.([^.]+)`);
+          const re = new RegExp(`${vm.rootState}\.([^.]+)`);
 
           vm.currentState = _.last($state.current.name.match(re));
           vm.isRootState = (new RegExp(`${vm.currentState}$`)).test(toState.name);

@@ -2,9 +2,9 @@
 /* global moment:false XLSX:false */
 (function() {
 
-  var localDev = !!location.port;
+  const localDev = !!location.port;
 
-  var authUrl = 'https://oauth.it';
+  const authUrl = 'https://oauth.it';
   // authUrl = localDev ? 'http://localhost:9080' :  authUrl;
 
   angular.module('vseramki')

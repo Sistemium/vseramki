@@ -4,13 +4,13 @@
 
   function AddFrameController(Baguette, Schema, Article, $scope, $state, ToastHelper, $q) {
 
-    var vm = this;
-    var FrameSize = Schema.model('FrameSize');
-    var BackMount = Schema.model('BackMount');
-    var Screening = Schema.model('Screening');
-    var ArticleFrameSize = Schema.model('ArticleFrameSize');
+    const vm = this;
+    const FrameSize = Schema.model('FrameSize');
+    const BackMount = Schema.model('BackMount');
+    const Screening = Schema.model('Screening');
+    const ArticleFrameSize = Schema.model('ArticleFrameSize');
 
-    var unique = true;
+    let unique = true;
 
     _.assign(vm, {
 
@@ -36,8 +36,10 @@
 
     });
 
+    let reverted = false;
+
     if ($state.params.id) {
-      var reverted = false;
+
       vm.id = $state.params.id;
       vm.editState = true;
 
@@ -103,8 +105,8 @@
     function hasChanges() {
       checkParams();
       return !vm.id ? _.get(vm, 'attrsForm.$dirty') :
-      Article.hasChanges(vm.id) ||
-      _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
+        Article.hasChanges(vm.id) ||
+        _.find(vm.articleFrameSizes, afs => !afs.id || ArticleFrameSize.hasChanges(afs.id));
     }
 
     function cancelChanges() {
@@ -144,8 +146,8 @@
     function addArticleFrameSize() {
       if (vm.extraFrameSizeId) {
 
-        var efs = {frameSizeId: vm.extraFrameSizeId};
-        var afs = _.find(vm.articleFrameSizes, efs);
+        const efs = {frameSizeId: vm.extraFrameSizeId};
+        let afs = _.find(vm.articleFrameSizes, efs);
 
         if (afs) {
           afs.count++;
@@ -195,7 +197,7 @@
     }
 
     function checkAttrs() {
-      var params = {};
+      const params = {};
 
       _.assign(params, {baguetteId: vm.frame.baguetteId}, {frameSizeId: vm.frame.frameSizeId});
 

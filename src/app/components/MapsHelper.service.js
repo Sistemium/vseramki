@@ -4,7 +4,7 @@
 
   function MapsHelper($window, mapApiLoad) {
 
-    var me = {
+    const me = {
       yandex: $window.ymaps
     };
 
@@ -47,7 +47,7 @@
         maxLongitude = _.max(locations, 'longitude')
         ;
 
-      var res = {
+      const res = {
         southwest: {
           latitude: minLatitude.latitude,
           longitude: minLongitude.longitude
@@ -68,8 +68,8 @@
     }
 
     function yPixelCoords(map) {
-      var zoom = map.getZoom();
-      var projection = map.options.get('projection');
+      const zoom = map.getZoom();
+      const projection = map.options.get('projection');
       return function (location) {
         return map.converter.globalToPage(
           projection.toGlobalPixels(yLatLng(location), zoom)

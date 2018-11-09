@@ -2,7 +2,7 @@
 
 (function () {
 
-  var acmeNavbar = {
+  const acmeNavbar = {
     templateUrl: 'app/components/navbar/navbar.html',
     controller: NavbarController,
     controllerAs: 'vm'
@@ -11,7 +11,7 @@
   /** @ngInject */
   function NavbarController(Cart, $scope, $window, $state, AuthHelper, ToastHelper) {
 
-    var vm = this;
+    const vm = this;
 
     _.assign(vm, {
 

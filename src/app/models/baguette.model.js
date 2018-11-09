@@ -66,13 +66,13 @@
       methods: {
 
         activePhoto: function () {
-          var photo = _.get(this, 'images[0]');
+          const photo = _.get(this, 'images[0]');
           return photo ? photo.thumbnailSrc : '/images/placeholder.png';
         },
 
         stringName: function () {
 
-          var names = [
+          const names = [
             this.brand ? '"' + this.brand.name + '"' : this.code
           ];
 

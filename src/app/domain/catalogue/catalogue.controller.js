@@ -4,11 +4,11 @@
 
   function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper, ExportExcel) {
 
-    var vm = ControllerHelper.setup(this, $scope, onStateChange)
+    const vm = ControllerHelper.setup(this, $scope, onStateChange)
       .use(TableHelper)
       .use(AuthHelper);
 
-    var {
+    const {
       Article,
       Baguette,
       Cart,
@@ -20,8 +20,8 @@
       BaguetteImage
     } = Schema.models();
 
-    var chunkSize = 3;
-    var lockArticlesScroll;
+    let chunkSize = 3;
+    let lockArticlesScroll;
 
     _.assign(vm, {
 
@@ -49,7 +49,7 @@
       sideNavListItemClick: sideNavListItemClick,
 
       fileDownloadClick: function () {
-        var articles = vm.articles;
+        const {articles} = vm;
         ExportExcel.exportArrayWithConfig(articles, Article.meta.exportConfig, 'Рамки');
       },
 
@@ -134,8 +134,8 @@
 
     function addClick() {
 
-      var re = new RegExp(`${vm.rootState}\.([^.]+)`);
-      var currentState = _.last($state.current.name.match(re));
+      const re = new RegExp(`${vm.rootState}\.([^.]+)`);
+      const currentState = _.last($state.current.name.match(re));
       $state.go(`${vm.rootState}.${currentState}.create`);
 
     }
@@ -165,7 +165,7 @@
     }
 
     function scrollToIndex() {
-      var id = vm.id;
+      const id = vm.id;
       if (!lockArticlesScroll && id) {
         vm.articlesListTopIndex = _.findIndex(vm.articles, {'id': id});
       }
@@ -183,14 +183,14 @@
     }
 
     function plusOne(item) {
-      var cart = item.inCart;
+      const cart = item.inCart;
       cart.count = (cart.count || 0) + 1;
       Cart.save(cart);
     }
 
     function minusOne(item) {
 
-      var cart = item.inCart;
+      const cart = item.inCart;
       cart.count--;
 
       if (!cart.count) {
@@ -212,8 +212,8 @@
 
     function makeJsFilter(filter) {
 
-      var f = filter || vm.articleFilter;
-      var jsFilter = f ? {
+      const f = filter || vm.articleFilter;
+      const jsFilter = f ? {
         where: _.mapValues(f, v => ({'==': v}))
       } : {};
 
@@ -234,8 +234,8 @@
 
     function filterArticles(filter) {
 
-      var f = filter || vm.articleFilter;
-      var jsFilter = makeJsFilter(f);
+      const f = filter || vm.articleFilter;
+      const jsFilter = makeJsFilter(f);
 
       rebind(jsFilter);
 
@@ -244,11 +244,11 @@
 
       function getVisibleBy(prop) {
 
-        var propFilter = makeJsFilter(_.pickBy(f, function (val, key) {
+        const propFilter = makeJsFilter(_.pickBy(f, function (val, key) {
           return key !== prop;
         }));
 
-        var articles = Article.filter(propFilter);
+        let articles = Article.filter(propFilter);
 
         if (!articles) {
           articles = {a: 'fail'}
@@ -286,7 +286,7 @@
 
     function filterOptionClick(item, field) {
 
-      var fieldName = field + 'Id';
+      const fieldName = field + 'Id';
 
       if (item) {
         vm.articleFilter[fieldName] = item.id;
@@ -300,7 +300,7 @@
     }
 
     function sideNavListItemClick(frame) {
-      var newState = $state.current.name;
+      let newState = $state.current.name;
 
       if (vm.currentState === 'create') {
         newState = '^.item';

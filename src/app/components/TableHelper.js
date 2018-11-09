@@ -9,7 +9,7 @@
 
     function pagination() {
 
-      var config = {
+      const config = {
         labels: {
           page: 'Страница:',
           rowsPerPage: 'Кол-во элементов: ',

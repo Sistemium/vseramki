@@ -4,8 +4,8 @@
 
   function AuthHelper(Auth, $q) {
 
-    var currentUser;
-    var currentUserRoles;
+    let currentUser;
+    let currentUserRoles;
 
     function isAdmin() {
 

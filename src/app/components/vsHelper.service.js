@@ -6,11 +6,11 @@
 
     function watchForGroupSize($scope, sideNavWidth, cellWidth, onChange) {
 
-      var lastGroupSize;
+      let lastGroupSize;
 
-      var un = $scope.$watch('windowWidth', function (windowWidth) {
+      const un = $scope.$watch('windowWidth', function (windowWidth) {
 
-        var groupSize = Math.floor((windowWidth - sideNavWidth) / cellWidth);
+        let groupSize = Math.floor((windowWidth - sideNavWidth) / cellWidth);
 
         if (groupSize < 1) {
           groupSize = 1;

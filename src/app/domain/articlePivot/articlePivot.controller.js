@@ -9,14 +9,14 @@
 
   function ArticlePivotController(Article, Schema, $q) {
 
-    var vm = this;
+    const vm = this;
 
-    var FrameSize = Schema.model('FrameSize');
-    var Brand = Schema.model('Brand');
-    var Material = Schema.model('Material');
-    var Colour = Schema.model('Colour');
+    const FrameSize = Schema.model('FrameSize');
+    const Brand = Schema.model('Brand');
+    const Material = Schema.model('Material');
+    const Colour = Schema.model('Colour');
 
-    var props = [
+    const props = [
       {
         label: 'Размер',
         model: FrameSize,
@@ -39,7 +39,7 @@
       }
     ];
 
-    var promises = _.map(props, function (p) {
+    const promises = _.map(props, function (p) {
       return p.model.findAll()
         .then(function (data) {
           p.data = data;
@@ -55,12 +55,12 @@
 
     function propsByGroup(name, group) {
 
-      var filter = {};
-      var prop = vm.groups.name;
+      const filter = {};
+      let prop = vm.groups.name;
 
       filter[prop] = group.id;
 
-      var articles = Article.filter(filter);
+      const articles = Article.filter(filter);
 
       if (!articles || !vm[name]) {
         return;
@@ -75,9 +75,9 @@
 
     }
 
-    var dropdownValues = {};
-    var valArr = [];
-    var collisionIn;
+    const dropdownValues = {};
+    let valArr = [];
+    let collisionIn;
 
     angular.extend(vm, {
 
@@ -92,8 +92,8 @@
             }
           });
           if (vm[event.srcElement.id]) { // if dropdown already has value
-            var temp = vm[event.srcElement.id];
-            var temp2 = dropdownValues[event.srcElement.id];
+            const temp = vm[event.srcElement.id];
+            const temp2 = dropdownValues[event.srcElement.id];
             vm[collisionIn] = temp;
             dropdownValues[collisionIn] = temp2;
             vm.assignValues(obj, labelId);
@@ -123,13 +123,13 @@
       },
 
       cellByGroupRowColumn: function (group, row, column) {
-        var filter = {};
+        const filter = {};
 
         filter[vm.groups.name] = group.id;
         filter[vm.rows.name] = row.id;
         filter[vm.columns.name] = column.id;
 
-        var articles = Article.filter(filter);
+        const articles = Article.filter(filter);
 
         return articles.length || '';
       },

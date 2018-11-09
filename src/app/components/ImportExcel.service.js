@@ -10,7 +10,7 @@
 
     function readFile(file, columns) {
 
-      var columnTranslation = {};
+      const columnTranslation = {};
 
       _.each(columns, column => {
 
@@ -18,12 +18,12 @@
           column.defaultValue = null;
         }
 
-        var parser = column.parser || defaultParser;
+        const parser = column.parser || defaultParser;
 
         columnTranslation[column.label] = {
           name: column.name,
           compute: row => {
-            var res = column.compute ? column.compute(row) : parser(row[column.label]);
+            const res = column.compute ? column.compute(row) : parser(row[column.label]);
             return res || column.defaultValue;
           }
         };
@@ -32,21 +32,21 @@
 
       return $q((resolve, reject) => {
 
-        var reader = new FileReader();
+        const reader = new FileReader();
 
         reader.onload = function (e) {
 
           try {
 
-            var data = e.target.result;
-            var res = XLSX.read(data, {type: 'binary'});
+            const data = e.target.result;
+            const res = XLSX.read(data, {type: 'binary'});
             if (!_.get(res, 'SheetNames.length')) {
               return reject('Неизвестный формат файла');
             }
-            var xlsxData = XLSX.utils.make_json(res.Sheets[res.SheetNames[0]]);
+            const xlsxData = XLSX.utils.make_json(res.Sheets[res.SheetNames[0]]);
 
-            var vmData = _.map(xlsxData, (row, idx) => {
-              var res = {
+            const vmData = _.map(xlsxData, (row, idx) => {
+              const res = {
                 index: idx + 1
               };
 

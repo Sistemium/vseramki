@@ -9,8 +9,8 @@
 
       function checkRoles() {
 
-        var needRoles = _.get(to, 'data.needRoles');
-        var needAdmin =  needRoles === 'admin';
+        const needRoles = _.get(to, 'data.needRoles');
+        const needAdmin =  needRoles === 'admin';
 
         // TODO: check needRoles value
         if (needAdmin && !AuthHelper.isAdmin() || needRoles && !AuthHelper.getUser()) {
@@ -23,7 +23,7 @@
         return checkRoles();
       }
 
-      var user = AuthHelper.hasUser();
+      const user = AuthHelper.hasUser();
 
       if (!user) {
         return checkRoles();

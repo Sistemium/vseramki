@@ -9,7 +9,7 @@
 
   function routerConfig(stateHelperProvider) {
 
-    var children = [{
+    const children = [{
       name: 'edit',
       url: '/edit/:id',
       templateUrl: 'app/domain/baguette/editBaguette.html',

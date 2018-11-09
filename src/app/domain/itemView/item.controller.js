@@ -4,20 +4,20 @@
 
   function ItemController($filter, $scope, $state, Schema, Helpers, $uiViewScroll, $timeout, $mdMedia) {
 
-    var {ToastHelper, ImageHelper, AuthHelper, AlertHelper} = Helpers;
+    const {ToastHelper, ImageHelper, AuthHelper, AlertHelper} = Helpers;
 
-    var vm = Helpers.ControllerHelper.setup(this, $scope);
+    const vm = Helpers.ControllerHelper.setup(this, $scope);
 
-    var {
+    const {
       Article,
       ArticleImage,
       Cart,
       BaguetteImage
     } = Schema.models();
 
-    var numberFilter = $filter('number');
+    const numberFilter = $filter('number');
 
-    var stateFilter = {
+    const stateFilter = {
       articleId: $state.params.id
     };
 
@@ -94,7 +94,7 @@
 
         setPrices();
 
-        var baguetteImageFilter = {
+        const baguetteImageFilter = {
           baguetteId: vm.article.baguetteId
         };
 
@@ -138,9 +138,9 @@
 
     function deleteClick($event) {
 
-      var frameId = vm.article.id;
+      const frameId = vm.article.id;
 
-      var promise = AlertHelper.showConfirm($event);
+      const promise = AlertHelper.showConfirm($event);
 
       promise.then(function (response) {
         if (response) {
@@ -159,7 +159,7 @@
 
     function minusOne(item) {
 
-      var cart = item.inCart;
+      const cart = item.inCart;
 
       cart.count--;
 
@@ -172,7 +172,7 @@
     }
 
     function plusOne(item) {
-      var cart = item.inCart;
+      const cart = item.inCart;
       cart.count = (cart.count || 0) + 1;
 
       onCartChange(cart);
@@ -204,7 +204,7 @@
         return;
       }
 
-      var discount = 100 - 100 * vm.article.discountedPrice(vm.cartSubTotal) / vm.article.highPrice;
+      const discount = 100 - 100 * vm.article.discountedPrice(vm.cartSubTotal) / vm.article.highPrice;
 
       vm.prices = [
         {
@@ -249,7 +249,7 @@
     }
 
     function setPreviewImage(newImg) {
-      var newId = _.get(newImg, 'id');
+      const newId = _.get(newImg, 'id');
 
       if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage, 'id')) {
 
@@ -266,7 +266,7 @@
 
     function onThumbnailClick(i, newImg) {
 
-      var newId = _.get(newImg, 'id');
+      const newId = _.get(newImg, 'id');
 
       if (!vm.currentImageLoading && newId === _.get(vm, 'currentImage.id')) {
         return $scope.$broadcast('openGallery', {index: i});

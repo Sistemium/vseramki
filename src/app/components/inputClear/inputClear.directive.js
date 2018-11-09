@@ -14,10 +14,10 @@
       },
 
       link: function (scope, element, attrs) {
-        var color = attrs.inputClear;
-        var style = color ? "color:" + color + ";" : "";
+        const color = attrs.inputClear;
+        const style = color ? "color:" + color + ";" : "";
 
-        var template = angular.element(
+        const template = angular.element(
           `<md-button class="md-icon-button input-clear-button" ng-click="clearModel()"`
           + ` ng-show="$parent.${attrs.ngModel}">`
           + `<i style="${style}" class="material-icons">close</i>`
