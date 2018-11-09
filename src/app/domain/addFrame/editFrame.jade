@@ -7,10 +7,16 @@ ng-style="{height: (edit.windowHeight - edit.offsetTop - 2) + 'px'}"
     form-fields.wide(layout='column' layout-align='space-between top' layout-gt-sm='row')
       .flex
 
-      .form-controls(layout='column' layout-align='top center' ng-include="'app/domain/addFrame/partials/frameFields1.html'")
+      .form-controls(
+      layout='column' layout-align='top center'
+      ng-include="'app/domain/addFrame/partials/frameFields1.html'"
+      )
 
       .flex
 
-      .form-controls(layout='column' layout-align='top center' ng-include="'app/domain/addFrame/partials/frameFields2.html'")
+      .form-controls(
+      layout='column' layout-align='top center'
+      ng-include="'app/domain/addFrame/partials/frameFields2.html'"
+      )
 
       .flex
