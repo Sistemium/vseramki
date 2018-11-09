@@ -59,6 +59,7 @@
     .factory('Schema', Schema)
 
     .run(function (DS, $window) {
+      $window.saDS = DS;
       const adapter = new $window.DSLocalStorageAdapter();
       DS.registerAdapter('localStorage', adapter);
     });
