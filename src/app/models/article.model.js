@@ -70,6 +70,13 @@
         }
       },
 
+      /**
+       * @property multiType
+       * @property frameSize
+       * @property lowPrice
+       * @property highPrice
+       */
+
       meta: {
         exportConfig: ExportConfig.Article
       },
@@ -116,10 +123,6 @@
 
         },
 
-        firstName: function () {
-
-        },
-
         secondName: function () {
           const name = this.multiTypeName();
 
@@ -139,7 +142,7 @@
             res += ` ${this.multiTypeName().toLowerCase()} (${this.articleFrameSizesName(frameSizes)})`;
           }
 
-          return res;
+          return _.trim(res);
 
         }
       },
