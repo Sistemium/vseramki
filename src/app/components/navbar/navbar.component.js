@@ -70,7 +70,7 @@
         // },
         {
           sref: 'catalogue',
-          label: 'Каталог'
+          label: 'Рамки'
         },
         {
           sref: 'info',
