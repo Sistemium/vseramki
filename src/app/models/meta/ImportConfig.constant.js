@@ -77,8 +77,12 @@
     ];
 
     const ArticleColumns = [
-
       {
+        name: 'code',
+        label: 'Артикул',
+        required: true,
+        parser: _.trim
+      }, {
         name: 'codeExternal',
         label: 'Код',
         required: true,
@@ -161,11 +165,11 @@
 
           if (!code) return;
 
-          let match = code.match(/(.+)-\d{4}$/i);
+          let match = code.match(/(.+)(РД|РП)\d+$/i);
 
-          let baguetteCode = _.last(match);
+          if (!match) return;
 
-          if (!baguetteCode) return;
+          let baguetteCode = match[1];
 
           let baguettes = baguetteModel.filter({
             where: {

@@ -1,6 +1,15 @@
-//md-input-container
-       label Название рамки
-       input(type='text' ng-model='vm.frame.name' name='name')
+md-input-container
+  label Артикул
+    =" "
+    span.required-field-asterisk *
+  input(
+  ng-model="vm.frame.code"
+  name="code"
+  required
+  )
+  div(ng-messages="vm.attrsForm.packageRel.$error")
+    div(ng-message="required") Поле не может быть пустым
+
 
 searchable-select(
 label='Багет'
