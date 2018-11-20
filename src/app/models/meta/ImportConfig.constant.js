@@ -25,7 +25,7 @@
       }, {
         name: 'code',
         label: 'Артикул',
-        replace: false
+        // replace: false
       }, {
         name: 'borderWidth',
         label: 'Ширина багета',
