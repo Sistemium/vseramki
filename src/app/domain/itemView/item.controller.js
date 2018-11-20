@@ -251,6 +251,10 @@
     function setPreviewImage(newImg) {
       const newId = _.get(newImg, 'id');
 
+      if (newId === vm.currentImageLoading ) {
+        return;
+      }
+
       if (newId !== vm.currentImageLoading && newId !== _.get(vm.currentImage, 'id')) {
 
         vm.currentImageLoading = newId;
