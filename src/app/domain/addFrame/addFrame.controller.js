@@ -124,10 +124,10 @@
     }
 
     function refreshName() {
-      if (!vm.frame.baguette) {
-        return;
-      }
-      vm.frame.name = vm.frame.stringName(vm.articleFrameSizes);
+      // if (!vm.frame.baguette) {
+      //   return;
+      // }
+      // vm.frame.name = vm.frame.stringName(vm.articleFrameSizes);
     }
 
     function articleFrameSizeDecrement(afs) {
