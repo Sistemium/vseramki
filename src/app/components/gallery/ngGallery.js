@@ -108,7 +108,7 @@
           scope.loading = true;
 
           $timeout(function () {
-            image.src = scope.images[i].smallSrc;
+            image.src = scope.images[i].largeSrc;
           });
 
 
