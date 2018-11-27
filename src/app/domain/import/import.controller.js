@@ -122,7 +122,7 @@
               setModifiedData();
             })
             .catch(err => {
-                ToastHelper.error(err.status == 500 ? 'Ошибка сервера' : 'Непредвиденная ошибка');
+              ToastHelper.error(err.status == 500 ? 'Ошибка сервера' : 'Непредвиденная ошибка');
             })
         });
 
@@ -137,7 +137,7 @@
         if (_.get(property, 'name') == _.get(property, 'id')) {
           isValid = !!elem[_.get(property, 'id')];
         } else {
-          isValid = !!elem[_.get(property, 'id')] && (!!elem[_.get(property, 'name')] );
+          isValid = !!elem[_.get(property, 'id')] && (!!elem[_.get(property, 'name')]);
         }
 
         if (!isValid) {
@@ -224,6 +224,14 @@
           });
 
           let isValid = checkValidFields(elem, requiredProperties);
+
+          // if (isValid) {
+          //   const name = instance.stringName();
+          //   if (name !== instance.name) {
+          //     diff.name = name;
+          //     // instance.name = name;
+          //   }
+          // }
 
           let res = {
             isValidProperties: isValid,
@@ -322,7 +330,7 @@
     function findNewProperties(data) {
 
       let refColumns = _.filter(columns, 'ref');
-      let properties= {};
+      let properties = {};
       let refNames = _.map(refColumns, 'name');
 
       _.each(refColumns, column => {
@@ -354,7 +362,7 @@
       });
 
       _.each(properties, property => {
-          property.items.sort(property.model.sorter);
+        property.items.sort(property.model.sorter);
       });
 
       vm.newProperties = _.filter(properties, 'items.length');
@@ -470,12 +478,14 @@
 
     function saveModelItem(item) {
 
+      const {instance} = item;
       _.each(columns, column => {
         const name = column.ref || column.name;
-        item.instance[name] = item.importData[name];
+        instance[name] = item.importData[name];
       });
 
-      return model.create(item.instance);
+      // instance.name = instance.stringName();
+      return model.create(instance);
     }
 
   }

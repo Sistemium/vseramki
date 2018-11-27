@@ -15,10 +15,10 @@
       }, {
         name: 'nameExternal',
         label: 'Наименование',
-        required: true
+        required: true,
       }, {
         name: 'name',
-        replace: false,
+        // replace: false,
         compute: item => {
           return item['Наименование']
         }
