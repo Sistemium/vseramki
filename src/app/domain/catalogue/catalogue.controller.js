@@ -2,7 +2,8 @@
 
 (function () {
 
-  function CatalogueController($scope, $q, $state, Schema, VSHelper, AuthHelper, TableHelper, ControllerHelper, ExportExcel) {
+  function CatalogueController($scope, $q, $state, Schema, util,
+                               VSHelper, AuthHelper, TableHelper, ControllerHelper, ExportExcel) {
 
     const vm = ControllerHelper.setup(this, $scope, onStateChange)
       .use(TableHelper)
@@ -33,6 +34,7 @@
       filterLength: false,
       selected: [],
       lockArticlesScroll: false,
+      allArticles: [],
 
       plusOne,
       minusOne,
@@ -160,8 +162,70 @@
     }
 
     function onArticleListChange() {
+
+      const articles = filterArticlesBySearch(vm.allArticles, vm.search);
+
+      vm.brands = getVisibleBy(Brand, 'brandId');
+      vm.colours = getVisibleBy(Colour, 'colourId');
+      vm.materials = getVisibleBy(Material, 'materialId');
+      vm.frameSizes = getVisibleBy(FrameSize, 'frameSizeId');
+
+      vm.articles = filterArticlesByFilters(articles, vm.articleFilter);
+
       scrollToIndex();
       setChunks(chunkSize);
+
+      function getVisibleBy(model, prop) {
+        const propFilter = _.pickBy(vm.articleFilter, (val, key) => key !== prop);
+        const propArticles = filterArticlesByFilters(articles, propFilter);
+        return model.getAll(_.keys(_.keyBy(propArticles, prop)));
+      }
+
+    }
+
+    function filterArticlesBySearch(articles, search) {
+
+      if (!search) {
+        return articles;
+      }
+
+      const byCode =_.find(articles, { code: search });
+
+      if (byCode) {
+        return [byCode];
+      }
+
+      const re = util.searchRe(vm.search);
+
+      return _.filter(articles, article => {
+
+        const {name, code, isValid} = article;
+
+        if (search === '/invalid') {
+          return !isValid;
+        }
+
+        return !vm.search || search === code || re.test(name);
+
+      });
+
+    }
+
+    function filterArticlesByFilters(articles, filters) {
+      return _.filter(articles, article => {
+
+        let res = true;
+
+        _.each(filters, (value, code) => {
+          if (article[code] !== value) {
+            res = false;
+            return false;
+          }
+        });
+
+        return res;
+
+      })
     }
 
     function scrollToIndex() {
@@ -175,7 +239,7 @@
       if (vm.unbind) {
         vm.unbind();
       }
-      vm.unbind = Article.bindAll(filter, $scope, 'vm.articles', onArticleListChange);
+      vm.unbind = Article.bindAll(filter, $scope, 'vm.allArticles', onArticleListChange);
     }
 
     function recalcTotals() {
@@ -210,62 +274,15 @@
       }
     }
 
-    function makeJsFilter(filter) {
-
-      const f = filter || vm.articleFilter;
-      const jsFilter = f ? {
-        where: _.mapValues(f, v => ({'==': v}))
-      } : {};
-
-      if (vm.search) {
-        if (vm.search == 'invalid') {
-          _.set(jsFilter, 'where.isValid', {
-            'likei': 'false'
-          });
-        } else {
-          _.set(jsFilter, 'where.name', {
-            'likei': `%${vm.search}%`
-          });
-        }
-      }
-      return jsFilter;
-
-    }
-
     function filterArticles(filter) {
 
       const f = filter || vm.articleFilter;
-      const jsFilter = makeJsFilter(f);
 
-      rebind(jsFilter);
+      rebind();
 
       vm.rows = _.chunk(vm.articles, chunkSize);
       vm.filterLength = !!Object.keys(f).length;
 
-      function getVisibleBy(prop) {
-
-        const propFilter = makeJsFilter(_.pickBy(f, function (val, key) {
-          return key !== prop;
-        }));
-
-        let articles = Article.filter(propFilter);
-
-        if (!articles) {
-          articles = {a: 'fail'}
-        }
-
-        return _.map(
-          _.groupBy(articles, prop),
-          function (val, key) {
-            return key;
-          }
-        );
-      }
-
-      vm.colours = Colour.getAll(getVisibleBy('colourId'));
-      vm.materials = Material.getAll(getVisibleBy('materialId'));
-      vm.brands = Brand.getAll(getVisibleBy('brandId'));
-      vm.frameSizes = FrameSize.getAll(getVisibleBy('frameSizeId'));
     }
 
 
