@@ -13,7 +13,8 @@
       ImportExcel,
       ToastHelper,
       TableHelper,
-      VSHelper
+      VSHelper,
+      util
     ) {
 
       return {
@@ -27,7 +28,8 @@
         ImportExcel,
         ToastHelper,
         TableHelper,
-        VSHelper
+        VSHelper,
+        util,
 
       };
 
