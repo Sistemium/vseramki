@@ -12,7 +12,7 @@ frame-name {
 .articles {
 
   .is-valid-article {
-    background: $vr-yellow-color + 150%;
+    background: lighten($vr-yellow-color, 40%);
   }
 
   .state-bar {
