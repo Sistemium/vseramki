@@ -7,7 +7,7 @@
     const filter = $filter('filter');
     const orderBy = $filter('orderBy');
 
-    const {VSHelper, ToastHelper, AlertHelper, ControllerHelper} = Helpers;
+    const {VSHelper, ToastHelper, AlertHelper, ControllerHelper, util} = Helpers;
 
     const vm = ControllerHelper.setup(this, $scope, onStateChange)
       .use(Helpers.TableHelper)
@@ -124,7 +124,7 @@
       if (!search) {
         vm.filteredBaguettes = vm.baguettes;
       } else {
-        const re = new RegExp(_.escapeRegExp(search), 'ig');
+        const re = util.searchRe(search);
         vm.filteredBaguettes = filter(vm.baguettes, baguette => {
           if (search === 'invalid') {
             return !baguette.isValid;
