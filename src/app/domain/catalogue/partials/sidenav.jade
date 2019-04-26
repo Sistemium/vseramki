@@ -3,7 +3,10 @@
   md-input-container.no-margin(flex layout='row')
     i.material-icons.search-label search
     label(for='articleSearcher')
-    input#articleSearcher(type="search" ng-model="vm.search" on-enter='vm.onEnter()')
+    input#articleSearcher(
+    type="search" ng-model="vm.search" on-enter='vm.onEnter()'
+    ng-model-options="{debounce: 500}"
+    )
 
   md-button.md-raised.md-mini.micro-square(
   style='margin: 0 4px'
