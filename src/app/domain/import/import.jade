@@ -53,6 +53,8 @@ ng-style='{"max-height": (import.windowHeight - import.offsetTop)+"px"}'
     preview
     )
 
+  .alert(ng-if='vm.importValidationError') {{ vm.importValidationError }}
+
   section.busy(ng-if="vm.busyReading" layout="column" layout-align="center center")
     h2 {{ vm.busyMessage }}
     md-progress-circular(md-diameter="100" md-mode="indeterminate")

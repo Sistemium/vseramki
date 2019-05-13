@@ -114,8 +114,7 @@
 
             if (fs) {
               frameSize = fs[0]
-            }
-            else {
+            } else {
               frameSize = false
             }
 
@@ -201,7 +200,7 @@
         label: 'Опт. цена',
         //parser: parseFloat,
         compute: item => {
-          return _.round(parseFloat(item['Спец_Цена']),2);
+          return _.round(parseFloat(item['Спец_Цена']), 2);
         }
       }
     ];
@@ -211,13 +210,21 @@
       Baguette: {
         BaguetteColumns,
         doneSref: 'baguettes',
-        primaryKey: 'codeExternal'
+        primaryKey: 'codeExternal',
+        fileErrors(data) {
+          const hasFrames = _.find(data, ({nameExternal}) => /рамка/i.test(nameExternal));
+          return hasFrames && 'В файле обнаружены рамки';
+        },
       },
 
       Article: {
         ArticleColumns,
         doneSref: 'catalogue',
-        primaryKey: 'codeExternal'
+        primaryKey: 'codeExternal',
+        fileErrors(data) {
+          const hasFrames = _.find(data, ({nameExternal}) => /багет/i.test(nameExternal));
+          return hasFrames && 'В файле обнаружены багеты';
+        },
       }
 
     }

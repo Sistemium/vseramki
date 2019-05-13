@@ -91,13 +91,30 @@
     });
 
     $scope.$watch('vm.columns.length', () => {
+
       vm.busyMessage = 'Проверка данных ...';
+      vm.importValidationError = null;
+
       $timeout().then(() => {
+
         if (vm.data) {
+          const { fileErrors } = importConfig;
+          if (fileErrors) {
+            const err = fileErrors(vm.data);
+            if (err) {
+              ToastHelper.error(err);
+              vm.importValidationError = `Неподходящий файл: ${err}`;
+              vm.busyReading = false;
+              return;
+            }
+          }
           setModifiedData();
         }
+
         vm.busyReading = false;
-      })
+
+      });
+
     });
 
     /*
