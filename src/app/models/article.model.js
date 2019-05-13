@@ -96,9 +96,11 @@
             return this.highPrice;
           }
 
+          const k = (useTotal - minThreshold) / (totalThreshold - minThreshold);
+
           return Math.floor(100.0 * (
-                this.highPrice - (this.highPrice - this.lowPrice) * Math.pow(useTotal / totalThreshold, 2)
-              )) / 100.0;
+            this.highPrice - (this.highPrice - this.lowPrice) * k
+          )) / 100.0;
 
         },
 
@@ -168,7 +170,7 @@
 
       if (hasUser) {
         hasUser.then(() => {
-          Article.findAll({limit:3000});
+          Article.findAll({limit: 3000});
         });
       }
 
