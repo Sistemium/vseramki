@@ -189,13 +189,16 @@
         return articles;
       }
 
-      const byCode =_.find(articles, { code: search });
+      const pattern = `^${_.escapeRegExp(search)}${/РП/i.test(search)?'':'(РП|$)'}`;
+      const startsWithRe = new RegExp(pattern, 'i');
 
-      if (byCode) {
-        return [byCode];
+      const byCode = _.filter(articles, ({code}) => startsWithRe.test(code));
+
+      if (byCode.length) {
+        return byCode;
       }
 
-      const re = util.searchRe(vm.search);
+      const re = util.searchRe(search);
 
       return _.filter(articles, article => {
 

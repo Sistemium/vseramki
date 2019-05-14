@@ -121,21 +121,31 @@
     }
 
     function setFiltered(search) {
+
       if (!search) {
+
         vm.filteredBaguettes = vm.baguettes;
+
       } else {
+
         const re = util.searchRe(search);
+        const codeRe = new RegExp(`^${_.escapeRegExp(search)}$`, 'i');
+
         vm.filteredBaguettes = filter(vm.baguettes, baguette => {
-          if (search === 'invalid') {
+
+          if (search === '/invalid') {
             return !baguette.isValid;
           }
+
           return re.test(baguette.name)
-            || re.test(baguette.code)
-            || re.test(baguette.codeExternal)
+            || codeRe.test(baguette.code)
+            || codeRe.test(baguette.codeExternal)
             || re.test(_.get(baguette, 'material.name'))
             || re.test(_.get(baguette, 'colour.name'))
             || baguette.id === search;
+
         });
+
       }
 
       setChunks(chunkSize);
