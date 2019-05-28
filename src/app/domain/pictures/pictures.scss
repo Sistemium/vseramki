@@ -1,0 +1,20 @@
+@import "../../styles/vars";
+
+pictures {
+
+  padding: 0 10px;
+  display: block;
+
+  h1 {
+    float: left;
+  }
+  .searcher {
+    max-width: 300px;
+    float: right;
+  }
+
+  picture-list {
+    clear: both;
+  }
+
+}

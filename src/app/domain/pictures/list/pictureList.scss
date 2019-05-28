@@ -1,0 +1,28 @@
+@import "../../../styles/_vars";
+
+
+picture-list {
+
+  display: block;
+  //margin: 0 20px;
+
+  .headers {
+    font-weight: bold;
+  }
+
+  .picture, .headers {
+
+    border-bottom: solid 1px $gray-borders-color;
+
+    display: flex;
+    justify-content: stretch;
+
+    > * {
+      flex: 1;
+      padding: 3px;
+    }
+
+  }
+
+
+}

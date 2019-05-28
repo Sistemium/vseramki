@@ -1,0 +1,16 @@
+.picture-list
+
+  .headers
+    .article Артикул
+    .name Название файла
+    .renamed Переименован
+
+  md-virtual-repeat-container.scroll-y.height-100.pictures(
+    resize='pictures'
+    ng-style='{ height: (pictures.windowHeight - pictures.offsetTop) + "px" }'
+    md-top-index='vm.topIndex'
+  )
+    .picture(md-virtual-repeat='picture in vm.pictures')
+      .article {{ picture.article }}
+      .name {{ picture.name }}
+      .renamed {{ picture.renamed }}
