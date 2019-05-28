@@ -2,7 +2,7 @@
 
 (function () {
 
-  function ControllerHelper() {
+  function ControllerHelper($q) {
 
     return {
       setup
@@ -58,7 +58,26 @@
 
       return _.assign(vm,{
         //stateBarButtonClick: event => $scope.$broadcast('stateBarButtonClick', event)
-        use
+        use,
+        setBusy(promise, message) {
+
+          if (_.isArray(promise)) {
+            promise = $q.all(promise);
+          }
+
+          vm.busy = promise;
+
+          vm.busy.finally(() => vm.busy = false);
+
+          vm.cgBusy = {promise};
+
+          if (message) {
+            vm.cgBusy.message = message;
+          }
+
+          return promise;
+
+        }
       });
 
     }
