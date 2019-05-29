@@ -3,8 +3,11 @@
 
 picture-list {
 
+  $height: 35px;
+  $padding: 4px;
+
   display: block;
-  //margin: 0 20px;
+
 
   .headers {
     font-weight: bold;
@@ -12,14 +15,26 @@ picture-list {
 
   .picture, .headers {
 
+    min-height: $height + $padding * 2;
+
     border-bottom: solid 1px $gray-borders-color;
 
     display: flex;
     justify-content: stretch;
+    align-items: center;
 
     > * {
       flex: 1;
-      padding: 3px;
+      padding: $padding;
+    }
+
+    > .thumbnail {
+      flex: 0;
+      min-width: $height * 2;
+      > img {
+        max-width: $height;
+        max-height: $height;
+      }
     }
 
   }

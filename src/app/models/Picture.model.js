@@ -20,9 +20,21 @@
 
       relations: {
         hasMany: {}
-      }
+      },
+
+      computed: {
+        thumbnailSrc: ['name', src('thumbnails')],
+      },
 
     });
+
+    function src(size) {
+      return name => escapeUrl(`https://s3-eu-west-1.amazonaws.com/vseramki/${size}/${name}`);
+    }
+
+    function escapeUrl(url) {
+      return url.replace(/\+/g, '%2B');
+    }
 
   }
 

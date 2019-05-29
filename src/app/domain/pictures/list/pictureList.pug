@@ -1,6 +1,7 @@
 .picture-list
 
   .headers
+    .thumbnail
     .article Артикул
     .name Название файла
     .renamed Переименован
@@ -11,6 +12,8 @@
     md-top-index='vm.topIndex'
   )
     .picture(md-virtual-repeat='picture in vm.pictures')
+      .thumbnail
+        img(ng-src="{{ picture.thumbnailSrc }}")
       .article {{ picture.article }}
       .name {{ picture.name }}
       .renamed {{ picture.renamed }}
