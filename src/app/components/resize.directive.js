@@ -41,7 +41,7 @@
 
   }
 
-  angular.module('ui.bootstrap.position')
+  angular.module('vseramki')
     .directive('resize', resize);
 
 })();
