@@ -24,6 +24,7 @@
 
       computed: {
         thumbnailSrc: ['name', src('thumbnails')],
+        smallSrc: ['name', src('small')],
       },
 
     });

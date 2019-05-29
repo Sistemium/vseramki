@@ -12,7 +12,13 @@
     md-top-index='vm.topIndex'
   )
     .picture(md-virtual-repeat='picture in vm.pictures')
-      .thumbnail
+      .thumbnail(
+        popover-trigger="'mouseenter'"
+        popover-placement="right"
+        uib-popover-template='"app/domain/pictures/preview/preview.template.html"'
+        popover-append-to-body="true"
+        popover-class='picture-preview-popover'
+      )
         img(ng-src="{{ picture.thumbnailSrc }}")
       .article {{ picture.article }}
       .name {{ picture.name }}

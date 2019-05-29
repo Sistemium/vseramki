@@ -18,3 +18,9 @@ pictures {
   }
 
 }
+
+.picture-preview-popover {
+  &.popover {
+    max-width: none;
+  }
+}

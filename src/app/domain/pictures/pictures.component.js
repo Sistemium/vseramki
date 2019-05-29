@@ -36,7 +36,7 @@
 
       return Picturing.findAllPictures()
         .then(pictures => {
-          vm.pictures = pictures;
+          vm.pictures = _.orderBy(pictures, 'name');
           onSearchChange(vm.search);
         });
 
@@ -51,7 +51,7 @@
         vm.filteredPictures = pictures;
       }
 
-      const re = new RegExp(_.escapeRegExp(search), 'i');
+      const re = util.searchRe(search);
 
       vm.filteredPictures = _.filter(pictures, picture => {
         const {name, article, renamed} = picture;

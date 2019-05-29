@@ -89,11 +89,16 @@
           label: 'Заказы'
         });
       }
+
       if (isAdmin) {
         vm.navs.push({
           sref: 'baguettes',
           label: 'Багет'
-        },{
+        }, {
+          sref: 'pictures',
+          label: 'Картинки',
+          cls: 'hide-sm'
+        }, {
           sref: 'dictionary',
           label: 'Словари'
         });
