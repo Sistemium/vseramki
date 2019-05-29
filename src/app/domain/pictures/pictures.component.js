@@ -12,7 +12,7 @@
 
   });
 
-  function picturesController($scope, ControllerHelper, Picturing) {
+  function picturesController($scope, ControllerHelper, Picturing, util) {
 
     const vm = ControllerHelper.setup(this, $scope);
 
@@ -51,11 +51,11 @@
         vm.filteredPictures = pictures;
       }
 
-      const re = new RegExp(_.escapeRegExp(search));
+      const re = new RegExp(_.escapeRegExp(search), 'i');
 
       vm.filteredPictures = _.filter(pictures, picture => {
-        const {name} = picture;
-        return re.test(name);
+        const {name, article, renamed} = picture;
+        return re.test(name) || re.test(article) || re.test(renamed);
       });
 
     }
