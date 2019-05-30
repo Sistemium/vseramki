@@ -196,7 +196,11 @@
 
       //TODO baguette.name
       if (!vm.baguette.isValid) {
-        vm.baguette.name = (_.get(vm.baguette, 'brand.name') || '') + ' ' + (_.get(vm.baguette, 'colour.name') || '') + ' ' + (_.get(vm.baguette, 'surface.name') || '');
+        const brandName = _.get(vm.baguette, 'brand.name') || '';
+        const colourName = _.get(vm.baguette, 'colour.name') || '';
+        const surfaceName = _.get(vm.baguette, 'surface.name') || '';
+
+        vm.baguette.name = `${brandName} ${colourName} ${surfaceName}`;
       }
 
       return Baguette.create(vm.baguette)
