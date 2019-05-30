@@ -21,6 +21,11 @@
       templateUrl: 'app/domain/baguette/editBaguette.html',
       controller: 'BaguetteEditController',
       controllerAs: 'vm'
+    }, {
+      name: 'view',
+      url: '/view/:id',
+      template: '<baguette-view baguette-id="vm.params.id"></baguette-view>',
+      controller: 'StateController as vm',
     }];
 
     stateHelperProvider

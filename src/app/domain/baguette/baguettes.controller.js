@@ -213,7 +213,7 @@
 
     function changeBaguette(bag) {
       const {name} = $state.current;
-      const newState = name.replace(/\.(edit|create)$/, '') + '.edit';
+      const newState = name.replace(/\.(edit|create|view)$/, '') + '.view';
       lockArticlesScroll = true;
       $state.go(newState, {id: bag.id});
     }

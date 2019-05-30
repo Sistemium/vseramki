@@ -1,0 +1,22 @@
+@import "../../../styles/vars";
+
+baguette-view {
+
+  $margin: 10px;
+
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .baguette-image {
+
+    padding: $margin;
+
+    img {
+      max-width: 150px;
+    }
+
+  }
+
+}
