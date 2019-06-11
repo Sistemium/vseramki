@@ -3,8 +3,21 @@
   ng-style='{height: (baguetteView.windowHeight - baguetteView.offsetTop) + "px"}'
 )
 
-  h1 {{ vm.baguette.name }}
+  h2 {{ vm.baguette.name }}
 
   .images
-    .baguette-image(ng-repeat="image in vm.images track by image.id")
-      img(ng-src="{{image.smallSrc}}")
+    .baguette-image(ng-click="vm.previewClick()")
+      //img(ng-src="{{vm.baguette.cornerThumb}}")
+      img(ng-src="{{vm.baguette.sizesSmall}}")
+      //img(ng-src="{{vm.baguette.stickThumb}}")
+
+  ng-gallery(
+    images='vm.images'
+    thumbnail-click-fn='vm.onThumbnailClick'
+    thumbs-num='3'
+    layout='row' layout-align='center center'
+  )
+
+  h3(ng-if="vm.baguette.articles.length") Рамки из этого багета
+
+  baguette-frames(baguette="vm.baguette")

@@ -4,9 +4,19 @@ baguette-view {
 
   $margin: 10px;
 
+  h2, h3 {
+    text-align: center;
+  }
+
   .images {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .baguette-image {
+    cursor: zoom-in;
   }
 
   .baguette-image {
@@ -14,7 +24,7 @@ baguette-view {
     padding: $margin;
 
     img {
-      max-width: 150px;
+      max-width: 250px;
     }
 
   }

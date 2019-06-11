@@ -17,7 +17,7 @@
 
     const vm = ControllerHelper.setup(this, $scope);
 
-    const {Baguette, BaguetteImage} = Schema.models();
+    const {Baguette} = Schema.models();
 
     vm.use({
 
@@ -27,12 +27,23 @@
 
       },
 
+      previewClick() {
+        if (!vm.images.length) {
+          return;
+        }
+        $scope.$broadcast('openGallery', {index: 0});
+      },
+
     });
 
     function refresh() {
       const {baguetteId} = vm;
-      Baguette.bindOne(baguetteId, $scope, 'vm.baguette');
-      BaguetteImage.bindAll({baguetteId}, $scope, 'vm.images');
+      Baguette.bindOne(baguetteId, $scope, 'vm.baguette', onBaguette);
+    }
+
+    function onBaguette() {
+      const {baguette} = vm;
+      vm.images = baguette.pictureImages();
     }
 
   }
