@@ -2,6 +2,7 @@
 
   function util() {
     return {
+
       searchRe(search) {
         let normalized = _.replace(_.toLower(search), /[ ]+/g, ' ');
         normalized = _.replace(normalized, /["']/g, '');
@@ -15,11 +16,21 @@
             case 'и':
             case 'й':
               return '[ий]';
-            default: return l;
+            default:
+              return l;
           }
         }).join('');
         return new RegExp(research, 'i');
-      }
+      },
+
+      pictureSrc(size) {
+        return name => this.escapeUrl(`https://s3-eu-west-1.amazonaws.com/vseramki/${size}/${name}`);
+      },
+
+      escapeUrl(url) {
+        return url.replace(/\+/g, '%2B');
+      },
+
     };
   }
 

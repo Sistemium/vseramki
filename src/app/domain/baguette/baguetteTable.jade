@@ -25,10 +25,10 @@
           ' track by bag.id'
           md-select='bag'
           md-select-id='id'
-          ng-click='vm.editBaguette(bag, $event)'
+          ng-click='vm.showBaguette(bag, $event)'
           )
             td(md-cell)
-              img.thumbnail(ng-src='{{bag.activePhoto()}}')
+              img.thumbnail(ng-src='{{bag.stickThumb}}')
             td(md-cell) {{bag.code}}
             td.hide-md.hide-sm(md-cell)
               span {{bag.name}}

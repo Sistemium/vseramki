@@ -2,6 +2,7 @@
 
   .headers
     .thumbnail
+    .type Тип
     .article Артикул
     .name Название файла
     .renamed Переименован
@@ -20,6 +21,7 @@
         popover-class='picture-preview-popover'
       )
         img(ng-src="{{ picture.thumbnailSrc }}")
+      .type {{ picture.type }}
       .article {{ picture.article }}
       .name {{ picture.name }}
       .renamed {{ picture.renamed }}

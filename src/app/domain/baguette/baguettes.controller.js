@@ -44,6 +44,7 @@
 
       resetFilters: () => vm.search = '',
       resetCheckedBaguette: () => vm.selected = [],
+      showBaguette: item => $state.go('.view', {id: item.id}),
       editBaguette: item => $state.go('.edit', {id: item.id}),
       fileUploadClick: () => $state.go('import', {model: 'Baguette'}),
       fileDownloadClick: () => {

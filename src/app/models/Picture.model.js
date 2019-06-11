@@ -6,7 +6,7 @@
     .module('vseramki')
     .run(Picture);
 
-  function Picture(Schema) {
+  function Picture(Schema, util) {
 
     return Schema.register({
 
@@ -23,19 +23,11 @@
       },
 
       computed: {
-        thumbnailSrc: ['name', src('thumbnails')],
-        smallSrc: ['name', src('small')],
+        thumbnailSrc: ['name', util.pictureSrc('thumbnails')],
+        smallSrc: ['name', util.pictureSrc('small')],
       },
 
     });
-
-    function src(size) {
-      return name => escapeUrl(`https://s3-eu-west-1.amazonaws.com/vseramki/${size}/${name}`);
-    }
-
-    function escapeUrl(url) {
-      return url.replace(/\+/g, '%2B');
-    }
 
   }
 
