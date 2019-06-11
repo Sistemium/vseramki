@@ -1,0 +1,5 @@
+.baguette-frames
+  .baguette-frame(ng-repeat='frame in vm.baguette.articles track by frame.id')
+    md-button.tool-button.default-button(
+      ui-sref='catalogue({item: frame.id})' aria-label='Размеры'
+      ) {{ frame.frameSize.name }}
