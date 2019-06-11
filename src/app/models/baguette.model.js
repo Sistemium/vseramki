@@ -7,7 +7,13 @@
     .service('Baguette', Baguette)
     .run(Baguette => Baguette);
 
-  function Baguette(Schema, Entity, ExportConfig) {
+  const PICTURE_TYPES = {
+    sizes: 1,
+    corner: 2,
+    stick: 3,
+  };
+
+  function Baguette(Schema, Entity, ExportConfig, util) {
 
     return Schema.register({
 
@@ -63,14 +69,34 @@
 
       },
 
+      computed: {
+        stickThumb: ['pictures', pictureSrc('stick')],
+        cornerThumb: ['pictures', pictureSrc('corner')],
+        sizesSmall: ['pictures', pictureSrc('sizes', 'small')],
+      },
+
       methods: {
 
-        activePhoto: function () {
+        pictureImages() {
+          const res = _.map(this.pictures, (name, type) => {
+            return {
+              id: type,
+              type,
+              ord: PICTURE_TYPES[type] || 0,
+              thumbnailSrc: util.pictureSrc('thumbnails')(name),
+              smallSrc: util.pictureSrc('small')(name),
+              largeSrc: util.pictureSrc('large')(name),
+            }
+          });
+          return _.orderBy(res, 'ord');
+        },
+
+        activePhoto() {
           const photo = _.get(this, 'images[0]');
           return photo ? photo.thumbnailSrc : '/images/placeholder.png';
         },
 
-        stringName: function () {
+        stringName() {
 
           const names = [
             this.brand ? '"' + this.brand.name + '"' : this.code
@@ -90,7 +116,8 @@
 
           return names.join(' ');
 
-        }
+        },
+
       },
 
       beforeCreateInstance: function (model, attrs) {
@@ -103,6 +130,16 @@
       }
 
     });
+
+    function pictureSrc(type, size = 'thumbnails') {
+      return pictures => {
+        if (!pictures) {
+          return '/images/placeholder.png';
+        }
+        return util.pictureSrc(size)(pictures[type]);
+      }
+    }
+
   }
 
 }());
