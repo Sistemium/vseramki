@@ -44,6 +44,7 @@
     function onBaguette() {
       const {baguette} = vm;
       vm.images = baguette.pictureImages();
+
     }
 
   }

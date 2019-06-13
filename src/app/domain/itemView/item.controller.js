@@ -81,7 +81,7 @@
 
      */
 
-    Article.findAll({limit: 1000})
+    Article.findAll({limit: 3000})
       .then(function (data) {
         vm.allArt = data;
       });

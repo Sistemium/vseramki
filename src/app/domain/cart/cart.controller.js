@@ -26,7 +26,9 @@
       saleOrder: null,
       emailPattern: User.meta.emailPattern,
 
-      processingDictionary: _.sortBy(_.map(SaleOrder.meta.dictionary.processing, (label, status) => {return {label, status}}), 'label'),
+      processingDictionary: _.sortBy(_.map(SaleOrder.meta.dictionary.processing, (label, status) => {
+        return {label, status}
+      }), 'label'),
 
       checkout,
       clearCart,
@@ -107,7 +109,7 @@
     Baguette.findAll();
     BaguetteImage.findAll();
     ArticleImage.findAll();
-    Article.findAll()
+    Article.findAll({limit: 3000})
       .then(refreshPrice);
 
     if (!vm.id) {
@@ -255,14 +257,14 @@
           });
 
           return $q.all(positions)
-            .catch(err=> {
+            .catch(err => {
               console.error(err);
               //TODO: delete created saleOrder if failed to create all positions
               return $q.reject();
             });
 
         })
-        .then(()=> {
+        .then(() => {
 
           if (authUser) {
             User.find(authUser.id).then(function (user) {
@@ -284,7 +286,7 @@
           Cart.destroyAll()
             .then(() => {
               $state.go('saleOrders.info', {id: vm.saleOrder.id})
-                .then(()=> {
+                .then(() => {
                   ToastHelper.success('Заказ успешно оформлен');
                   vm.busy = false;
                 });
@@ -349,12 +351,12 @@
       if (SaleOrder.hasChanges(id)) {
         vm.blockMdSelect = true;
         SaleOrder.save(id)
-          .then(()=> ToastHelper.success('Статус изменен')
+          .then(() => ToastHelper.success('Статус изменен')
             .then(() => {
               vm.blockMdSelect = false;
             }))
           .catch(() => {
-            ToastHelper.error('Статус не изменен').then(()=> {
+            ToastHelper.error('Статус не изменен').then(() => {
               SaleOrder.revert(id);
               vm.blockMdSelect = false;
             });

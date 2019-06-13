@@ -28,9 +28,10 @@
         disabled-if='!vm.baguettes.length || !vm.filteredBaguettes.length'
         )
         state-bar-button.admin-button(hide-xs title='Импорт из таблицы Excel' icon='file_upload' ng-show='!vm.currentItem')
-        state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo' ng-show='vm.currentItem')
+        //state-bar-button.admin-button(title='Добавить фото' icon='add_a_photo' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Удалить багет' icon='delete' ng-show='vm.currentItem')
         state-bar-button.admin-button(title='Добавить багет' icon='add')
+        state-bar-button.admin-button(title='Редактировать багет' icon='edit' ng-if='vm.currentItem')
 
   section.busy(ng-if="!vm.ready" layout="row" layout-align="center center")
     md-progress-circular(md-diameter="100" md-mode="indeterminate")

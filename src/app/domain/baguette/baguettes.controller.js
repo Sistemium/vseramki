@@ -18,7 +18,8 @@
       Material,
       Colour,
       BaguetteImage,
-      Baguette
+      Baguette,
+      Article,
     } = Schema.models();
 
     let chunkSize;
@@ -41,6 +42,7 @@
       deleteClick,
       addClick,
       sideNavListItemClick: changeBaguette,
+      editClick: () => $state.go(`${$state.current.parent.name}.edit`, {id: vm.currentItem.id}),
 
       resetFilters: () => vm.search = '',
       resetCheckedBaguette: () => vm.selected = [],
@@ -67,7 +69,8 @@
           Colour.findAll(),
           Material.findAll(),
           Brand.findAll(),
-          BaguetteImage.findAll()
+          BaguetteImage.findAll(),
+          Article.findAll({limit: 3000}),
         ]);
       })
       .then(() => {
@@ -108,7 +111,7 @@
         rebind(baguetteFilter);
       }
 
-      if (/\.edit$/.test(toState.name)) {
+      if (/\.(edit|view)$/.test(toState.name)) {
         return Baguette.find(toParams.id)
           .then(function (item) {
             vm.currentItem = item;
