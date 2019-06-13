@@ -46,20 +46,14 @@ layout-align='space-between center'
         .property-label
           span Материал
           = ' '
-          a(ui-sref='baguettes.table.edit({id: vm.article.baguetteId})') багета:
+          a(ui-sref='baguettes.table.view({id: vm.article.baguetteId})') багета:
         .property-value {{vm.article.material.name}}
       .property
         .property-label
           span Ширина
           = ' '
-          a(ui-sref='baguettes.table.edit({id: vm.article.baguetteId})') багета:
+          a(ui-sref='baguettes.table.view({id: vm.article.baguetteId})') багета:
         .property-value {{vm.article.baguette.borderWidth}} мм.
-      .property(ng-if='vm.article.screeningId')
-        .property-label Прозрачная вставка:
-        .property-value {{vm.article.screening.name}}
-      .property(ng-if='vm.article.backMountId')
-        .property-label Крепление задника:
-        .property-value {{vm.article.backMount.name}}
       .property
         .property-label Вес:
         .property-value(ng-class='{gray: !vm.article.pieceWeight}')

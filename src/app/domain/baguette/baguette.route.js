@@ -41,7 +41,7 @@
 
         data: {
           title: 'Багеты',
-          needRoles: 'admin'
+          // needRoles: 'admin'
         },
 
         children: [

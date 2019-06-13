@@ -71,13 +71,14 @@
         {
           sref: 'catalogue',
           label: 'Рамки'
-        },
-        {
+        }, {
+          sref: 'baguettes',
+          label: 'Багет'
+        }, {
           sref: 'info',
           label: 'Контакты',
           cls: vm.loggedIn && 'hide-sm'
-        },
-        {
+        }, {
           sref: 'delivery',
           label: 'Доставка'
         }
@@ -92,9 +93,6 @@
 
       if (isAdmin) {
         vm.navs.push({
-          sref: 'baguettes',
-          label: 'Багет'
-        }, {
           sref: 'pictures',
           label: 'Картинки',
           cls: 'hide-sm'

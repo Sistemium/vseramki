@@ -17,6 +17,7 @@ $ng-gallery-icon-hover-color: #d8d8d8;
     &:hover {
       color: yellow;
     }
+
     color: yellow;
   }
 
@@ -105,8 +106,11 @@ ng-gallery.margin-top-em > .ng-gallery {
 
   }
 
-  .main-view > * {
-    width: 100%;
+  .main-view {
+    padding-bottom: 160px;
+    > * {
+      width: 100%;
+    }
   }
 
   .photo-counter {
@@ -130,7 +134,7 @@ ng-gallery.margin-top-em > .ng-gallery {
     margin: 4px;
 
     padding: 20px;
-    background: rgb(255,255, 255);
+    background: rgb(255, 255, 255);
     //box-shadow: 0 0 40px 0 rgba(225, 225, 225, 0.9);
     border-radius: 10px;
 
