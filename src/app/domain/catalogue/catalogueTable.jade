@@ -12,8 +12,8 @@
           th(md-column md-order-by='brand.name') Бренд
           th(md-column md-order-by='frameSize.name') Размер
           th(md-column md-order-by='colour.name') Цвет
-          th.hide-sm.hide-xs(md-column md-order-by='lowPrice') Цена опт.
           th(md-column md-order-by='highPrice') Цена розн.
+          th.hide-sm.hide-xs(md-column md-order-by='lowPrice') Цена опт.
           th(md-column md-order-by='inCart.count') Заказ, шт.
           //th(md-column md-order-by='pieceWeight') Вес (кг.)
 
@@ -35,8 +35,8 @@
             td(md-cell) {{article.brand.name}}
             td(md-cell) {{article.frameSize.name}}
             td(md-cell) {{article.colour.name}}
-            td.hide-sm.hide-xs(md-cell) {{article.lowPrice}}
             td(md-cell) {{article.highPrice}}
+            td.hide-sm.hide-xs(md-cell) {{article.lowPrice}}
             td.prevent-clicks(md-cell)
 
               md-button.mini-fab.default-button(

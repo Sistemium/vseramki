@@ -11,8 +11,9 @@
           th(md-column md-order-by='code') Артикул
           th.hide-md.hide-sm(md-column md-order-by='name') Наименование
           th.hide-xs(md-column md-order-by='brand.name') Бренд
-          th.hide-xs(md-column md-order-by='colour.name') Цвет
-          th.hide-xs(md-column md-order-by='surface.name') Поверхность
+          th.hide-sm.hide-xs(md-column md-order-by='colour.name') Цвет
+          th(md-column md-order-by='highPrice') Цена розн.
+          th.hide-xs(md-column md-order-by='lowPrice') Цена опт.
           th.hide-xs(md-column md-order-by='lastName') Комментарий
           th.hide-xs.hide-sm(md-column) Цвета
           th.hide-xs.hide-sm(md-column md-order-by='borderWidth') Ширина (мм.)
@@ -34,8 +35,9 @@
               span {{bag.name}}
               .warning(ng-if='!bag.isValid') !
             td.hide-xs(md-cell) {{bag.brand.name}}
-            td.hide-xs(md-cell) {{bag.colour.name}}
-            td.hide-xs(md-cell) {{bag.surface.name}}
+            td.hide-sm.hide-xs(md-cell) {{bag.colour.name}}
+            td(md-cell) {{bag.highPrice}}
+            td.hide-xs(md-cell) {{bag.lowPrice}}
             td.hide-xs(md-cell) {{bag.lastName}}
             td.hide-xs.hide-sm(md-cell)
               div(ng-repeat='bc in bag.colours track by bc.id') {{ bc.colour.name }}

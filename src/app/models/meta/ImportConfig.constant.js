@@ -73,6 +73,20 @@
           return _.upperFirst(res);
 
         }
+      }, {
+        name: 'highPrice',
+        label: 'Розн. цена',
+        //parser: parseFloat,
+        compute: item => {
+          return _.round(parseFloat(item['Розн_Цена']) || parseFloat(item['Мел_Опт_Цена']) * 1.15, 2);
+        }
+      }, {
+        name: 'lowPrice',
+        label: 'Опт. цена',
+        //parser: parseFloat,
+        compute: item => {
+          return _.round(parseFloat(item['Мел_Опт_Цена']), 2);
+        }
       }
     ];
 
@@ -193,14 +207,14 @@
         label: 'Розн. цена',
         //parser: parseFloat,
         compute: item => {
-          return _.round(parseFloat(item['Мел_Опт_Цена']) || parseFloat(item['Опт_Цена']) * 1.15, 2);
+          return _.round(parseFloat(item['Розн_Цена']) || parseFloat(item['Мел_Опт_Цена']) * 1.15, 2);
         }
       }, {
         name: 'lowPrice',
         label: 'Опт. цена',
         //parser: parseFloat,
         compute: item => {
-          return _.round(parseFloat(item['Опт_Цена']), 2);
+          return _.round(parseFloat(item['Мел_Опт_Цена']), 2);
         }
       }
     ];
