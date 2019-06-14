@@ -7,12 +7,6 @@
     .service('Baguette', Baguette)
     .run(Baguette => Baguette);
 
-  const PICTURE_TYPES = {
-    sizes: 1,
-    corner: 2,
-    stick: 3,
-  };
-
   function Baguette(Schema, Entity, ExportConfig, util) {
 
     return Schema.register({
@@ -70,25 +64,15 @@
       },
 
       computed: {
-        stickThumb: ['pictures', pictureSrc('stick')],
-        cornerThumb: ['pictures', pictureSrc('corner')],
-        sizesSmall: ['pictures', pictureSrc('sizes', 'small')],
+        stickThumb: ['pictures', util.pictureSrc('stick')],
+        cornerThumb: ['pictures', util.pictureSrc('corner')],
+        sizesSmall: ['pictures', util.pictureSrc('sizes', 'small')],
       },
 
       methods: {
 
         pictureImages() {
-          const res = _.map(this.pictures, (name, type) => {
-            return {
-              id: type,
-              type,
-              ord: PICTURE_TYPES[type] || 0,
-              thumbnailSrc: util.pictureSrc('thumbnails')(name),
-              smallSrc: util.pictureSrc('small')(name),
-              largeSrc: util.pictureSrc('large')(name),
-            }
-          });
-          return _.orderBy(res, 'ord');
+          return util.pictureImages(this.pictures);
         },
 
         activePhoto() {
@@ -130,15 +114,6 @@
       }
 
     });
-
-    function pictureSrc(type, size = 'thumbnails') {
-      return pictures => {
-        if (!pictures) {
-          return '/images/placeholder.png';
-        }
-        return util.pictureSrc(size)(pictures[type]);
-      }
-    }
 
   }
 
