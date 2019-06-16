@@ -12,7 +12,7 @@ md-content#scroll-main.ui-view
             .md-card-corner
               label {{ article.code }}
             md-card-header
-              img.thumbnail(ng-src='{{article.thumb}}')
+              img.thumbnail(ng-src='{{article.activePhoto()}}')
             h5.name
               frame-name.title(article='article')
               small.gray {{ ::article.multiTypeName() }}
