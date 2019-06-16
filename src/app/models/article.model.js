@@ -2,7 +2,7 @@
 
 (function () {
 
-  function Article(Schema, Entity, ExportConfig) {
+  function Article(Schema, Entity, ExportConfig, util) {
 
     const totalThreshold = 100000;
     const minThreshold = 10000;
@@ -81,14 +81,22 @@
         exportConfig: ExportConfig.Article
       },
 
+      computed: {
+        thumb: ['pictures', util.pictureSrc('frame')],
+      },
+
       methods: {
 
-        activePhoto: function () {
-          const photo = _.get(this, 'images[0]') || _.get(this, 'baguette.images[0]');
-          return photo ? photo.thumbnailSrc : '/images/placeholder.png';
+        activePhoto() {
+          return _.get(this.pictures, 'frame') ? this.thumb : _.get(this, 'baguette.cornerThumb');
         },
 
-        discountedPrice: function (total) {
+        pictureImages() {
+          const images = _.assign({}, this.pictures, _.get(this.baguette, 'pictures'));
+          return util.pictureImages(images);
+        },
+
+        discountedPrice(total) {
 
           const useTotal = total < totalThreshold ? total : totalThreshold;
 
