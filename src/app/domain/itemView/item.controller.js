@@ -12,7 +12,7 @@
       Article,
       ArticleImage,
       Cart,
-      BaguetteImage
+      // BaguetteImage
     } = Schema.models();
 
     const numberFilter = $filter('number');
@@ -34,7 +34,7 @@
       currentImageHover: {},
       addToCart: () => {
         Cart.addToCart(vm.article);
-        $mdMedia('gt-sm') || $timeout(()=> {
+        $mdMedia('gt-sm') || $timeout(() => {
           $uiViewScroll(angular.element(document.getElementById('cartCountInput')));
         });
       },
@@ -64,11 +64,11 @@
         vm.images.length && $scope.$broadcast('openGallery', {index: vm.images.indexOf(vm.currentImage) || 0})
       },
 
-      visibilityClick: ()=> {
+      visibilityClick: () => {
         setIsValid(false);
       },
 
-      visibilityOffClick: ()=> {
+      visibilityOffClick: () => {
         setIsValid(true);
       }
 
@@ -94,15 +94,9 @@
 
         setPrices();
 
-        const baguetteImageFilter = {
-          baguetteId: vm.article.baguetteId
-        };
+        vm.images = vm.article.pictureImages();
 
-        ArticleImage.bindAll(stateFilter, $scope, 'vm.articleImages', mergeImages);
-        BaguetteImage.bindAll(baguetteImageFilter, $scope, 'vm.baguetteImages', mergeImages);
-
-        ArticleImage.findAll(stateFilter);
-        BaguetteImage.findAll(baguetteImageFilter);
+        setPreviewImage(_.first(vm.images));
 
       }
 
@@ -188,11 +182,6 @@
       Cart.save(cart);
     }
 
-    function mergeImages() {
-      vm.images = _.union(vm.articleImages, vm.baguetteImages);
-      setPreviewImage(_.first(vm.images));
-    }
-
     function imageClick(item) {
       vm.clickedImage = item;
     }
@@ -251,7 +240,7 @@
     function setPreviewImage(newImg) {
       const newId = _.get(newImg, 'id');
 
-      if (newId === vm.currentImageLoading ) {
+      if (newId === vm.currentImageLoading) {
         return;
       }
 

@@ -17,7 +17,7 @@
       Brand,
       Material,
       Colour,
-      BaguetteImage,
+      // BaguetteImage,
       Baguette,
       Article,
     } = Schema.models();
@@ -69,7 +69,7 @@
           Colour.findAll(),
           Material.findAll(),
           Brand.findAll(),
-          BaguetteImage.findAll(),
+          // BaguetteImage.findAll(),
           Article.findAll({limit: 3000}),
         ]);
       })

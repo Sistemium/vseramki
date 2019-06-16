@@ -11,9 +11,9 @@
 
     const {
       Article,
-      ArticleImage,
+      // ArticleImage,
       Baguette,
-      BaguetteImage,
+      // BaguetteImage,
       Cart,
       SaleOrder,
       SaleOrderPosition,
@@ -107,8 +107,8 @@
     }
 
     Baguette.findAll();
-    BaguetteImage.findAll();
-    ArticleImage.findAll();
+    // BaguetteImage.findAll();
+    // ArticleImage.findAll();
     Article.findAll({limit: 3000})
       .then(refreshPrice);
 

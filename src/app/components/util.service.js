@@ -35,7 +35,7 @@
 
       pictureSrc(type, size = 'thumbnails') {
         return pictures => {
-          if (!pictures) {
+          if (!pictures || !pictures[type]) {
             return '/images/placeholder.png';
           }
           return this.pictureSizeSrc(size)(pictures[type]);

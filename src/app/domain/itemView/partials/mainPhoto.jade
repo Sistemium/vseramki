@@ -29,6 +29,7 @@ layout-align='space-between center'
 
   ng-gallery(
   images='vm.images'
+  ng-if="vm.images.length"
   thumbnail-click-fn='vm.onThumbnailClick'
   is-deletable='vm.isAdmin'
   thumbs-num='5'

@@ -13,12 +13,12 @@
       Article,
       Baguette,
       Cart,
-      ArticleImage,
+      // ArticleImage,
       FrameSize,
       Brand,
       Material,
       Colour,
-      BaguetteImage
+      // BaguetteImage
     } = Schema.models();
 
     let chunkSize = 3;
@@ -75,8 +75,8 @@
           FrameSize.findAll(),
           Brand.findAll(),
           Baguette.findAll(),
-          BaguetteImage.findAll(),
-          ArticleImage.findAll()
+          // BaguetteImage.findAll(),
+          // ArticleImage.findAll()
         ]);
 
       })
