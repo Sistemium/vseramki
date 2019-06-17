@@ -189,7 +189,7 @@
         return articles;
       }
 
-      const pattern = `^${_.escapeRegExp(search)}${/РП/i.test(search)?'':'(РП|$)'}`;
+      const pattern = `^${_.escapeRegExp(search)}${/РП/i.test(search) ? '' : '(РП|$)'}`;
       const startsWithRe = new RegExp(pattern, 'i');
 
       const byCode = _.filter(articles, ({code}) => startsWithRe.test(code));
@@ -206,6 +206,10 @@
 
         if (search === '/invalid') {
           return !isValid;
+        }
+
+        if (search === '/no_picture') {
+          return !article.pictures;
         }
 
         return !vm.search || search === code || re.test(name);

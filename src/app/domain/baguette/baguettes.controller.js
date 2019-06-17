@@ -141,6 +141,10 @@
             return !baguette.isValid;
           }
 
+          if (search === '/no_picture') {
+            return !baguette.pictures;
+          }
+
           return re.test(baguette.name)
             || codeRe.test(baguette.code)
             || codeRe.test(baguette.codeExternal)
