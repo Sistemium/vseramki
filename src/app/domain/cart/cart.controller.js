@@ -106,7 +106,7 @@
       setup({});
     }
 
-    Baguette.findAll();
+    Baguette.findAll({limit: 3000});
     // BaguetteImage.findAll();
     // ArticleImage.findAll();
     Article.findAll({limit: 3000})

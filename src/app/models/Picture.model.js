@@ -23,8 +23,18 @@
       },
 
       computed: {
-        thumbnailSrc: ['name', util.pictureSrc('thumbnails')],
-        smallSrc: ['name', util.pictureSrc('small')],
+        thumbnailSrc: ['name', util.pictureSizeSrc('thumbnails')],
+        smallSrc: ['name', util.pictureSizeSrc('small')],
+      },
+
+      methods: {
+        hasArticles() {
+          const {Article, Baguette} = Schema.models();
+          if (this.type === 'frame') {
+            return Article.filter({code: this.article}).length;
+          }
+          return Baguette.filter({code: this.article}).length;
+        },
       },
 
     });

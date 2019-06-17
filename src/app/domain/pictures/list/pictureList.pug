@@ -22,6 +22,8 @@
       )
         img(ng-src="{{ picture.thumbnailSrc }}")
       .type {{ picture.type }}
-      .article {{ picture.article }}
+      .article
+        span {{ picture.hasArticles() ? '✅' : '⭕️' }}
+        span {{ picture.article }}
       .name {{ picture.name }}
       .renamed {{ picture.renamed }}

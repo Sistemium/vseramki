@@ -74,7 +74,7 @@
           Material.findAll(),
           FrameSize.findAll(),
           Brand.findAll(),
-          Baguette.findAll(),
+          Baguette.findAll({limit: 3000}),
           // BaguetteImage.findAll(),
           // ArticleImage.findAll()
         ]);

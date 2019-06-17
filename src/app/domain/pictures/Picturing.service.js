@@ -9,12 +9,13 @@
 
   function Picturing(Schema) {
 
-    const {Picture} = Schema.models();
+    const {Picture, Baguette} = Schema.models();
 
     return {
 
       findAllPictures() {
-        return Picture.findAll({ limit: 10000 });
+        return Baguette.findAll({limit: 3000})
+          .then(() => Picture.findAll({limit: 10000}));
       }
 
     };

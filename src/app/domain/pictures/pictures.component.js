@@ -49,13 +49,19 @@
 
       if (!search) {
         vm.filteredPictures = pictures;
+        return;
+      }
+
+      if (search === '/invalid') {
+        vm.filteredPictures = _.filter(pictures, picture => !picture.hasArticles());
+        return;
       }
 
       const re = util.searchRe(search);
 
       vm.filteredPictures = _.filter(pictures, picture => {
-        const {name, article, renamed} = picture;
-        return re.test(name) || re.test(article) || re.test(renamed);
+        const {name, article, renamed, type} = picture;
+        return type === search || re.test(article) || re.test(name) || re.test(renamed);
       });
 
     }

@@ -62,7 +62,7 @@
 
      */
 
-    Baguette.findAll()
+    Baguette.findAll({limit: 3000})
       .then(baguettes => {
         vm.baguettes = baguettes;
         return $q.all([

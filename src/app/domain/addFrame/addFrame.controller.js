@@ -53,7 +53,7 @@
       vm.saveLabel = 'Сохранить';
     }
 
-    Baguette.findAll();
+    Baguette.findAll({limit: 3000});
     Baguette.bindAll({}, $scope, 'vm.baguettes');
 
     //Article.findAll();
