@@ -5,6 +5,7 @@
   function ImportConfigFN(Schema) {
 
     const baguetteModel = Schema.model('Baguette');
+    const {Colour} = Schema.models();
 
     const BaguetteColumns = [
       {
@@ -35,7 +36,19 @@
         name: 'colour.name',
         model: 'Colour',
         label: 'Цвет',
-        ref: 'colourId'
+        ref: 'colourId',
+        replace: false,
+        compute: item => {
+
+          const name = item['Наименование'];
+
+          if (!name) {
+            return null;
+          }
+
+          return _.get(Colour.meta.matchesString(name), 'name');
+
+        }
       }, {
         name: 'surface.name',
         model: 'Surface',

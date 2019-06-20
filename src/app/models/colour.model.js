@@ -6,13 +6,16 @@
     .module('vseramki')
     .service('Colour', Colour)
     .run(function (Colour) {
-      Colour.findAll();
+      Colour.findAll()
+        .then(() => Colour.meta.setMatchers());
     })
   ;
 
   function Colour(Schema) {
 
-    return Schema.register({
+    let matchers = [];
+
+    const model = Schema.register({
 
       labels: {
         plural: 'Цвета',
@@ -28,9 +31,37 @@
             foreignKey: 'colourId'
           }
         }
-      }
+      },
+
+      computed: {
+        // matcher: ['name', ],
+      },
+
+      meta: {
+
+        setMatchers() {
+
+          const colours = model.getAll();
+
+          matchers = _.map(colours, ({name}) => {
+            const normalized = _.replace(_.escapeRegExp(name), /ё/ig, '[её]');
+            return {
+              re: new RegExp(`([^a-zа-я]|^)${normalized}([^a-zа-я]|$)`, 'i'),
+              name,
+            };
+          });
+
+        },
+
+        matchesString(string) {
+          return _.find(matchers, ({re}) => re.test(string));
+        },
+
+      },
 
     });
+
+    return model;
 
   }
 
