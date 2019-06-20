@@ -26,4 +26,6 @@
         span {{ picture.hasArticles() ? '✅' : '⭕️' }}
         span {{ picture.article }}
       .name {{ picture.name }}
-      .renamed {{ picture.renamed }}
+      .renamed(
+        ng-click='vm.renameClick($event, picture)'
+      ) {{ picture.renamed }}

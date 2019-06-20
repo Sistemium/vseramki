@@ -28,6 +28,10 @@ picture-list {
       padding: $padding;
     }
 
+    > .renamed {
+      cursor: pointer;
+    }
+
     > .thumbnail {
       flex: 0;
       min-width: $height * 2;
