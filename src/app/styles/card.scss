@@ -38,11 +38,11 @@ md-card {
   > * {
     color: #808080;
     padding: 4px 6px;
+  }
+  label {
     border: solid 1px rgba(0,0,0,0.12);
     border-top: none;
     border-right: none;
-  }
-  label {
     //padding-right: 0;
     border-bottom-left-radius: 6px;
   }

@@ -7,13 +7,16 @@
       span.flex {
         display: none;
       }
+
       ng-transclude {
         flex: 1;
       }
+
       md-input-container {
         margin-left: 15px;
       }
     }
+
     #searcher {
       //max-width: 160px;
       font-size: 16px;
@@ -41,18 +44,26 @@
     min-height: 35px;
     height: 35px;
     cursor: pointer;
+
     .gray {
       text-align: right;
     }
+
     border-bottom: $list-item-border;
 
     position: relative;
+
     .gray small {
       position: absolute;
       bottom: 5px;
       right: 5px
     }
 
+
+  }
+
+  .stock {
+    color: $gray;
   }
 
   .repeated-group-item {
@@ -70,18 +81,31 @@
 
   md-card {
     overflow: hidden;
+
     .property-list-container .property > * {
       margin-top: 0;
     }
+
     md-card-content {
       margin: 0 0 15px 0;
       padding: 0;
       width: 100%;
       text-align: center;
+
       .property-value {
         text-align: left;
       }
     }
+
+    .md-card-corner {
+      display: flex;
+      justify-content: flex-end;
+      .stock {
+        text-align: left;
+        flex: 1;
+      }
+    }
+
   }
 
   form-footer #frames {

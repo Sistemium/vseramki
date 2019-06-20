@@ -10,6 +10,7 @@ md-content#scroll-main.ui-view
         md-card(layout='column' layout-align='center center')
 
           .md-card-corner
+            .stock(ng-if="!bag.stock") Нет в наличии
             label {{ bag.code }}
 
           md-card-content.clickable(ng-click='vm.showBaguette(bag)')

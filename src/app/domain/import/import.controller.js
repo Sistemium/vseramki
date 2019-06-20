@@ -273,7 +273,7 @@
           vm.recordData.newRecord++;
 
           instance = model.createInstance({
-            isValid: false
+            isValid: true
           });
 
           _.each(instance, (value, key) => {

@@ -18,7 +18,7 @@
           th.hide-xs.hide-sm(md-column) Цвета
           th.hide-xs.hide-sm(md-column md-order-by='borderWidth') Ширина (мм.)
         tbody.clickable(md-body)
-          tr(
+          tr.baguette-row(
           md-row
           ng-repeat='bag in vm.filteredBaguettes ' +
           '| orderBy: vm.orderBy ' +
@@ -38,7 +38,9 @@
             td.hide-sm.hide-xs(md-cell) {{bag.colour.name}}
             td(md-cell) {{bag.highPrice}}
             td.hide-xs(md-cell) {{bag.lowPrice}}
-            td.hide-xs(md-cell) {{bag.lastName}}
+            td.hide-xs(md-cell)
+              span {{bag.lastName}}
+              .stock(ng-if="!bag.stock") Нет в наличии
             td.hide-xs.hide-sm(md-cell)
               div(ng-repeat='bc in bag.colours track by bc.id') {{ bc.colour.name }}
             td.hide-xs.hide-sm(md-cell) {{bag.borderWidth}}

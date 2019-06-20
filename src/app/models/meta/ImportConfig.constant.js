@@ -87,6 +87,14 @@
         compute: item => {
           return _.round(parseFloat(item['Мел_Опт_Цена']), 2);
         }
+      }, {
+        name: 'stock',
+        label: 'Остаток',
+        parser: parseInt,
+      }, {
+        name: 'sales',
+        label: 'Продажи',
+        parser: parseInt,
       }
     ];
 
