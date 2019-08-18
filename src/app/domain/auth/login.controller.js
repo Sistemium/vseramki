@@ -20,21 +20,21 @@
         name: 'Google',
         class: 'google'
       },
-      {
-        url: 'mailru/vseramki',
-        name: 'Mail.ru',
-        class: 'mailru'
-      },
+      // {
+      //   url: 'mailru/vseramki',
+      //   name: 'Mail.ru',
+      //   class: 'mailru'
+      // },
       {
         url: 'odnoklassniki/vseramki',
         name: 'Одноклассники',
         class: 'odnoklassniki'
       },
-      {
-        url: 'vk/vseramki',
-        name: 'ВКонтакте',
-        class: 'vk'
-      }
+      // {
+      //   url: 'vk/vseramki',
+      //   name: 'ВКонтакте',
+      //   class: 'vk'
+      // }
     ];
 
     vm.mobile = [{
