@@ -15,7 +15,7 @@
       done: 'Выполнен'
     };
 
-    function processingLabel (processing) {
+    function processingLabel(processing) {
       return processingDictionary[processing];
     }
 
@@ -58,20 +58,20 @@
 
       methods: {
 
-        orderSubTotal: function () {
+        orderSubTotal() {
           return _.sumBy(this.positions, item =>
             item.count > 0 ? Math.round(100.0 * item.priceOrigin * item.count) / 100.0 : 0
           );
         },
 
-        orderTotal: function () {
+        orderTotal() {
           const items = this.positions;
           const subTotal = this.orderSubTotal(items);
 
           return _.sumBy(items, item => item.count ? item.cost(subTotal) : 0);
         },
 
-        recalcTotals: function (vm) {
+        recalcTotals(vm) {
 
           const model = this;
           const items = model.positions;

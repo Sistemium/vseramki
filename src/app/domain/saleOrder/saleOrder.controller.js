@@ -38,7 +38,7 @@
     SaleOrder.bindAll({}, $scope, 'vm.saleOrders');
 
 
-    loadData();
+    vm.setBusy(loadData());
 
     /*
      Watch
@@ -69,6 +69,9 @@
     }
 
     function loadData() {
+      if (vm.isAdmin) {
+        return SaleOrder.findAll({});
+      }
       if (vm.userId) {
         SaleOrder.findAll({
           creatorId: vm.userId
@@ -111,7 +114,7 @@
     function sideNavListItemClick(event, item) {
 
       $state.go('saleOrders.info', {id: item.id})
-        .then(()=> {
+        .then(() => {
           event ? lockOrdersScroll = true : lockOrdersScroll = false;
         });
     }

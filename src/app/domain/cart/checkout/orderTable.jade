@@ -13,7 +13,7 @@ md-table-container
         th(md-column md-numeric) Стоимость
     tbody(md-body)
       tr(md-row ng-repeat='item in vm.data track by item.id')
-        td.text-left(md-cell) {{ ::item.article.name}}
+        td.text-left(md-cell) {{ item.article.name}}
         td(md-cell)
           .plus-minus(layout-align='center center' layout='row' ng-if='vm.editMode')
             md-button.micro-fab(ng-click='vm.minusOne(item)') -
