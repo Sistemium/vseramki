@@ -94,7 +94,7 @@
             if (range.e.r < R) range.e.r = R;
             if (range.e.c < C) range.e.c = C;
             const cell = {v: data[R][C]};
-            if (R===0) {
+            if (R === 0) {
               cell.s = {font: {bold: true}, alignment: {horizontal: 'center'}};
             }
             if (cell.v == null) continue;
@@ -105,8 +105,7 @@
               cell.t = 'n';
               cell.z = XLSX.SSF._table[14];
               cell.v = datenum(cell.v);
-            }
-            else cell.t = 's';
+            } else cell.t = 's';
             ws[cell_ref] = cell;
           }
         }
@@ -139,10 +138,34 @@
       return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
     }
 
-    function worksheetFromArrayWithConfig(data, config) {
+    function worksheetFromArrayWithConfig(data, config, headers = []) {
       const ws = {};
 
       const wsCols = [];
+
+      _.each(headers, ({label, value}, idx) => {
+        const labelCell = {
+          v: label,
+          t: 's',
+          s: {
+            font: {bold: true},
+            alignment: {horizontal: 'right'}
+          }
+        };
+        setCell(ws, labelCell, {c: 0, r: idx});
+        if (value === null || _.isUndefined(value)) return;
+        const valueCell = {
+          v: value,
+          t: _.isNumber(value) ? 'n' : 's',
+          s: {
+            // font: {bold: true},
+            // alignment: {horizontal: 'center'}
+          }
+        };
+        setCell(ws, valueCell, {c: 1, r: idx});
+      });
+
+      const tableStart = headers.length ? headers.length + 1 : 0;
 
       _.each(config, (col, idx) => {
 
@@ -155,7 +178,7 @@
           }
         };
 
-        setCell(ws, cell, {c: idx, r: 0});
+        setCell(ws, cell, {c: idx, r: tableStart});
 
       });
 
@@ -176,7 +199,7 @@
 
           maxLength = _.max([maxLength, val.toString().length]);
 
-          setCell(ws, cell, {c: colIdx, r: rowIdx + 1});
+          setCell(ws, cell, {c: colIdx, r: rowIdx + 1 + tableStart});
 
         });
 
@@ -186,7 +209,34 @@
 
       });
 
-      const range = {e: {c: config.length - 1, r: data.length}, s: {c: 0, r: 0}};
+      let hasTotals = 0;
+
+      _.each(config, (col, idx) => {
+
+        if (!col.totalSum) return;
+
+        hasTotals = 1;
+
+        const cell = {
+          v: _.sumBy(data, col.property),
+          t: 'n',
+          s: {
+            font: {bold: true},
+            // alignment: {horizontal: 'center'}
+          }
+        };
+
+        setCell(ws, cell, {c: idx, r: tableStart + 1 + data.length});
+
+      });
+
+      if (headers) {
+        wsCols[0].wch = _.max([wsCols[0].wch, _.maxBy(headers, ({label}) => label.length).label.length + 2]);
+      }
+
+      const lastRow = data.length + tableStart + hasTotals;
+
+      const range = {e: {c: config.length - 1, r: lastRow}, s: {c: 0, r: 0}};
 
       ws['!cols'] = wsCols;
       ws['!ref'] = XLSX.utils.encode_range(range);
@@ -195,14 +245,14 @@
 
     }
 
-    function exportArrayWithConfig(data, config, name) {
+    function exportArrayWithConfig(data, config, name, headers) {
 
       const wb = new Workbook();
 
       name = name || 'Таблица';
 
       wb.SheetNames.push(name);
-      wb.Sheets[name] = worksheetFromArrayWithConfig(data, config);
+      wb.Sheets[name] = worksheetFromArrayWithConfig(data, config, headers);
 
       const wbOut = XLSX.write(wb, {bookType: 'xlsx', bookSST: false, type: 'binary'});
       const fileName = name + '.xlsx';

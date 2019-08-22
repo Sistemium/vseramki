@@ -6,7 +6,8 @@
     .module('vseramki')
     .controller('SaleOrderController', SaleOrderController);
 
-  function SaleOrderController($scope, Schema, AuthHelper, $state, TableHelper, ControllerHelper, ToastHelper, $timeout) {
+  function SaleOrderController($scope, Schema, AuthHelper, $state, $timeout,
+                               TableHelper, ControllerHelper, ToastHelper, SaleOrderExporting) {
 
     const vm = ControllerHelper.setup(this, $scope, onStateChange);
 
@@ -28,7 +29,10 @@
       editClick: goToEdit,
       printClick,
       goToEdit,
-      arrowBackClick
+      arrowBackClick,
+      fileDownloadClick(){
+        vm.currentItem && SaleOrderExporting.exportExcel(vm.currentItem);
+      }
     });
 
     /*
