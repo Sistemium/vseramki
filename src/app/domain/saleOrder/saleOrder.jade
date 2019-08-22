@@ -18,14 +18,18 @@
 //      )
 //        | {{state[1]}}
 
-.scroll-y.saleOrder(resize='saleOrder' ng-style='{height: (saleOrder.windowHeight - saleOrder.offsetTop - 1)+"px"}' ng-if='vm.saleOrder')
+.scroll-y.saleOrder(
+  resize='saleOrder'
+  ng-style='{height: (saleOrder.windowHeight - saleOrder.offsetTop - 1)+"px"}'
+  ng-if='vm.saleOrder'
+)
 
   form-edit.notable-disabled(vm="vm" item="vm.saleOrder" form-title="" name-field='' show-buttons='false')
     form-fields.wide.print-layout-row.print-layout-align-space-around-start(
-    layout='column' layout-align='center'
-    layout-gt-sm='row'
-    layout-align-sm='start center'
-    layout-align-gt-sm='space-between start'
+      layout='column' layout-align='center'
+      layout-gt-sm='row'
+      layout-align-sm='start center'
+      layout-align-gt-sm='space-between start'
     )
       .flex
       #order-info.property-list.flex-5-4(ng-include="'app/domain/cart/checkout/orderInfo.html'")
