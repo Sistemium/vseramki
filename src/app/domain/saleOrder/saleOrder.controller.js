@@ -30,7 +30,7 @@
       printClick,
       goToEdit,
       arrowBackClick,
-      fileDownloadClick(){
+      fileDownloadClick() {
         vm.currentItem && SaleOrderExporting.exportExcel(vm.currentItem);
       }
     });
@@ -73,16 +73,23 @@
     }
 
     function loadData() {
+
       if (vm.isAdmin) {
         return SaleOrder.findAll({});
       }
+
       if (vm.userId) {
-        SaleOrder.findAll({
+        return SaleOrder.findAll({
           creatorId: vm.userId
         });
-      } else {
-        //TODO: load by deviceUUID
       }
+
+      if ($state.params.id) {
+        return SaleOrder.find($state.params.id);
+      }
+
+      return $timeout(_.noop, 0);
+
     }
 
     function printClick() {
