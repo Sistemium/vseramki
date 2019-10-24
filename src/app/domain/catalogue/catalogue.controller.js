@@ -189,7 +189,7 @@
         return articles;
       }
 
-      const pattern = `^${_.escapeRegExp(search)}${/РП/i.test(search) ? '' : '(РП|$)'}`;
+      const pattern = `^${_.escapeRegExp(search)}${/Р[ПД]/i.test(search) ? '' : '(Р[ПД]|$)'}`;
       const startsWithRe = new RegExp(pattern, 'i');
 
       const byCode = _.filter(articles, ({code}) => startsWithRe.test(code));
