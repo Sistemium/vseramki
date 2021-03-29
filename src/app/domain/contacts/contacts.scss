@@ -1,6 +1,8 @@
+@import "../../styles/_vars";
+
 .contacts {
 
-  #requisites, #location {
+  #requisites, #location, #other {
     .property-label {
       flex: 2
     }
@@ -31,6 +33,13 @@
       display: block;
       min-height: 400px;
       min-width: 400px;
+    }
+  }
+
+  #other {
+    margin-top: 20px;
+    a {
+      color: $vr-blue-color;
     }
   }
 

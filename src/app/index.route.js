@@ -9,6 +9,13 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
+      .state('privacy', {
+        url: '/privacy',
+        templateUrl: 'app/domain/privacy/privacy.html',
+        data: {
+          title: 'Конфиденциальность'
+        },
+      })
       .state('home', {
         url: '/?access-token',
         templateUrl: 'app/main/main.html',

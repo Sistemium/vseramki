@@ -4,7 +4,7 @@
 
   const basePath = window.localStorage.getItem('JSData.BasePath')
     || location.protocol === 'https:' && '/api/'
-    || 'https://api.sistemium.com/v4d/vr2/';
+    || 'http://localhost:9300/api/';
 
 
   function Schema(saSchema, $http) {
